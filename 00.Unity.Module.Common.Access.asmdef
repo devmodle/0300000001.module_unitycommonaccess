@@ -1,0 +1,16 @@
+{
+    "name": "00.Unity.Module.Common.Access",
+    "references": [
+        "00.Unity.Module.Common.Define",
+        "00.Unity.Module.Common.Externals"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

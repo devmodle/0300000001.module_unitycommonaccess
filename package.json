@@ -1,12 +1,13 @@
 {
 	"name": "00.unity.module.common.access",
-	"version": "1.0.0",
+	"version": "v1.0.0",
 	"displayName": "00.Unity.Module.Common.Access",
 	"author": {
 		"name": "dante",
 		"email": "are2341@nate.com"
 	},
 	"dependencies": {
-
+		"00.unity.module.common.define": "v1.0.0",
+		"00.unity.module.common.externals": "v1.0.0"
 	}
 }

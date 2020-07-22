@@ -78,13 +78,13 @@ public static partial class CAccess {
 	//! 해상도를 반환한다
 	public static Vector2 GetResolution(bool a_bIsRuntime = true) {
 		float fScale = CAccess.GetResolutionScale(a_bIsRuntime);
-		return new Vector2(KCDefine.SCREEN_WIDTH, KCDefine.SCREEN_HEIGHT) * fScale;
+		return new Vector2(KCDefine.B_SCREEN_WIDTH, KCDefine.B_SCREEN_HEIGHT) * fScale;
 	}
 
 	//! 해상도 비율을 반환한다
 	public static float GetResolutionScale(bool a_bIsRuntime = true) {
 		float fScale = 1.0f;
-		float fAspect = KCDefine.SCREEN_WIDTH / (float)KCDefine.SCREEN_HEIGHT;
+		float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
 
 		float fScreenWidth = CAccess.GetDeviceScreenSize(a_bIsRuntime).x;
 		float fScreenHeight = CAccess.GetDeviceScreenSize(a_bIsRuntime).y;
@@ -146,7 +146,7 @@ public static partial class CAccess {
 		}
 
 		var oVersion = new System.Version(Device.systemVersion);
-		return oVersion.CompareTo(KCDefine.MIN_VERSION_LOGIN_WITH_APPLE) >= KCDefine.COMPARE_RESULT_EQUALS;
+		return oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE) >= KCDefine.B_COMPARE_RESULT_EQUALS;
 	}
 #endif			// UNITY_IOS
 
@@ -155,13 +155,13 @@ public static partial class CAccess {
 	public static bool IsSupportHapticFeedback() {
 #if UNITY_IOS
 		string oModel = Device.generation.ToString();
-		bool bIsiPhone = oModel.Contains(KCDefine.MODEL_NAME_IPHONE);
+		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
-		int nIndex = KCDefine.HAPTIC_FEEDBACK_SUPPORT_MODELS.ExFindValue((a_eDeviceGeneration) => {
+		int nIndex = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.ExFindValue((a_eDeviceGeneration) => {
 			return bIsiPhone && a_eDeviceGeneration == Device.generation;
 		});
 
-		return nIndex > KCDefine.INDEX_INVALID;
+		return nIndex > KCDefine.B_INDEX_INVALID;
 #else
 		return true;
 #endif			// #if UNITY_IOS

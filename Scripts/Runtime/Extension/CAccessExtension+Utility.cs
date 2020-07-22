@@ -50,12 +50,12 @@ public static partial class CAccessExtension {
 
 	//! 크기 형식 문자열을 반환한다
 	public static string ExGetSizeFormatString(this string a_oSender, int a_nSize) {
-		return string.Format(KCDefine.SIZE_FORMAT_STRING, a_nSize, a_oSender);
+		return string.Format(KCDefine.B_SIZE_FORMAT_STRING, a_nSize, a_oSender);
 	}
 
 	//! 색상 형식 문자열을 반환한다
 	public static string ExGetColorFormatString(this string a_oSender, Color a_stColor) {
-		return string.Format(KCDefine.COLOR_FORMAT_STRING, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
+		return string.Format(KCDefine.B_COLOR_FORMAT_STRING, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
 	}
 
 	//! 위치를 변경한다

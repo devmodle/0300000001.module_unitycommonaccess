@@ -78,8 +78,8 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender.ExIsValid());
 		string oCountryCode = a_oSender.ToUpper();
 
-		for(int i = 0; i < KCDefine.EUROPEAN_UNION_COUNTRY_CODES.Length; ++i) {
-			if(oCountryCode.ExIsEquals(KCDefine.EUROPEAN_UNION_COUNTRY_CODES[i])) {
+		for(int i = 0; i < KCDefine.B_EUROPEAN_UNION_COUNTRY_CODES.Length; ++i) {
+			if(oCountryCode.ExIsEquals(KCDefine.B_EUROPEAN_UNION_COUNTRY_CODES[i])) {
 				return true;
 			}
 		}
@@ -146,13 +146,13 @@ public static partial class CAccessExtension {
 	//! 인덱스 유효 여부를 검사한다
 	public static bool ExIsValidIndex<T>(this T[] a_oSender, int a_nIndex) {
 		CAccess.Assert(a_oSender != null);
-		return a_nIndex > KCDefine.INDEX_INVALID && a_nIndex < a_oSender.Length;
+		return a_nIndex > KCDefine.B_INDEX_INVALID && a_nIndex < a_oSender.Length;
 	}
 
 	//! 인덱스 유효 여부룰 검사한다
 	public static bool ExIsValidIndex<T>(this List<T> a_oSender, int a_nIndex) {
 		CAccess.Assert(a_oSender != null);
-		return a_nIndex > KCDefine.INDEX_INVALID && a_nIndex < a_oSender.Count;
+		return a_nIndex > KCDefine.B_INDEX_INVALID && a_nIndex < a_oSender.Count;
 	}
 
 	//! 비동기 작업 완료 여부를 검사한다

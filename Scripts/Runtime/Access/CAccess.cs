@@ -15,7 +15,7 @@ public static partial class CAccess {
 
 	//! 쓰기용 스트림을 반환한다
 	public static FileStream GetWriteStream(string a_oFilepath,
-		bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.EMPTY_STRING) {
+		bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
 		CAccess.Assert(a_oFilepath.ExIsValid());
 		string oDirectoryPath = Path.GetDirectoryName(a_oFilepath);
 
@@ -26,8 +26,8 @@ public static partial class CAccess {
 		// 자동 백업이 가능 할 경우
 		if(a_bIsAutoBackup && File.Exists(a_oFilepath)) {
 			string oFilename = Path.GetFileName(a_oFilepath);
-			string oBackupFilename = string.Format(KCDefine.FILENAME_FORMAT_BACKUP, Path.GetFileNameWithoutExtension(a_oFilepath), System.DateTime.Now.ToString(KCDefine.NAME_FORMAT_BACKUP));
-			string oBackupDirectoryPath = Path.Combine(oDirectoryPath, (a_oBackupDirectoryName.Length <= 0) ? KCDefine.DIR_NAME_BACKUP : a_oBackupDirectoryName);
+			string oBackupFilename = string.Format(KCDefine.B_FILE_NAME_FORMAT_BACKUP, Path.GetFileNameWithoutExtension(a_oFilepath), System.DateTime.Now.ToString(KCDefine.B_NAME_FORMAT_BACKUP));
+			string oBackupDirectoryPath = Path.Combine(oDirectoryPath, (a_oBackupDirectoryName.Length <= 0) ? KCDefine.B_DIR_NAME_BACKUP : a_oBackupDirectoryName);
 			
 			CAccess.CreateDirectory(oBackupDirectoryPath);
 
@@ -38,12 +38,12 @@ public static partial class CAccess {
 			if(!File.Exists(oBackupFilepath)) {
 				var oFilepaths = Directory.GetFiles(oBackupDirectoryPath);
 
-				if(oFilepaths.Length >= KCDefine.MAX_NUM_BACKUP_FILES - 1) {
+				if(oFilepaths.Length >= KCDefine.B_MAX_NUM_BACKUP_FILES - 1) {
 					System.Array.Sort(oFilepaths, (a_oLhs, a_oRhs) => {
 						return a_oRhs.CompareTo(a_oLhs);
 					});
 
-					for(int i = KCDefine.MAX_NUM_BACKUP_FILES - 1; i < oFilepaths.Length; ++i) {
+					for(int i = KCDefine.B_MAX_NUM_BACKUP_FILES - 1; i < oFilepaths.Length; ++i) {
 						File.Delete(oFilepaths[i]);
 					}
 				}
@@ -57,7 +57,7 @@ public static partial class CAccess {
 
 	//! 조건을 검사한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.EMPTY_STRING) {
+	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_EMPTY_STRING) {
 		if(a_oMsg != null && a_oMsg.Length >= 1) {
 			UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
 		} else {

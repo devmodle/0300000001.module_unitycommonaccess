@@ -1,13 +1,13 @@
 {
-  "name": "00.unitymodule.common.access",
+  "name": "unitymodule.common.access",
   "version": "1.0.0",
-  "displayName": "00.UnityModule.Common.Access",
+  "displayName": "UnityModule.Common.Access",
   "author": {
     "name": "dante",
     "email": "are2341@nate.com"
   },
   "dependencies": {
-    "00.unitymodule.common.define": "https://gitlab.com/9tap.repository/unitymodule_common_define_client.git#1.0.0",
-    "00.unitymodule.common.externals": "https://gitlab.com/9tap.repository/unitymodule_common_externals_client.git#1.0.0"
+    "unitymodule.common.define": "https://gitlab.com/9tap.repository/unitymodule_common_define_client.git#v1.0.0",
+    "unitymodule.common.externals": "https://gitlab.com/9tap.repository/unitymodule_common_externals_client.git#v1.0.0"
   }
 }

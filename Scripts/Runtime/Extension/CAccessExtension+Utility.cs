@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif			// #if UNITY_EDITOR
+
 //! 유틸리티 접근 확장 클래스
 public static partial class CAccessExtension {
 	#region 클래스 함수
@@ -188,4 +192,16 @@ public static partial class CAccessExtension {
 		a_oSender.ExSetSizeDelta(new Vector2(a_oSender.sizeDelta.x, a_fValue));
 	}
 	#endregion			// 클래스 함수
+
+	#region 조건부 클래스 함수
+#if UNITY_EDITOR
+	//! 스크립트 순서를 변경한다
+	public static void ExSetScriptOrder(this MonoBehaviour a_oSender, int a_nOrder) {
+		CAccess.Assert(a_oSender != null && (a_nOrder >= short.MinValue && a_nOrder <= short.MaxValue));
+		var oMonoScript = MonoScript.FromMonoBehaviour(a_oSender);
+
+		CAccess.SetScriptOrder(oMonoScript, a_nOrder);
+	}
+#endif			// #if UNITY_EDITOR
+	#endregion			// 조건부 클래스 함수
 }

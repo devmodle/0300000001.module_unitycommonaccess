@@ -1,8 +1,7 @@
 {
     "name": "UnityModule.Common.Access",
     "references": [
-        "UnityModule.Common.Define",
-        "UnityModule.Common.Externals"
+        "UnityModule.Common.Define"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,0 +1,32 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.PackageManager;
+using UnityEditor.PackageManager.Requests;
+
+#if UNITY_IOS
+using UnityEditor.iOS.Xcode;
+#endif			// #if UNITY_IOS
+
+//! 에디터 기본 접근 확장 클래스
+public static partial class CEditorAccessExtension {
+	#region 클래스 함수
+	//! 완료 여부를 검사한다
+	public static bool ExIsComplete(this Request a_oSender) {
+		return a_oSender != null && a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;
+	}
+	#endregion			// 클래스 함수
+
+	#region 조건부 클래스 함수
+#if UNITY_IOS
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this PlistDocument a_oSender) {
+		return a_oSender != null && a_oSender.root != null;
+	}
+#endif			// #if UNITY_IOS
+	#endregion			// 조건부 클래스 함수
+}
+#endif			// #if UNITY_EDITOR

@@ -68,7 +68,7 @@ public static partial class CAccessExtension {
 		return a_dblSender.ExIsGreate(a_dblRhs) || a_dblSender.ExIsEquals(a_dblRhs);
 	}
 
-	//! 비동기 작업 완료 여부를 검사한다
+	//! 완료 여부를 검사한다
 	public static bool ExIsComplete(this Task a_oSender) {
 		return a_oSender != null && (a_oSender.IsCompleted && !a_oSender.IsFaulted && !a_oSender.IsCanceled);
 	}
@@ -155,7 +155,7 @@ public static partial class CAccessExtension {
 		return a_nIndex > KCDefine.B_INDEX_INVALID && a_nIndex < a_oSender.Count;
 	}
 
-	//! 비동기 작업 완료 여부를 검사한다
+	//! 완료 여부를 검사한다
 	public static bool ExIsComplete<T>(this Task<T> a_oSender) {
 		bool bIsComplete = a_oSender != null && (a_oSender.IsCompleted && !a_oSender.IsFaulted && !a_oSender.IsCanceled);
 		return bIsComplete && a_oSender.Result != null;

@@ -157,11 +157,13 @@ public static partial class CAccess {
 		string oModel = Device.generation.ToString();
 		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
-		int nIndex = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.ExFindValue((a_eDeviceGeneration) => {
-			return bIsiPhone && a_eDeviceGeneration == Device.generation;
-		});
+		for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
+			if(bIsiPhone && KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i] == Device.generation) {
+				return true;
+			}
+		}
 
-		return nIndex > KCDefine.B_INDEX_INVALID;
+		return false;
 #else
 		return true;
 #endif			// #if UNITY_IOS

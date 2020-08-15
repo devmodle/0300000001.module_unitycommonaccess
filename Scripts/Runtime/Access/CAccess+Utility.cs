@@ -89,7 +89,6 @@ public static partial class CAccess {
 		float fScreenWidth = CAccess.GetDeviceScreenSize(a_bIsRuntime).x;
 		float fScreenHeight = CAccess.GetDeviceScreenSize(a_bIsRuntime).y;
 
-		// 화면을 벗어났을 경우
 		if(fScreenWidth.ExIsLess(fScreenHeight * fAspect)) {
 			fScale = fScreenWidth / (fScreenHeight * fAspect);
 		}
@@ -175,7 +174,7 @@ public static partial class CAccess {
 	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder) {
 		CAccess.Assert(a_oScript != null && (a_nOrder >= short.MinValue && a_nOrder <= short.MaxValue));
 		int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
-
+		
 		if(nOrder != a_nOrder) {
 			MonoImporter.SetExecutionOrder(a_oScript, a_nOrder);
 		}

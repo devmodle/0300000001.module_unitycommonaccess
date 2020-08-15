@@ -82,7 +82,7 @@ public static partial class CAccessExtension {
 	//! 회전을 변경한다
 	public static void ExSetRotation(this Transform a_oSender, Vector3 a_stRotation, bool a_bIsWorld = false) {
 		CAccess.Assert(a_oSender != null);
-
+		
 		if(a_bIsWorld) {
 			a_oSender.eulerAngles = a_stRotation;
 		} else {

@@ -23,7 +23,6 @@ public static partial class CAccess {
 			CAccess.CreateDirectory(oDirectoryPath);
 		}
 
-		// 자동 백업이 가능 할 경우
 		if(a_bIsAutoBackup && File.Exists(a_oFilepath)) {
 			string oFilename = Path.GetFileName(a_oFilepath);
 			string oBackupFilename = string.Format(KCDefine.B_FILE_NAME_FORMAT_BACKUP, Path.GetFileNameWithoutExtension(a_oFilepath), System.DateTime.Now.ToString(KCDefine.B_NAME_FORMAT_BACKUP));
@@ -34,7 +33,6 @@ public static partial class CAccess {
 			string oBackupFilepath = Path.Combine(oBackupDirectoryPath, 
 				oFilename.ExGetReplaceString(Path.GetFileNameWithoutExtension(a_oFilepath), oBackupFilename));
 
-			// 동일한 백업 파일이 없을 경우
 			if(!File.Exists(oBackupFilepath)) {
 				var oFilepaths = Directory.GetFiles(oBackupDirectoryPath);
 
@@ -66,18 +64,18 @@ public static partial class CAccess {
 	}
 
 	//! 디렉토리를 생성한다
-	public static DirectoryInfo CreateDirectory(string a_oFilepath) {
-		if(!Directory.Exists(a_oFilepath)) {
-			Directory.CreateDirectory(a_oFilepath);
+	public static DirectoryInfo CreateDirectory(string a_oDirPath) {
+		if(!Directory.Exists(a_oDirPath)) {
+			Directory.CreateDirectory(a_oDirPath);
 		}
 
-		return new DirectoryInfo(a_oFilepath);
+		return new DirectoryInfo(a_oDirPath);
 	}
 
 	//! 디렉토리를 제거한다
-	public static void RemoveDirectory(string a_oFilepath, bool a_bIsRecursive = true) {
-		if(Directory.Exists(a_oFilepath)) {
-			Directory.Delete(a_oFilepath, a_bIsRecursive);
+	public static void RemoveDirectory(string a_oDirPath, bool a_bIsRecursive = true) {
+		if(Directory.Exists(a_oDirPath)) {
+			Directory.Delete(a_oDirPath, a_bIsRecursive);
 		}
 	}
 	#endregion			// 클래스 함수

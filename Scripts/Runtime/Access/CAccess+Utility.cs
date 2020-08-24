@@ -55,6 +55,7 @@ public static partial class CAccess {
 	
 	//! 안전 영역을 반환한다
 	public static Rect GetSafeArea(bool a_bIsRuntime = true) {
+		// 런 타임 모드 일 경우
 		if(a_bIsRuntime) {
 			return Screen.safeArea;
 		}
@@ -64,6 +65,7 @@ public static partial class CAccess {
 
 	//! 디바이스 화면 크기를 반환한다
 	public static Vector2 GetDeviceScreenSize(bool a_bIsRuntime = true) {
+		// 런 타임 모드 일 경우
 		if(a_bIsRuntime) {
 #if UNITY_EDITOR
 			return new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
@@ -89,6 +91,7 @@ public static partial class CAccess {
 		float fScreenWidth = CAccess.GetDeviceScreenSize(a_bIsRuntime).x;
 		float fScreenHeight = CAccess.GetDeviceScreenSize(a_bIsRuntime).y;
 
+		// 화면 너비를 벗어났을 경우
 		if(fScreenWidth.ExIsLess(fScreenHeight * fAspect)) {
 			fScale = fScreenWidth / (fScreenHeight * fAspect);
 		}
@@ -128,6 +131,7 @@ public static partial class CAccess {
 	public static void RemoveComponent(Component a_oComponent) {
 		CAccess.Assert(a_oComponent != null);
 
+		// 앱이 실행 중 일 경우
 		if(Application.isPlaying) {
 			GameObject.Destroy(a_oComponent);
 		} else {
@@ -140,6 +144,7 @@ public static partial class CAccess {
 #if UNITY_IOS
 	//! 애플 로그인 지원 여부를 검사한다
 	public static bool IsSupportLoginWithApple() {
+		// 모바일 플랫폼이 아닐 경우
 		if(!CAccess.IsMobilePlatform()) {
 			return false;
 		}
@@ -157,6 +162,7 @@ public static partial class CAccess {
 		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
 		for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
+			// 햅틱 피드백 지원 모델 일 경우
 			if(bIsiPhone && KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i] == Device.generation) {
 				return true;
 			}
@@ -174,7 +180,8 @@ public static partial class CAccess {
 	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder) {
 		CAccess.Assert(a_oScript != null && (a_nOrder >= short.MinValue && a_nOrder <= short.MaxValue));
 		int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
-		
+
+		// 기존 순서와 다를 경우
 		if(nOrder != a_nOrder) {
 			MonoImporter.SetExecutionOrder(a_oScript, a_nOrder);
 		}

@@ -37,9 +37,12 @@ public static partial class CEditorAccess {
 	public static string GetAndroidPlatformName(EAndroidPlatformType a_ePlatformType) {
 		CAccess.Assert(a_ePlatformType > EAndroidPlatformType.NONE && a_ePlatformType < EAndroidPlatformType.MAX_VALUE);
 
+		// 원 스토어 플랫폼 일 경우
 		if(a_ePlatformType == EAndroidPlatformType.ONE_STORE) {
 			return KCDefine.B_PLATFORM_NAME_ONE_STORE;
-		} else if(a_ePlatformType == EAndroidPlatformType.GALAXY_STORE) {
+		}
+		// 갤럭시 스토어 플랫폼 일 경우
+		else if(a_ePlatformType == EAndroidPlatformType.GALAXY_STORE) {
 			return KCDefine.B_PLATFORM_NAME_GALAXY_STORE;
 		}
 

@@ -79,6 +79,7 @@ public static partial class CAccessExtension {
 		string oCountryCode = a_oSender.ToUpper();
 
 		for(int i = 0; i < KCDefine.B_EUROPEAN_UNION_COUNTRY_CODES.Length; ++i) {
+			// 유럽 연합 일 경우
 			if(oCountryCode.ExIsEquals(KCDefine.B_EUROPEAN_UNION_COUNTRY_CODES[i])) {
 				return true;
 			}
@@ -112,6 +113,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender.ExIsValid());
 		CAccess.Assert(a_nReplaceTimes >= 1 && (a_oSearch != null && a_oReplace != null));
 
+		// 검색과 변경 문자열이 다를 경우
 		if(!a_oSearch.ExIsEquals(a_oReplace)) {
 			for(int i = 0; i < a_nReplaceTimes && a_oSender.Contains(a_oSearch); ++i) {
 				a_oSender = a_oSender.Replace(a_oSearch, a_oReplace);
@@ -196,6 +198,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(oFieldInfos != null);
 
 		foreach(var oFieldInfo in oFieldInfos) {
+			// 필드 이름이 동일 할 경우
 			if(oFieldInfo.Name.ExIsEquals(a_oName)) {
 				return oFieldInfo.GetValue(a_oSender);
 			}
@@ -221,6 +224,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(oPropertyInfos != null);
 
 		foreach(var oPropertyInfo in oPropertyInfos) {
+			// 프로퍼티 이름과 동일 할 경우
 			if(oPropertyInfo.Name.ExIsEquals(a_oName)) {
 				return oPropertyInfo.GetValue(a_oSender);
 			}
@@ -233,7 +237,8 @@ public static partial class CAccessExtension {
 	public static void ExSetValue<T>(this T[] a_oSender, int a_nIndex, T a_tValue) {
 		CAccess.Assert(a_oSender != null);
 
-		if(a_nIndex >= 0 && a_nIndex < a_oSender.Length) {
+		// 인덱스가 유효 할 경우
+		if(a_oSender.ExIsValidIndex(a_nIndex)) {
 			a_oSender[a_nIndex] = a_tValue;
 		}
 	}
@@ -242,7 +247,8 @@ public static partial class CAccessExtension {
 	public static void ExSetValue<T>(this List<T> a_oSender, int a_nIndex, T a_tValue) {
 		CAccess.Assert(a_oSender != null);
 
-		if(a_nIndex >= 0 && a_nIndex < a_oSender.Count) {
+		// 인덱스가 유효 할 경우
+		if(a_oSender.ExIsValidIndex(a_nIndex)) {
 			a_oSender[a_nIndex] = a_tValue;
 		}
 	}
@@ -251,8 +257,38 @@ public static partial class CAccessExtension {
 	public static void ExSetValue<Key, Value>(this Dictionary<Key, Value> a_oSender, Key a_tKey, Value a_tValue) {
 		CAccess.Assert(a_oSender != null);
 
+		// 키가 유효 할 경우
 		if(a_oSender.ContainsKey(a_tKey)) {
 			a_oSender[a_tKey] = a_tValue;
+		}
+	}
+
+	//! 값을 변경한다
+	public static void ExSetValues<T>(this T[] a_oSender, int[] a_oIndices, T[] a_oValues) {
+		bool bIsEnable = a_oSender != null && (a_oIndices.ExIsValid() && a_oValues.ExIsValid());
+		CAccess.Assert(bIsEnable && a_oIndices.Length == a_oValues.Length);
+
+		for(int i = 0; i < a_oIndices.Length; ++i) {
+			a_oSender.ExSetValue(a_oIndices[i], a_oValues[i]);
+		}
+	}
+
+	//! 값을 변경한다
+	public static void ExSetValues<T>(this List<T> a_oSender, List<int> a_oIndexList, List<T> a_oValueList) {
+		bool bIsEnable = a_oSender != null && (a_oIndexList.ExIsValid() && a_oValueList.ExIsValid());
+		CAccess.Assert(bIsEnable && a_oIndexList.Count == a_oValueList.Count);
+
+		for(int i = 0; i < a_oIndexList.Count; ++i) {
+			a_oSender.ExSetValue(a_oIndexList[i], a_oValueList[i]);
+		}
+	}
+
+	//! 값을 변경한다
+	public static void ExSetValues<Key, Value>(this Dictionary<Key, Value> a_oSender, Dictionary<Key, Value> a_oValueList) {
+		CAccess.Assert(a_oValueList != null);
+
+		foreach(var stKeyValue in a_oValueList) {
+			a_oSender.ExSetValue(stKeyValue.Key, stKeyValue.Value);
 		}
 	}
 
@@ -273,6 +309,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(oFieldInfos != null && a_oName.ExIsValid());
 
 		foreach(var oFieldInfo in oFieldInfos) {
+			// 필드 이름이 동일 할 경우
 			if(oFieldInfo.Name.ExIsEquals(a_oName)) {
 				oFieldInfo.SetValue(a_oSender, a_oValue);
 			}
@@ -296,6 +333,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(oPropertyInfos != null && a_oName.ExIsValid());
 
 		foreach(var oPropertyInfo in oPropertyInfos) {
+			// 프로퍼티 이름이 동일 할 경우
 			if(oPropertyInfo.Name.ExIsEquals(a_oName)) {
 				oPropertyInfo.SetValue(a_oSender, a_oValue);
 			}

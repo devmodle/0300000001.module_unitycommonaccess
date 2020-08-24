@@ -66,6 +66,7 @@ public static partial class CAccessExtension {
 	public static void ExSetPos(this Transform a_oSender, Vector3 a_stPos, bool a_bIsWorld = false) {
 		CAccess.Assert(a_oSender != null);
 
+		// 월드 모드 일 경우
 		if(a_bIsWorld) {
 			a_oSender.position = a_stPos;
 		} else {
@@ -83,6 +84,7 @@ public static partial class CAccessExtension {
 	public static void ExSetRotation(this Transform a_oSender, Vector3 a_stRotation, bool a_bIsWorld = false) {
 		CAccess.Assert(a_oSender != null);
 		
+		// 월드 모드 일 경우
 		if(a_bIsWorld) {
 			a_oSender.eulerAngles = a_stRotation;
 		} else {

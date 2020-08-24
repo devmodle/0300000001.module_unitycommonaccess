@@ -19,10 +19,12 @@ public static partial class CAccess {
 		CAccess.Assert(a_oFilepath.ExIsValid());
 		string oDirectoryPath = Path.GetDirectoryName(a_oFilepath);
 
+		// 디렉토리 자동 생성 모드 일 경우
 		if(a_bIsAutoCreateDirectory) {
 			CAccess.CreateDirectory(oDirectoryPath);
 		}
 
+		// 자동 백업이 가능 할 경우
 		if(a_bIsAutoBackup && File.Exists(a_oFilepath)) {
 			string oFilename = Path.GetFileName(a_oFilepath);
 			string oBackupFilename = string.Format(KCDefine.B_FILE_NAME_FORMAT_BACKUP, Path.GetFileNameWithoutExtension(a_oFilepath), System.DateTime.Now.ToString(KCDefine.B_NAME_FORMAT_BACKUP));
@@ -33,9 +35,11 @@ public static partial class CAccess {
 			string oBackupFilepath = Path.Combine(oBackupDirectoryPath, 
 				oFilename.ExGetReplaceString(Path.GetFileNameWithoutExtension(a_oFilepath), oBackupFilename));
 
+			// 백업 파일 생성이 가능 할 경우
 			if(!File.Exists(oBackupFilepath)) {
 				var oFilepaths = Directory.GetFiles(oBackupDirectoryPath);
 
+				// 파일 최대 개수를 벗어났을 경우
 				if(oFilepaths.Length >= KCDefine.B_MAX_NUM_BACKUP_FILES - 1) {
 					System.Array.Sort(oFilepaths, (a_oLhs, a_oRhs) => {
 						return a_oRhs.CompareTo(a_oLhs);
@@ -56,6 +60,7 @@ public static partial class CAccess {
 	//! 조건을 검사한다
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_EMPTY_STRING) {
+		// 메세지가 유효 할 경우
 		if(a_oMsg != null && a_oMsg.Length >= 1) {
 			UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
 		} else {
@@ -65,6 +70,7 @@ public static partial class CAccess {
 
 	//! 디렉토리를 생성한다
 	public static DirectoryInfo CreateDirectory(string a_oDirPath) {
+		// 디렉토리가 없을 경우
 		if(!Directory.Exists(a_oDirPath)) {
 			Directory.CreateDirectory(a_oDirPath);
 		}
@@ -74,6 +80,7 @@ public static partial class CAccess {
 
 	//! 디렉토리를 제거한다
 	public static void RemoveDirectory(string a_oDirPath, bool a_bIsRecursive = true) {
+		// 디렉토리가 존재 할 경우
 		if(Directory.Exists(a_oDirPath)) {
 			Directory.Delete(a_oDirPath, a_bIsRecursive);
 		}

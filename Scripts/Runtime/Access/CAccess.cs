@@ -27,7 +27,7 @@ public static partial class CAccess {
 		// 자동 백업이 가능 할 경우
 		if(a_bIsAutoBackup && File.Exists(a_oFilepath)) {
 			string oFilename = Path.GetFileName(a_oFilepath);
-			string oBackupFilename = string.Format(KCDefine.B_FILE_NAME_FORMAT_BACKUP, Path.GetFileNameWithoutExtension(a_oFilepath), System.DateTime.Now.ToString(KCDefine.B_NAME_FORMAT_BACKUP));
+			string oBackupFilename = string.Format(KCDefine.B_FILENAME_FORMAT_BACKUP, Path.GetFileNameWithoutExtension(a_oFilepath), System.DateTime.Now.ToString(KCDefine.B_NAME_FORMAT_BACKUP));
 			string oBackupDirectoryPath = Path.Combine(oDirectoryPath, (a_oBackupDirectoryName.Length <= 0) ? KCDefine.B_DIR_NAME_BACKUP : a_oBackupDirectoryName);
 			
 			CAccess.CreateDirectory(oBackupDirectoryPath);

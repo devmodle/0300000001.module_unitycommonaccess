@@ -52,7 +52,7 @@ public static partial class CAccess {
 	public static bool IsHandheldConsolePlatform() {
 		return Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
 	}
-	
+
 	//! 안전 영역을 반환한다
 	public static Rect GetSafeArea(bool a_bIsRuntime = true) {
 		// 런 타임 모드 일 경우
@@ -139,6 +139,20 @@ public static partial class CAccess {
 		}
 	}
 	#endregion			// 클래스 함수
+
+	#region 제네릭 클래스 함수
+	//! 리소스 존재 여부를 검사한다
+	public static bool IsExistsRes<T>(string a_oFilepath, bool a_bIsAutoUnload = false) where T : Object {
+		var oRes = Resources.Load<T>(a_oFilepath);
+		bool bIsExists = oRes != null;
+
+		if(a_bIsAutoUnload && oRes != null) {
+			Resources.UnloadAsset(oRes);
+		}
+
+		return bIsExists;
+	}
+	#endregion			// 제네릭 클래스 함수
 
 	#region 조건부 클래스 함수
 #if UNITY_IOS

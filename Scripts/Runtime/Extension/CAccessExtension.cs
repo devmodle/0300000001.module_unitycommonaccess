@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Reflection;
 using UnityEngine;
@@ -10,6 +11,17 @@ public static partial class CAccessExtension {
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this string a_oSender) {
 		return a_oSender != null && a_oSender.Length >= 1;
+	}
+
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this SystemLanguage a_eSender) {
+		return a_eSender >= SystemLanguage.Afrikaans && a_eSender < SystemLanguage.Unknown;
+	}
+
+	//! 국가 코드 유효 여부를 검사한다
+	public static bool ExIsValidCountryCode(this string a_oCountryCode) {
+		string oCountryCode = a_oCountryCode.ToUpper();
+		return oCountryCode.ExIsValid() && !oCountryCode.ExIsEquals(KCDefine.B_UNKNOWN_COUNTRY_CODE);
 	}
 
 	//! 동일 여부를 검사한다
@@ -121,6 +133,14 @@ public static partial class CAccessExtension {
 		}
 
 		return a_oSender;
+	}
+
+	//! 파일 이름이 변경 된 경로를 반환한다
+	public static string ExGetReplaceFilenamePath(this string a_oSender, string a_oFilename) {
+		CAccess.Assert(a_oSender.ExIsValid() && a_oFilename.ExIsValid());
+		var oFilename = Path.GetFileNameWithoutExtension(a_oSender);
+
+		return a_oSender.ExGetReplaceString(oFilename, a_oFilename);
 	}
 	#endregion			// 클래스 함수
 
@@ -264,12 +284,12 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValues<T>(this T[] a_oSender, int[] a_oIndices, T[] a_oValues) {
-		bool bIsEnable = a_oSender != null && (a_oIndices.ExIsValid() && a_oValues.ExIsValid());
-		CAccess.Assert(bIsEnable && a_oIndices.Length == a_oValues.Length);
+	public static void ExSetValues<T>(this T[] a_oSender, List<int> a_oIndexList, List<T> a_oValueList) {
+		bool bIsEnable = a_oSender != null && (a_oIndexList.ExIsValid() && a_oValueList.ExIsValid());
+		CAccess.Assert(bIsEnable && a_oIndexList.Count == a_oValueList.Count);
 
-		for(int i = 0; i < a_oIndices.Length; ++i) {
-			a_oSender.ExSetValue(a_oIndices[i], a_oValues[i]);
+		for(int i = 0; i < a_oIndexList.Count; ++i) {
+			a_oSender.ExSetValue(a_oIndexList[i], a_oValueList[i]);
 		}
 	}
 

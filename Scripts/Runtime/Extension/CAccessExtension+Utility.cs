@@ -194,7 +194,7 @@ public static partial class CAccessExtension {
 		a_oSender.ExSetSizeDelta(new Vector2(a_oSender.sizeDelta.x, a_fValue));
 	}
 	#endregion			// 클래스 함수
-
+	
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다

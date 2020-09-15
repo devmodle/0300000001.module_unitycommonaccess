@@ -29,24 +29,19 @@ public static partial class CEditorAccess {
 
 	//! 독립 플랫폼 이름을 반환한다
 	public static string GetStandalonePlatformName(EStandalonePlatformType a_ePlatformType) {
-		CAccess.Assert(a_ePlatformType > EStandalonePlatformType.NONE && a_ePlatformType < EStandalonePlatformType.MAX_VALUE);
-		return (a_ePlatformType == EStandalonePlatformType.WINDOWS) ? KCDefine.B_PLATFORM_NAME_WINDOWS : KCDefine.B_PLATFORM_NAME_MAC;
+		return (a_ePlatformType == EStandalonePlatformType.WINDOWS) ? KCDefine.B_PLATFORM_NAME_WINDOWS 
+			: KCDefine.B_PLATFORM_NAME_MAC;
 	}
 
 	//! 안드로이드 플랫폼 이름을 반환한다
 	public static string GetAndroidPlatformName(EAndroidPlatformType a_ePlatformType) {
-		CAccess.Assert(a_ePlatformType > EAndroidPlatformType.NONE && a_ePlatformType < EAndroidPlatformType.MAX_VALUE);
-
 		// 원 스토어 플랫폼 일 경우
 		if(a_ePlatformType == EAndroidPlatformType.ONE_STORE) {
 			return KCDefine.B_PLATFORM_NAME_ONE_STORE;
 		}
-		// 갤럭시 스토어 플랫폼 일 경우
-		else if(a_ePlatformType == EAndroidPlatformType.GALAXY_STORE) {
-			return KCDefine.B_PLATFORM_NAME_GALAXY_STORE;
-		}
 
-		return KCDefine.B_PLATFORM_NAME_GOOGLE;
+		return (a_ePlatformType == EAndroidPlatformType.GALAXY_STORE) ? KCDefine.B_PLATFORM_NAME_GALAXY_STORE
+			: KCDefine.B_PLATFORM_NAME_GOOGLE;
 	}
 
 	//! 그래픽 API 를 변경한다

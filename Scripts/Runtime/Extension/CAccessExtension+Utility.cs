@@ -10,6 +10,11 @@ using UnityEditor;
 public static partial class CAccessExtension {
 	#region 클래스 함수
 	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this EUserType a_eSender) {
+		return a_eSender > EUserType.NONE && a_eSender < EUserType.MAX_VALUE;
+	}
+
+	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this TextAsset a_oSender) {
 		return a_oSender != null && (a_oSender.text.ExIsValid() || a_oSender.bytes.ExIsValid());
 	}
@@ -64,8 +69,6 @@ public static partial class CAccessExtension {
 
 	//! 위치를 변경한다
 	public static void ExSetPos(this Transform a_oSender, Vector3 a_stPos, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
-
 		// 월드 모드 일 경우
 		if(a_bIsWorld) {
 			a_oSender.position = a_stPos;
@@ -74,16 +77,8 @@ public static partial class CAccessExtension {
 		}
 	}
 
-	//! 비율을 변경한다
-	public static void ExSetScale(this Transform a_oSender, Vector3 a_stScale) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.localScale = a_stScale;
-	}
-
 	//! 회전을 변경한다
 	public static void ExSetRotation(this Transform a_oSender, Vector3 a_stRotation, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
-		
 		// 월드 모드 일 경우
 		if(a_bIsWorld) {
 			a_oSender.eulerAngles = a_stRotation;
@@ -94,103 +89,82 @@ public static partial class CAccessExtension {
 
 	//! X 축 위치를 변경한다
 	public static void ExSetPosX(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
 		var stPos = a_bIsWorld ? a_oSender.position : a_oSender.localPosition;
-
 		a_oSender.ExSetPos(new Vector3(a_fValue, stPos.y, stPos.z), a_bIsWorld);
 	}
 	
 	//! Y 축 위치를 변경한다
 	public static void ExSetPosY(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
 		var stPos = a_bIsWorld ? a_oSender.position : a_oSender.localPosition;
-
 		a_oSender.ExSetPos(new Vector3(stPos.x, a_fValue, stPos.z), a_bIsWorld);
 	}
 
 	//! Z 축 위치를 변경한다
 	public static void ExSetPosZ(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
 		var stPos = a_bIsWorld ? a_oSender.position : a_oSender.localPosition;
-
 		a_oSender.ExSetPos(new Vector3(stPos.x, stPos.y, a_fValue), a_bIsWorld);
 	}
 
 	//! X 축 비율을 변경한다
 	public static void ExSetScaleX(this Transform a_oSender, float a_fValue) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.ExSetScale(new Vector3(a_fValue, a_oSender.localScale.y, a_oSender.localScale.z));
+		a_oSender.localScale = new Vector3(a_fValue, a_oSender.localScale.y, a_oSender.localScale.z);
 	}
 
 	//! Y 축 비율을 변경한다
 	public static void ExSetScaleY(this Transform a_oSender, float a_fValue) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.ExSetScale(new Vector3(a_oSender.localScale.x, a_fValue, a_oSender.localScale.z));
+		a_oSender.localScale = new Vector3(a_oSender.localScale.x, a_fValue, a_oSender.localScale.z);
 	}
 
 	//! Z 축 비율을 변경한다
 	public static void ExSetScaleZ(this Transform a_oSender, float a_fValue) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.ExSetScale(new Vector3(a_oSender.localScale.x, a_oSender.localScale.y, a_fValue));
+		a_oSender.localScale = new Vector3(a_oSender.localScale.x, a_oSender.localScale.y, a_fValue);
 	}
 
 	//! X 축 각도를 변경한다
 	public static void ExSetRotationX(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
-
 		a_oSender.ExSetRotation(new Vector3(a_fValue, stRotation.y, stRotation.z), a_bIsWorld);
 	}
 	
 	//! Y 축 각도를 변경한다
 	public static void ExSetRotationY(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
-
 		a_oSender.ExSetRotation(new Vector3(stRotation.x, a_fValue, stRotation.z), a_bIsWorld);
 	}
 
 	//! Z 축 각도를 변경한다
 	public static void ExSetRotationZ(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
-		CAccess.Assert(a_oSender != null);
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
-
 		a_oSender.ExSetRotation(new Vector3(stRotation.x, stRotation.y, a_fValue), a_bIsWorld);
 	}
 
 	//! 앵커 위치를 변경한다
 	public static void ExSetAnchorPos(this RectTransform a_oSender, Vector2 a_stPos) {
-		CAccess.Assert(a_oSender != null);
 		a_oSender.anchoredPosition = a_stPos;
 	}
 
 	//! 크기 간격을 변경한다
 	public static void ExSetSizeDelta(this RectTransform a_oSender, Vector2 a_stDelta) {
-		CAccess.Assert(a_oSender != null);
 		a_oSender.sizeDelta = a_stDelta;
 	}
 
 	//! X 축 앵커 위치를 변경한다
 	public static void ExSetAnchorPosX(this RectTransform a_oSender, float a_fValue) {
-		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetAnchorPos(new Vector2(a_fValue, a_oSender.anchoredPosition.y));
 	}
 
 	//! Y 축 앵커 위치를 변경한다
 	public static void ExSetAnchorPosY(this RectTransform a_oSender, float a_fValue) {
-		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetAnchorPos(new Vector2(a_oSender.anchoredPosition.x, a_fValue));
 	}
 
 	//! X 축 크기 간격을 변경한다
 	public static void ExSetSizeDeltaX(this RectTransform a_oSender, float a_fValue) {
-		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetSizeDelta(new Vector2(a_fValue, a_oSender.sizeDelta.y));
 	}
 
 	//! Y 축 크기 간격을 변경한다
 	public static void ExSetSizeDeltaY(this RectTransform a_oSender, float a_fValue) {
-		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetSizeDelta(new Vector2(a_oSender.sizeDelta.x, a_fValue));
 	}
 	#endregion			// 클래스 함수
@@ -199,9 +173,7 @@ public static partial class CAccessExtension {
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다
 	public static void ExSetScriptOrder(this MonoBehaviour a_oSender, int a_nOrder) {
-		CAccess.Assert(a_oSender != null && (a_nOrder >= short.MinValue && a_nOrder <= short.MaxValue));
 		var oMonoScript = MonoScript.FromMonoBehaviour(a_oSender);
-
 		CAccess.SetScriptOrder(oMonoScript, a_nOrder);
 	}
 #endif			// #if UNITY_EDITOR

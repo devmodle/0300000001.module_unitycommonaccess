@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -129,7 +130,7 @@ public static partial class CAccess {
 
 	//! 컴포넌트를 제거한다
 	public static void RemoveComponent(Component a_oComponent) {
-		CAccess.Assert(a_oComponent != null);
+		CAccess.Assert((a_oComponent as Selectable) != null);
 
 		// 앱이 실행 중 일 경우
 		if(Application.isPlaying) {
@@ -192,7 +193,6 @@ public static partial class CAccess {
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다
 	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder) {
-		CAccess.Assert(a_oScript != null && (a_nOrder >= short.MinValue && a_nOrder <= short.MaxValue));
 		int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
 
 		// 기존 순서와 다를 경우

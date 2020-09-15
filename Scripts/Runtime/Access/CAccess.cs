@@ -9,14 +9,12 @@ public static partial class CAccess {
 	#region 클래스 함수
 	//! 읽기용 스트림을 반환한다
 	public static FileStream GetReadStream(string a_oFilepath) {
-		CAccess.Assert(a_oFilepath.ExIsValid());
 		return File.Exists(a_oFilepath) ? File.Open(a_oFilepath, FileMode.Open, FileAccess.Read) : null;
 	}
 
 	//! 쓰기용 스트림을 반환한다
 	public static FileStream GetWriteStream(string a_oFilepath,
 		bool a_bIsAutoCreateDirectory = true, bool a_bIsAutoBackup = false, string a_oBackupDirectoryName = KCDefine.B_EMPTY_STRING) {
-		CAccess.Assert(a_oFilepath.ExIsValid());
 		string oDirectoryPath = Path.GetDirectoryName(a_oFilepath);
 
 		// 디렉토리 자동 생성 모드 일 경우

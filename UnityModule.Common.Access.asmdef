@@ -1,7 +1,9 @@
 {
     "name": "UnityModule.Common.Access",
     "references": [
-        "UnityModule.Common.Define"
+        "UnityModule.Common.Define",
+        "Unity.Notifications.iOS",
+        "Unity.Notifications.Android"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -6,6 +6,10 @@ using UnityEngine;
 using UnityEditor;
 #endif			// #if UNITY_EDITOR
 
+#if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
+using Unity.Notifications.iOS;
+#endif			// #if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
+
 //! 유틸리티 접근 확장 클래스
 public static partial class CAccessExtension {
 	#region 클래스 함수
@@ -177,5 +181,12 @@ public static partial class CAccessExtension {
 		CAccess.SetScriptOrder(oMonoScript, a_nOrder);
 	}
 #endif			// #if UNITY_EDITOR
+
+#if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
+	//! 완료 여부를 검사한다
+	public static bool ExIsCompleteRequest(this AuthorizationRequest a_oSender) {
+		return a_oSender != null && a_oSender.IsFinished;
+	}
+#endif			// #if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
 	#endregion			// 조건부 클래스 함수
 }

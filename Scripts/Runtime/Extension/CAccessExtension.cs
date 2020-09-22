@@ -9,13 +9,18 @@ using UnityEngine;
 public static partial class CAccessExtension {
 	#region 클래스 함수
 	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this SystemLanguage a_eSender) {
+		return a_eSender >= SystemLanguage.Afrikaans && a_eSender < SystemLanguage.Unknown;
+	}
+
+	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this string a_oSender) {
 		return a_oSender != null && a_oSender.Length >= 1;
 	}
 
-	//! 유효 여부를 검사한다
-	public static bool ExIsValid(this SystemLanguage a_eSender) {
-		return a_eSender >= SystemLanguage.Afrikaans && a_eSender < SystemLanguage.Unknown;
+	//! 빌드 번호 유효 여부를 검사한다
+	public static bool ExIsValidBuildNumber(this int a_nSender) {
+		return a_nSender >= KCDefine.B_MIN_BUILD_NUMBER;
 	}
 
 	//! 언어 유효 여부를 검사한다

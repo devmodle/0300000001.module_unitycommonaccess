@@ -14,43 +14,43 @@ using UnityEngine.iOS;
 //! 유틸리티 접근자
 public static partial class CAccess {
 	#region 클래스 함수
-	//! 에디터 플랫폼 여부를 검사한다
-	public static bool IsEditorPlatform() {
+	//! 에디터 여부를 검사한다
+	public static bool IsEditor() {
 		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
 	}
 
-	//! 데스크 탑 플랫폼 여부를 검사한다
-	public static bool IsDesktopPlatform() {
-		return CAccess.IsMacPlatform() || CAccess.IsWindowsPlatform();
+	//! 데스크 탑 여부를 검사한다
+	public static bool IsDesktop() {
+		return CAccess.IsMac() || CAccess.IsWindows();
 	}
 
 	//! 독립 플랫폼 여부를 검사한다
-	public static bool IsStandalonePlatform() {
+	public static bool IsStandalone() {
 		return Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.WindowsPlayer;
 	}
 
-	//! 맥 플랫폼 여부를 검사한다
-	public static bool IsMacPlatform() {
+	//! 맥 여부를 검사한다
+	public static bool IsMac() {
 		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
 	}
 
-	//! 윈도우 플랫폼 여부를 검사한다
-	public static bool IsWindowsPlatform() {
+	//! 윈도우 여부를 검사한다
+	public static bool IsWindows() {
 		return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
 	}
 
-	//! 모바일 플랫폼 여부를 검사한다
-	public static bool IsMobilePlatform() {
+	//! 모바일 여부를 검사한다
+	public static bool IsMobile() {
 		return Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
 	}
 
-	//! 콘솔 플랫폼 여부를 검사한다
-	public static bool IsConsolePlatform() {
+	//! 콘솔 여부를 검사한다
+	public static bool IsConsole() {
 		return Application.platform == RuntimePlatform.PS4 || Application.platform == RuntimePlatform.XboxOne;
 	}
 
-	//! 휴대용 콘솔 플랫폼 여부를 검사한다
-	public static bool IsHandheldConsolePlatform() {
+	//! 휴대용 콘솔 여부를 검사한다
+	public static bool IsHandheldConsole() {
 		return Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
 	}
 
@@ -159,13 +159,12 @@ public static partial class CAccess {
 #if UNITY_IOS
 	//! 애플 로그인 지원 여부를 검사한다
 	public static bool IsSupportLoginWithApple() {
-		// 모바일 플랫폼이 아닐 경우
-		if(!CAccess.IsMobilePlatform()) {
-			return false;
-		}
-
+#if UNITY_EDITOR
+		return false;
+#else
 		var oVersion = new System.Version(Device.systemVersion);
 		return oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE) >= KCDefine.B_COMPARE_RESULT_EQUALS;
+#endif			// #if UNITY_EDITOR
 	}
 #endif			// UNITY_IOS
 

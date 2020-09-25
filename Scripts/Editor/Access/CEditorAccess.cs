@@ -35,7 +35,7 @@ public static partial class CEditorAccess {
 
 	//! 안드로이드 이름을 반환한다
 	public static string GetAndroidPlatformName(EAndroidPlatformType a_ePlatformType) {
-		// 원 스토어 플랫폼 일 경우
+		// 원 스토어 일 경우
 		if(a_ePlatformType == EAndroidPlatformType.ONE_STORE) {
 			return KCDefine.B_PLATFORM_NAME_ONE_STORE;
 		}

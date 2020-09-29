@@ -183,7 +183,7 @@ public static partial class CAccessExtension {
 #endif			// #if UNITY_EDITOR
 
 #if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
-	//! 완료 여부를 검사한다
+	//! 요청 완료 여부를 검사한다
 	public static bool ExIsCompleteRequest(this AuthorizationRequest a_oSender) {
 		return a_oSender != null && a_oSender.IsFinished;
 	}

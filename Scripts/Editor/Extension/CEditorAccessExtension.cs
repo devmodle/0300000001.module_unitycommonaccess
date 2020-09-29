@@ -14,6 +14,19 @@ using UnityEditor.iOS.Xcode;
 //! 에디터 기본 접근 확장 클래스
 public static partial class CEditorAccessExtension {
 	#region 클래스 함수
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this EBuildType a_eSender) {
+		return a_eSender > EBuildType.NONE && a_eSender < EBuildType.MAX_VALUE;
+	}
+
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this BuildTarget a_eSender) {
+		bool bIsStandalone = a_eSender == BuildTarget.StandaloneOSX || 
+			a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64;
+			
+		return bIsStandalone || a_eSender == BuildTarget.iOS || a_eSender == BuildTarget.Android;
+	}
+
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete(this Request a_oSender) {
 		return a_oSender != null && a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;

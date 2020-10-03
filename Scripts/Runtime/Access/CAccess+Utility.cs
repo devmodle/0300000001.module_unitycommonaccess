@@ -128,15 +128,15 @@ public static partial class CAccess {
 		return stSafeArea.y / CAccess.GetDeviceScreenSize(a_bIsRuntime).y;
 	}
 
-	//! 컴포넌트를 제거한다
-	public static void RemoveComponent(Component a_oComponent) {
-		CAccess.Assert((a_oComponent as Selectable) != null);
+	//! 객체를 제거한다
+	public static void RemoveObj(Object a_oObj, bool a_bIsRemoveAsset = false) {
+		CAccess.Assert(a_oObj != null);
 
 		// 앱이 실행 중 일 경우
 		if(Application.isPlaying) {
-			GameObject.Destroy(a_oComponent);
+			GameObject.Destroy(a_oObj);
 		} else {
-			GameObject.DestroyImmediate(a_oComponent);
+			GameObject.DestroyImmediate(a_oObj, a_bIsRemoveAsset);
 		}
 	}
 	#endregion			// 클래스 함수

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -9,6 +10,21 @@ using UnityEditor;
 //! 에디터 기본 접근
 public static partial class CEditorAccess {
 	#region 클래스 함수
+	//! 컴파일 에러 여부를 검사한다
+	public static bool IsCompileError() {
+		var oAssembly = Assembly.GetAssembly(typeof(SceneView));
+		var oLogEntries = oAssembly.GetType(KCEditorDefine.B_CLS_NAME_LOG_ENTRIES);
+
+		var oClearMethodInfo = oLogEntries?.GetMethod(KCEditorDefine.B_FUNC_NAME_LOG_ENTRIES_CLEAR);
+		oClearMethodInfo?.Invoke(KCDefine.U_LOCK_OBJ_COMMON, null);
+
+		var oGetCountMethodInfo = oLogEntries?.GetMethod(KCEditorDefine.B_FUNC_NAME_LOG_ENTRIES_GET_COUNT);
+		var oResult = oGetCountMethodInfo?.Invoke(KCDefine.U_LOCK_OBJ_COMMON, null);
+
+		int nNumLogs = (oResult != null) ? (int)oResult : KCDefine.B_ZERO_VALUE_INT;
+		return nNumLogs > KCDefine.B_ZERO_VALUE_INT;
+	}
+
 	//! 상태 갱신 가능 여부를 검사한다
 	public static bool IsEnableUpdateState() {
 		return !Application.isPlaying && !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;

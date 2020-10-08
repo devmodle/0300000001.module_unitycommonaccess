@@ -54,6 +54,25 @@ public static partial class CAccess {
 		return Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
 	}
 
+	//! 햅틱 피드백 지원 여부를 검사한다
+	public static bool IsSupportHapticFeedback() {
+#if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_IOS
+		string oModel = Device.generation.ToString();
+		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
+
+		int nIndex = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.ExFindValue((a_eModel) => 
+			return bIsiPhone && a_eModel == Device.generation;
+
+		return nIndex > KCDefine.B_INDEX_INVALID;
+#else
+		return true;
+#endif			// #if UNITY_IOS
+#else
+		return false;
+#endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+	}
+
 	//! 안전 영역을 반환한다
 	public static Rect GetSafeArea(bool a_bIsRuntime = true) {
 		// 런 타임 모드 일 경우
@@ -167,27 +186,6 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 	}
 #endif			// UNITY_IOS
-
-#if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
-	//! 햅틱 피드백 지원 여부를 검사한다
-	public static bool IsSupportHapticFeedback() {
-#if UNITY_IOS
-		string oModel = Device.generation.ToString();
-		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
-
-		for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
-			// 햅틱 피드백 지원 모델 일 경우
-			if(bIsiPhone && KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i] == Device.generation) {
-				return true;
-			}
-		}
-
-		return false;
-#else
-		return true;
-#endif			// #if UNITY_IOS
-	}
-#endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다

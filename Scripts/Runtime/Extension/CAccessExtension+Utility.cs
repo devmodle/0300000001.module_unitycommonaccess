@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEditor;
 #endif			// #if UNITY_EDITOR
 
-#if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
+#if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
 using Unity.Notifications.iOS;
-#endif			// #if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
+#endif			// #if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
 
 //! 유틸리티 접근 확장 클래스
 public static partial class CAccessExtension {
@@ -182,11 +182,11 @@ public static partial class CAccessExtension {
 	}
 #endif			// #if UNITY_EDITOR
 
-#if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
+#if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
 	//! 요청 완료 여부를 검사한다
 	public static bool ExIsCompleteRequest(this AuthorizationRequest a_oSender) {
 		return a_oSender != null && a_oSender.IsFinished;
 	}
-#endif			// #if LOCAL_NOTI_MODULE_ENABLE && UNITY_IOS
+#endif			// #if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
 }

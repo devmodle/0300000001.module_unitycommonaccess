@@ -61,10 +61,16 @@ public static partial class CAccess {
 		string oModel = Device.generation.ToString();
 		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
-		int nIndex = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.ExFindValue((a_eModel) => 
-			return bIsiPhone && a_eModel == Device.generation;
+		for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
+			var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i];
 
-		return nIndex > KCDefine.B_INDEX_INVALID;
+			// 햅틱 피드백을 지원 할 경우
+			if(bIsiPhone && eModel == Device.generation) {
+				return true;
+			}
+		}
+
+		return false;
 #else
 		return true;
 #endif			// #if UNITY_IOS

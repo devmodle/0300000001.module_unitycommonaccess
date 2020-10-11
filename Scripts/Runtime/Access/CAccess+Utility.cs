@@ -61,7 +61,7 @@ public static partial class CAccess {
 		string oModel = Device.generation.ToString();
 		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
-		for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
+		for(int i = KCDefine.B_INDEX_START; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
 			var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i];
 
 			// 햅틱 피드백을 지원 할 경우
@@ -86,7 +86,8 @@ public static partial class CAccess {
 			return Screen.safeArea;
 		}
 
-		return new Rect(0.0f, 0.0f, Camera.main.pixelWidth, Camera.main.pixelHeight);
+		return new Rect(KCDefine.B_MIN_VALUE_NORM, 
+			KCDefine.B_MIN_VALUE_NORM, Camera.main.pixelWidth, Camera.main.pixelHeight);
 	}
 
 	//! 디바이스 화면 크기를 반환한다
@@ -111,7 +112,7 @@ public static partial class CAccess {
 
 	//! 해상도 비율을 반환한다
 	public static float GetResolutionScale(bool a_bIsRuntime = true) {
-		float fScale = 1.0f;
+		float fScale = KCDefine.B_MAX_VALUE_NORM;
 		float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
 
 		float fScreenWidth = CAccess.GetDeviceScreenSize(a_bIsRuntime).x;
@@ -191,7 +192,7 @@ public static partial class CAccess {
 		return oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE) >= KCDefine.B_COMPARE_RESULT_EQUALS;
 #endif			// #if UNITY_EDITOR
 	}
-#endif			// UNITY_IOS
+#endif			// #if UNITY_IOS
 
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다

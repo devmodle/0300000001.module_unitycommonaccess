@@ -6,21 +6,21 @@ using UnityEngine;
 using UnityEditor;
 #endif			// #if UNITY_EDITOR
 
-#if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
+#if UNITY_IOS && NOTI_MODULE_ENABLE
 using Unity.Notifications.iOS;
-#endif			// #if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
+#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 
 //! 유틸리티 접근 확장 클래스
 public static partial class CAccessExtension {
 	#region 클래스 변수
-#if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
+#if UNITY_IOS && NOTI_MODULE_ENABLE
 	private static AuthorizationOption[] m_oAuthOpts = new AuthorizationOption[] {
 		AuthorizationOption.Badge,
 		AuthorizationOption.Sound,
 		AuthorizationOption.Alert,
 		AuthorizationOption.CarPlay
 	};
-#endif			// #if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
+#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 	#endregion			// 클래스 변수
 
 	#region 클래스 함수
@@ -193,7 +193,7 @@ public static partial class CAccessExtension {
 	}
 #endif			// #if UNITY_EDITOR
 
-#if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
+#if UNITY_IOS && NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다
 	public static bool ExIsValid(this AuthorizationOption a_eSender) {
 		int nSumValue = KCDefine.B_ZERO_VALUE_INT;
@@ -209,6 +209,6 @@ public static partial class CAccessExtension {
 	public static bool ExIsCompleteRequest(this AuthorizationRequest a_oSender) {
 		return a_oSender != null && a_oSender.IsFinished;
 	}
-#endif			// #if UNITY_IOS && LOCAL_NOTI_MODULE_ENABLE
+#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
 }

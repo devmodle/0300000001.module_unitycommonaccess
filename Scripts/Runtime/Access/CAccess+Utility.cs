@@ -11,6 +11,10 @@ using UnityEditor;
 using UnityEngine.iOS;
 #endif			// #if UNITY_IOS
 
+#if UNITY_ANDROID
+using UnityEngine.Android;
+#endif			// #if UNITY_ANDROID
+
 //! 유틸리티 접근자
 public static partial class CAccess {
 	#region 클래스 함수
@@ -52,6 +56,16 @@ public static partial class CAccess {
 	//! 휴대용 콘솔 여부를 검사한다
 	public static bool IsHandheldConsole() {
 		return Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
+	}
+
+	//! 권한 유효 여부를 검사한다
+	public static bool IsEnablePermission(string a_oPermission) {
+#if UNITY_ANDROID
+		return a_oPermission.ExIsValid() && 
+			Permission.HasUserAuthorizedPermission(a_oPermission);
+#else
+		return false;
+#endif			// #if UNITY_ANDROID
 	}
 
 	//! 햅틱 피드백 지원 여부를 검사한다
@@ -182,18 +196,6 @@ public static partial class CAccess {
 	#endregion			// 제네릭 클래스 함수
 
 	#region 조건부 클래스 함수
-#if UNITY_IOS
-	//! 애플 로그인 지원 여부를 검사한다
-	public static bool IsSupportLoginWithApple() {
-#if UNITY_EDITOR
-		return false;
-#else
-		var oVersion = new System.Version(Device.systemVersion);
-		return oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE) >= KCDefine.B_COMPARE_RESULT_EQUALS;
-#endif			// #if UNITY_EDITOR
-	}
-#endif			// #if UNITY_IOS
-
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다
 	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder) {
@@ -205,5 +207,17 @@ public static partial class CAccess {
 		}
 	}
 #endif			// #if UNITY_EDITOR
+
+#if UNITY_IOS
+	//! 애플 로그인 지원 여부를 검사한다
+	public static bool IsSupportLoginWithApple() {
+#if UNITY_EDITOR
+		return false;
+#else
+		var oVersion = new System.Version(Device.systemVersion);
+		return oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE) >= KCDefine.B_COMPARE_RESULT_EQUALS;
+#endif			// #if UNITY_EDITOR
+	}
+#endif			// #if UNITY_IOS
 	#endregion			// 조건부 클래스 함수
 }

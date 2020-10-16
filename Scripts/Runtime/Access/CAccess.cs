@@ -45,10 +45,10 @@ public static partial class CAccess {
 				var oFilepaths = Directory.GetFiles(oBackupDirpath);
 
 				// 파일 최대 개수를 벗어났을 경우
-				if(oFilepaths.Length >= KCDefine.B_MAX_NUM_BACKUP_FILES - 1) {
+				if(oFilepaths.Length >= KCDefine.B_MAX_NUM_BACKUP_FILES - KCDefine.B_VALUE_INT_1) {
 					System.Array.Sort(oFilepaths, (a_oLhs, a_oRhs) => a_oRhs.CompareTo(a_oLhs));
 
-					for(int i = KCDefine.B_MAX_NUM_BACKUP_FILES - 1; i < oFilepaths.Length; ++i) {
+					for(int i = KCDefine.B_MAX_NUM_BACKUP_FILES - KCDefine.B_VALUE_INT_1; i < oFilepaths.Length; ++i) {
 						File.Delete(oFilepaths[i]);
 					}
 				}
@@ -64,7 +64,7 @@ public static partial class CAccess {
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_EMPTY_STRING) {
 		// 메세지가 유효 할 경우
-		if(a_oMsg != null && a_oMsg.Length >= 1) {
+		if(a_oMsg != null && a_oMsg.Length > KCDefine.B_VALUE_INT_0) {
 			UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
 		} else {
 			UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue);

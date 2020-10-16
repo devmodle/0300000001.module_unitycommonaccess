@@ -196,13 +196,13 @@ public static partial class CAccessExtension {
 #if UNITY_IOS && NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다
 	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
-		int nSumValue = KCDefine.B_ZERO_VALUE_INT;
+		int nSumValue = KCDefine.B_VALUE_INT_0;
 
 		for(int i = 0; i < CAccessExtension.m_oAuthOpts.Length; ++i) {
 			nSumValue += (int)(a_eSender & CAccessExtension.m_oAuthOpts[i]);
 		}
 
-		return nSumValue != KCDefine.B_ZERO_VALUE_INT;
+		return nSumValue != KCDefine.B_VALUE_INT_0;
 	}
 
 	//! 인증 요청 완료 여부를 검사한다

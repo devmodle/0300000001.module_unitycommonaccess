@@ -72,15 +72,21 @@ public static partial class CAccess {
 	public static bool IsSupportHapticFeedback() {
 #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 #if UNITY_IOS
-		string oModel = Device.generation.ToString();
-		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
+		var oVersion = new System.Version(Device.systemVersion);
+		int nCompareResult = oVersion.CompareTo(KCDefine.U_MIN_VERSION_HAPTIC_FEEDBACK);
 
-		for(int i = KCDefine.B_INDEX_START; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
-			var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i];
+		// 햅틱 피드백 지원 버전 일 경우
+		if(nCompareResult >= KCDefine.B_COMPARE_RESULT_EQUALS) {
+			string oModel = Device.generation.ToString();
+			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
-			// 햅틱 피드백을 지원 할 경우
-			if(bIsiPhone && eModel == Device.generation) {
-				return true;
+			for(int i = KCDefine.B_VALUE_INT_0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
+				var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i];
+
+				// 햅틱 피드백 지원 모델 일 경우
+				if(bIsiPhone && eModel == Device.generation) {
+					return true;
+				}
 			}
 		}
 

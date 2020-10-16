@@ -21,8 +21,8 @@ public static partial class CEditorAccess {
 		var oGetCountMethodInfo = oLogEntries?.GetMethod(KCEditorDefine.B_FUNC_NAME_LOG_ENTRIES_GET_COUNT);
 		var oResult = oGetCountMethodInfo?.Invoke(KCDefine.U_LOCK_OBJ_COMMON, null);
 
-		int nNumLogs = (oResult != null) ? (int)oResult : KCDefine.B_ZERO_VALUE_INT;
-		return nNumLogs > KCDefine.B_ZERO_VALUE_INT;
+		int nNumLogs = (oResult != null) ? (int)oResult : KCDefine.B_VALUE_INT_0;
+		return nNumLogs > KCDefine.B_VALUE_INT_0;
 	}
 
 	//! 상태 갱신 가능 여부를 검사한다

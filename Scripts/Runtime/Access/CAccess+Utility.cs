@@ -98,7 +98,7 @@ public static partial class CAccess {
 		return false;
 #endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 	}
-
+	
 	//! 안전 영역을 반환한다
 	public static Rect GetSafeArea(bool a_bIsRuntime = true) {
 		// 런 타임 모드 일 경우
@@ -106,8 +106,8 @@ public static partial class CAccess {
 			return Screen.safeArea;
 		}
 
-		return new Rect(KCDefine.B_MIN_VALUE_NORM, 
-			KCDefine.B_MIN_VALUE_NORM, Camera.main.pixelWidth, Camera.main.pixelHeight);
+		return new Rect(KCDefine.B_VALUE_FLOAT_0, 
+			KCDefine.B_VALUE_FLOAT_0, Camera.main.pixelWidth, Camera.main.pixelHeight);
 	}
 
 	//! 디바이스 화면 크기를 반환한다
@@ -132,7 +132,7 @@ public static partial class CAccess {
 
 	//! 해상도 비율을 반환한다
 	public static float GetResolutionScale(bool a_bIsRuntime = true) {
-		float fScale = KCDefine.B_MAX_VALUE_NORM;
+		float fScale = KCDefine.B_VALUE_FLOAT_1;
 		float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
 
 		float fScreenWidth = CAccess.GetDeviceScreenSize(a_bIsRuntime).x;

@@ -14,6 +14,16 @@ public static partial class CAccessExtension {
 	}
 
 	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this System.DateTime a_stSender) {
+		return a_stSender.Ticks >= KCDefine.B_VALUE_INT_0;
+	}
+
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this System.TimeSpan a_stSender) {
+		return a_stSender.TotalSeconds.ExIsGreateEquals(KCDefine.B_VALUE_FLOAT_0);
+	}
+
+	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this string a_oSender) {
 		return a_oSender != null && a_oSender.Length > KCDefine.B_VALUE_INT_0;
 	}
@@ -21,6 +31,11 @@ public static partial class CAccessExtension {
 	//! 빌드 번호 유효 여부를 검사한다
 	public static bool ExIsValidBuildNumber(this int a_nSender) {
 		return a_nSender >= KCDefine.B_MIN_BUILD_NUMBER;
+	}
+
+	//! 빌드 버전 유효 여부를 검사한다
+	public static bool ExIsValidBuildVersion(this string a_oSender) {
+		return System.Version.TryParse(a_oSender, out System.Version stVersion);
 	}
 
 	//! 언어 유효 여부를 검사한다

@@ -9,11 +9,6 @@ using UnityEngine;
 public static partial class CAccessExtension {
 	#region 클래스 함수
 	//! 유효 여부를 검사한다
-	public static bool ExIsValid(this SystemLanguage a_eSender) {
-		return a_eSender >= SystemLanguage.Afrikaans && a_eSender < SystemLanguage.Unknown;
-	}
-
-	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this System.DateTime a_stSender) {
 		return a_stSender.Ticks >= KCDefine.B_VALUE_INT_0;
 	}

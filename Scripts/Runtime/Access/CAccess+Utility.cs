@@ -110,6 +110,15 @@ public static partial class CAccess {
 			KCDefine.B_VALUE_FLOAT_0, Camera.main.pixelWidth, Camera.main.pixelHeight);
 	}
 
+	//! 배너 광고 높이를 반환한다
+	public static float GetBannerAdsHeight(float a_fHeight) {
+		float fScale = CAccess.GetResolutionScale(Application.isPlaying);
+		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetDeviceScreenSize(Application.isPlaying).y;
+
+		float fBannerAdsHeight = a_fHeight * (Screen.dpi / KCDefine.B_DEF_DPI);
+		return (fBannerAdsHeight * fPercent) / fScale;
+	}
+
 	//! 디바이스 화면 크기를 반환한다
 	public static Vector2 GetDeviceScreenSize(bool a_bIsRuntime = true) {
 		// 런 타임 모드 일 경우

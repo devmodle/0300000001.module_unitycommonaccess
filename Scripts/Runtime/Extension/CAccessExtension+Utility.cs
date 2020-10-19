@@ -30,6 +30,16 @@ public static partial class CAccessExtension {
 	}
 
 	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this EMobileType a_eSender) {
+		return a_eSender > EMobileType.NONE && a_eSender < EMobileType.MAX_VALUE;
+	}
+
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this SystemLanguage a_eSender) {
+		return a_eSender >= SystemLanguage.Afrikaans && a_eSender < SystemLanguage.Unknown;
+	}
+
+	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this TextAsset a_oSender) {
 		return a_oSender != null && (a_oSender.text.ExIsValid() || a_oSender.bytes.ExIsValid());
 	}

@@ -30,8 +30,8 @@ public static partial class CAccessExtension {
 	}
 
 	//! 유효 여부를 검사한다
-	public static bool ExIsValid(this EMobileType a_eSender) {
-		return a_eSender > EMobileType.NONE && a_eSender < EMobileType.MAX_VALUE;
+	public static bool ExIsValid(this EDeviceType a_eSender) {
+		return a_eSender > EDeviceType.NONE && a_eSender < EDeviceType.MAX_VALUE;
 	}
 
 	//! 유효 여부를 검사한다

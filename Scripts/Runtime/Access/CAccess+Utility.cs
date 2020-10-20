@@ -98,11 +98,36 @@ public static partial class CAccess {
 		return false;
 #endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 	}
+
+	//! 디바이스 타입을 반환한다
+	public static EDeviceType GetDeviceType() {
+#if UNITY_IOS
+		string oModel = Device.generation.ToString();
+
+		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
+		bool bIsiPad = oModel.Contains(KCDefine.U_MODEL_NAME_IPAD);
+
+		// iPhone, iPad 디바이스 일 경우
+		if(bIsiPhone || bIsiPad) {
+			return bIsiPhone ? EDeviceType.PHONE : EDeviceType.TABLET;
+		}
+#endif			// #if UNITY_IOS
+
+		var stScreenSize = CAccess.GetScreenSize();
+
+		float fInches = CAccess.GetScreenInches();
+		float fAspect = Mathf.Max(stScreenSize.x, stScreenSize.y) / Mathf.Min(stScreenSize.x, stScreenSize.y);
+
+		bool bIsTablet = fInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && 
+			fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
+
+		return bIsTablet ? EDeviceType.TABLET : EDeviceType.PHONE;
+	}
 	
 	//! 안전 영역을 반환한다
-	public static Rect GetSafeArea(bool a_bIsRuntime = true) {
-		// 런 타임 모드 일 경우
-		if(a_bIsRuntime) {
+	public static Rect GetSafeArea() {
+		// 앱이 실행 중 일 경우
+		if(Application.isPlaying) {
 			return Screen.safeArea;
 		}
 
@@ -112,17 +137,25 @@ public static partial class CAccess {
 
 	//! 배너 광고 높이를 반환한다
 	public static float GetBannerAdsHeight(float a_fHeight) {
-		float fScale = CAccess.GetResolutionScale(Application.isPlaying);
-		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetDeviceScreenSize(Application.isPlaying).y;
+		float fScale = CAccess.GetResolutionScale();
+		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
 
 		float fBannerAdsHeight = a_fHeight * (Screen.dpi / KCDefine.B_DEF_DPI);
 		return (fBannerAdsHeight * fPercent) / fScale;
 	}
 
-	//! 디바이스 화면 크기를 반환한다
-	public static Vector2 GetDeviceScreenSize(bool a_bIsRuntime = true) {
-		// 런 타임 모드 일 경우
-		if(a_bIsRuntime) {
+	//! 화면 인치를 반환한다
+	public static float GetScreenInches() {
+		var stScreenSize = CAccess.GetScreenSize();
+		stScreenSize = new Vector2(stScreenSize.x / Screen.dpi, stScreenSize.y / Screen.dpi);
+
+		return stScreenSize.magnitude;
+	}
+
+	//! 화면 크기를 반환한다
+	public static Vector2 GetScreenSize() {
+		// 앱이 실행 중 일 경우
+		if(Application.isPlaying) {
 #if UNITY_EDITOR
 			return new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
 #else
@@ -134,18 +167,18 @@ public static partial class CAccess {
 	}
 
 	//! 해상도를 반환한다
-	public static Vector2 GetResolution(bool a_bIsRuntime = true) {
-		float fScale = CAccess.GetResolutionScale(a_bIsRuntime);
+	public static Vector2 GetResolution() {
+		float fScale = CAccess.GetResolutionScale();
 		return new Vector2(KCDefine.B_SCREEN_WIDTH, KCDefine.B_SCREEN_HEIGHT) * fScale;
 	}
 
 	//! 해상도 비율을 반환한다
-	public static float GetResolutionScale(bool a_bIsRuntime = true) {
+	public static float GetResolutionScale() {
 		float fScale = KCDefine.B_VALUE_FLOAT_1;
 		float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
 
-		float fScreenWidth = CAccess.GetDeviceScreenSize(a_bIsRuntime).x;
-		float fScreenHeight = CAccess.GetDeviceScreenSize(a_bIsRuntime).y;
+		float fScreenWidth = CAccess.GetScreenSize().x;
+		float fScreenHeight = CAccess.GetScreenSize().y;
 
 		// 화면 너비를 벗어났을 경우
 		if(fScreenWidth.ExIsLess(fScreenHeight * fAspect)) {
@@ -156,31 +189,31 @@ public static partial class CAccess {
 	}
 
 	//! 왼쪽 화면 비율을 반환한다
-	public static float GetLeftScreenScale(bool a_bIsRuntime = true) {
-		var stSafeArea = CAccess.GetSafeArea(a_bIsRuntime);
-		return stSafeArea.x / CAccess.GetDeviceScreenSize(a_bIsRuntime).x;
+	public static float GetLeftScreenScale() {
+		var stSafeArea = CAccess.GetSafeArea();
+		return stSafeArea.x / CAccess.GetScreenSize().x;
 	}
 
 	//! 오른쪽 화면 비율을 반환한다
-	public static float GetRightScreenScale(bool a_bIsRuntime = true) {
-		var stSafeArea = CAccess.GetSafeArea(a_bIsRuntime);
-		float fScreenWidth = CAccess.GetDeviceScreenSize(a_bIsRuntime).x;
+	public static float GetRightScreenScale() {
+		var stSafeArea = CAccess.GetSafeArea();
+		float fScreenWidth = CAccess.GetScreenSize().x;
 
 		return (fScreenWidth - (stSafeArea.x + stSafeArea.width)) / fScreenWidth;
 	}
 
 	//! 상단 화면 비율을 반환한다
-	public static float GetTopScreenScale(bool a_bIsRuntime = true) {
-		var stSafeArea = CAccess.GetSafeArea(a_bIsRuntime);
-		float fScreenHeight = CAccess.GetDeviceScreenSize(a_bIsRuntime).y;
+	public static float GetTopScreenScale() {
+		var stSafeArea = CAccess.GetSafeArea();
+		float fScreenHeight = CAccess.GetScreenSize().y;
 
 		return (fScreenHeight - (stSafeArea.y + stSafeArea.height)) / fScreenHeight;
 	}
 
 	//! 하단 화면 비율을 반환한다
-	public static float GetBottomScreenScale(bool a_bIsRuntime = true) {
-		var stSafeArea = CAccess.GetSafeArea(a_bIsRuntime);
-		return stSafeArea.y / CAccess.GetDeviceScreenSize(a_bIsRuntime).y;
+	public static float GetBottomScreenScale() {
+		var stSafeArea = CAccess.GetSafeArea();
+		return stSafeArea.y / CAccess.GetScreenSize().y;
 	}
 
 	//! 객체를 제거한다
@@ -198,7 +231,9 @@ public static partial class CAccess {
 
 	#region 제네릭 클래스 함수
 	//! 리소스 존재 여부를 검사한다
-	public static bool IsExistsRes<T>(string a_oFilepath, bool a_bIsAutoUnload = false) where T : Object {
+	public static bool IsExistsRes<T>(string a_oFilepath, 
+		bool a_bIsAutoUnload = false) where T : Object 
+	{
 		var oRes = Resources.Load<T>(a_oFilepath);
 		bool bIsExists = oRes != null;
 

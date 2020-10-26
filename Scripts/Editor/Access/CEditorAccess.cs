@@ -46,18 +46,18 @@ public static partial class CEditorAccess {
 	//! 독립 플랫폼 이름을 반환한다
 	public static string GetStandaloneName(EStandaloneType a_eType) {
 		return (a_eType == EStandaloneType.WINDOWS) ?
-			KCDefine.B_PLATFORM_NAME_WINDOWS : KCDefine.B_PLATFORM_NAME_MAC;
+			KCDefine.B_PLATFORM_WINDOWS : KCDefine.B_PLATFORM_MAC;
 	}
 
 	//! 안드로이드 이름을 반환한다
 	public static string GetAndroidName(EAndroidType a_eType) {
 		// 원 스토어 일 경우
 		if(a_eType == EAndroidType.ONE_STORE) {
-			return KCDefine.B_PLATFORM_NAME_ONE_STORE;
+			return KCDefine.B_PLATFORM_ONE_STORE;
 		}
 
 		return (a_eType == EAndroidType.GALAXY_STORE) ? 
-			KCDefine.B_PLATFORM_NAME_GALAXY_STORE : KCDefine.B_PLATFORM_NAME_GOOGLE;
+			KCDefine.B_PLATFORM_GALAXY_STORE : KCDefine.B_PLATFORM_GOOGLE;
 	}
 
 	//! 그래픽 API 를 변경한다

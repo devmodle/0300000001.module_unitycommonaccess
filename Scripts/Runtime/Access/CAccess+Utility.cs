@@ -99,6 +99,15 @@ public static partial class CAccess {
 #endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
 	}
 
+	//! DPI 를 반환한다
+	public static float GetDPI() {
+#if UNITY_EDITOR
+		return KCDefine.B_EDITOR_DPI;
+#else
+		return Screen.dpi;
+#endif			// #if UNITY_EDITOR
+	}
+
 	//! 디바이스 타입을 반환한다
 	public static EDeviceType GetDeviceType() {
 #if UNITY_IOS
@@ -140,7 +149,9 @@ public static partial class CAccess {
 		float fScale = CAccess.GetResolutionScale();
 		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
 
-		float fBannerAdsHeight = a_fHeight * (Screen.dpi / KCDefine.B_DEF_DPI);
+		float fDPI = CAccess.GetDPI();
+		float fBannerAdsHeight = a_fHeight * (fDPI / KCDefine.B_DEF_DPI);
+
 		return (fBannerAdsHeight * fPercent) / fScale;
 	}
 

@@ -101,11 +101,7 @@ public static partial class CAccess {
 
 	//! DPI 를 반환한다
 	public static float GetDPI() {
-#if UNITY_EDITOR
-		return KCDefine.B_EDITOR_DPI;
-#else
 		return Screen.dpi;
-#endif			// #if UNITY_EDITOR
 	}
 
 	//! 디바이스 타입을 반환한다

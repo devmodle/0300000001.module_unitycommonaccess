@@ -106,12 +106,12 @@ public static partial class CAccessExtension {
 	}
 
 	//! 유럽 연합 여부를 검사한다
-	public static bool ExIsEuropeanUnion(this string a_oSender) {
+	public static bool ExIsEU(this string a_oSender) {
 		string oCountryCode = a_oSender.ToUpper();
 
-		for(int i = KCDefine.B_VALUE_INT_0; i < KCDefine.B_EUROPEAN_UNION_COUNTRY_CODES.Length; ++i) {
+		for(int i = KCDefine.B_VALUE_INT_0; i < KCDefine.B_EU_COUNTRY_CODES.Length; ++i) {
 			// 유럽 연합 일 경우
-			if(oCountryCode.ExIsEquals(KCDefine.B_EUROPEAN_UNION_COUNTRY_CODES[i])) {
+			if(oCountryCode.ExIsEquals(KCDefine.B_EU_COUNTRY_CODES[i])) {
 				return true;
 			}
 		}

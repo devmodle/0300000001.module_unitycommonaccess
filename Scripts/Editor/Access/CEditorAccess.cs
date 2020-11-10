@@ -10,21 +10,6 @@ using UnityEditor;
 //! 에디터 기본 접근
 public static partial class CEditorAccess {
 	#region 클래스 함수
-	//! 컴파일 에러 여부를 검사한다
-	public static bool IsCompileError() {
-		var oAssembly = Assembly.GetAssembly(typeof(SceneView));
-		var oLogEntries = oAssembly.GetType(KCEditorDefine.B_CLS_NAME_LOG_ENTRIES);
-
-		var oClearMethodInfo = oLogEntries?.GetMethod(KCEditorDefine.B_FUNC_NAME_LOG_ENTRIES_CLEAR);
-		oClearMethodInfo?.Invoke(KCDefine.U_LOCK_OBJ_COMMON, null);
-
-		var oGetCountMethodInfo = oLogEntries?.GetMethod(KCEditorDefine.B_FUNC_NAME_LOG_ENTRIES_GET_COUNT);
-		var oResult = oGetCountMethodInfo?.Invoke(KCDefine.U_LOCK_OBJ_COMMON, null);
-
-		int nNumLogs = (oResult != null) ? (int)oResult : KCDefine.B_VALUE_INT_0;
-		return nNumLogs > KCDefine.B_VALUE_INT_0;
-	}
-
 	//! 상태 갱신 가능 여부를 검사한다
 	public static bool IsEnableUpdateState() {
 		return !Application.isPlaying && !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
@@ -34,13 +19,13 @@ public static partial class CEditorAccess {
 	public static bool IsEnableDrawGizmos() {
 		return !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
 	}
-	
+
 	//! 활성된 객체를 반환한다
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		var oObj = Selection.activeGameObject;
-
+		
 		return (oObj == null || (a_bIsInHierarchy && !oObj.activeInHierarchy)) ? 
-			null : Selection.activeGameObject;
+			null : oObj;
 	}
 
 	//! 독립 플랫폼 이름을 반환한다

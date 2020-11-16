@@ -80,7 +80,7 @@ public static partial class CAccess {
 			string oModel = Device.generation.ToString();
 			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
-			for(int i = KCDefine.B_VALUE_INT_0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
+			for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
 				var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i];
 
 				// 햅틱 피드백 지원 모델 일 경우

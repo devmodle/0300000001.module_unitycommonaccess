@@ -109,7 +109,7 @@ public static partial class CAccessExtension {
 	public static bool ExIsEU(this string a_oSender) {
 		string oCountryCode = a_oSender.ToUpper();
 
-		for(int i = KCDefine.B_VALUE_INT_0; i < KCDefine.B_EU_COUNTRY_CODES.Length; ++i) {
+		for(int i = 0; i < KCDefine.B_EU_COUNTRY_CODES.Length; ++i) {
 			// 유럽 연합 일 경우
 			if(oCountryCode.ExIsEquals(KCDefine.B_EU_COUNTRY_CODES[i])) {
 				return true;
@@ -143,7 +143,7 @@ public static partial class CAccessExtension {
 	public static string ExGetReplaceString(this string a_oSender, string a_oSearch, string a_oReplace, int a_nReplaceTimes = 1) {
 		// 검색과 변경 문자열이 다를 경우
 		if(!a_oSearch.ExIsEquals(a_oReplace)) {
-			for(int i = KCDefine.B_VALUE_INT_0; i < a_nReplaceTimes && a_oSender.Contains(a_oSearch); ++i) {
+			for(int i = 0; i < a_nReplaceTimes && a_oSender.Contains(a_oSearch); ++i) {
 				a_oSender = a_oSender.Replace(a_oSearch, a_oReplace);
 			}
 		}
@@ -283,14 +283,14 @@ public static partial class CAccessExtension {
 
 	//! 값을 변경한다
 	public static void ExSetValues<T>(this T[] a_oSender, List<int> a_oIndexList, List<T> a_oValueList) {
-		for(int i = KCDefine.B_VALUE_INT_0; i < a_oIndexList.Count; ++i) {
+		for(int i = 0; i < a_oIndexList.Count; ++i) {
 			a_oSender.ExSetValue(a_oIndexList[i], a_oValueList[i]);
 		}
 	}
 
 	//! 값을 변경한다
 	public static void ExSetValues<T>(this List<T> a_oSender, List<int> a_oIndexList, List<T> a_oValueList) {
-		for(int i = KCDefine.B_VALUE_INT_0; i < a_oIndexList.Count; ++i) {
+		for(int i = 0; i < a_oIndexList.Count; ++i) {
 			a_oSender.ExSetValue(a_oIndexList[i], a_oValueList[i]);
 		}
 	}

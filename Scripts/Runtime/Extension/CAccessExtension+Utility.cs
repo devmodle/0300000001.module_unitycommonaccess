@@ -89,7 +89,8 @@ public static partial class CAccessExtension {
 
 	//! 색상 형식 문자열을 반환한다
 	public static string ExGetColorFormatString(this string a_oSender, Color a_stColor) {
-		return string.Format(KCDefine.B_COLOR_FORMAT_STRING, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
+		return string.Format(KCDefine.B_COLOR_FORMAT_STRING, 
+			ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
 	}
 
 	//! 위치를 변경한다
@@ -103,7 +104,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 회전을 변경한다
-	public static void ExSetRotation(this Transform a_oSender, Vector3 a_stRotation, bool a_bIsWorld = false) {
+	public static void ExSetRotation(this Transform a_oSender, 
+		Vector3 a_stRotation, bool a_bIsWorld = false) 
+	{
 		// 월드 모드 일 경우
 		if(a_bIsWorld) {
 			a_oSender.eulerAngles = a_stRotation;
@@ -146,19 +149,25 @@ public static partial class CAccessExtension {
 	}
 
 	//! X 축 각도를 변경한다
-	public static void ExSetRotationX(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
+	public static void ExSetRotationX(this Transform a_oSender, 
+		float a_fValue, bool a_bIsWorld = false) 
+	{
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
 		a_oSender.ExSetRotation(new Vector3(a_fValue, stRotation.y, stRotation.z), a_bIsWorld);
 	}
 	
 	//! Y 축 각도를 변경한다
-	public static void ExSetRotationY(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
+	public static void ExSetRotationY(this Transform a_oSender, 
+		float a_fValue, bool a_bIsWorld = false) 
+	{
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
 		a_oSender.ExSetRotation(new Vector3(stRotation.x, a_fValue, stRotation.z), a_bIsWorld);
 	}
 
 	//! Z 축 각도를 변경한다
-	public static void ExSetRotationZ(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
+	public static void ExSetRotationZ(this Transform a_oSender, 
+		float a_fValue, bool a_bIsWorld = false) 
+	{
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
 		a_oSender.ExSetRotation(new Vector3(stRotation.x, stRotation.y, a_fValue), a_bIsWorld);
 	}

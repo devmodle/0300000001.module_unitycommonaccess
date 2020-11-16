@@ -102,7 +102,8 @@ public static partial class CAccessExtension {
 
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete(this Task a_oSender) {
-		return a_oSender != null && (a_oSender.IsCompleted && !a_oSender.IsFaulted && !a_oSender.IsCanceled);
+		return a_oSender != null && 
+			(a_oSender.IsCompleted && !a_oSender.IsFaulted && !a_oSender.IsCanceled);
 	}
 
 	//! 유럽 연합 여부를 검사한다
@@ -125,22 +126,30 @@ public static partial class CAccessExtension {
 	}
 
 	//! 시간 간격을 반환한다
-	public static double ExGetDeltaTimePerMinutes(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+	public static double ExGetDeltaTimePerMinutes(this System.DateTime a_stSender, 
+		System.DateTime a_stRhs) 
+	{
 		return (a_stSender - a_stRhs).TotalMinutes;
 	}
 
 	//! 시간 간격을 반환한다
-	public static double ExGetDeltaTimePerHours(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+	public static double ExGetDeltaTimePerHours(this System.DateTime a_stSender, 
+		System.DateTime a_stRhs) 
+	{
 		return (a_stSender - a_stRhs).TotalHours;
 	}
 
 	//! 시간 간격을 반환한다
-	public static double ExGetDeltaTimePerDays(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+	public static double ExGetDeltaTimePerDays(this System.DateTime a_stSender, 
+		System.DateTime a_stRhs) 
+	{
 		return (a_stSender - a_stRhs).TotalDays;
 	}
 
 	//! 변경 된 문자열을 반환한다
-	public static string ExGetReplaceString(this string a_oSender, string a_oSearch, string a_oReplace, int a_nReplaceTimes = 1) {
+	public static string ExGetReplaceString(this string a_oSender, 
+		string a_oSearch, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_INT_1) 
+	{
 		// 검색과 변경 문자열이 다를 경우
 		if(!a_oSearch.ExIsEquals(a_oReplace)) {
 			for(int i = 0; i < a_nReplaceTimes && a_oSender.Contains(a_oSearch); ++i) {
@@ -167,7 +176,8 @@ public static partial class CAccessExtension {
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid<T>(this T[,] a_oSender) {
 		return a_oSender != null && 
-			(a_oSender.GetLength(KCDefine.B_VALUE_INT_0) > KCDefine.B_VALUE_INT_0 && a_oSender.GetLength(KCDefine.B_VALUE_INT_1) > KCDefine.B_VALUE_INT_0);
+			(a_oSender.GetLength(KCDefine.B_VALUE_INT_0) > KCDefine.B_VALUE_INT_0 && 
+			a_oSender.GetLength(KCDefine.B_VALUE_INT_1) > KCDefine.B_VALUE_INT_0);
 	}
 
 	//! 유효 여부를 검사한다
@@ -192,7 +202,9 @@ public static partial class CAccessExtension {
 
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete<T>(this Task<T> a_oSender) {
-		bool bIsComplete = a_oSender != null && (a_oSender.IsCompleted && !a_oSender.IsFaulted && !a_oSender.IsCanceled);
+		bool bIsComplete = a_oSender != null && 
+			(a_oSender.IsCompleted && !a_oSender.IsFaulted && !a_oSender.IsCanceled);
+
 		return bIsComplete && a_oSender.Result != null;
 	}
 
@@ -207,12 +219,16 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 반환한다
-	public static Value ExGetValue<Key, Value>(this Dictionary<Key, Value> a_oSender, Key a_tKey, Value a_tDefValue) {
+	public static Value ExGetValue<Key, Value>(this Dictionary<Key, Value> a_oSender, 
+		Key a_tKey, Value a_tDefValue) 
+	{
 		return a_oSender.ContainsKey(a_tKey) ? a_oSender[a_tKey] : a_tDefValue;
 	}
 
 	//! 필드 값을 반환한다
-	public static object ExGetFieldValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
+	public static object ExGetFieldValue<T>(this object a_oSender, 
+		string a_oName, BindingFlags a_eBindingFlags) 
+	{
 		var oType = typeof(T);
 		var oFieldInfo = oType.GetField(a_oName, a_eBindingFlags);
 
@@ -235,7 +251,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 프로퍼티 값을 반환한다
-	public static object ExGetPropertyValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
+	public static object ExGetPropertyValue<T>(this object a_oSender, 
+		string a_oName, BindingFlags a_eBindingFlags) 
+	{
 		var oType = typeof(T);
 		var oPropertyInfo = oType.GetProperty(a_oName, a_eBindingFlags);
 
@@ -274,7 +292,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValue<Key, Value>(this Dictionary<Key, Value> a_oSender, Key a_tKey, Value a_tValue) {
+	public static void ExSetValue<Key, Value>(this Dictionary<Key, Value> a_oSender, 
+		Key a_tKey, Value a_tValue) 
+	{
 		// 키가 유효 할 경우
 		if(a_oSender.ContainsKey(a_tKey)) {
 			a_oSender[a_tKey] = a_tValue;
@@ -282,28 +302,36 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValues<T>(this T[] a_oSender, List<int> a_oIndexList, List<T> a_oValueList) {
+	public static void ExSetValues<T>(this T[] a_oSender, 
+		List<int> a_oIndexList, List<T> a_oValueList) 
+	{
 		for(int i = 0; i < a_oIndexList.Count; ++i) {
 			a_oSender.ExSetValue(a_oIndexList[i], a_oValueList[i]);
 		}
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValues<T>(this List<T> a_oSender, List<int> a_oIndexList, List<T> a_oValueList) {
+	public static void ExSetValues<T>(this List<T> a_oSender, 
+		List<int> a_oIndexList, List<T> a_oValueList) 
+	{
 		for(int i = 0; i < a_oIndexList.Count; ++i) {
 			a_oSender.ExSetValue(a_oIndexList[i], a_oValueList[i]);
 		}
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValues<Key, Value>(this Dictionary<Key, Value> a_oSender, Dictionary<Key, Value> a_oValueList) {
+	public static void ExSetValues<Key, Value>(this Dictionary<Key, Value> a_oSender, 
+		Dictionary<Key, Value> a_oValueList) 
+	{
 		foreach(var stKeyValue in a_oValueList) {
 			a_oSender.ExSetValue(stKeyValue.Key, stKeyValue.Value);
 		}
 	}
 
 	//! 필드 값을 변경한다
-	public static void ExSetFieldValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oValue) {
+	public static void ExSetFieldValue<T>(this object a_oSender, 
+		string a_oName, BindingFlags a_eBindingFlags, object a_oValue) 
+	{
 		var oType = typeof(T);
 		var oFieldInfo = oType.GetField(a_oName, a_eBindingFlags);
 
@@ -311,7 +339,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 런타임 필드 값을 변경한다
-	public static void ExSetRuntimeFieldValue<T>(this object a_oSender, string a_oName, object a_oValue) {
+	public static void ExSetRuntimeFieldValue<T>(this object a_oSender, 
+		string a_oName, object a_oValue) 
+	{
 		var oType = typeof(T);
 		var oFieldInfos = oType.GetRuntimeFields();
 
@@ -324,7 +354,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 프로퍼티 값을 변경한다
-	public static void ExSetPropertyValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oValue) {
+	public static void ExSetPropertyValue<T>(this object a_oSender, 
+		string a_oName, BindingFlags a_eBindingFlags, object a_oValue) 
+	{
 		var oType = typeof(T);
 		var oPropertyInfo = oType.GetProperty(a_oName, a_eBindingFlags);
 
@@ -332,7 +364,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 런타임 프로퍼티 값을 변경한다
-	public static void ExSetRuntimePropertyValue<T>(this object a_oSender, string a_oName, object a_oValue) {
+	public static void ExSetRuntimePropertyValue<T>(this object a_oSender, 
+		string a_oName, object a_oValue) 
+	{
 		var oType = typeof(T);
 		var oPropertyInfos = oType.GetRuntimeProperties();
 		

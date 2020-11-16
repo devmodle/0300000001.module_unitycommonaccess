@@ -15,7 +15,10 @@ public static partial class CAccess {
 
 	//! 쓰기용 스트림을 반환한다
 	public static FileStream GetWriteStream(string a_oFilepath,
-		bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirname = KCDefine.B_EMPTY_STRING) {
+		bool a_bIsAutoCreateDir = true, 
+		bool a_bIsAutoBackup = false, 
+		string a_oBackupDirname = KCDefine.B_EMPTY_STRING) 
+	{
 		string oDirpath = Path.GetDirectoryName(a_oFilepath);
 
 		// 디렉토리 자동 생성 모드 일 경우
@@ -43,12 +46,13 @@ public static partial class CAccess {
 			// 백업 파일 생성이 가능 할 경우
 			if(!File.Exists(oBackupFilepath)) {
 				var oFilepaths = Directory.GetFiles(oBackupDirpath);
+				int nMaxNumBackupFiles = KCDefine.B_MAX_NUM_BACKUP_FILES - KCDefine.B_VALUE_INT_1;
 
 				// 파일 최대 개수를 벗어났을 경우
-				if(oFilepaths.Length >= KCDefine.B_MAX_NUM_BACKUP_FILES - KCDefine.B_VALUE_INT_1) {
+				if(oFilepaths.Length >= nMaxNumBackupFiles) {
 					System.Array.Sort(oFilepaths, (a_oLhs, a_oRhs) => a_oRhs.CompareTo(a_oLhs));
 
-					for(int i = KCDefine.B_MAX_NUM_BACKUP_FILES - KCDefine.B_VALUE_INT_1; i < oFilepaths.Length; ++i) {
+					for(int i = nMaxNumBackupFiles; i < oFilepaths.Length; ++i) {
 						File.Delete(oFilepaths[i]);
 					}
 				}

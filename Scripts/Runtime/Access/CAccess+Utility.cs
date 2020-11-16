@@ -20,7 +20,8 @@ public static partial class CAccess {
 	#region 클래스 함수
 	//! 에디터 여부를 검사한다
 	public static bool IsEditor() {
-		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
+		return Application.platform == RuntimePlatform.OSXEditor || 
+			Application.platform == RuntimePlatform.WindowsEditor;
 	}
 
 	//! 데스크 탑 여부를 검사한다
@@ -30,32 +31,38 @@ public static partial class CAccess {
 
 	//! 독립 플랫폼 여부를 검사한다
 	public static bool IsStandalone() {
-		return Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.WindowsPlayer;
+		return Application.platform == RuntimePlatform.OSXPlayer || 
+			Application.platform == RuntimePlatform.WindowsPlayer;
 	}
 
 	//! 맥 여부를 검사한다
 	public static bool IsMac() {
-		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
+		return Application.platform == RuntimePlatform.OSXEditor || 
+			Application.platform == RuntimePlatform.OSXPlayer;
 	}
 
 	//! 윈도우 여부를 검사한다
 	public static bool IsWindows() {
-		return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
+		return Application.platform == RuntimePlatform.WindowsEditor || 
+			Application.platform == RuntimePlatform.WindowsPlayer;
 	}
 
 	//! 모바일 여부를 검사한다
 	public static bool IsMobile() {
-		return Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
+		return Application.platform == RuntimePlatform.IPhonePlayer || 
+			Application.platform == RuntimePlatform.Android;
 	}
 
 	//! 콘솔 여부를 검사한다
 	public static bool IsConsole() {
-		return Application.platform == RuntimePlatform.PS4 || Application.platform == RuntimePlatform.XboxOne;
+		return Application.platform == RuntimePlatform.PS4 || 
+			Application.platform == RuntimePlatform.XboxOne;
 	}
 
 	//! 휴대용 콘솔 여부를 검사한다
 	public static bool IsHandheldConsole() {
-		return Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
+		return Application.platform == RuntimePlatform.Stadia || 
+			Application.platform == RuntimePlatform.Switch;
 	}
 
 	//! 권한 유효 여부를 검사한다
@@ -119,9 +126,12 @@ public static partial class CAccess {
 #endif			// #if UNITY_IOS
 
 		var stScreenSize = CAccess.GetScreenSize();
-
 		float fInches = CAccess.GetScreenInches();
-		float fAspect = Mathf.Max(stScreenSize.x, stScreenSize.y) / Mathf.Min(stScreenSize.x, stScreenSize.y);
+
+		float fMaxLength = Mathf.Max(stScreenSize.x, stScreenSize.y);
+		float fMinLength = Mathf.Min(stScreenSize.x, stScreenSize.y);
+
+		float fAspect = fMaxLength / fMinLength;
 
 		bool bIsTablet = fInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && 
 			fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
@@ -272,7 +282,9 @@ public static partial class CAccess {
 		return false;
 #else
 		var oVersion = new System.Version(Device.systemVersion);
-		return oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE) >= KCDefine.B_COMPARE_RESULT_EQUALS;
+		int nCompareResult = oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE);
+		
+		return nCompareResult >= KCDefine.B_COMPARE_RESULT_EQUALS;
 #endif			// #if UNITY_EDITOR
 	}
 #endif			// #if UNITY_IOS

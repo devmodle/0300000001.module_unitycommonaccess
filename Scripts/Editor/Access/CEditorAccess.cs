@@ -12,7 +12,8 @@ public static partial class CEditorAccess {
 	#region 클래스 함수
 	//! 상태 갱신 가능 여부를 검사한다
 	public static bool IsEnableUpdateState() {
-		return !Application.isPlaying && !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
+		return !Application.isPlaying && 
+			!EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
 	}
 
 	//! 기즈모 그리기 가능 여부를 검사한다
@@ -46,7 +47,9 @@ public static partial class CEditorAccess {
 	}
 
 	//! 그래픽 API 를 변경한다
-	public static void SetGraphicAPI(BuildTarget a_eTarget, GraphicsDeviceType[] a_oDeviceTypes, bool a_bIsEnableAuto = true) {
+	public static void SetGraphicAPI(BuildTarget a_eTarget, 
+		GraphicsDeviceType[] a_oDeviceTypes, bool a_bIsEnableAuto = true) 
+	{
 		PlayerSettings.SetGraphicsAPIs(a_eTarget, a_oDeviceTypes);
 		PlayerSettings.SetUseDefaultGraphicsAPIs(a_eTarget, a_bIsEnableAuto);
 	}

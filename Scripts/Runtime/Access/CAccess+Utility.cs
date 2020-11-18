@@ -254,6 +254,7 @@ public static partial class CAccess {
 		var oRes = Resources.Load<T>(a_oFilepath);
 		bool bIsExists = oRes != null;
 
+		// 자동 제거 모드 일 경우
 		if(a_bIsAutoUnload && oRes != null) {
 			Resources.UnloadAsset(oRes);
 		}

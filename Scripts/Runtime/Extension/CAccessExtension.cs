@@ -60,6 +60,11 @@ public static partial class CAccessExtension {
 		return a_oSender != null && a_oRhs != null && a_oSender.Equals(a_oRhs);
 	}
 
+	//! 포함 여부를 검사한다
+	public static bool ExIsContains(this string a_oSender, string a_oSearch) {
+		return a_oSender != null && a_oSearch != null && a_oSender.Contains(a_oSearch);
+	}
+
 	//! 작음 여부를 검사한다
 	public static bool ExIsLess(this float a_fSender, float a_fRhs) {
 		return a_fSender < a_fRhs - float.Epsilon;
@@ -152,7 +157,7 @@ public static partial class CAccessExtension {
 	{
 		// 검색과 변경 문자열이 다를 경우
 		if(!a_oSearch.ExIsEquals(a_oReplace)) {
-			for(int i = 0; i < a_nReplaceTimes && a_oSender.Contains(a_oSearch); ++i) {
+			for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oSearch); ++i) {
 				a_oSender = a_oSender.Replace(a_oSearch, a_oReplace);
 			}
 		}

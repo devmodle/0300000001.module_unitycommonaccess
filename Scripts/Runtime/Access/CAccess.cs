@@ -68,7 +68,7 @@ public static partial class CAccess {
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_EMPTY_STRING) {
 		// 메세지가 유효 할 경우
-		if(a_oMsg != null && a_oMsg.Length > KCDefine.B_VALUE_INT_0) {
+		if(a_oMsg.ExIsValid()) {
 			UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
 		} else {
 			UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue);

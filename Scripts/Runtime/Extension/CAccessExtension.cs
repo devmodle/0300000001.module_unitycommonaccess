@@ -61,8 +61,8 @@ public static partial class CAccessExtension {
 	}
 
 	//! 포함 여부를 검사한다
-	public static bool ExIsContains(this string a_oSender, string a_oSearch) {
-		return a_oSender != null && a_oSearch != null && a_oSender.Contains(a_oSearch);
+	public static bool ExIsContains(this string a_oSender, string a_oTarget) {
+		return a_oSender != null && a_oTarget != null && a_oSender.Contains(a_oTarget);
 	}
 
 	//! 작음 여부를 검사한다
@@ -153,12 +153,12 @@ public static partial class CAccessExtension {
 
 	//! 변경 된 문자열을 반환한다
 	public static string ExGetReplaceString(this string a_oSender, 
-		string a_oSearch, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_INT_1) 
+		string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_INT_1) 
 	{
 		// 검색과 변경 문자열이 다를 경우
-		if(!a_oSearch.ExIsEquals(a_oReplace)) {
-			for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oSearch); ++i) {
-				a_oSender = a_oSender.Replace(a_oSearch, a_oReplace);
+		if(!a_oTarget.ExIsEquals(a_oReplace)) {
+			for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oTarget); ++i) {
+				a_oSender = a_oSender.Replace(a_oTarget, a_oReplace);
 			}
 		}
 

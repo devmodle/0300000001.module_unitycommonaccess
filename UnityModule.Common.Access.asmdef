@@ -2,6 +2,7 @@
     "name": "UnityModule.Common.Access",
     "references": [
         "UnityModule.Common.Define",
+        "UnityModule.Common.Externals",
         "Unity.Notifications.iOS",
         "Unity.Notifications.Android"
     ],

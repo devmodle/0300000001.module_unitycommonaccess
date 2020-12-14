@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif			// #if UNITY_EDITOR
 
-#if UNITY_IOS && NOTI_MODULE_ENABLE
+#if UNITY_IOS
+#if APPLE_LOGIN_ENABLE
+using UnityEngine.SignInWithApple;
+#endif			// #if APPLE_LOGIN_ENABLE
+
+#if NOTI_MODULE_ENABLE
 using Unity.Notifications.iOS;
-#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
+#endif			// #if NOTI_MODULE_ENABLE
+#endif			// #if UNITY_IOS
 
 //! 유틸리티 접근 확장 클래스
 public static partial class CAccessExtension {
@@ -41,7 +48,17 @@ public static partial class CAccessExtension {
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this TextAsset a_oSender) {
-		return a_oSender != null && (a_oSender.text.ExIsValid() || a_oSender.bytes.ExIsValid());
+		// 텍스트 에셋이 유효하지 않을 경우
+		if(a_oSender == null) {
+			return false;
+		}
+		
+		return a_oSender.text.ExIsValid() || a_oSender.bytes.ExIsValid();
+	}
+
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this SpriteAtlas a_oSender) {
+		return a_oSender != null && a_oSender.spriteCount > KCDefine.B_VALUE_INT_0;
 	}
 
 	//! 동일 여부를 검사한다
@@ -51,14 +68,14 @@ public static partial class CAccessExtension {
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this Vector3 a_stSender, Vector3 a_stRhs) {
-		return a_stSender.x.ExIsEquals(a_stRhs.x) && 
-			a_stSender.y.ExIsEquals(a_stRhs.y) && a_stSender.z.ExIsEquals(a_stRhs.z);
+		bool bIsEquals = CAccessExtension.ExIsEquals((Vector2)a_stSender, (Vector2)a_stRhs);
+		return bIsEquals && a_stSender.z.ExIsEquals(a_stRhs.z);
 	}
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this Vector4 a_stSender, Vector4 a_stRhs) {
-		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y) &&
-			a_stSender.z.ExIsEquals(a_stRhs.z) && a_stSender.w.ExIsEquals(a_stRhs.w);
+		bool bIsEquals = CAccessExtension.ExIsEquals((Vector3)a_stSender, (Vector3)a_stRhs);
+		return bIsEquals && a_stSender.w.ExIsEquals(a_stRhs.w);
 	}
 
 	//! 색상을 반환한다
@@ -84,17 +101,22 @@ public static partial class CAccessExtension {
 
 	//! 크기 형식 문자열을 반환한다
 	public static string ExGetSizeFormatString(this string a_oSender, int a_nSize) {
+		CAccess.Assert(a_oSender != null);
 		return string.Format(KCDefine.B_SIZE_FORMAT_STRING, a_nSize, a_oSender);
 	}
 
 	//! 색상 형식 문자열을 반환한다
 	public static string ExGetColorFormatString(this string a_oSender, Color a_stColor) {
+		CAccess.Assert(a_oSender != null);
+
 		return string.Format(KCDefine.B_COLOR_FORMAT_STRING, 
 			ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
 	}
 
 	//! 위치를 변경한다
 	public static void ExSetPos(this Transform a_oSender, Vector3 a_stPos, bool a_bIsWorld = false) {
+		CAccess.Assert(a_oSender != null);
+
 		// 월드 모드 일 경우
 		if(a_bIsWorld) {
 			a_oSender.position = a_stPos;
@@ -107,6 +129,8 @@ public static partial class CAccessExtension {
 	public static void ExSetRotation(this Transform a_oSender, 
 		Vector3 a_stRotation, bool a_bIsWorld = false) 
 	{
+		CAccess.Assert(a_oSender != null);
+
 		// 월드 모드 일 경우
 		if(a_bIsWorld) {
 			a_oSender.eulerAngles = a_stRotation;
@@ -117,34 +141,43 @@ public static partial class CAccessExtension {
 
 	//! X 축 위치를 변경한다
 	public static void ExSetPosX(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
+		CAccess.Assert(a_oSender != null);
 		var stPos = a_bIsWorld ? a_oSender.position : a_oSender.localPosition;
+
 		a_oSender.ExSetPos(new Vector3(a_fValue, stPos.y, stPos.z), a_bIsWorld);
 	}
 	
 	//! Y 축 위치를 변경한다
 	public static void ExSetPosY(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
+		CAccess.Assert(a_oSender != null);
 		var stPos = a_bIsWorld ? a_oSender.position : a_oSender.localPosition;
+
 		a_oSender.ExSetPos(new Vector3(stPos.x, a_fValue, stPos.z), a_bIsWorld);
 	}
 
 	//! Z 축 위치를 변경한다
 	public static void ExSetPosZ(this Transform a_oSender, float a_fValue, bool a_bIsWorld = false) {
+		CAccess.Assert(a_oSender != null);
 		var stPos = a_bIsWorld ? a_oSender.position : a_oSender.localPosition;
+
 		a_oSender.ExSetPos(new Vector3(stPos.x, stPos.y, a_fValue), a_bIsWorld);
 	}
 
 	//! X 축 비율을 변경한다
 	public static void ExSetScaleX(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.localScale = new Vector3(a_fValue, a_oSender.localScale.y, a_oSender.localScale.z);
 	}
 
 	//! Y 축 비율을 변경한다
 	public static void ExSetScaleY(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.localScale = new Vector3(a_oSender.localScale.x, a_fValue, a_oSender.localScale.z);
 	}
 
 	//! Z 축 비율을 변경한다
 	public static void ExSetScaleZ(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.localScale = new Vector3(a_oSender.localScale.x, a_oSender.localScale.y, a_fValue);
 	}
 
@@ -152,7 +185,9 @@ public static partial class CAccessExtension {
 	public static void ExSetRotationX(this Transform a_oSender, 
 		float a_fValue, bool a_bIsWorld = false) 
 	{
+		CAccess.Assert(a_oSender != null);
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
+
 		a_oSender.ExSetRotation(new Vector3(a_fValue, stRotation.y, stRotation.z), a_bIsWorld);
 	}
 	
@@ -160,7 +195,9 @@ public static partial class CAccessExtension {
 	public static void ExSetRotationY(this Transform a_oSender, 
 		float a_fValue, bool a_bIsWorld = false) 
 	{
+		CAccess.Assert(a_oSender != null);
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
+
 		a_oSender.ExSetRotation(new Vector3(stRotation.x, a_fValue, stRotation.z), a_bIsWorld);
 	}
 
@@ -168,37 +205,45 @@ public static partial class CAccessExtension {
 	public static void ExSetRotationZ(this Transform a_oSender, 
 		float a_fValue, bool a_bIsWorld = false) 
 	{
+		CAccess.Assert(a_oSender != null);
 		var stRotation = a_bIsWorld ? a_oSender.eulerAngles : a_oSender.localEulerAngles;
+
 		a_oSender.ExSetRotation(new Vector3(stRotation.x, stRotation.y, a_fValue), a_bIsWorld);
 	}
 
 	//! 앵커 위치를 변경한다
 	public static void ExSetAnchorPos(this RectTransform a_oSender, Vector2 a_stPos) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.anchoredPosition = a_stPos;
 	}
 
 	//! 크기 간격을 변경한다
 	public static void ExSetSizeDelta(this RectTransform a_oSender, Vector2 a_stDelta) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.sizeDelta = a_stDelta;
 	}
 
 	//! X 축 앵커 위치를 변경한다
 	public static void ExSetAnchorPosX(this RectTransform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetAnchorPos(new Vector2(a_fValue, a_oSender.anchoredPosition.y));
 	}
 
 	//! Y 축 앵커 위치를 변경한다
 	public static void ExSetAnchorPosY(this RectTransform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetAnchorPos(new Vector2(a_oSender.anchoredPosition.x, a_fValue));
 	}
 
 	//! X 축 크기 간격을 변경한다
 	public static void ExSetSizeDeltaX(this RectTransform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetSizeDelta(new Vector2(a_fValue, a_oSender.sizeDelta.y));
 	}
 
 	//! Y 축 크기 간격을 변경한다
 	public static void ExSetSizeDeltaY(this RectTransform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
 		a_oSender.ExSetSizeDelta(new Vector2(a_oSender.sizeDelta.x, a_fValue));
 	}
 	#endregion			// 클래스 함수
@@ -207,12 +252,28 @@ public static partial class CAccessExtension {
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다
 	public static void ExSetScriptOrder(this MonoBehaviour a_oSender, int a_nOrder) {
+		CAccess.Assert(a_oSender != null);
 		var oMonoScript = MonoScript.FromMonoBehaviour(a_oSender);
+
 		CAccess.SetScriptOrder(oMonoScript, a_nOrder);
 	}
 #endif			// #if UNITY_EDITOR
 
-#if UNITY_IOS && NOTI_MODULE_ENABLE
+#if UNITY_IOS
+#if APPLE_LOGIN_ENABLE
+	//! 유효 여부를 검사한다
+	public static bool ExIsValidUserInfo(this SignInWithApple.CallbackArgs a_stSender) {
+		return !a_stSender.error.ExIsValid() && a_stSender.userInfo.userId.ExIsValid();
+	}
+
+	//! 유효 여부를 검사한다
+	public static bool ExIsValidCredentialState(this SignInWithApple.CallbackArgs a_stSender) {
+		bool bIsAuth = a_stSender.credentialState == UserCredentialState.Authorized;
+		return bIsAuth && !a_stSender.error.ExIsValid();
+	}
+#endif			// #if APPLE_LOGIN_ENABLE
+
+#if NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다
 	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
 		int nSumValue = KCDefine.B_VALUE_INT_0;
@@ -228,6 +289,7 @@ public static partial class CAccessExtension {
 	public static bool ExIsCompleteRequest(this AuthorizationRequest a_oSender) {
 		return a_oSender != null && a_oSender.IsFinished;
 	}
-#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
+#endif			// #if NOTI_MODULE_ENABLE
+#endif			// #if UNITY_IOS
 	#endregion			// 조건부 클래스 함수
 }

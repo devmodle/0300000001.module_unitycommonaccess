@@ -67,9 +67,10 @@ public static partial class CAccess {
 
 	//! 권한 유효 여부를 검사한다
 	public static bool IsEnablePermission(string a_oPermission) {
+		CAccess.Assert(a_oPermission.ExIsValid());
+
 #if UNITY_ANDROID
-		return a_oPermission.ExIsValid() && 
-			Permission.HasUserAuthorizedPermission(a_oPermission);
+		return Permission.HasUserAuthorizedPermission(a_oPermission);
 #else
 		return false;
 #endif			// #if UNITY_ANDROID
@@ -77,7 +78,9 @@ public static partial class CAccess {
 
 	//! 햅틱 피드백 지원 여부를 검사한다
 	public static bool IsSupportHapticFeedback() {
-#if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_EDITOR || !(HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID))
+		return false;
+#else
 #if UNITY_IOS
 		var oVersion = new System.Version(Device.systemVersion);
 		int nCompareResult = oVersion.CompareTo(KCDefine.U_MIN_VERSION_HAPTIC_FEEDBACK);
@@ -100,10 +103,8 @@ public static partial class CAccess {
 		return false;
 #else
 		return true;
-#endif			// #if UNITY_IOS
-#else
-		return false;
-#endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if UNITY_IOS		
+#endif			// #if UNITY_EDITOR
 	}
 
 	//! DPI 를 반환한다
@@ -115,25 +116,23 @@ public static partial class CAccess {
 	public static EDeviceType GetDeviceType() {
 #if UNITY_IOS
 		string oModel = Device.generation.ToString();
-
 		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
-		bool bIsiPad = oModel.Contains(KCDefine.U_MODEL_NAME_IPAD);
 
-		// iPhone, iPad 디바이스 일 경우
-		if(bIsiPhone || bIsiPad) {
+		// iPhone, iPad 일 경우
+		if(bIsiPhone || oModel.Contains(KCDefine.U_MODEL_NAME_IPAD)) {
 			return bIsiPhone ? EDeviceType.PHONE : EDeviceType.TABLET;
 		}
 #endif			// #if UNITY_IOS
 
 		var stScreenSize = CAccess.GetScreenSize();
-		float fInches = CAccess.GetScreenInches();
+		float fScreenInches = CAccess.GetScreenInches();
 
 		float fMaxLength = Mathf.Max(stScreenSize.x, stScreenSize.y);
 		float fMinLength = Mathf.Min(stScreenSize.x, stScreenSize.y);
 
 		float fAspect = fMaxLength / fMinLength;
 
-		bool bIsTablet = fInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && 
+		bool bIsTablet = fScreenInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && 
 			fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
 
 		return bIsTablet ? EDeviceType.TABLET : EDeviceType.PHONE;
@@ -232,26 +231,16 @@ public static partial class CAccess {
 		var stSafeArea = CAccess.GetSafeArea();
 		return stSafeArea.y / CAccess.GetScreenSize().y;
 	}
-
-	//! 객체를 제거한다
-	public static void RemoveObj(Object a_oObj, bool a_bIsRemoveAsset = false) {
-		CAccess.Assert(a_oObj != null);
-
-		// 앱이 실행 중 일 경우
-		if(Application.isPlaying) {
-			GameObject.Destroy(a_oObj);
-		} else {
-			GameObject.DestroyImmediate(a_oObj, a_bIsRemoveAsset);
-		}
-	}
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
 	//! 리소스 존재 여부를 검사한다
-	public static bool IsExistsRes<T>(string a_oFilepath, 
+	public static bool IsExistsRes<T>(string a_oFilePath, 
 		bool a_bIsAutoUnload = false) where T : Object 
 	{
-		var oRes = Resources.Load<T>(a_oFilepath);
+		CAccess.Assert(a_oFilePath.ExIsValid());
+
+		var oRes = Resources.Load<T>(a_oFilePath);
 		bool bIsExists = oRes != null;
 
 		// 자동 제거 모드 일 경우
@@ -267,6 +256,7 @@ public static partial class CAccess {
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다
 	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder) {
+		CAccess.Assert(a_oScript != null);
 		int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
 
 		// 기존 순서와 다를 경우

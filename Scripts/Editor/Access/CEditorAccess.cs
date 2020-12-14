@@ -21,12 +21,16 @@ public static partial class CEditorAccess {
 		return !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
 	}
 
-	//! 활성된 객체를 반환한다
+	//! 활성 객체를 반환한다
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		var oObj = Selection.activeGameObject;
+
+		// 활성 객체가 없을 경우
+		if(oObj == null) {
+			return null;
+		}
 		
-		return (oObj == null || (a_bIsInHierarchy && !oObj.activeInHierarchy)) ? 
-			null : oObj;
+		return (a_bIsInHierarchy && !oObj.activeInHierarchy) ? null : oObj;
 	}
 
 	//! 독립 플랫폼 이름을 반환한다

@@ -29,7 +29,12 @@ public static partial class CEditorAccessExtension {
 
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete(this Request a_oSender) {
-		return a_oSender != null && a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;
+		// 요청이 유효하지 않을 경우
+		if(a_oSender == null) {
+			return false;
+		}
+
+		return a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;
 	}
 	#endregion			// 클래스 함수
 

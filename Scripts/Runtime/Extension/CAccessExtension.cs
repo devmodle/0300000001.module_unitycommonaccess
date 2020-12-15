@@ -10,12 +10,12 @@ public static partial class CAccessExtension {
 	#region 클래스 함수
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this System.DateTime a_stSender) {
-		return a_stSender.Ticks >= KCDefine.B_VALUE_INT_0;
+		return a_stSender.Ticks >= KCDefine.B_VALUE_LONG_0;
 	}
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this System.TimeSpan a_stSender) {
-		return a_stSender.Ticks >= KCDefine.B_VALUE_INT_0;
+		return a_stSender.Ticks >= KCDefine.B_VALUE_LONG_0;
 	}
 
 	//! 유효 여부를 검사한다
@@ -66,13 +66,15 @@ public static partial class CAccessExtension {
 	}
 
 	//! 동일 여부를 검사한다
-	public static bool ExIsEquals(this string a_oSender, string a_oRhs) {
-		return a_oSender != null && a_oRhs != null && a_oSender.Equals(a_oRhs);
+	public static bool ExIsEquals(this string a_oSender, string a_oString) {
+		CAccess.Assert(a_oSender != null && a_oString != null);
+		return a_oSender.Equals(a_oString);
 	}
 
 	//! 포함 여부를 검사한다
-	public static bool ExIsContains(this string a_oSender, string a_oTarget) {
-		return a_oSender != null && a_oTarget != null && a_oSender.Contains(a_oTarget);
+	public static bool ExIsContains(this string a_oSender, string a_oString) {
+		CAccess.Assert(a_oSender != null && a_oString != null);
+		return a_oSender.Contains(a_oString);
 	}
 
 	//! 작음 여부를 검사한다
@@ -117,25 +119,17 @@ public static partial class CAccessExtension {
 
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete(this Task a_oSender) {
-		// 비동기 작업이 유효하지 않을 경우
-		if(a_oSender == null) {
-			return false;
-		}
-
+		CAccess.Assert(a_oSender != null);
 		return a_oSender.IsCompleted && !a_oSender.IsFaulted && !a_oSender.IsCanceled;
 	}
 
 	//! 유럽 연합 여부를 검사한다
 	public static bool ExIsEU(this string a_oSender) {
-		// 언어가 유효하지 않을 경우
-		if(!a_oSender.ExIsValid()) {
-			return false;
-		}
-
+		CAccess.Assert(a_oSender.ExIsValid());
 		string oCountryCode = a_oSender.ToUpper();
 
 		for(int i = 0; i < KCDefine.B_EU_COUNTRY_CODES.Length; ++i) {
-			// 유럽 연합 일 경우
+			// 국가 코드가 동일 할 경우
 			if(oCountryCode.ExIsEquals(KCDefine.B_EU_COUNTRY_CODES[i])) {
 				return true;
 			}
@@ -145,25 +139,33 @@ public static partial class CAccessExtension {
 	}
 
 	//! 시간 간격을 반환한다
-	public static double ExGetDeltaTime(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+	public static double ExGetDeltaTime(this System.DateTime a_stSender, 
+		System.DateTime a_stRhs) 
+	{
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
 		return (a_stSender - a_stRhs).TotalSeconds;
 	}
 
 	//! 시간 간격을 반환한다
-	public static double ExGetDeltaTimePerMinutes(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+	public static double ExGetDeltaTimePerMinutes(this System.DateTime a_stSender, 
+		System.DateTime a_stRhs) 
+	{
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
 		return (a_stSender - a_stRhs).TotalMinutes;
 	}
 
 	//! 시간 간격을 반환한다
-	public static double ExGetDeltaTimePerHours(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+	public static double ExGetDeltaTimePerHours(this System.DateTime a_stSender, 
+		System.DateTime a_stRhs) 
+	{
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
 		return (a_stSender - a_stRhs).TotalHours;
 	}
 
 	//! 시간 간격을 반환한다
-	public static double ExGetDeltaTimePerDays(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+	public static double ExGetDeltaTimePerDays(this System.DateTime a_stSender, 
+		System.DateTime a_stRhs) 
+	{
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
 		return (a_stSender - a_stRhs).TotalDays;
 	}
@@ -173,24 +175,50 @@ public static partial class CAccessExtension {
 		string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_INT_1) 
 	{
 		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());
-		CAccess.Assert(a_nReplaceTimes >= KCDefine.B_VALUE_INT_0);
 
-		// 검색과 변경 문자열이 다를 경우
-		if(!a_oTarget.ExIsEquals(a_oReplace)) {
-			for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oTarget); ++i) {
-				a_oSender = a_oSender.Replace(a_oTarget, a_oReplace);
-			}
+		for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oTarget); ++i) {
+			a_oSender = a_oSender.Replace(a_oTarget, a_oReplace);
 		}
 
 		return a_oSender;
 	}
 
 	//! 파일 이름이 변경 된 경로를 반환한다
-	public static string ExGetReplaceFileNamePath(this string a_oSender, string a_oFileName) {
+	public static string ExGetReplaceFileNamePath(this string a_oSender, 
+		string a_oFileName) 
+	{
 		CAccess.Assert(a_oSender.ExIsValid() && a_oFileName.ExIsValid());
 		var oFileName = Path.GetFileNameWithoutExtension(a_oSender);
 
 		return a_oSender.ExGetReplaceString(oFileName, a_oFileName);
+	}
+
+	//! 리스트 -> 비트로 변환한다
+	public static int ExToBits(this List<int> a_oSender) {
+		CAccess.Assert(a_oSender != null);
+		int nValue = KCDefine.B_VALUE_INT_0;
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			nValue |= 1 << a_oSender[i];
+		}
+
+		return nValue;
+	}
+
+	//! 로컬 -> 월드로 변환한다
+	public static Vector3 ExToWorld(this Vector3 a_stSender, 
+		GameObject a_oObj, bool a_bIsCoordinate = true) 
+	{
+		return a_bIsCoordinate ? a_oObj.transform.TransformPoint(a_stSender) 
+			: a_oObj.transform.TransformDirection(a_stSender);
+	}
+
+	//! 월드 -> 로컬로 변환한다
+	public static Vector3 ExToLocal(this Vector3 a_stSender, 
+		GameObject a_oObj, bool a_bIsCoordinate = true) 
+	{
+		return a_bIsCoordinate ? a_oObj.transform.InverseTransformPoint(a_stSender) 
+			: a_oObj.transform.InverseTransformDirection(a_stSender);
 	}
 	#endregion			// 클래스 함수
 
@@ -223,32 +251,32 @@ public static partial class CAccessExtension {
 
 	//! 인덱스 유효 여부를 검사한다
 	public static bool ExIsValidIndex<T>(this T[] a_oSender, int a_nIndex) {
-		// 배열이 유효하지 않을 경우
-		if(!a_oSender.ExIsValid()) {
-			return false;
-		}
-
+		CAccess.Assert(a_oSender != null);
 		return a_nIndex > KCDefine.B_INDEX_INVALID && a_nIndex < a_oSender.Length;
+	}
+
+	//! 인덱스 유효 여부를 검사한다
+	public static bool ExIsValidIndex<T>(this T[,] a_oSender, int a_nRow, int a_nCol) {
+		CAccess.Assert(a_oSender != null);
+
+		int nNumRows = a_oSender.GetLength(KCDefine.B_VALUE_INT_0);
+		int nNumCols = a_oSender.GetLength(KCDefine.B_VALUE_INT_1);
+
+		return a_nRow > KCDefine.B_INDEX_INVALID && a_nRow < nNumRows && 
+			a_nCol > KCDefine.B_INDEX_INVALID && a_nCol < nNumCols;
 	}
 
 	//! 인덱스 유효 여부룰 검사한다
 	public static bool ExIsValidIndex<T>(this List<T> a_oSender, int a_nIndex) {
-		// 리스트가 유효하지 않을 경우
-		if(!a_oSender.ExIsValid()) {
-			return false;
-		}
-		
+		CAccess.Assert(a_oSender != null);
 		return a_nIndex > KCDefine.B_INDEX_INVALID && a_nIndex < a_oSender.Count;
 	}
 
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete<T>(this Task<T> a_oSender) {
-		// 비동기 작업이 유효하지 않을 경우
-		if(a_oSender == null) {
-			return false;
-		}
-
+		CAccess.Assert(a_oSender != null);
 		var oTask = a_oSender as Task;
+
 		return oTask.ExIsComplete() && a_oSender.Result != null;
 	}
 
@@ -256,6 +284,12 @@ public static partial class CAccessExtension {
 	public static T ExGetValue<T>(this T[] a_oSender, int a_nIndex, T a_tDefValue) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExIsValidIndex(a_nIndex) ? a_oSender[a_nIndex] : a_tDefValue;
+	}
+
+	//! 값을 반환한다
+	public static T ExGetValue<T>(this T[,] a_oSender, int a_nRow, int a_nCol, T a_tDefValue) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIndex(a_nRow, a_nCol) ? a_oSender[a_nRow, a_nCol] : a_tDefValue;
 	}
 
 	//! 값을 반환한다

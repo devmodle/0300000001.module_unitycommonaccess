@@ -151,6 +151,8 @@ public static partial class CAccess {
 
 	//! 배너 광고 높이를 반환한다
 	public static float GetBannerAdsHeight(float a_fHeight) {
+		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VALUE_FLOAT_0));
+
 		float fScale = CAccess.GetResolutionScale();
 		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
 
@@ -239,16 +241,14 @@ public static partial class CAccess {
 		bool a_bIsAutoUnload = false) where T : Object 
 	{
 		CAccess.Assert(a_oFilePath.ExIsValid());
-
 		var oRes = Resources.Load<T>(a_oFilePath);
-		bool bIsExists = oRes != null;
 
 		// 자동 제거 모드 일 경우
 		if(a_bIsAutoUnload && oRes != null) {
 			Resources.UnloadAsset(oRes);
 		}
 
-		return bIsExists;
+		return oRes != null;
 	}
 	#endregion			// 제네릭 클래스 함수
 

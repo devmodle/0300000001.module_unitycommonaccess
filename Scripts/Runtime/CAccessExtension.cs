@@ -193,7 +193,7 @@ public static partial class CAccessExtension {
 		return a_oSender.ExGetReplaceString(oFileName, a_oFileName);
 	}
 
-	//! 리스트 -> 비트로 변환한다
+	//! 리스트 => 비트로 변환한다
 	public static int ExToBits(this List<int> a_oSender) {
 		CAccess.Assert(a_oSender != null);
 		int nValue = KCDefine.B_VALUE_INT_0;
@@ -205,7 +205,7 @@ public static partial class CAccessExtension {
 		return nValue;
 	}
 
-	//! 로컬 -> 월드로 변환한다
+	//! 로컬 => 월드로 변환한다
 	public static Vector3 ExToWorld(this Vector3 a_stSender, 
 		GameObject a_oObj, bool a_bIsCoordinate = true) 
 	{
@@ -213,7 +213,7 @@ public static partial class CAccessExtension {
 			: a_oObj.transform.TransformDirection(a_stSender);
 	}
 
-	//! 월드 -> 로컬로 변환한다
+	//! 월드 => 로컬로 변환한다
 	public static Vector3 ExToLocal(this Vector3 a_stSender, 
 		GameObject a_oObj, bool a_bIsCoordinate = true) 
 	{

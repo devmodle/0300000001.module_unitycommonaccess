@@ -88,7 +88,7 @@ public static partial class CAccess {
 		// 햅틱 피드백 지원 버전 일 경우
 		if(nCompareResult >= KCDefine.B_COMPARE_R_EQUALS) {
 			string oModel = Device.generation.ToString();
-			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
+			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
 
 			for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS.Length; ++i) {
 				var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORT_MODELS[i];
@@ -116,10 +116,10 @@ public static partial class CAccess {
 	public static EDeviceType GetDeviceType() {
 #if UNITY_IOS
 		string oModel = Device.generation.ToString();
-		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
+		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
 
 		// iPhone, iPad 일 경우
-		if(bIsiPhone || oModel.Contains(KCDefine.U_MODEL_NAME_IPAD)) {
+		if(bIsiPhone || oModel.Contains(KCDefine.U_MODEL_N_IPAD)) {
 			return bIsiPhone ? EDeviceType.PHONE : EDeviceType.TABLET;
 		}
 #endif			// #if UNITY_IOS

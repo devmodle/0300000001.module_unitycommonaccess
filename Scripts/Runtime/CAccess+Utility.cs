@@ -86,7 +86,7 @@ public static partial class CAccess {
 		int nCompareResult = oVersion.CompareTo(KCDefine.U_MIN_VERSION_HAPTIC_FEEDBACK);
 
 		// 햅틱 피드백 지원 버전 일 경우
-		if(nCompareResult >= KCDefine.B_COMPARE_RESULT_EQUALS) {
+		if(nCompareResult >= KCDefine.B_COMPARE_R_EQUALS) {
 			string oModel = Device.generation.ToString();
 			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_NAME_IPHONE);
 
@@ -145,13 +145,13 @@ public static partial class CAccess {
 			return Screen.safeArea;
 		}
 
-		return new Rect(KCDefine.B_VALUE_FLOAT_0, 
-			KCDefine.B_VALUE_FLOAT_0, Camera.main.pixelWidth, Camera.main.pixelHeight);
+		return new Rect(KCDefine.B_VALUE_FLT_0, 
+			KCDefine.B_VALUE_FLT_0, Camera.main.pixelWidth, Camera.main.pixelHeight);
 	}
 
 	//! 배너 광고 높이를 반환한다
 	public static float GetBannerAdsHeight(float a_fHeight) {
-		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VALUE_FLOAT_0));
+		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VALUE_FLT_0));
 
 		float fScale = CAccess.GetResolutionScale();
 		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
@@ -192,7 +192,7 @@ public static partial class CAccess {
 
 	//! 해상도 비율을 반환한다
 	public static float GetResolutionScale() {
-		float fScale = KCDefine.B_VALUE_FLOAT_1;
+		float fScale = KCDefine.B_VALUE_FLT_1;
 		float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
 
 		float fScreenWidth = CAccess.GetScreenSize().x;
@@ -275,7 +275,7 @@ public static partial class CAccess {
 		var oVersion = new System.Version(Device.systemVersion);
 		int nCompareResult = oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE);
 		
-		return nCompareResult >= KCDefine.B_COMPARE_RESULT_EQUALS;
+		return nCompareResult >= KCDefine.B_COMPARE_R_EQUALS;
 #endif			// #if UNITY_EDITOR
 	}
 #endif			// #if UNITY_IOS

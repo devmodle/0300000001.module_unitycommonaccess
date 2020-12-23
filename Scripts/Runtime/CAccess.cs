@@ -36,11 +36,11 @@ public static partial class CAccess {
 			string oFileName = Path.GetFileName(a_oFilePath);
 			string oOriginFileName = Path.GetFileNameWithoutExtension(a_oFilePath);
 
-			string oBackupFileName = string.Format(KCDefine.B_FILE_NAME_FORMAT_BACKUP, 
-				oOriginFileName, System.DateTime.Now.ToString(KCDefine.B_NAME_FORMAT_BACKUP));
+			string oBackupFileName = string.Format(KCDefine.B_FILE_N_FMT_BACKUP, 
+				oOriginFileName, System.DateTime.Now.ToString(KCDefine.B_NAME_FMT_BACKUP));
 
 			string oBackupDirName = a_oBackupDirName.ExIsValid() ? a_oBackupDirName 
-				: KCDefine.B_DIR_NAME_BACKUP;
+				: KCDefine.B_DIR_N_BACKUP;
 
 			string oBackupPath = oDirPath.ExIsValid() ? Path.Combine(oDirPath, oBackupDirName) 
 				: Path.Combine(string.Empty, oBackupDirName);

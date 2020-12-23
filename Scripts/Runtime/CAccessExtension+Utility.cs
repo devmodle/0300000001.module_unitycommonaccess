@@ -138,8 +138,8 @@ public static partial class CAccessExtension {
 		float fAspect = stScreenSize.x / stScreenSize.y;
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
 
-		var stNormPos = new Vector3(((a_oSender.position.x * 2.0f) / stScreenSize.x) - KCDefine.B_VALUE_FLOAT_1,
-			((a_oSender.position.y * 2.0f) / stScreenSize.y) - KCDefine.B_VALUE_FLOAT_1, KCDefine.B_VALUE_FLOAT_0);
+		var stNormPos = new Vector3(((a_oSender.position.x * 2.0f) / stScreenSize.x) - KCDefine.B_VALUE_FLT_1,
+			((a_oSender.position.y * 2.0f) / stScreenSize.y) - KCDefine.B_VALUE_FLT_1, KCDefine.B_VALUE_FLT_0);
 
 		stNormPos.x *= (fScreenWidth / 2.0f) * KCDefine.B_UNIT_SCALE;
 		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / 2.0f) * KCDefine.B_UNIT_SCALE;
@@ -356,14 +356,14 @@ public static partial class CAccessExtension {
 	//! 크기 형식 문자열을 반환한다
 	public static string ExGetSizeFormatString(this string a_oSender, int a_nSize) {
 		CAccess.Assert(a_oSender != null);
-		return string.Format(KCDefine.B_SIZE_FORMAT_STRING, a_nSize, a_oSender);
+		return string.Format(KCDefine.B_SIZE_FMT_STRING, a_nSize, a_oSender);
 	}
 
 	//! 색상 형식 문자열을 반환한다
 	public static string ExGetColorFormatString(this string a_oSender, Color a_stColor) {
 		CAccess.Assert(a_oSender != null);
 
-		return string.Format(KCDefine.B_COLOR_FORMAT_STRING, 
+		return string.Format(KCDefine.B_COLOR_FMT_STRING, 
 			ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
 	}
 

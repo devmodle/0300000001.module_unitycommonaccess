@@ -256,14 +256,14 @@ public static partial class CAccessExtension {
 	}
 
 	//! 인덱스 유효 여부를 검사한다
-	public static bool ExIsValidIndex<T>(this T[,] a_oSender, int a_nRow, int a_nCol) {
+	public static bool ExIsValidIndex<T>(this T[,] a_oSender, Vector2Int a_stIndex) {
 		CAccess.Assert(a_oSender != null);
 
 		int nNumRows = a_oSender.GetLength(KCDefine.B_VALUE_INT_0);
 		int nNumCols = a_oSender.GetLength(KCDefine.B_VALUE_INT_1);
 
-		return a_nRow > KCDefine.B_INDEX_INVALID && a_nRow < nNumRows && 
-			a_nCol > KCDefine.B_INDEX_INVALID && a_nCol < nNumCols;
+		return a_stIndex.y > KCDefine.B_INDEX_INVALID && a_stIndex.y < nNumRows && 
+			a_stIndex.x > KCDefine.B_INDEX_INVALID && a_stIndex.x < nNumCols;
 	}
 
 	//! 인덱스 유효 여부룰 검사한다
@@ -287,9 +287,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 반환한다
-	public static T ExGetValue<T>(this T[,] a_oSender, int a_nRow, int a_nCol, T a_tDefValue) {
+	public static T ExGetValue<T>(this T[,] a_oSender, Vector2Int a_stIndex, T a_tDefValue) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExIsValidIndex(a_nRow, a_nCol) ? a_oSender[a_nRow, a_nCol] : a_tDefValue;
+		return a_oSender.ExIsValidIndex(a_stIndex) ? a_oSender[a_stIndex.y, a_stIndex.x] : a_tDefValue;
 	}
 
 	//! 값을 반환한다

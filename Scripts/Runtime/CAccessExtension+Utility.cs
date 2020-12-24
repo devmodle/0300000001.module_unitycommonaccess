@@ -589,6 +589,36 @@ public static partial class CAccessExtension {
 		a_oSender.anchoredPosition = new Vector2(a_oSender.anchoredPosition.x, a_fValue);
 	}
 
+	//! 위치 => 인덱스로 변경한다
+	public static Vector2Int ExToIndex(this Vector2 a_stSender, Vector2 a_stBasePos, Vector2 a_stSize) {
+		CAccess.Assert(!a_stSize.x.ExIsEquals(KCDefine.B_VALUE_FLT_0));
+		CAccess.Assert(!a_stSize.y.ExIsEquals(KCDefine.B_VALUE_FLT_0));
+
+		var stDelta = a_stSender - a_stBasePos;
+		return new Vector2Int((int)(stDelta.x / a_stSize.x), (int)(stDelta.y / -a_stSize.y));
+	}
+
+	//! 위치 => 인덱스로 변경한다
+	public static Vector3Int ExToIndex(this Vector3 a_stSender, Vector3 a_stBasePos, Vector3 a_stSize) {
+		CAccess.Assert(!a_stSize.x.ExIsEquals(KCDefine.B_VALUE_FLT_0));
+		CAccess.Assert(!a_stSize.y.ExIsEquals(KCDefine.B_VALUE_FLT_0));
+		CAccess.Assert(!a_stSize.z.ExIsEquals(KCDefine.B_VALUE_FLT_0));
+
+		var stDelta = a_stSender - a_stBasePos;
+		return new Vector3Int((int)(stDelta.x / a_stSize.x), (int)(stDelta.y / -a_stSize.y), (int)(stDelta.z / -a_stSize.z));
+	}
+
+	//! 인덱스 => 위치로 변경한다
+	public static Vector2 ExToPos(this Vector2Int a_stSender, Vector2 a_stOffset, Vector2 a_stSize) {
+		return new Vector2((a_stSender.x * a_stSize.x) + a_stOffset.x, (a_stSender.y * -a_stSize.y) + a_stOffset.y);
+	}
+
+	//! 인덱스 => 위치로 변경한다
+	public static Vector3 ExToPos(this Vector3Int a_stSender, Vector3 a_stOffset, Vector3 a_stSize) {
+		return new Vector3((a_stSender.x * a_stSize.x) + a_stOffset.x, 
+			(a_stSender.y * -a_stSize.y) + a_stOffset.y, (a_stSender.z * -a_stSize.z) + a_stOffset.z);
+	}
+
 	//! 자식 객체를 탐색한다
 	public static GameObject ExFindChild(this Scene a_stSender, 
 		string a_oName, bool a_bIsEnableSubname = false) 

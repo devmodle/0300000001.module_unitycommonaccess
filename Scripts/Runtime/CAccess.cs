@@ -59,7 +59,9 @@ public static partial class CAccess {
 
 				// 최대 개수를 벗어났을 경우
 				if(oFilePaths.Length >= KCDefine.B_MAX_NUM_BACKUP_FILES) {
-					System.Array.Sort(oFilePaths, (a_oLhs, a_oRhs) => a_oRhs.CompareTo(a_oLhs));
+					System.Array.Sort(oFilePaths, (a_oLhs, a_oRhs) => {
+						return a_oRhs.CompareTo(a_oLhs);
+					});
 
 					for(int i = KCDefine.B_MAX_NUM_BACKUP_FILES - 1; i < oFilePaths.Length; ++i) {
 						File.Delete(oFilePaths[i]);

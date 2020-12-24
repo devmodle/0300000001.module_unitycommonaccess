@@ -425,14 +425,24 @@ public static partial class CAccessExtension {
 		a_oSender.eventMask = stLayerMask;
 	}
 
-	//! 캔버스 정렬 순서를 변경한다
+	//! 정렬 순서를 변경한다
 	public static void ExSetSortingOrder(this Canvas a_oSender, 
-		string a_oLayer, int a_nOrder) 
+		STSortingOrderInfo a_stOrderInfo)
 	{
-		CAccess.Assert(a_oSender != null && a_oLayer.ExIsValid());
+		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
 
-		a_oSender.sortingLayerName = a_oLayer;
-		a_oSender.sortingOrder = a_nOrder;
+		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
+		a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+	}
+
+	//! 정렬 순서를 변경한다
+	public static void ExSetSortingOrder(this SpriteRenderer a_oSender, 
+		STSortingOrderInfo a_stOrderInfo)
+	{
+		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
+
+		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
+		a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
 	}
 
 	//! X 축 비율을 변경한다

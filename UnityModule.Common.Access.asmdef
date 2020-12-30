@@ -1,10 +1,13 @@
 {
     "name": "UnityModule.Common.Access",
+    "rootNamespace": "",
     "references": [
         "UnityModule.Common.Define",
         "UnityModule.Common.Externals",
         "Unity.Notifications.iOS",
-        "Unity.Notifications.Android"
+        "Unity.Notifications.Android",
+        "DOTween.Modules",
+        "DOTweenPro.Scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

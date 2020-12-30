@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -232,6 +233,12 @@ public static partial class CAccess {
 	public static float GetBottomScreenScale() {
 		var stSafeArea = CAccess.GetSafeArea();
 		return stSafeArea.y / CAccess.GetScreenSize().y;
+	}
+	
+	//! 값을 할당한다
+	public static void AssignValue(ref Sequence a_oLhs, Sequence a_oRhs) {
+		a_oLhs?.Kill();
+		a_oLhs = a_oRhs;
 	}
 	#endregion			// 클래스 함수
 

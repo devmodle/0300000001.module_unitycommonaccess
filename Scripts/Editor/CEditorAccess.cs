@@ -24,9 +24,9 @@ public static partial class CEditorAccess {
 	//! 활성 객체를 반환한다
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		var oObj = Selection.activeGameObject;
-		bool bIsInvalidObj = a_bIsInHierarchy && !oObj.activeInHierarchy;
+		bool bIsInvalidObj = a_bIsInHierarchy && (oObj != null && !oObj.activeInHierarchy);
 
-		return (bIsInvalidObj || oObj == null) ? null : oObj;
+		return bIsInvalidObj ? null : oObj;
 	}
 
 	//! 독립 플랫폼 이름을 반환한다

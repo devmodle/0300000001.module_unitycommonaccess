@@ -9,11 +9,6 @@ using UnityEditor;
 //! 에디터 기본 접근
 public static partial class CEditorAccess {
 	#region 클래스 함수
-	//! 빌드 가능 여부를 검사한다
-	public static bool IsEnableBuild() {
-		return !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
-	}
-
 	//! 상태 갱신 가능 여부를 검사한다
 	public static bool IsEnableUpdateState() {
 		return !Application.isPlaying && 

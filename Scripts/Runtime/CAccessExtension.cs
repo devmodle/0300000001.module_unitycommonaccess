@@ -272,6 +272,36 @@ public static partial class CAccessExtension {
 		return a_nIndex > KCDefine.B_INDEX_INVALID && a_nIndex < a_oSender.Count;
 	}
 
+	//! 포함 여부를 검사한다
+	public static bool ExIsContains<T>(this T[] a_oSender, T a_tValue) {
+		CAccess.Assert(a_oSender != null);
+
+		for(int i = 0; i < a_oSender.Length; ++i) {
+			// 값이 동일 할 경우
+			if(a_oSender[i].Equals(a_tValue)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	//! 포함 여부를 검사한다
+	public static bool ExIsContains<T>(this T[,] a_oSender, T a_tValue) {
+		CAccess.Assert(a_oSender != null);
+
+		for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VALUE_INT_0); ++i) {
+			for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VALUE_INT_1); ++j) {
+				// 값이 동일 할 경우
+				if(a_oSender[i, j].Equals(a_tValue)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete<T>(this Task<T> a_oSender) {
 		CAccess.Assert(a_oSender != null);

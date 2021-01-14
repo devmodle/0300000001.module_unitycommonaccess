@@ -27,7 +27,7 @@ public static partial class CAccess {
 
 	//! 데스크 탑 여부를 검사한다
 	public static bool IsDesktop() {
-		return CAccess.IsMac() || CAccess.IsWindows();
+		return CAccess.IsMac() || CAccess.IsWnds();
 	}
 
 	//! 독립 플랫폼 여부를 검사한다
@@ -43,7 +43,7 @@ public static partial class CAccess {
 	}
 
 	//! 윈도우 여부를 검사한다
-	public static bool IsWindows() {
+	public static bool IsWnds() {
 		return Application.platform == RuntimePlatform.WindowsEditor || 
 			Application.platform == RuntimePlatform.WindowsPlayer;
 	}

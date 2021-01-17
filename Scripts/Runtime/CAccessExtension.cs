@@ -185,10 +185,12 @@ public static partial class CAccessExtension {
 
 	//! 파일 이름이 변경 된 경로를 반환한다
 	public static string ExGetReplaceFileNamePath(this string a_oSender, 
-		string a_oFileName) 
+		string a_oFileName, bool a_bIsResetExtension = false) 
 	{
 		CAccess.Assert(a_oSender.ExIsValid() && a_oFileName.ExIsValid());
-		var oFileName = Path.GetFileNameWithoutExtension(a_oSender);
+
+		var oFileName = a_bIsResetExtension ? Path.GetFileName(a_oSender)
+			: Path.GetFileNameWithoutExtension(a_oSender);
 
 		return a_oSender.ExGetReplaceString(oFileName, a_oFileName);
 	}

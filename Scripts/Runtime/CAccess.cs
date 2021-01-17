@@ -17,9 +17,7 @@ public static partial class CAccess {
 
 	//! 쓰기용 스트림을 반환한다
 	public static FileStream GetWriteStream(string a_oFilePath,
-		bool a_bIsAutoCreateDir = true, 
-		bool a_bIsAutoBackup = false, 
-		string a_oBackupDirName = KCDefine.B_EMPTY_STRING) 
+		bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirName = KCDefine.B_EMPTY_STRING) 
 	{
 		CAccess.Assert(a_oFilePath.ExIsValid());
 

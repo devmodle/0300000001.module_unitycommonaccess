@@ -591,7 +591,7 @@ public static partial class CAccessExtension {
 	
 	//! 자식 객체를 탐색한다
 	public static GameObject ExFindChild(this Scene a_stSender, 
-		string a_oName, bool a_bIsEnableSubname = false) 
+		string a_oName, bool a_bIsEnableSubName = false) 
 	{
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObjs = a_stSender.GetRootGameObjects();
@@ -600,7 +600,7 @@ public static partial class CAccessExtension {
 		if(oObjs.ExIsValid()) {
 			for(int i = 0; i < oObjs.Length; ++i) {
 				var oObj = oObjs[i].ExFindChild(a_oName, 
-					true, a_bIsEnableSubname);
+					true, a_bIsEnableSubName);
 
 				// 자식 객체가 존재 할 경우
 				if(oObj != null) {
@@ -614,7 +614,7 @@ public static partial class CAccessExtension {
 
 	//! 자식 객체를 탐색한다
 	public static GameObject ExFindChild(this GameObject a_oSender, 
-		string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubname = false) 
+		string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) 
 	{
 		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
 		
@@ -624,7 +624,7 @@ public static partial class CAccessExtension {
 		foreach(var oObj in oEnumerator) {
 			// 이름이 동일 할 경우
 			if(oObj.name.ExIsEquals(a_oName) || 
-				(a_bIsEnableSubname && oObj.name.ExIsContains(a_oName))) 
+				(a_bIsEnableSubName && oObj.name.ExIsContains(a_oName))) 
 			{
 				return oObj;
 			}

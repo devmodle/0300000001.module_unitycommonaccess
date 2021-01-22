@@ -10,15 +10,11 @@ public static partial class CAccess {
 	//! 읽기용 스트림을 반환한다
 	public static FileStream GetReadStream(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		
-		return File.Exists(a_oFilePath) ? 
-			File.Open(a_oFilePath, FileMode.Open, FileAccess.Read) : null;
+		return File.Exists(a_oFilePath) ? File.Open(a_oFilePath, FileMode.Open, FileAccess.Read) : null;
 	}
 
 	//! 쓰기용 스트림을 반환한다
-	public static FileStream GetWriteStream(string a_oFilePath,
-		bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirName = KCDefine.B_EMPTY_STRING) 
-	{
+	public static FileStream GetWriteStream(string a_oFilePath, bool a_bIsAutoCreateDir = true, bool a_bIsAutoBackup = false, string a_oBackupDirName = KCDefine.B_EMPTY_STRING) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
 		string oDirPath = Path.GetDirectoryName(a_oFilePath);
@@ -34,22 +30,18 @@ public static partial class CAccess {
 			string oFileName = Path.GetFileName(a_oFilePath);
 			string oOriginFileName = Path.GetFileNameWithoutExtension(a_oFilePath);
 
-			string oBackupFileName = string.Format(KCDefine.B_NAME_FMT_BACKUP_COMBINE, 
-				oOriginFileName, System.DateTime.Now.ToString(KCDefine.B_NAME_FMT_BACKUP));
+			string oDateString = System.DateTime.Now.ToString(KCDefine.B_NAME_FMT_BACKUP);
+			string oBackupFileName = string.Format(KCDefine.B_NAME_FMT_BACKUP_COMBINE, oOriginFileName, oDateString);
 
-			string oBackupDirName = a_oBackupDirName.ExIsValid() ? a_oBackupDirName 
-				: KCDefine.B_DIR_N_BACKUP;
-
-			string oBackupPath = oDirPath.ExIsValid() ? Path.Combine(oDirPath, oBackupDirName) 
-				: Path.Combine(string.Empty, oBackupDirName);
+			string oBackupDirName = a_oBackupDirName.ExIsValid() ? a_oBackupDirName : KCDefine.B_DIR_N_BACKUP;
+			string oBackupPath = oDirPath.ExIsValid() ? Path.Combine(oDirPath, oBackupDirName) : Path.Combine(string.Empty, oBackupDirName);
 
 			// 디렉토리가 없을 경우
 			if(!Directory.Exists(oBackupPath)) {
 				Directory.CreateDirectory(oBackupPath);
 			}
 
-			string oBackupFilePath = Path.Combine(oBackupPath, 
-				oFileName.ExGetReplaceString(oOriginFileName, oBackupFileName));
+			string oBackupFilePath = Path.Combine(oBackupPath, oFileName.ExGetReplaceString(oOriginFileName, oBackupFileName));
 
 			// 백업 파일 생성이 가능 할 경우
 			if(!File.Exists(oBackupFilePath)) {
@@ -57,9 +49,7 @@ public static partial class CAccess {
 
 				// 최대 개수를 벗어났을 경우
 				if(oFilePaths.Length >= KCDefine.B_MAX_NUM_BACKUP_FILES) {
-					System.Array.Sort(oFilePaths, (a_oLhs, a_oRhs) => {
-						return a_oRhs.CompareTo(a_oLhs);
-					});
+					System.Array.Sort(oFilePaths, (a_oLhs, a_oRhs) => a_oRhs.CompareTo(a_oLhs));
 
 					for(int i = KCDefine.B_MAX_NUM_BACKUP_FILES - 1; i < oFilePaths.Length; ++i) {
 						File.Delete(oFilePaths[i]);

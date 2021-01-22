@@ -21,8 +21,7 @@ public static partial class CAccess {
 	#region 클래스 함수
 	//! 에디터 여부를 검사한다
 	public static bool IsEditor() {
-		return Application.platform == RuntimePlatform.OSXEditor || 
-			Application.platform == RuntimePlatform.WindowsEditor;
+		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
 	}
 
 	//! 데스크 탑 여부를 검사한다
@@ -32,38 +31,32 @@ public static partial class CAccess {
 
 	//! 독립 플랫폼 여부를 검사한다
 	public static bool IsStandalone() {
-		return Application.platform == RuntimePlatform.OSXPlayer || 
-			Application.platform == RuntimePlatform.WindowsPlayer;
+		return Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.WindowsPlayer;
 	}
 
 	//! 맥 여부를 검사한다
 	public static bool IsMac() {
-		return Application.platform == RuntimePlatform.OSXEditor || 
-			Application.platform == RuntimePlatform.OSXPlayer;
+		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
 	}
 
 	//! 윈도우 여부를 검사한다
 	public static bool IsWnds() {
-		return Application.platform == RuntimePlatform.WindowsEditor || 
-			Application.platform == RuntimePlatform.WindowsPlayer;
+		return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
 	}
 
 	//! 모바일 여부를 검사한다
 	public static bool IsMobile() {
-		return Application.platform == RuntimePlatform.IPhonePlayer || 
-			Application.platform == RuntimePlatform.Android;
+		return Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
 	}
 
 	//! 콘솔 여부를 검사한다
 	public static bool IsConsole() {
-		return Application.platform == RuntimePlatform.PS4 || 
-			Application.platform == RuntimePlatform.XboxOne;
+		return Application.platform == RuntimePlatform.PS4 || Application.platform == RuntimePlatform.XboxOne;
 	}
 
 	//! 휴대용 콘솔 여부를 검사한다
 	public static bool IsHandheldConsole() {
-		return Application.platform == RuntimePlatform.Stadia || 
-			Application.platform == RuntimePlatform.Switch;
+		return Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
 	}
 
 	//! 권한 유효 여부를 검사한다
@@ -132,9 +125,7 @@ public static partial class CAccess {
 		float fMinLength = Mathf.Min(stScreenSize.x, stScreenSize.y);
 
 		float fAspect = fMaxLength / fMinLength;
-
-		bool bIsTablet = fScreenInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && 
-			fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
+		bool bIsTablet = fScreenInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
 
 		return bIsTablet ? EDeviceType.TABLET : EDeviceType.PHONE;
 	}
@@ -146,8 +137,7 @@ public static partial class CAccess {
 			return Screen.safeArea;
 		}
 
-		return new Rect(KCDefine.B_VALUE_FLT_0, 
-			KCDefine.B_VALUE_FLT_0, Camera.main.pixelWidth, Camera.main.pixelHeight);
+		return new Rect(KCDefine.B_VALUE_FLT_0, KCDefine.B_VALUE_FLT_0, Camera.main.pixelWidth, Camera.main.pixelHeight);
 	}
 
 	//! 배너 광고 높이를 반환한다
@@ -244,9 +234,7 @@ public static partial class CAccess {
 
 	#region 제네릭 클래스 함수
 	//! 리소스 존재 여부를 검사한다
-	public static bool IsExistsRes<T>(string a_oFilePath, 
-		bool a_bIsAutoUnload = false) where T : Object 
-	{
+	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 		var oRes = Resources.Load<T>(a_oFilePath);
 

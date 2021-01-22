@@ -138,8 +138,8 @@ public static partial class CAccessExtension {
 		float fAspect = stScreenSize.x / stScreenSize.y;
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
 
-		var stNormPos = new Vector3(((a_oSender.position.x * 2.0f) / stScreenSize.x) - KCDefine.B_VALUE_FLT_1,
-			((a_oSender.position.y * 2.0f) / stScreenSize.y) - KCDefine.B_VALUE_FLT_1, KCDefine.B_VALUE_FLT_0);
+		float fNormPosX = ((a_oSender.position.x * 2.0f) / stScreenSize.x) - KCDefine.B_VALUE_FLT_1;
+		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * 2.0f) / stScreenSize.y) - KCDefine.B_VALUE_FLT_1, KCDefine.B_VALUE_FLT_0);
 
 		stNormPos.x *= (fScreenWidth / 2.0f) * KCDefine.B_UNIT_SCALE;
 		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / 2.0f) * KCDefine.B_UNIT_SCALE;
@@ -156,9 +156,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 캔버스 월드 비율 위치를 반환한다
-	public static Vector3 ExGetWorldScalePos(this PointerEventData a_oSender, 
-		Vector3 a_stScale) 
-	{
+	public static Vector3 ExGetWorldScalePos(this PointerEventData a_oSender, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null);
 		var stPos = a_oSender.ExGetWorldPos();
 
@@ -166,9 +164,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 캔버스 로컬 비율 위치를 반환한다
-	public static Vector3 ExGetLocalScalePos(this PointerEventData a_oSender, 
-		GameObject a_oObj, Vector3 a_stScale) 
-	{
+	public static Vector3 ExGetLocalScalePos(this PointerEventData a_oSender, GameObject a_oObj, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
 		var stPos = a_oSender.ExGetWorldScalePos(a_stScale);
 
@@ -179,11 +175,8 @@ public static partial class CAccessExtension {
 	public static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
 		var stResolution = CAccess.GetResolution();
 
-		float fPosX = Mathf.Clamp(a_stSender.x, 
-			(stResolution.x / -2.0f) * KCDefine.B_UNIT_SCALE, (stResolution.x / 2.0f) * KCDefine.B_UNIT_SCALE);
-
-		float fPosY = Mathf.Clamp(a_stSender.y, 
-			(stResolution.y / -2.0f) * KCDefine.B_UNIT_SCALE, (stResolution.y / 2.0f) * KCDefine.B_UNIT_SCALE);
+		float fPosX = Mathf.Clamp(a_stSender.x, (stResolution.x / -2.0f) * KCDefine.B_UNIT_SCALE, (stResolution.x / 2.0f) * KCDefine.B_UNIT_SCALE);
+		float fPosY = Mathf.Clamp(a_stSender.y, (stResolution.y / -2.0f) * KCDefine.B_UNIT_SCALE, (stResolution.y / 2.0f) * KCDefine.B_UNIT_SCALE);
 
 		return new Vector3(fPosX, fPosY, a_stSender.z);
 	}
@@ -197,9 +190,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 보정된 캔버스 로컬 위치를 반환한다
-	public static Vector3 ExGetCorrectLocalPos(this PointerEventData a_oSender, 
-		GameObject a_oObj) 
-	{
+	public static Vector3 ExGetCorrectLocalPos(this PointerEventData a_oSender, GameObject a_oObj) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
 		var stPos = a_oSender.ExGetCorrectWorldPos();
 
@@ -207,17 +198,13 @@ public static partial class CAccessExtension {
 	}
 
 	//! 보정된 캔버스 월드 비율 위치를 반환한다
-	public static Vector3 ExGetCorrectWorldScalePos(this Vector3 a_oSender, 
-		Vector3 a_stScale) 
-	{
+	public static Vector3 ExGetCorrectWorldScalePos(this Vector3 a_oSender, Vector3 a_stScale) {
 		var stPos = a_oSender.ExGetScaleVector(a_stScale);
 		return stPos.ExGetCorrectWorldPos();
 	}
 
 	//! 보정된 캔버스 월드 비율 위치를 반환한다
-	public static Vector3 ExGetCorrectWorldScalePos(this PointerEventData a_oSender, 
-		Vector3 a_stScale) 
-	{
+	public static Vector3 ExGetCorrectWorldScalePos(this PointerEventData a_oSender, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null);
 		var stPos = a_oSender.ExGetWorldScalePos(a_stScale);
 
@@ -225,9 +212,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 보정된 캔버스 로컬 비율 위치를 반환한다
-	public static Vector3 ExGetCorrectLocalScalePos(this PointerEventData a_oSender, 
-		GameObject a_oObj, Vector3 a_stScale) 
-	{
+	public static Vector3 ExGetCorrectLocalScalePos(this PointerEventData a_oSender, GameObject a_oObj, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
 		var stPos = a_oSender.ExGetCorrectWorldScalePos(a_stScale);
 
@@ -235,20 +220,16 @@ public static partial class CAccessExtension {
 	}
 
 	//! 스크롤 뷰 정규 위치를 반환한다
-	public static Vector2 ExGetNormPos(this ScrollRect a_oSender, 
-		GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) 
-	{
+	public static Vector2 ExGetNormPos(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null);
 		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
 
-		return new Vector2(a_oSender.ExGetHNormPos(a_oViewport, a_oContentsRoot, a_stPos),
-			a_oSender.ExGetVNormPos(a_oViewport, a_oContentsRoot, a_stPos));
+		float fNormPosH = a_oSender.ExGetNormPosH(a_oViewport, a_oContentsRoot, a_stPos);
+		return new Vector2(fNormPosH, a_oSender.ExGetNormPosV(a_oViewport, a_oContentsRoot, a_stPos));
 	}
 
 	//! 스크롤 뷰 수직 정규 위치를 반환한다
-	public static float ExGetVNormPos(this ScrollRect a_oSender, 
-		GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) 
-	{
+	public static float ExGetNormPosV(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null);
 		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
 
@@ -260,9 +241,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 스크롤 뷰 수평 정규 위치를 반환한다
-	public static float ExGetHNormPos(this ScrollRect a_oSender, 
-		GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) 
-	{
+	public static float ExGetNormPosH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null);
 		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
 
@@ -273,9 +252,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 스크롤 뷰 수직 정규 범위를 반환한다
-	public static KeyValuePair<float, float> ExGetVNormRange(this ScrollRect a_oSender, 
-		GameObject a_oViewport, GameObject a_oContentsRoot) 
-	{
+	public static KeyValuePair<float, float> ExGetNormRangeV(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot) {
 		CAccess.Assert(a_oSender != null);
 		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
 
@@ -285,22 +262,20 @@ public static partial class CAccessExtension {
 		float fMaxPosY = oContentsRootTrans.rect.height - oContentsRootTrans.anchoredPosition.y;
 		float fMinPosY = oContentsRootTrans.rect.height - (oContentsRootTrans.anchoredPosition.y + oViewportTrans.rect.height);
 
-		return new KeyValuePair<float, float>(Mathf.Clamp01((fMinPosY - oViewportTrans.rect.height) / (oContentsRootTrans.rect.height - oViewportTrans.rect.height)),
-			Mathf.Clamp01((fMaxPosY - oViewportTrans.rect.height) / (oContentsRootTrans.rect.height - oViewportTrans.rect.height)));
+		float fMinNormPosY = Mathf.Clamp01((fMinPosY - oViewportTrans.rect.height) / (oContentsRootTrans.rect.height - oViewportTrans.rect.height));
+		return new KeyValuePair<float, float>(fMinNormPosY, Mathf.Clamp01((fMaxPosY - oViewportTrans.rect.height) / (oContentsRootTrans.rect.height - oViewportTrans.rect.height)));
 	}
 
 	//! 스크롤 뷰 수평 정규 범위를 반환한다
-	public static KeyValuePair<float, float> ExGetHNormRange(this ScrollRect a_oSender, 
-		GameObject a_oViewport, GameObject a_oContentsRoot) 
-	{
+	public static KeyValuePair<float, float> ExGetNormRangeH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot) {
 		CAccess.Assert(a_oSender != null);
 		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
 
 		var oViewportTrans = a_oViewport.transform as RectTransform;
 		var oContentsRootTrans = a_oContentsRoot.transform as RectTransform;
 
-		return new KeyValuePair<float, float>(Mathf.Clamp01((oContentsRootTrans.anchoredPosition.x - oViewportTrans.rect.width) / (oContentsRootTrans.rect.width - oViewportTrans.rect.width)),
-			Mathf.Clamp01(((oContentsRootTrans.anchoredPosition.x + oViewportTrans.rect.width) - oViewportTrans.rect.width) / (oContentsRootTrans.rect.width - oViewportTrans.rect.width)));
+		float fMinNormPosX = Mathf.Clamp01((oContentsRootTrans.anchoredPosition.x - oViewportTrans.rect.width) / (oContentsRootTrans.rect.width - oViewportTrans.rect.width));
+		return new KeyValuePair<float, float>(fMinNormPosX, Mathf.Clamp01(((oContentsRootTrans.anchoredPosition.x + oViewportTrans.rect.width) - oViewportTrans.rect.width) / (oContentsRootTrans.rect.width - oViewportTrans.rect.width)));
 	}
 
 	//! 자식을 반환한다
@@ -320,14 +295,11 @@ public static partial class CAccessExtension {
 	}
 
 	//! 자식을 반환한다
-	public static List<GameObject> ExGetChildren(this GameObject a_oSender, 
-		bool a_bIsIncludeSelf = true) 
-	{
+	public static List<GameObject> ExGetChildren(this GameObject a_oSender, bool a_bIsIncludeSelf = true) {
 		CAccess.Assert(a_oSender != null);
-		var oObjList = new List<GameObject>();
 
-		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() 
-			: a_oSender.Descendants();
+		var oObjList = new List<GameObject>();
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
 
 		foreach(var oObj in oEnumerator) {
 			oObjList.Add(oObj);
@@ -337,14 +309,11 @@ public static partial class CAccessExtension {
 	}
 
 	//! 부모를 반환한다
-	public static List<GameObject> ExGetParents(this GameObject a_oSender, 
-		bool a_bIsIncludeSelf = true) 
-	{
+	public static List<GameObject> ExGetParents(this GameObject a_oSender, bool a_bIsIncludeSelf = true) {
 		CAccess.Assert(a_oSender != null);
-		var oObjList = new List<GameObject>();
 
-		var oEnumerator = a_bIsIncludeSelf ? a_oSender.AncestorsAndSelf() 
-			: a_oSender.Ancestors();
+		var oObjList = new List<GameObject>();
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.AncestorsAndSelf() : a_oSender.Ancestors();
 
 		foreach(var oObj in oEnumerator) {
 			oObjList.Add(oObj);
@@ -362,9 +331,7 @@ public static partial class CAccessExtension {
 	//! 색상 형식 문자열을 반환한다
 	public static string ExGetColorFormatString(this string a_oSender, Color a_stColor) {
 		CAccess.Assert(a_oSender != null);
-
-		return string.Format(KCDefine.B_COLOR_FMT_STRING, 
-			ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
+		return string.Format(KCDefine.B_COLOR_FMT_STRING, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
 	}
 
 	//! 활성화 여부를 변경한다
@@ -376,13 +343,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 컬링 마스크를 변경한다
-	public static void ExSetCullingMask(this Camera a_oSender, 
-		List<int> a_oLayerList, bool a_bIsReset = true) 
-	{
+	public static void ExSetCullingMask(this Camera a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_INT_0 
-			: a_oSender.cullingMask;
+		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_INT_0 : a_oSender.cullingMask;
 
 		// 레이어 리스트가 유효 할 경우
 		if(a_oLayerList != null) {
@@ -391,13 +354,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 컬링 마스크를 변경한다
-	public static void ExSetCullingMask(this Light a_oSender, 
-		List<int> a_oLayerList, bool a_bIsReset = true) 
-	{
+	public static void ExSetCullingMask(this Light a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_INT_0 
-			: a_oSender.cullingMask;
+		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_INT_0 : a_oSender.cullingMask;
 
 		// 레이어가 유효 할 경우
 		if(a_oLayerList.ExIsValid()) {
@@ -408,14 +367,11 @@ public static partial class CAccessExtension {
 	}
 
 	//! 이벤트 마스크를 변경한다
-	public static void ExSetEventMask(this PhysicsRaycaster a_oSender, 
-		List<int> a_oLayerList, bool a_bIsReset = true) 
-	{
+	public static void ExSetEventMask(this PhysicsRaycaster a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
+		
 		var stLayerMask = a_oSender.eventMask;
-
-		stLayerMask.value = a_bIsReset ? KCDefine.B_VALUE_INT_0 
-			: a_oSender.eventMask.value;
+		stLayerMask.value = a_bIsReset ? KCDefine.B_VALUE_INT_0 : a_oSender.eventMask.value;
 
 		// 레이어 리스트가 유효 할 경우
 		if(a_oLayerList != null) {
@@ -426,9 +382,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this Canvas a_oSender, 
-		STSortingOrderInfo a_stOrderInfo)
-	{
+	public static void ExSetSortingOrder(this Canvas a_oSender, STSortingOrderInfo a_stOrderInfo) {
 		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
 
 		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
@@ -436,9 +390,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this SpriteRenderer a_oSender, 
-		STSortingOrderInfo a_stOrderInfo)
-	{
+	public static void ExSetSortingOrder(this SpriteRenderer a_oSender, STSortingOrderInfo a_stOrderInfo) {
 		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
 
 		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
@@ -448,121 +400,91 @@ public static partial class CAccessExtension {
 	//! X 축 비율을 변경한다
 	public static void ExSetScaleX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-		
-		a_oSender.localScale = new Vector3(a_fValue, 
-			a_oSender.localScale.y, a_oSender.localScale.z);
+		a_oSender.localScale = new Vector3(a_fValue, a_oSender.localScale.y, a_oSender.localScale.z);
 	}
 
 	//! Y 축 비율을 변경한다
 	public static void ExSetScaleY(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localScale = new Vector3(a_oSender.localScale.x, 
-			a_fValue, a_oSender.localScale.z);
+		a_oSender.localScale = new Vector3(a_oSender.localScale.x, a_fValue, a_oSender.localScale.z);
 	}
 
 	//! Z 축 비율을 변경한다
 	public static void ExSetScaleZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localScale = new Vector3(a_oSender.localScale.x, 
-			a_oSender.localScale.y, a_fValue);
+		a_oSender.localScale = new Vector3(a_oSender.localScale.x, a_oSender.localScale.y, a_fValue);
 	}
 
 	//! 월드 X 축 각도를 변경한다
 	public static void ExSetWorldRotationX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.eulerAngles = new Vector3(a_fValue, 
-			a_oSender.eulerAngles.y, a_oSender.eulerAngles.z);
+		a_oSender.eulerAngles = new Vector3(a_fValue, a_oSender.eulerAngles.y, a_oSender.eulerAngles.z);
 	}
 	
 	//! 월드 Y 축 각도를 변경한다
 	public static void ExSetWorldRotationY(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.eulerAngles = new Vector3(a_oSender.eulerAngles.x, 
-			a_fValue, a_oSender.eulerAngles.z);
+		a_oSender.eulerAngles = new Vector3(a_oSender.eulerAngles.x, a_fValue, a_oSender.eulerAngles.z);
 	}
 
 	//! 월드 Z 축 각도를 변경한다
 	public static void ExSetWorldRotationZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.eulerAngles = new Vector3(a_oSender.eulerAngles.x, 
-			a_oSender.eulerAngles.y, a_fValue);
+		a_oSender.eulerAngles = new Vector3(a_oSender.eulerAngles.x, a_oSender.eulerAngles.y, a_fValue);
 	}
 
 	//! 로컬 X 축 각도를 변경한다
 	public static void ExSetLocalRotationX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localEulerAngles = new Vector3(a_fValue, 
-			a_oSender.localEulerAngles.y, a_oSender.localEulerAngles.z);
+		a_oSender.localEulerAngles = new Vector3(a_fValue, a_oSender.localEulerAngles.y, a_oSender.localEulerAngles.z);
 	}
 	
 	//! 로컬 Y 축 각도를 변경한다
 	public static void ExSetLocalRotationY(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localEulerAngles = new Vector3(a_oSender.localEulerAngles.x, 
-			a_fValue, a_oSender.localEulerAngles.z);
+		a_oSender.localEulerAngles = new Vector3(a_oSender.localEulerAngles.x, a_fValue, a_oSender.localEulerAngles.z);
 	}
 
 	//! 로컬 Z 축 각도를 변경한다
 	public static void ExSetLocalRotationZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localEulerAngles = new Vector3(a_oSender.localEulerAngles.x, 
-			a_oSender.localEulerAngles.y, a_fValue);
+		a_oSender.localEulerAngles = new Vector3(a_oSender.localEulerAngles.x, a_oSender.localEulerAngles.y, a_fValue);
 	}
 
 	//! 월드 X 축 위치를 변경한다
 	public static void ExSetWorldPosX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.position = new Vector3(a_fValue,
-			a_oSender.position.y, a_oSender.position.z);
+		a_oSender.position = new Vector3(a_fValue, a_oSender.position.y, a_oSender.position.z);
 	}
 	
 	//! 월드 Y 축 위치를 변경한다
 	public static void ExSetWorldPosY(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.position = new Vector3(a_oSender.position.x, 
-			a_fValue, a_oSender.position.z);
+		a_oSender.position = new Vector3(a_oSender.position.x, a_fValue, a_oSender.position.z);
 	}
 
 	//! 월드 Z 축 위치를 변경한다
 	public static void ExSetWorldPosZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.position = new Vector3(a_oSender.position.x, 
-			a_oSender.position.y, a_fValue);
+		a_oSender.position = new Vector3(a_oSender.position.x, a_oSender.position.y, a_fValue);
 	}
 
 	//! 로컬 X 축 위치를 변경한다
 	public static void ExSetLocalPosX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localPosition = new Vector3(a_fValue,
-			a_oSender.localPosition.y, a_oSender.localPosition.z);
+		a_oSender.localPosition = new Vector3(a_fValue, a_oSender.localPosition.y, a_oSender.localPosition.z);
 	}
 	
 	//! 로컬 Y 축 위치를 변경한다
 	public static void ExSetLocalPosY(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localPosition = new Vector3(a_oSender.localPosition.x, 
-			a_fValue, a_oSender.localPosition.z);
+		a_oSender.localPosition = new Vector3(a_oSender.localPosition.x, a_fValue, a_oSender.localPosition.z);
 	}
 
 	//! 로컬 Z 축 위치를 변경한다
 	public static void ExSetLocalPosZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
-
-		a_oSender.localPosition = new Vector3(a_oSender.localPosition.x, 
-			a_oSender.localPosition.y, a_fValue);
+		a_oSender.localPosition = new Vector3(a_oSender.localPosition.x, a_oSender.localPosition.y, a_fValue);
 	}
 
 	//! X 축 크기 간격을 변경한다
@@ -590,17 +512,14 @@ public static partial class CAccessExtension {
 	}
 	
 	//! 자식 객체를 탐색한다
-	public static GameObject ExFindChild(this Scene a_stSender, 
-		string a_oName, bool a_bIsEnableSubName = false) 
-	{
+	public static GameObject ExFindChild(this Scene a_stSender, string a_oName, bool a_bIsEnableSubName = false) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObjs = a_stSender.GetRootGameObjects();
 
 		// 객체가 존재 할 경우
 		if(oObjs.ExIsValid()) {
 			for(int i = 0; i < oObjs.Length; ++i) {
-				var oObj = oObjs[i].ExFindChild(a_oName, 
-					true, a_bIsEnableSubName);
+				var oObj = oObjs[i].ExFindChild(a_oName, true, a_bIsEnableSubName);
 
 				// 자식 객체가 존재 할 경우
 				if(oObj != null) {
@@ -613,13 +532,9 @@ public static partial class CAccessExtension {
 	}
 
 	//! 자식 객체를 탐색한다
-	public static GameObject ExFindChild(this GameObject a_oSender, 
-		string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) 
-	{
+	public static GameObject ExFindChild(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
 		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
-		
-		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() 
-			: a_oSender.Descendants();
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
 
 		foreach(var oObj in oEnumerator) {
 			// 이름이 동일 할 경우
@@ -636,9 +551,7 @@ public static partial class CAccessExtension {
 
 	#region 제네릭 클래스 함수
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponent<T>(this GameObject a_oSender, 
-		bool a_bIsEnable) where T : Component 
-	{
+	public static void ExSetEnableComponent<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Component {
 		CAccess.Assert(a_oSender != null);
 		var oComponent = a_oSender.GetComponentInChildren<T>() as Behaviour;
 
@@ -649,9 +562,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponent<T>(this Scene a_stSender, 
-		string a_oName, bool a_bIsEnable) where T : Component 
-	{
+	public static void ExSetEnableComponent<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Component {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObj = a_stSender.ExFindChild(a_oName);
 
@@ -659,9 +570,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponent<T>(this GameObject a_oSender, 
-		string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Component 
-	{
+	public static void ExSetEnableComponent<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Component {
 		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
 		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
 

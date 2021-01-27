@@ -44,6 +44,28 @@ public static partial class CEditorAccessExtension {
 	public static bool ExIsValid(this PlistDocument a_oSender) {
 		return a_oSender != null && a_oSender.root != null;
 	}
+
+	//! 배열을 반환한다
+	public static PlistElementArray ExGetArray(this PlistDocument a_oSender, string a_oKey) {
+		CAccess.Assert(a_oSender.ExIsValid());
+
+		try {
+			return a_oSender.root[a_oKey].AsArray();
+		} catch {
+			return a_oSender.root.CreateArray(a_oKey);
+		}
+	}
+
+	//! 딕셔너리를 반환한다
+	public static PlistElementDict ExGetDict(this PlistDocument a_oSender, string a_oKey) {
+		CAccess.Assert(a_oSender.ExIsValid());
+
+		try {
+			return a_oSender.root[a_oKey].AsDict();
+		} catch {
+			return a_oSender.root.CreateDict(a_oKey);
+		}
+	}
 #endif			// #if UNITY_IOS
 	#endregion			// 조건부 클래스 함수
 }

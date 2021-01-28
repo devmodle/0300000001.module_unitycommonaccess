@@ -416,37 +416,37 @@ public static partial class CAccessExtension {
 	}
 
 	//! 월드 X 축 각도를 변경한다
-	public static void ExSetWorldRotationX(this Transform a_oSender, float a_fValue) {
+	public static void ExSetWorldAngleX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.eulerAngles = new Vector3(a_fValue, a_oSender.eulerAngles.y, a_oSender.eulerAngles.z);
 	}
 	
 	//! 월드 Y 축 각도를 변경한다
-	public static void ExSetWorldRotationY(this Transform a_oSender, float a_fValue) {
+	public static void ExSetWorldAngleY(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.eulerAngles = new Vector3(a_oSender.eulerAngles.x, a_fValue, a_oSender.eulerAngles.z);
 	}
 
 	//! 월드 Z 축 각도를 변경한다
-	public static void ExSetWorldRotationZ(this Transform a_oSender, float a_fValue) {
+	public static void ExSetWorldAngleZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.eulerAngles = new Vector3(a_oSender.eulerAngles.x, a_oSender.eulerAngles.y, a_fValue);
 	}
 
 	//! 로컬 X 축 각도를 변경한다
-	public static void ExSetLocalRotationX(this Transform a_oSender, float a_fValue) {
+	public static void ExSetLocalAngleX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.localEulerAngles = new Vector3(a_fValue, a_oSender.localEulerAngles.y, a_oSender.localEulerAngles.z);
 	}
 	
 	//! 로컬 Y 축 각도를 변경한다
-	public static void ExSetLocalRotationY(this Transform a_oSender, float a_fValue) {
+	public static void ExSetLocalAngleY(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.localEulerAngles = new Vector3(a_oSender.localEulerAngles.x, a_fValue, a_oSender.localEulerAngles.z);
 	}
 
 	//! 로컬 Z 축 각도를 변경한다
-	public static void ExSetLocalRotationZ(this Transform a_oSender, float a_fValue) {
+	public static void ExSetLocalAngleZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.localEulerAngles = new Vector3(a_oSender.localEulerAngles.x, a_oSender.localEulerAngles.y, a_fValue);
 	}

@@ -7,6 +7,24 @@ using UnityEngine;
 //! 기본 접근자
 public static partial class CAccess {
 	#region 클래스 함수
+	//! 자정 시간을 반환한다
+	public static System.DateTime GetMidnightTime() {
+		return System.DateTime.Today.AddDays(KCDefine.B_VALUE_DBL_1);
+	}
+	
+	//! 자정 시간 간격을 반환한다
+	public static System.TimeSpan GetMidnightDeltaTime() {
+		return CAccess.GetMidnightTime() - System.DateTime.Now;
+	}
+
+	//! 자정 시간 간격을 반환한다
+	public static string GetMidnightDeltaTimeString() {
+		var stDeltaTime = CAccess.GetMidnightDeltaTime();
+		var stDateTime = new System.DateTime(stDeltaTime.Ticks);
+
+		return stDateTime.ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
+	}
+
 	//! 읽기용 스트림을 반환한다
 	public static FileStream GetReadStream(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());

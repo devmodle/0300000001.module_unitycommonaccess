@@ -162,6 +162,12 @@ public static partial class CAccessExtension {
 		return (a_stSender - a_stRhs).TotalDays;
 	}
 
+	//! 시간 간격을 반환한다
+	public static long ExGetDeltaTimePerTicks(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
+		return (a_stSender - a_stRhs).Ticks;
+	}
+
 	//! 이전 인덱스를 반환한다
 	public static Vector2Int ExGetPrevIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_2D));

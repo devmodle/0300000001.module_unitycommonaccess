@@ -69,4 +69,11 @@ public static partial class CAccess {
 		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
 	}
 	#endregion			// 클래스 함수
+
+	#region 제네릭 클래스 함수
+	//! 열거형 값을 반환한다
+	public static T[] GetEnumValues<T>() {
+		return System.Enum.GetValues(typeof(T)) as T[];
+	}
+	#endregion			// 제네릭 클래스 함수
 }

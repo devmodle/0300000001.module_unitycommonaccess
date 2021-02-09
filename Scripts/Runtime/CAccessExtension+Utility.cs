@@ -577,10 +577,41 @@ public static partial class CAccessExtension {
 		oObj.ExSetEnableComponent<T>(a_bIsEnable);
 	}
 
+	//! 컴포넌트 활성 여부를 변경한다
+	public static void ExSetEnableComponents<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Component {
+		CAccess.Assert(a_oSender != null);
+		var oComponents = a_oSender.GetComponentsInChildren<T>();
+
+		for(int i = 0; i < oComponents.Length; ++i) {
+			var oComponent = oComponents[i] as Behaviour;
+
+			// 컴포넌트가 존재 할 경우
+			if(oComponent != null) {
+				oComponent.enabled = a_bIsEnable;
+			}
+		}
+	}
+
+	//! 컴포넌트 활성 여부를 변경한다
+	public static void ExSetEnableComponents<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Component {
+		CAccess.Assert(a_oName.ExIsValid());
+		var oObj = a_stSender.ExFindChild(a_oName);
+
+		oObj.ExSetEnableComponents<T>(a_bIsEnable);
+	}
+
+	//! 컴포넌트 활성 여부를 변경한다
+	public static void ExSetEnableComponents<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Component {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+
+		oObj.ExSetEnableComponents<T>(a_bIsEnable);
+	}
+
 	//! 컴포넌트 상호 작용 가능 여부를 변경한다
 	public static void ExSetInteractable<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Selectable {
 		CAccess.Assert(a_oSender != null);
-		var oComponent = a_oSender.GetComponentInChildren<T>() as Selectable;
+		var oComponent = a_oSender.GetComponentInChildren<T>();
 
 		// 컴포넌트가 존재 할 경우
 		if(oComponent != null) {
@@ -602,6 +633,37 @@ public static partial class CAccessExtension {
 		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
 
 		oObj.ExSetInteractable<T>(a_bIsEnable);
+	}
+
+	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	public static void ExSetInteractables<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Selectable {
+		CAccess.Assert(a_oSender != null);
+		var oComponents = a_oSender.GetComponentsInChildren<T>();
+
+		for(int i = 0; i < oComponents.Length; ++i) {
+			var oComponent = oComponents[i];
+
+			// 컴포넌트가 존재 할 경우
+			if(oComponent != null) {
+				oComponent.interactable = a_bIsEnable;
+			}
+		}
+	}
+
+	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	public static void ExSetInteractables<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Selectable {
+		CAccess.Assert(a_oName.ExIsValid());
+		var oObj = a_stSender.ExFindChild(a_oName);
+
+		oObj.ExSetInteractables<T>(a_bIsEnable);
+	}
+
+	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	public static void ExSetInteractables<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Selectable {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+
+		oObj.ExSetInteractables<T>(a_bIsEnable);
 	}
 	#endregion			// 제네릭 클래스 함수
 	

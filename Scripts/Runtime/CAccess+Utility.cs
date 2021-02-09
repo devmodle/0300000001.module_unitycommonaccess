@@ -16,6 +16,10 @@ using UnityEngine.iOS;
 using UnityEngine.Android;
 #endif			// #if UNITY_ANDROID
 
+#if PURCHASE_MODULE_ENABLE
+using UnityEngine.Purchasing;
+#endif			// #if PURCHASE_MODULE_ENABLE
+
 //! 유틸리티 접근자
 public static partial class CAccess {
 	#region 클래스 함수
@@ -274,5 +278,17 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 	}
 #endif			// #if UNITY_IOS
+
+#if PURCHASE_MODULE_ENABLE
+	//! 가격 문자열을 반환한다
+	public static string GetPriceString(Product a_oProduct) {
+		CAccess.Assert(a_oProduct != null);
+
+		decimal dclPrice = a_oProduct.metadata.localizedPrice;
+		string oCurrencyCode = a_oProduct.metadata.isoCurrencyCode;
+		
+		return string.Format(KCDefine.B_TEXT_FMT_PRICE, oCurrencyCode, dclPrice);		
+	}
+#endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
 }

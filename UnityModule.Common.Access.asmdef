@@ -4,6 +4,7 @@
     "references": [
         "UnityModule.Common.Define",
         "UnityModule.Common.Externals",
+        "UnityEngine.Purchasing",
         "Unity.Notifications.iOS",
         "Unity.Notifications.Android",
         "DOTween.Modules",

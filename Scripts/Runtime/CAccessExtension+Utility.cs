@@ -65,6 +65,12 @@ public static partial class CAccessExtension {
 		return a_oSender != null && a_oSender.spriteCount > KCDefine.B_VALUE_INT_0;
 	}
 
+	//! 인덱스 유효 여부를 검사한다
+	public static bool ExIsValidIdx(this SimpleJSON.JSONArray a_oSender, int a_nIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_nIdx > KCDefine.B_IDX_INVALID && a_nIdx < a_oSender.Count;
+	}
+
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this Vector2 a_stSender, Vector2 a_stRhs) {
 		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y);

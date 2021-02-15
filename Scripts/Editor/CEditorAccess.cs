@@ -31,12 +31,7 @@ public static partial class CEditorAccess {
 	public static string GetStandaloneName(EStandaloneType a_eType) {
 		return (a_eType == EStandaloneType.WNDS) ? KCDefine.B_PLATFORM_N_WNDS : KCDefine.B_PLATFORM_N_MAC;
 	}
-
-	//! iOS 이름을 반환한다
-	public static string GetiOSName(EiOSType a_eType) {
-		return KCDefine.B_PLATFORM_N_APPLE;
-	}
-
+	
 	//! 안드로이드 이름을 반환한다
 	public static string GetAndroidName(EAndroidType a_eType) {
 		// 원 스토어 일 경우

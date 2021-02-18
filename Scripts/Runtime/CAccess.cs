@@ -93,5 +93,17 @@ public static partial class CAccess {
 	public static T[] GetEnumValues<T>() {
 		return System.Enum.GetValues(typeof(T)) as T[];
 	}
+
+	//! 열거형 문자열을 반환한다
+	public static string[] GetEnumStrings<T>() {
+		var oEnumValues = CAccess.GetEnumValues<T>();
+		var oEnumStrings = new string[oEnumValues.Length];
+
+		for(int i = 0; i < oEnumValues.Length; ++i) {
+			oEnumStrings[i] = oEnumValues[i].ToString();
+		}
+
+		return oEnumStrings;
+	}
 	#endregion			// 제네릭 클래스 함수
 }

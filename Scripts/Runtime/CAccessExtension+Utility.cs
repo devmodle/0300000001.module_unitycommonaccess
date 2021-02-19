@@ -226,62 +226,62 @@ public static partial class CAccessExtension {
 	}
 
 	//! 스크롤 뷰 정규 위치를 반환한다
-	public static Vector2 ExGetNormPos(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) {
+	public static Vector2 ExGetNormPos(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
+		CAccess.Assert(a_oViewport != null && a_oContents != null);
 
-		float fNormPosH = a_oSender.ExGetNormPosH(a_oViewport, a_oContentsRoot, a_stPos);
-		return new Vector2(fNormPosH, a_oSender.ExGetNormPosV(a_oViewport, a_oContentsRoot, a_stPos));
+		float fNormPosH = a_oSender.ExGetNormPosH(a_oViewport, a_oContents, a_stPos);
+		return new Vector2(fNormPosH, a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos));
 	}
 
 	//! 스크롤 뷰 수직 정규 위치를 반환한다
-	public static float ExGetNormPosV(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) {
+	public static float ExGetNormPosV(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
+		CAccess.Assert(a_oViewport != null && a_oContents != null);
 
 		var oViewportTrans = a_oViewport.transform as RectTransform;
-		var oContentsRootTrans = a_oContentsRoot.transform as RectTransform;
+		var oContentsTrans = a_oContents.transform as RectTransform;
 
-		float fPosY = oContentsRootTrans.rect.height - a_stPos.y;		
-		return Mathf.Clamp01((fPosY - oViewportTrans.rect.height) / (oContentsRootTrans.rect.height - oViewportTrans.rect.height));
+		float fPosY = oContentsTrans.rect.height - a_stPos.y;		
+		return Mathf.Clamp01((fPosY - oViewportTrans.rect.height) / (oContentsTrans.rect.height - oViewportTrans.rect.height));
 	}
 
 	//! 스크롤 뷰 수평 정규 위치를 반환한다
-	public static float ExGetNormPosH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot, Vector3 a_stPos) {
+	public static float ExGetNormPosH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
+		CAccess.Assert(a_oViewport != null && a_oContents != null);
 
 		var oViewportTrans = a_oViewport.transform as RectTransform;
-		var oContentsRootTrans = a_oContentsRoot.transform as RectTransform;
+		var oContentsTrans = a_oContents.transform as RectTransform;
 
-		return Mathf.Clamp01((a_stPos.x - oViewportTrans.rect.width) / (oContentsRootTrans.rect.width - oViewportTrans.rect.width));
+		return Mathf.Clamp01((a_stPos.x - oViewportTrans.rect.width) / (oContentsTrans.rect.width - oViewportTrans.rect.width));
 	}
 
 	//! 스크롤 뷰 수직 정규 범위를 반환한다
-	public static KeyValuePair<float, float> ExGetNormRangeV(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot) {
+	public static KeyValuePair<float, float> ExGetNormRangeV(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents) {
 		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
+		CAccess.Assert(a_oViewport != null && a_oContents != null);
 
 		var oViewportTrans = a_oViewport.transform as RectTransform;
-		var oContentsRootTrans = a_oContentsRoot.transform as RectTransform;
+		var oContentsTrans = a_oContents.transform as RectTransform;
 
-		float fMaxPosY = oContentsRootTrans.rect.height - oContentsRootTrans.anchoredPosition.y;
-		float fMinPosY = oContentsRootTrans.rect.height - (oContentsRootTrans.anchoredPosition.y + oViewportTrans.rect.height);
+		float fMaxPosY = oContentsTrans.rect.height - oContentsTrans.anchoredPosition.y;
+		float fMinPosY = oContentsTrans.rect.height - (oContentsTrans.anchoredPosition.y + oViewportTrans.rect.height);
 
-		float fMinNormPosY = Mathf.Clamp01((fMinPosY - oViewportTrans.rect.height) / (oContentsRootTrans.rect.height - oViewportTrans.rect.height));
-		return new KeyValuePair<float, float>(fMinNormPosY, Mathf.Clamp01((fMaxPosY - oViewportTrans.rect.height) / (oContentsRootTrans.rect.height - oViewportTrans.rect.height)));
+		float fMinNormPosY = Mathf.Clamp01((fMinPosY - oViewportTrans.rect.height) / (oContentsTrans.rect.height - oViewportTrans.rect.height));
+		return new KeyValuePair<float, float>(fMinNormPosY, Mathf.Clamp01((fMaxPosY - oViewportTrans.rect.height) / (oContentsTrans.rect.height - oViewportTrans.rect.height)));
 	}
 
 	//! 스크롤 뷰 수평 정규 범위를 반환한다
-	public static KeyValuePair<float, float> ExGetNormRangeH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContentsRoot) {
+	public static KeyValuePair<float, float> ExGetNormRangeH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents) {
 		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContentsRoot != null);
+		CAccess.Assert(a_oViewport != null && a_oContents != null);
 
 		var oViewportTrans = a_oViewport.transform as RectTransform;
-		var oContentsRootTrans = a_oContentsRoot.transform as RectTransform;
+		var oContentsTrans = a_oContents.transform as RectTransform;
 
-		float fMinNormPosX = Mathf.Clamp01((oContentsRootTrans.anchoredPosition.x - oViewportTrans.rect.width) / (oContentsRootTrans.rect.width - oViewportTrans.rect.width));
-		return new KeyValuePair<float, float>(fMinNormPosX, Mathf.Clamp01(((oContentsRootTrans.anchoredPosition.x + oViewportTrans.rect.width) - oViewportTrans.rect.width) / (oContentsRootTrans.rect.width - oViewportTrans.rect.width)));
+		float fMinNormPosX = Mathf.Clamp01((oContentsTrans.anchoredPosition.x - oViewportTrans.rect.width) / (oContentsTrans.rect.width - oViewportTrans.rect.width));
+		return new KeyValuePair<float, float>(fMinNormPosX, Mathf.Clamp01(((oContentsTrans.anchoredPosition.x + oViewportTrans.rect.width) - oViewportTrans.rect.width) / (oContentsTrans.rect.width - oViewportTrans.rect.width)));
 	}
 
 	//! 자식을 반환한다

@@ -25,6 +25,17 @@ public static partial class CAccess {
 		return stDateTime.ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
 	}
 
+	//! 버전 문자열을 반환한다
+	public static string GetVersionString(string a_oVersion, EUserType a_eUserType) {
+		// 유저 타입이 유효하지 않을 경우
+		if(a_eUserType != EUserType.USER_A && a_eUserType != EUserType.USER_B) {
+			return string.Format(KCDefine.B_TEXT_FMT_VERSION, a_oVersion, KCDefine.B_TOKEN_USER_UNKNOWN);
+		}
+
+		string oUserToken = (a_eUserType == EUserType.USER_A) ? KCDefine.B_TOKEN_USER_A : KCDefine.B_TOKEN_USER_B;
+		return string.Format(KCDefine.B_TEXT_FMT_VERSION, a_oVersion, oUserToken);
+	}
+
 	//! 읽기용 스트림을 반환한다
 	public static FileStream GetReadStream(string a_oFilePath) {
 		CAccess.Assert(a_oFilePath.ExIsValid());

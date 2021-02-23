@@ -138,6 +138,17 @@ public static partial class CAccessExtension {
 		return false;
 	}
 
+	//! 변경 된 값을 반환한다
+	public static int ExGetReplaceZeroValue(this int a_nSender, int a_nNumDigits) {
+		int nDivideValue = KCDefine.B_VALUE_INT_1;
+
+		for(int i = 0; i < a_nNumDigits; ++i) {
+			nDivideValue *= 10;
+		}
+
+		return (a_nSender / nDivideValue) * nDivideValue;
+	}
+
 	//! 시간 간격을 반환한다
 	public static double ExGetDeltaTime(this System.DateTime a_stSender, System.DateTime a_stRhs) {
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
@@ -209,7 +220,7 @@ public static partial class CAccessExtension {
 		int nValue = KCDefine.B_VALUE_INT_0;
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
-			nValue |= 1 << a_oSender[i];
+			nValue |= KCDefine.B_VALUE_INT_1 << a_oSender[i];
 		}
 
 		return nValue;

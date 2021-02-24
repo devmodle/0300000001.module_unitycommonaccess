@@ -45,6 +45,23 @@ public static partial class CEditorAccessExtension {
 		return a_oSender != null && a_oSender.root != null;
 	}
 
+	//! 포함 여부를 검사한다
+	public static bool ExIsContainsAdsNetworkID(this PlistElementArray a_oSender, string a_oNetworkID) {
+		CAccess.Assert(a_oSender != null && a_oNetworkID.ExIsValid());
+
+		for(int i = 0; i < a_oSender.values.Count; ++i) {
+			var oAdsNetworkIDInfo = a_oSender.values[i].AsDict();
+			var oAdsNetworkIDs = oAdsNetworkIDInfo.values;
+
+			// 광고 네트워크 식별자가 존재 할 경우
+			if(oAdsNetworkIDs.TryGetValue(KCEditorDefine.B_KEY_IOS_ADS_NETWORK_ID, out PlistElement oValue) && oValue.AsString().ExIsEquals(a_oNetworkID)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	//! 배열을 반환한다
 	public static PlistElementArray ExGetArray(this PlistDocument a_oSender, string a_oKey) {
 		CAccess.Assert(a_oSender.ExIsValid());

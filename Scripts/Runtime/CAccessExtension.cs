@@ -195,6 +195,12 @@ public static partial class CAccessExtension {
 		return a_stSender + KCDefine.B_IDX_OFFSETS_NEXT_2D[(int)a_eDirection];
 	}
 
+	//! 괄호 문자열을 반환한다
+	public static string ExGetBracketString(this string a_oSender) {
+		CAccess.Assert(a_oSender != null);
+		return string.Format(KCDefine.B_TEXT_FMT_BRACKET, a_oSender);
+	}
+
 	//! 변경 된 문자열을 반환한다
 	public static string ExGetReplaceString(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_INT_1) {
 		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());

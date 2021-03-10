@@ -403,6 +403,15 @@ public static partial class CAccessExtension {
 		a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
 	}
 
+	//! 정렬 순서를 변경한다
+	public static void ExSetSortingOrder(this ParticleSystem a_oSender, STSortingOrderInfo a_stOrderInfo) {
+		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
+
+		var oRenderer = a_oSender.GetComponent<Renderer>();
+		oRenderer.sortingLayerName = a_stOrderInfo.m_oLayer;
+		oRenderer.sortingOrder = a_stOrderInfo.m_nOrder;
+	}
+
 	//! X 축 비율을 변경한다
 	public static void ExSetScaleX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);

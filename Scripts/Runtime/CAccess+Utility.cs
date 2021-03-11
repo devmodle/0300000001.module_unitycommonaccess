@@ -230,9 +230,15 @@ public static partial class CAccess {
 	}
 	
 	//! 값을 할당한다
-	public static void AssignValue(ref Sequence a_oLhs, Sequence a_oRhs) {
+	public static void AssignValue(ref Tween a_oLhs, Tween a_oRhs) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs;
+	}
+	
+	//! 값을 할당한다
+	public static void AssignValue(ref Sequence a_oLhs, Tween a_oRhs) {
+		a_oLhs?.Kill();
+		a_oLhs = a_oRhs as Sequence;
 	}
 	#endregion			// 클래스 함수
 

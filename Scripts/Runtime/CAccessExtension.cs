@@ -10,17 +10,17 @@ public static partial class CAccessExtension {
 	#region 클래스 함수
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this System.DateTime a_stSender) {
-		return a_stSender.Ticks >= KCDefine.B_VALUE_LONG_0;
+		return a_stSender.Ticks >= KCDefine.B_VALUE_0_LONG;
 	}
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this System.TimeSpan a_stSender) {
-		return a_stSender.Ticks >= KCDefine.B_VALUE_LONG_0;
+		return a_stSender.Ticks >= KCDefine.B_VALUE_0_LONG;
 	}
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this string a_oSender) {
-		return a_oSender != null && a_oSender.Length > KCDefine.B_VALUE_INT_0;
+		return a_oSender != null && a_oSender.Length > KCDefine.B_VALUE_0_INT;
 	}
 
 	//! 빌드 번호 유효 여부를 검사한다
@@ -140,7 +140,7 @@ public static partial class CAccessExtension {
 
 	//! 변경 된 값을 반환한다
 	public static int ExGetReplaceZeroValue(this int a_nSender, int a_nNumDigits) {
-		int nDivideValue = KCDefine.B_VALUE_INT_1;
+		int nDivideValue = KCDefine.B_VALUE_1_INT;
 
 		for(int i = 0; i < a_nNumDigits; ++i) {
 			nDivideValue *= 10;
@@ -202,7 +202,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 변경 된 문자열을 반환한다
-	public static string ExGetReplaceString(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_INT_1) {
+	public static string ExGetReplaceString(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_1_INT) {
 		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());
 
 		for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oTarget); ++i) {
@@ -223,10 +223,10 @@ public static partial class CAccessExtension {
 	//! 리스트 => 비트로 변환한다
 	public static int ExToBits(this List<int> a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		int nValue = KCDefine.B_VALUE_INT_0;
+		int nValue = KCDefine.B_VALUE_0_INT;
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
-			nValue |= KCDefine.B_VALUE_INT_1 << a_oSender[i];
+			nValue |= KCDefine.B_VALUE_1_INT << a_oSender[i];
 		}
 
 		return nValue;
@@ -246,7 +246,7 @@ public static partial class CAccessExtension {
 	#region 제네릭 클래스 함수
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid<T>(this T[] a_oSender) {
-		return a_oSender != null && a_oSender.Length > KCDefine.B_VALUE_INT_0;
+		return a_oSender != null && a_oSender.Length > KCDefine.B_VALUE_0_INT;
 	}
 
 	//! 유효 여부를 검사한다
@@ -256,18 +256,18 @@ public static partial class CAccessExtension {
 			return false;
 		}
 
-		bool bIsValid = a_oSender.GetLength(KCDefine.B_VALUE_INT_0) > KCDefine.B_VALUE_INT_0;
-		return bIsValid && a_oSender.GetLength(KCDefine.B_VALUE_INT_1) > KCDefine.B_VALUE_INT_0;
+		bool bIsValid = a_oSender.GetLength(KCDefine.B_VALUE_0_INT) > KCDefine.B_VALUE_0_INT;
+		return bIsValid && a_oSender.GetLength(KCDefine.B_VALUE_1_INT) > KCDefine.B_VALUE_0_INT;
 	}
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid<T>(this List<T> a_oSender) {
-		return a_oSender != null && a_oSender.Count > KCDefine.B_VALUE_INT_0;
+		return a_oSender != null && a_oSender.Count > KCDefine.B_VALUE_0_INT;
 	}
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid<Key, Value>(this Dictionary<Key, Value> a_oSender) {
-		return a_oSender != null && a_oSender.Count > KCDefine.B_VALUE_INT_0;
+		return a_oSender != null && a_oSender.Count > KCDefine.B_VALUE_0_INT;
 	}
 
 	//! 인덱스 유효 여부를 검사한다
@@ -280,8 +280,8 @@ public static partial class CAccessExtension {
 	public static bool ExIsValidIdx<T>(this T[,] a_oSender, Vector2Int a_stIdx) {
 		CAccess.Assert(a_oSender != null);
 
-		int nNumRows = a_oSender.GetLength(KCDefine.B_VALUE_INT_0);
-		int nNumCols = a_oSender.GetLength(KCDefine.B_VALUE_INT_1);
+		int nNumRows = a_oSender.GetLength(KCDefine.B_VALUE_0_INT);
+		int nNumCols = a_oSender.GetLength(KCDefine.B_VALUE_1_INT);
 
 		bool bIsValid = a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < nNumRows;
 		return bIsValid && a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < nNumCols;
@@ -311,8 +311,8 @@ public static partial class CAccessExtension {
 	public static bool ExIsContains<T>(this T[,] a_oSender, T a_tValue) {
 		CAccess.Assert(a_oSender != null);
 
-		for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VALUE_INT_0); ++i) {
-			for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VALUE_INT_1); ++j) {
+		for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VALUE_0_INT); ++i) {
+			for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VALUE_1_INT); ++j) {
 				// 값이 동일 할 경우
 				if(a_oSender[i, j].Equals(a_tValue)) {
 					return true;

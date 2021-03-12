@@ -62,7 +62,7 @@ public static partial class CAccessExtension {
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this SpriteAtlas a_oSender) {
-		return a_oSender != null && a_oSender.spriteCount > KCDefine.B_VALUE_INT_0;
+		return a_oSender != null && a_oSender.spriteCount > KCDefine.B_VALUE_0_INT;
 	}
 
 	//! 인덱스 유효 여부를 검사한다
@@ -144,8 +144,8 @@ public static partial class CAccessExtension {
 		float fAspect = stScreenSize.x / stScreenSize.y;
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
 
-		float fNormPosX = ((a_oSender.position.x * 2.0f) / stScreenSize.x) - KCDefine.B_VALUE_FLT_1;
-		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * 2.0f) / stScreenSize.y) - KCDefine.B_VALUE_FLT_1, KCDefine.B_VALUE_FLT_0);
+		float fNormPosX = ((a_oSender.position.x * 2.0f) / stScreenSize.x) - KCDefine.B_VALUE_1_FLT;
+		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * 2.0f) / stScreenSize.y) - KCDefine.B_VALUE_1_FLT, KCDefine.B_VALUE_0_FLT);
 
 		stNormPos.x *= (fScreenWidth / 2.0f) * KCDefine.B_UNIT_SCALE;
 		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / 2.0f) * KCDefine.B_UNIT_SCALE;
@@ -351,7 +351,7 @@ public static partial class CAccessExtension {
 	//! 컬링 마스크를 변경한다
 	public static void ExSetCullingMask(this Camera a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_INT_0 : a_oSender.cullingMask;
+		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_0_INT : a_oSender.cullingMask;
 
 		// 레이어 리스트가 유효 할 경우
 		if(a_oLayerList != null) {
@@ -362,7 +362,7 @@ public static partial class CAccessExtension {
 	//! 컬링 마스크를 변경한다
 	public static void ExSetCullingMask(this Light a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_INT_0 : a_oSender.cullingMask;
+		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_0_INT : a_oSender.cullingMask;
 
 		// 레이어가 유효 할 경우
 		if(a_oLayerList.ExIsValid()) {
@@ -377,7 +377,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		
 		var stLayerMask = a_oSender.eventMask;
-		stLayerMask.value = a_bIsReset ? KCDefine.B_VALUE_INT_0 : a_oSender.eventMask.value;
+		stLayerMask.value = a_bIsReset ? KCDefine.B_VALUE_0_INT : a_oSender.eventMask.value;
 
 		// 레이어 리스트가 유효 할 경우
 		if(a_oLayerList != null) {
@@ -717,13 +717,13 @@ public static partial class CAccessExtension {
 #if NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다
 	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
-		int nSumValue = KCDefine.B_VALUE_INT_0;
+		int nSumValue = KCDefine.B_VALUE_0_INT;
 
 		for(int i = 0; i < CAccessExtension.m_oAuthOpts.Length; ++i) {
 			nSumValue += (int)(a_eSender & CAccessExtension.m_oAuthOpts[i]);
 		}
 
-		return nSumValue != KCDefine.B_VALUE_INT_0;
+		return nSumValue != KCDefine.B_VALUE_0_INT;
 	}
 
 	//! 인증 요청 완료 여부를 검사한다

@@ -141,12 +141,12 @@ public static partial class CAccess {
 			return Screen.safeArea;
 		}
 
-		return new Rect(KCDefine.B_VALUE_FLT_0, KCDefine.B_VALUE_FLT_0, Camera.main.pixelWidth, Camera.main.pixelHeight);
+		return new Rect(KCDefine.B_VALUE_0_FLT, KCDefine.B_VALUE_0_FLT, Camera.main.pixelWidth, Camera.main.pixelHeight);
 	}
 
 	//! 배너 광고 높이를 반환한다
 	public static float GetBannerAdsHeight(float a_fHeight) {
-		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VALUE_FLT_0));
+		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VALUE_0_FLT));
 
 		float fScale = CAccess.GetResolutionScale();
 		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
@@ -187,7 +187,7 @@ public static partial class CAccess {
 
 	//! 해상도 비율을 반환한다
 	public static float GetResolutionScale() {
-		float fScale = KCDefine.B_VALUE_FLT_1;
+		float fScale = KCDefine.B_VALUE_1_FLT;
 		float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
 
 		float fScreenWidth = CAccess.GetScreenSize().x;

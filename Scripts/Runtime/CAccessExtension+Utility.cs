@@ -623,7 +623,7 @@ public static partial class CAccessExtension {
 		oObj.ExSetEnableComponents<T>(a_bIsEnable);
 	}
 
-	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	//! 컴포넌트 상호 작용 여부를 변경한다
 	public static void ExSetInteractable<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Selectable {
 		CAccess.Assert(a_oSender != null);
 		var oComponent = a_oSender.GetComponentInChildren<T>();
@@ -634,7 +634,7 @@ public static partial class CAccessExtension {
 		}
 	}
 
-	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	//! 컴포넌트 상호 작용 여부를 변경한다
 	public static void ExSetInteractable<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Selectable {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObj = a_stSender.ExFindChild(a_oName);
@@ -642,7 +642,7 @@ public static partial class CAccessExtension {
 		oObj.ExSetInteractable<T>(a_bIsEnable);
 	}
 
-	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	//! 컴포넌트 상호 작용 여부를 변경한다
 	public static void ExSetInteractable<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Selectable {
 		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
 		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
@@ -650,7 +650,7 @@ public static partial class CAccessExtension {
 		oObj.ExSetInteractable<T>(a_bIsEnable);
 	}
 
-	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	//! 컴포넌트 상호 작용 여부를 변경한다
 	public static void ExSetInteractables<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Selectable {
 		CAccess.Assert(a_oSender != null);
 		var oComponents = a_oSender.GetComponentsInChildren<T>();
@@ -665,7 +665,7 @@ public static partial class CAccessExtension {
 		}
 	}
 
-	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	//! 컴포넌트 상호 작용 여부를 변경한다
 	public static void ExSetInteractables<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Selectable {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObj = a_stSender.ExFindChild(a_oName);
@@ -673,7 +673,7 @@ public static partial class CAccessExtension {
 		oObj.ExSetInteractables<T>(a_bIsEnable);
 	}
 
-	//! 컴포넌트 상호 작용 가능 여부를 변경한다
+	//! 컴포넌트 상호 작용 여부를 변경한다
 	public static void ExSetInteractables<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Selectable {
 		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
 		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);

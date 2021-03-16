@@ -412,6 +412,12 @@ public static partial class CAccessExtension {
 		oRenderer.sortingOrder = a_stOrderInfo.m_nOrder;
 	}
 
+	//! 비율을 변경한다
+	public static void ExSetScale(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
+		a_oSender.localScale = new Vector3(a_fValue, a_fValue, a_fValue);
+	}
+
 	//! X 축 비율을 변경한다
 	public static void ExSetScaleX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
@@ -428,6 +434,12 @@ public static partial class CAccessExtension {
 	public static void ExSetScaleZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.localScale = new Vector3(a_oSender.localScale.x, a_oSender.localScale.y, a_fValue);
+	}
+
+	//! 월드 각도를 변경한다
+	public static void ExSetWorldAngle(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
+		a_oSender.eulerAngles = new Vector3(a_fValue, a_fValue, a_fValue);
 	}
 
 	//! 월드 X 축 각도를 변경한다
@@ -448,6 +460,12 @@ public static partial class CAccessExtension {
 		a_oSender.eulerAngles = new Vector3(a_oSender.eulerAngles.x, a_oSender.eulerAngles.y, a_fValue);
 	}
 
+	//! 로컬 각도를 변경한다
+	public static void ExSetLocalAngle(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
+		a_oSender.localEulerAngles = new Vector3(a_fValue, a_fValue, a_fValue);
+	}
+
 	//! 로컬 X 축 각도를 변경한다
 	public static void ExSetLocalAngleX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
@@ -464,6 +482,12 @@ public static partial class CAccessExtension {
 	public static void ExSetLocalAngleZ(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.localEulerAngles = new Vector3(a_oSender.localEulerAngles.x, a_oSender.localEulerAngles.y, a_fValue);
+	}
+
+	//! 월드 위치를 변경한다
+	public static void ExSetWorldPos(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
+		a_oSender.position = new Vector3(a_fValue, a_fValue, a_fValue);
 	}
 
 	//! 월드 X 축 위치를 변경한다
@@ -484,6 +508,12 @@ public static partial class CAccessExtension {
 		a_oSender.position = new Vector3(a_oSender.position.x, a_oSender.position.y, a_fValue);
 	}
 
+	//! 로컬 위치를 변경한다
+	public static void ExSetLocalPos(this Transform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
+		a_oSender.localPosition = new Vector3(a_fValue, a_fValue, a_fValue);
+	}
+
 	//! 로컬 X 축 위치를 변경한다
 	public static void ExSetLocalPosX(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
@@ -502,6 +532,12 @@ public static partial class CAccessExtension {
 		a_oSender.localPosition = new Vector3(a_oSender.localPosition.x, a_oSender.localPosition.y, a_fValue);
 	}
 
+	//! 크기 간격을 변경한다
+	public static void ExSetSizeDelta(this RectTransform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
+		a_oSender.sizeDelta = new Vector2(a_fValue, a_fValue);
+	}
+
 	//! X 축 크기 간격을 변경한다
 	public static void ExSetSizeDeltaX(this RectTransform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
@@ -512,6 +548,12 @@ public static partial class CAccessExtension {
 	public static void ExSetSizeDeltaY(this RectTransform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);
 		a_oSender.sizeDelta = new Vector2(a_oSender.sizeDelta.x, a_fValue);
+	}
+
+	//! 앵커 위치를 변경한다
+	public static void ExSetAnchorPos(this RectTransform a_oSender, float a_fValue) {
+		CAccess.Assert(a_oSender != null);
+		a_oSender.anchoredPosition = new Vector2(a_fValue, a_fValue);
 	}
 
 	//! X 축 앵커 위치를 변경한다

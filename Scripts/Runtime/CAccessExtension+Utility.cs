@@ -412,6 +412,14 @@ public static partial class CAccessExtension {
 		oRenderer.sortingOrder = a_stOrderInfo.m_nOrder;
 	}
 
+	//! 색상을 변경한다
+	public static void ExSetStartColor(this ParticleSystem a_oSender, Color a_stMinColor, Color a_stMaxColor) {
+		CAccess.Assert(a_oSender != null);
+
+		var oMainModule = a_oSender.main;
+		oMainModule.startColor = new ParticleSystem.MinMaxGradient(a_stMinColor, a_stMaxColor);
+	}
+
 	//! 비율을 변경한다
 	public static void ExSetScale(this Transform a_oSender, float a_fValue) {
 		CAccess.Assert(a_oSender != null);

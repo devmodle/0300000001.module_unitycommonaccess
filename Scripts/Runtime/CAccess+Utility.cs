@@ -80,11 +80,11 @@ public static partial class CAccess {
 		return false;
 #else
 #if UNITY_IOS
-		var oVersion = new System.Version(Device.systemVersion);
-		int nCompareResult = oVersion.CompareTo(KCDefine.U_MIN_VERSION_HAPTIC_FEEDBACK);
+		var oVer = new System.Version(Device.systemVersion);
+		int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK);
 
 		// 햅틱 피드백 지원 버전 일 경우
-		if(nCompareResult >= KCDefine.B_COMPARE_R_EQUALS) {
+		if(nCompare >= KCDefine.B_COMPARE_EQUALS) {
 			string oModel = Device.generation.ToString();
 			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
 
@@ -277,10 +277,10 @@ public static partial class CAccess {
 #if UNITY_EDITOR
 		return false;
 #else
-		var oVersion = new System.Version(Device.systemVersion);
-		int nCompareResult = oVersion.CompareTo(KCDefine.U_MIN_VERSION_LOGIN_WITH_APPLE);
+		var oVer = new System.Version(Device.systemVersion);
+		int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_LOGIN_WITH_APPLE);
 		
-		return nCompareResult >= KCDefine.B_COMPARE_R_EQUALS;
+		return nCompare >= KCDefine.B_COMPARE_EQUALS;
 #endif			// #if UNITY_EDITOR
 	}
 #endif			// #if UNITY_IOS

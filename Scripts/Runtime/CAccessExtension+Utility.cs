@@ -303,13 +303,13 @@ public static partial class CAccessExtension {
 	//! 크기 형식 문자열을 반환한다
 	public static string ExGetSizeFormatString(this string a_oSender, int a_nSize) {
 		CAccess.Assert(a_oSender != null);
-		return string.Format(KCDefine.B_SIZE_FMT_STRING, a_nSize, a_oSender);
+		return string.Format(KCDefine.B_SIZE_FMT_STR, a_nSize, a_oSender);
 	}
 
 	//! 색상 형식 문자열을 반환한다
 	public static string ExGetColorFormatString(this string a_oSender, Color a_stColor) {
 		CAccess.Assert(a_oSender != null);
-		return string.Format(KCDefine.B_COLOR_FMT_STRING, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
+		return string.Format(KCDefine.B_COLOR_FMT_STR, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
 	}
 
 	//! 활성화 여부를 변경한다

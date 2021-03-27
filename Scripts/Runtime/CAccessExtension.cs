@@ -24,13 +24,13 @@ public static partial class CAccessExtension {
 	}
 
 	//! 빌드 번호 유효 여부를 검사한다
-	public static bool ExIsValidBuildNumber(this int a_nSender) {
+	public static bool ExIsValidBuildNum(this int a_nSender) {
 		return a_nSender >= KCDefine.B_MIN_BUILD_NUMBER;
 	}
 
 	//! 빌드 버전 유효 여부를 검사한다
-	public static bool ExIsValidBuildVersion(this string a_oSender) {
-		return System.Version.TryParse(a_oSender, out System.Version stVersion);
+	public static bool ExIsValidBuildVer(this string a_oSender) {
+		return System.Version.TryParse(a_oSender, out System.Version stVer);
 	}
 
 	//! 언어 유효 여부를 검사한다
@@ -66,15 +66,15 @@ public static partial class CAccessExtension {
 	}
 
 	//! 동일 여부를 검사한다
-	public static bool ExIsEquals(this string a_oSender, string a_oString) {
-		CAccess.Assert(a_oSender != null && a_oString != null);
-		return a_oSender.Equals(a_oString);
+	public static bool ExIsEquals(this string a_oSender, string a_oStr) {
+		CAccess.Assert(a_oSender != null && a_oStr != null);
+		return a_oSender.Equals(a_oStr);
 	}
 
 	//! 포함 여부를 검사한다
-	public static bool ExIsContains(this string a_oSender, string a_oString) {
-		CAccess.Assert(a_oSender != null && a_oString != null);
-		return a_oSender.Contains(a_oString);
+	public static bool ExIsContains(this string a_oSender, string a_oStr) {
+		CAccess.Assert(a_oSender != null && a_oStr != null);
+		return a_oSender.Contains(a_oStr);
 	}
 
 	//! 작음 여부를 검사한다

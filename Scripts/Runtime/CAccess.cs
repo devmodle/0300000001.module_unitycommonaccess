@@ -70,7 +70,7 @@ public static partial class CAccess {
 				Directory.CreateDirectory(oBackupPath);
 			}
 
-			string oBackupFilePath = Path.Combine(oBackupPath, oFileName.ExGetReplaceString(oOriginFileName, oBackupFileName));
+			string oBackupFilePath = Path.Combine(oBackupPath, oFileName.ExGetReplaceStr(oOriginFileName, oBackupFileName));
 
 			// 백업 파일 생성이 가능 할 경우
 			if(!File.Exists(oBackupFilePath)) {

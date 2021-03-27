@@ -196,13 +196,13 @@ public static partial class CAccessExtension {
 	}
 
 	//! 괄호 문자열을 반환한다
-	public static string ExGetBracketString(this string a_oSender) {
+	public static string ExGetBracketStr(this string a_oSender) {
 		CAccess.Assert(a_oSender != null);
 		return string.Format(KCDefine.B_TEXT_FMT_BRACKET, a_oSender);
 	}
 
 	//! 변경 된 문자열을 반환한다
-	public static string ExGetReplaceString(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_1_INT) {
+	public static string ExGetReplaceStr(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VALUE_1_INT) {
 		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());
 
 		for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oTarget); ++i) {
@@ -217,7 +217,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender.ExIsValid() && a_oFileName.ExIsValid());
 		var oFileName = a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender);
 
-		return a_oSender.ExGetReplaceString(oFileName, a_oFileName);
+		return a_oSender.ExGetReplaceStr(oFileName, a_oFileName);
 	}
 
 	//! 리스트 => 비트로 변환한다

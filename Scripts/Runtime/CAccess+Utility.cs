@@ -287,7 +287,7 @@ public static partial class CAccess {
 
 #if PURCHASE_MODULE_ENABLE
 	//! 가격 문자열을 반환한다
-	public static string GetPriceString(Product a_oProduct) {
+	public static string GetPriceStr(Product a_oProduct) {
 		CAccess.Assert(a_oProduct != null);
 
 		decimal dclPrice = a_oProduct.metadata.localizedPrice;

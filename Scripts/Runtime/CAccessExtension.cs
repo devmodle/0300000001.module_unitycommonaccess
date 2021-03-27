@@ -25,12 +25,12 @@ public static partial class CAccessExtension {
 
 	//! 빌드 번호 유효 여부를 검사한다
 	public static bool ExIsValidBuildNum(this int a_nSender) {
-		return a_nSender >= KCDefine.B_MIN_BUILD_NUMBER;
+		return a_nSender >= KCDefine.B_MIN_BUILD_NUM;
 	}
 
 	//! 빌드 버전 유효 여부를 검사한다
 	public static bool ExIsValidBuildVer(this string a_oSender) {
-		return System.Version.TryParse(a_oSender, out System.Version stVer);
+		return System.Version.TryParse(a_oSender, out System.Version oVer);
 	}
 
 	//! 언어 유효 여부를 검사한다

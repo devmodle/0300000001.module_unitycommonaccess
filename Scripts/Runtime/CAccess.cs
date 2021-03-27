@@ -18,7 +18,7 @@ public static partial class CAccess {
 	}
 
 	//! 자정 시간 간격을 반환한다
-	public static string GetMidnightDeltaTimeString() {
+	public static string GetMidnightDeltaTimeStr() {
 		var stDeltaTime = CAccess.GetMidnightDeltaTime();
 		var stDateTime = new System.DateTime(stDeltaTime.Ticks);
 
@@ -59,8 +59,8 @@ public static partial class CAccess {
 			string oFileName = Path.GetFileName(a_oFilePath);
 			string oOriginFileName = Path.GetFileNameWithoutExtension(a_oFilePath);
 
-			string oDateString = System.DateTime.Now.ToString(KCDefine.B_NAME_FMT_BACKUP);
-			string oBackupFileName = string.Format(KCDefine.B_NAME_FMT_BACKUP_COMBINE, oOriginFileName, oDateString);
+			string oDateStr = System.DateTime.Now.ToString(KCDefine.B_NAME_FMT_BACKUP);
+			string oBackupFileName = string.Format(KCDefine.B_NAME_FMT_BACKUP_COMBINE, oOriginFileName, oDateStr);
 
 			string oBackupDirName = a_oBackupDirName.ExIsValid() ? a_oBackupDirName : KCDefine.B_DIR_N_BACKUP;
 			string oBackupPath = oDirPath.ExIsValid() ? Path.Combine(oDirPath, oBackupDirName) : Path.Combine(string.Empty, oBackupDirName);
@@ -106,15 +106,15 @@ public static partial class CAccess {
 	}
 
 	//! 열거형 문자열을 반환한다
-	public static string[] GetEnumStrings<T>() {
+	public static string[] GetEnumStrs<T>() {
 		var oEnumValues = CAccess.GetEnumValues<T>();
-		var oEnumStrings = new string[oEnumValues.Length];
+		var oEnumStrs = new string[oEnumValues.Length];
 
 		for(int i = 0; i < oEnumValues.Length; ++i) {
-			oEnumStrings[i] = oEnumValues[i].ToString();
+			oEnumStrs[i] = oEnumValues[i].ToString();
 		}
 
-		return oEnumStrings;
+		return oEnumStrs;
 	}
 	#endregion			// 제네릭 클래스 함수
 }

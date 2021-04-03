@@ -144,11 +144,11 @@ public static partial class CAccessExtension {
 		float fAspect = stScreenSize.x / stScreenSize.y;
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
 
-		float fNormPosX = ((a_oSender.position.x * 2.0f) / stScreenSize.x) - KCDefine.B_VALUE_1_FLT;
-		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * 2.0f) / stScreenSize.y) - KCDefine.B_VALUE_1_FLT, KCDefine.B_VALUE_0_FLT);
+		float fNormPosX = ((a_oSender.position.x * KCDefine.B_VALUE_2_FLT) / stScreenSize.x) - KCDefine.B_VALUE_1_FLT;
+		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * KCDefine.B_VALUE_2_FLT) / stScreenSize.y) - KCDefine.B_VALUE_1_FLT, KCDefine.B_VALUE_0_FLT);
 
-		stNormPos.x *= (fScreenWidth / 2.0f) * KCDefine.B_UNIT_SCALE;
-		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / 2.0f) * KCDefine.B_UNIT_SCALE;
+		stNormPos.x *= (fScreenWidth / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE;
+		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE;
 
 		return stNormPos;
 	}
@@ -181,8 +181,8 @@ public static partial class CAccessExtension {
 	public static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
 		var stResolution = CAccess.GetResolution();
 
-		float fPosX = Mathf.Clamp(a_stSender.x, (stResolution.x / -2.0f) * KCDefine.B_UNIT_SCALE, (stResolution.x / 2.0f) * KCDefine.B_UNIT_SCALE);
-		float fPosY = Mathf.Clamp(a_stSender.y, (stResolution.y / -2.0f) * KCDefine.B_UNIT_SCALE, (stResolution.y / 2.0f) * KCDefine.B_UNIT_SCALE);
+		float fPosX = Mathf.Clamp(a_stSender.x, (stResolution.x / -KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.x / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE);
+		float fPosY = Mathf.Clamp(a_stSender.y, (stResolution.y / -KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.y / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE);
 
 		return new Vector3(fPosX, fPosY, a_stSender.z);
 	}

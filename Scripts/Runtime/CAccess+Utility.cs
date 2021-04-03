@@ -145,44 +145,40 @@ public static partial class CAccess {
 	}
 
 	//! 배너 광고 높이를 반환한다
-	public static float GetBannerAdsHeight(float a_fHeight) {
-		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VALUE_0_FLT));
-
-		float fScale = CAccess.GetResolutionScale();
-		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
+	public static float GetBannerAdsHeight(float a_fDesignHeight) {
+		CAccess.Assert(a_fDesignHeight.ExIsGreateEquals(KCDefine.B_VALUE_0_FLT));
 
 		float fDPI = CAccess.GetDPI();
-		float fBannerAdsHeight = a_fHeight * (fDPI / KCDefine.B_DEF_DPI);
+		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
+		float fBannerAdsHeight = a_fDesignHeight * (fDPI / KCDefine.B_DEF_DPI);
 
-		return (fBannerAdsHeight * fPercent) / fScale;
+		return (fBannerAdsHeight * fPercent) / CAccess.GetResolutionScale();
 	}
 
 	//! 화면 인치를 반환한다
 	public static float GetScreenInches() {
-		var stScreenSize = CAccess.GetScreenSize();
-		stScreenSize = new Vector2(stScreenSize.x / Screen.dpi, stScreenSize.y / Screen.dpi);
-
+		var stScreenSize = CAccess.GetScreenSize() / Screen.dpi;
 		return stScreenSize.magnitude;
 	}
 
 	//! 화면 크기를 반환한다
-	public static Vector2 GetScreenSize() {
+	public static Vector3 GetScreenSize() {
 		// 앱이 실행 중 일 경우
 		if(Application.isPlaying) {
 #if UNITY_EDITOR
-			return new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
+			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VALUE_0_FLT);
 #else
-			return new Vector2(Screen.width, Screen.height);
+			return new Vector3(Screen.width, Screen.height, KCDefine.B_VALUE_0_FLT);
 #endif			// #if UNITY_EDITOR			
 		}
 
-		return new Vector2(Camera.main.pixelWidth, Camera.main.pixelHeight);
+		return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VALUE_0_FLT);
 	}
 
 	//! 해상도를 반환한다
-	public static Vector2 GetResolution() {
+	public static Vector3 GetResolution() {
 		float fScale = CAccess.GetResolutionScale();
-		return new Vector2(KCDefine.B_SCREEN_WIDTH, KCDefine.B_SCREEN_HEIGHT) * fScale;
+		return new Vector3(KCDefine.B_SCREEN_WIDTH, KCDefine.B_SCREEN_HEIGHT, KCDefine.B_VALUE_0_FLT) * fScale;
 	}
 
 	//! 해상도 비율을 반환한다

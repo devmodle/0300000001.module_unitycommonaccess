@@ -35,12 +35,7 @@ public static partial class CAccessExtension {
 
 	//! 언어 유효 여부를 검사한다
 	public static bool ExIsValidLanguage(this string a_oSender) {
-		// 언어가 유효하지 않을 경우
-		if(!a_oSender.ExIsValid()) {
-			return false;
-		}
-
-		return !a_oSender.ExIsEquals(KCDefine.B_UNKNOWN_LANGUAGE);
+		return a_oSender.ExIsValid() && !a_oSender.ExIsEquals(KCDefine.B_UNKNOWN_LANGUAGE);
 	}
 
 	//! 국가 코드 유효 여부를 검사한다

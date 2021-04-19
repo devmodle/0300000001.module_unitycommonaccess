@@ -226,13 +226,13 @@ public static partial class CAccess {
 	}
 	
 	//! 값을 할당한다
-	public static void AssignValue(ref Tween a_oLhs, Tween a_oRhs) {
+	public static void AssignVal(ref Tween a_oLhs, Tween a_oRhs) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs;
 	}
 	
 	//! 값을 할당한다
-	public static void AssignValue(ref Sequence a_oLhs, Tween a_oRhs) {
+	public static void AssignVal(ref Sequence a_oLhs, Tween a_oRhs) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs as Sequence;
 	}
@@ -242,14 +242,16 @@ public static partial class CAccess {
 	//! 리소스 존재 여부를 검사한다
 	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object {
 		CAccess.Assert(a_oFilePath.ExIsValid());
+
 		var oRes = Resources.Load<T>(a_oFilePath);
+		bool bIsExistsRes = oRes != null;
 
 		// 자동 제거 모드 일 경우
-		if(a_bIsAutoUnload && oRes != null) {
+		if(bIsExistsRes && a_bIsAutoUnload) {
 			Resources.UnloadAsset(oRes);
 		}
 
-		return oRes != null;
+		return bIsExistsRes;
 	}
 	#endregion			// 제네릭 클래스 함수
 

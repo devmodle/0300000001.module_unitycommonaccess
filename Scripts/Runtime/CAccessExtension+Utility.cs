@@ -393,159 +393,159 @@ public static partial class CAccessExtension {
 	}
 
 	//! 비율을 변경한다
-	public static void ExSetScale(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetScale(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_fValue, a_fValue, a_fValue);
+		a_oSender.transform.localScale = new Vector3(a_fVal, a_fVal, a_fVal);
 	}
 
 	//! X 축 비율을 변경한다
-	public static void ExSetScaleX(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetScaleX(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_fValue, a_oSender.transform.localScale.y, a_oSender.transform.localScale.z);
+		a_oSender.transform.localScale = new Vector3(a_fVal, a_oSender.transform.localScale.y, a_oSender.transform.localScale.z);
 	}
 
 	//! Y 축 비율을 변경한다
-	public static void ExSetScaleY(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetScaleY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_fValue, a_oSender.transform.localScale.z);
+		a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_fVal, a_oSender.transform.localScale.z);
 	}
 
 	//! Z 축 비율을 변경한다
-	public static void ExSetScaleZ(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetScaleZ(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_oSender.transform.localScale.y, a_fValue);
+		a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_oSender.transform.localScale.y, a_fVal);
 	}
 
 	//! 월드 각도를 변경한다
-	public static void ExSetWorldAngle(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldAngle(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_fValue, a_fValue, a_fValue);
+		a_oSender.transform.eulerAngles = new Vector3(a_fVal, a_fVal, a_fVal);
 	}
 
 	//! 월드 X 축 각도를 변경한다
-	public static void ExSetWorldAngleX(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldAngleX(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_fValue, a_oSender.transform.eulerAngles.y, a_oSender.transform.eulerAngles.z);
+		a_oSender.transform.eulerAngles = new Vector3(a_fVal, a_oSender.transform.eulerAngles.y, a_oSender.transform.eulerAngles.z);
 	}
 	
 	//! 월드 Y 축 각도를 변경한다
-	public static void ExSetWorldAngleY(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldAngleY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_fValue, a_oSender.transform.eulerAngles.z);
+		a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_fVal, a_oSender.transform.eulerAngles.z);
 	}
 
 	//! 월드 Z 축 각도를 변경한다
-	public static void ExSetWorldAngleZ(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldAngleZ(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_oSender.transform.eulerAngles.y, a_fValue);
+		a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_oSender.transform.eulerAngles.y, a_fVal);
 	}
 
 	//! 로컬 각도를 변경한다
-	public static void ExSetLocalAngle(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalAngle(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_fValue, a_fValue, a_fValue);
+		a_oSender.transform.localEulerAngles = new Vector3(a_fVal, a_fVal, a_fVal);
 	}
 
 	//! 로컬 X 축 각도를 변경한다
-	public static void ExSetLocalAngleX(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalAngleX(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_fValue, a_oSender.transform.localEulerAngles.y, a_oSender.transform.localEulerAngles.z);
+		a_oSender.transform.localEulerAngles = new Vector3(a_fVal, a_oSender.transform.localEulerAngles.y, a_oSender.transform.localEulerAngles.z);
 	}
 	
 	//! 로컬 Y 축 각도를 변경한다
-	public static void ExSetLocalAngleY(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalAngleY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_fValue, a_oSender.transform.localEulerAngles.z);
+		a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_fVal, a_oSender.transform.localEulerAngles.z);
 	}
 
 	//! 로컬 Z 축 각도를 변경한다
-	public static void ExSetLocalAngleZ(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalAngleZ(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_oSender.transform.localEulerAngles.y, a_fValue);
+		a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_oSender.transform.localEulerAngles.y, a_fVal);
 	}
 
 	//! 월드 위치를 변경한다
-	public static void ExSetWorldPos(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldPos(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_fValue, a_fValue, a_fValue);
+		a_oSender.transform.position = new Vector3(a_fVal, a_fVal, a_fVal);
 	}
 
 	//! 월드 X 축 위치를 변경한다
-	public static void ExSetWorldPosX(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldPosX(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_fValue, a_oSender.transform.position.y, a_oSender.transform.position.z);
+		a_oSender.transform.position = new Vector3(a_fVal, a_oSender.transform.position.y, a_oSender.transform.position.z);
 	}
 	
 	//! 월드 Y 축 위치를 변경한다
-	public static void ExSetWorldPosY(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldPosY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_fValue, a_oSender.transform.position.z);
+		a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_fVal, a_oSender.transform.position.z);
 	}
 
 	//! 월드 Z 축 위치를 변경한다
-	public static void ExSetWorldPosZ(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetWorldPosZ(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_oSender.transform.position.y, a_fValue);
+		a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_oSender.transform.position.y, a_fVal);
 	}
 
 	//! 로컬 위치를 변경한다
-	public static void ExSetLocalPos(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalPos(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_fValue, a_fValue, a_fValue);
+		a_oSender.transform.localPosition = new Vector3(a_fVal, a_fVal, a_fVal);
 	}
 
 	//! 로컬 X 축 위치를 변경한다
-	public static void ExSetLocalPosX(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalPosX(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_fValue, a_oSender.transform.localPosition.y, a_oSender.transform.localPosition.z);
+		a_oSender.transform.localPosition = new Vector3(a_fVal, a_oSender.transform.localPosition.y, a_oSender.transform.localPosition.z);
 	}
 	
 	//! 로컬 Y 축 위치를 변경한다
-	public static void ExSetLocalPosY(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalPosY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_fValue, a_oSender.transform.localPosition.z);
+		a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_fVal, a_oSender.transform.localPosition.z);
 	}
 
 	//! 로컬 Z 축 위치를 변경한다
-	public static void ExSetLocalPosZ(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetLocalPosZ(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_oSender.transform.localPosition.y, a_fValue);
+		a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_oSender.transform.localPosition.y, a_fVal);
 	}
 
 	//! 크기 간격을 변경한다
-	public static void ExSetSizeDelta(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetSizeDelta(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fValue, a_fValue);
+		(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fVal, a_fVal);
 	}
 
 	//! X 축 크기 간격을 변경한다
-	public static void ExSetSizeDeltaX(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetSizeDeltaX(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fValue, (a_oSender.transform as RectTransform).sizeDelta.y);
+		(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fVal, (a_oSender.transform as RectTransform).sizeDelta.y);
 	}
 
 	//! Y 축 크기 간격을 변경한다
-	public static void ExSetSizeDeltaY(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetSizeDeltaY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).sizeDelta = new Vector2((a_oSender.transform as RectTransform).sizeDelta.x, a_fValue);
+		(a_oSender.transform as RectTransform).sizeDelta = new Vector2((a_oSender.transform as RectTransform).sizeDelta.x, a_fVal);
 	}
 
 	//! 앵커 위치를 변경한다
-	public static void ExSetAnchorPos(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetAnchorPos(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fValue, a_fValue);
+		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fVal, a_fVal);
 	}
 
 	//! X 축 앵커 위치를 변경한다
-	public static void ExSetAnchorPosX(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetAnchorPosX(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fValue, (a_oSender.transform as RectTransform).anchoredPosition.y);
+		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fVal, (a_oSender.transform as RectTransform).anchoredPosition.y);
 	}
 
 	//! Y 축 앵커 위치를 변경한다
-	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fValue) {
+	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fValue);
+		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal);
 	}
 	
 	//! 자식 객체를 탐색한다
@@ -739,13 +739,13 @@ public static partial class CAccessExtension {
 #if NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다
 	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
-		int nSumValue = KCDefine.B_VAL_0_INT;
+		int nSumVal = KCDefine.B_VAL_0_INT;
 
 		for(int i = 0; i < CAccessExtension.m_oAuthOpts.Length; ++i) {
-			nSumValue += (int)(a_eSender & CAccessExtension.m_oAuthOpts[i]);
+			nSumVal += (int)(a_eSender & CAccessExtension.m_oAuthOpts[i]);
 		}
 
-		return nSumValue != KCDefine.B_VAL_0_INT;
+		return nSumVal != KCDefine.B_VAL_0_INT;
 	}
 
 	//! 인증 요청 완료 여부를 검사한다

@@ -134,14 +134,14 @@ public static partial class CAccessExtension {
 	}
 
 	//! 변경 된 값을 반환한다
-	public static int ExGetReplaceZeroValue(this int a_nSender, int a_nNumDigits) {
-		int nDivideValue = KCDefine.B_VAL_1_INT;
+	public static int ExGetReplaceZeroVal(this int a_nSender, int a_nNumDigits) {
+		int nDivideVal = KCDefine.B_VAL_1_INT;
 
 		for(int i = 0; i < a_nNumDigits; ++i) {
-			nDivideValue *= 10;
+			nDivideVal *= 10;
 		}
 
-		return (a_nSender / nDivideValue) * nDivideValue;
+		return (a_nSender / nDivideVal) * nDivideVal;
 	}
 
 	//! 시간 간격을 반환한다
@@ -218,13 +218,13 @@ public static partial class CAccessExtension {
 	//! 리스트 => 비트로 변환한다
 	public static int ExToBits(this List<int> a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		int nValue = KCDefine.B_VAL_0_INT;
+		int nVal = KCDefine.B_VAL_0_INT;
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
-			nValue |= KCDefine.B_VAL_1_INT << a_oSender[i];
+			nVal |= KCDefine.B_VAL_1_INT << a_oSender[i];
 		}
 
-		return nValue;
+		return nVal;
 	}
 
 	//! 로컬 => 월드로 변환한다
@@ -261,7 +261,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 유효 여부를 검사한다
-	public static bool ExIsValid<Key, Value>(this Dictionary<Key, Value> a_oSender) {
+	public static bool ExIsValid<Key, Val>(this Dictionary<Key, Val> a_oSender) {
 		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
 	}
 
@@ -289,12 +289,12 @@ public static partial class CAccessExtension {
 	}
 
 	//! 포함 여부를 검사한다
-	public static bool ExIsContains<T>(this T[] a_oSender, T a_tValue) {
+	public static bool ExIsContains<T>(this T[] a_oSender, T a_tVal) {
 		CAccess.Assert(a_oSender != null);
 
 		for(int i = 0; i < a_oSender.Length; ++i) {
 			// 값이 동일 할 경우
-			if(a_oSender[i].Equals(a_tValue)) {
+			if(a_oSender[i].Equals(a_tVal)) {
 				return true;
 			}
 		}
@@ -303,13 +303,13 @@ public static partial class CAccessExtension {
 	}
 
 	//! 포함 여부를 검사한다
-	public static bool ExIsContains<T>(this T[,] a_oSender, T a_tValue) {
+	public static bool ExIsContains<T>(this T[,] a_oSender, T a_tVal) {
 		CAccess.Assert(a_oSender != null);
 
 		for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VAL_0_INT); ++i) {
 			for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
 				// 값이 동일 할 경우
-				if(a_oSender[i, j].Equals(a_tValue)) {
+				if(a_oSender[i, j].Equals(a_tVal)) {
 					return true;
 				}
 			}
@@ -327,31 +327,31 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 반환한다
-	public static T ExGetValue<T>(this T[] a_oSender, int a_nIdx, T a_tDefValue) {
+	public static T ExGetVal<T>(this T[] a_oSender, int a_nIdx, T a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExIsValidIdx(a_nIdx) ? a_oSender[a_nIdx] : a_tDefValue;
+		return a_oSender.ExIsValidIdx(a_nIdx) ? a_oSender[a_nIdx] : a_tDefVal;
 	}
 
 	//! 값을 반환한다
-	public static T ExGetValue<T>(this T[,] a_oSender, Vector2Int a_stIdx, T a_tDefValue) {
+	public static T ExGetVal<T>(this T[,] a_oSender, Vector2Int a_stIdx, T a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y, a_stIdx.x] : a_tDefValue;
+		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y, a_stIdx.x] : a_tDefVal;
 	}
 
 	//! 값을 반환한다
-	public static T ExGetValue<T>(this List<T> a_oSender, int a_nIdx, T a_tDefValue) {
+	public static T ExGetVal<T>(this List<T> a_oSender, int a_nIdx, T a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExIsValidIdx(a_nIdx) ? a_oSender[a_nIdx] : a_tDefValue;
+		return a_oSender.ExIsValidIdx(a_nIdx) ? a_oSender[a_nIdx] : a_tDefVal;
 	}
 
 	//! 값을 반환한다
-	public static Value ExGetValue<Key, Value>(this Dictionary<Key, Value> a_oSender, Key a_tKey, Value a_tDefValue) {
+	public static Val ExGetVal<Key, Val>(this Dictionary<Key, Val> a_oSender, Key a_tKey, Val a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ContainsKey(a_tKey) ? a_oSender[a_tKey] : a_tDefValue;
+		return a_oSender.ContainsKey(a_tKey) ? a_oSender[a_tKey] : a_tDefVal;
 	}
 
 	//! 필드 값을 반환한다
-	public static object ExGetFieldValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
+	public static object ExGetFieldVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oFieldInfo = typeof(T).GetField(a_oName, a_eBindingFlags);
 
@@ -359,7 +359,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 런타임 필드 값을 반환한다
-	public static object ExGetRuntimeFieldValue<T>(this object a_oSender, string a_oName) {
+	public static object ExGetRuntimeFieldVal<T>(this object a_oSender, string a_oName) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oFieldInfos = typeof(T).GetRuntimeFields();
 
@@ -374,7 +374,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 프로퍼티 값을 반환한다
-	public static object ExGetPropertyValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
+	public static object ExGetPropertyVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oPropertyInfo = typeof(T).GetProperty(a_oName, a_eBindingFlags);
 
@@ -382,7 +382,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 런타임 프로퍼티 값을 반환한다
-	public static object ExGetRuntimePropertyValue<T>(this object a_oSender, string a_oName) {
+	public static object ExGetRuntimePropertyVal<T>(this object a_oSender, string a_oName) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oPropertyInfos = typeof(T).GetRuntimeProperties();
 		
@@ -397,102 +397,102 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValue<T>(this T[] a_oSender, int a_nIdx, T a_tValue) {
+	public static void ExSetVal<T>(this T[] a_oSender, int a_nIdx, T a_tVal) {
 		CAccess.Assert(a_oSender != null);
 
 		// 인덱스가 유효 할 경우
 		if(a_oSender.ExIsValidIdx(a_nIdx)) {
-			a_oSender[a_nIdx] = a_tValue;
+			a_oSender[a_nIdx] = a_tVal;
 		}
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValue<T>(this List<T> a_oSender, int a_nIdx, T a_tValue) {
+	public static void ExSetVal<T>(this List<T> a_oSender, int a_nIdx, T a_tVal) {
 		CAccess.Assert(a_oSender != null);
 
 		// 인덱스가 유효 할 경우
 		if(a_oSender.ExIsValidIdx(a_nIdx)) {
-			a_oSender[a_nIdx] = a_tValue;
+			a_oSender[a_nIdx] = a_tVal;
 		}
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValue<Key, Value>(this Dictionary<Key, Value> a_oSender, Key a_tKey, Value a_tValue) {
+	public static void ExSetVal<Key, Val>(this Dictionary<Key, Val> a_oSender, Key a_tKey, Val a_tVal) {
 		CAccess.Assert(a_oSender != null);
 
 		// 키가 유효 할 경우
 		if(a_oSender.ContainsKey(a_tKey)) {
-			a_oSender[a_tKey] = a_tValue;
+			a_oSender[a_tKey] = a_tVal;
 		}
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValues<T>(this T[] a_oSender, List<int> a_oIdxList, List<T> a_oValueList) {
+	public static void ExSetVals<T>(this T[] a_oSender, List<int> a_oIdxList, List<T> a_oValList) {
 		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oIdxList != null && a_oValueList != null);
+		CAccess.Assert(a_oIdxList != null && a_oValList != null);
 
 		for(int i = 0; i < a_oIdxList.Count; ++i) {
-			a_oSender.ExSetValue(a_oIdxList[i], a_oValueList[i]);
+			a_oSender.ExSetVal(a_oIdxList[i], a_oValList[i]);
 		}
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValues<T>(this List<T> a_oSender, List<int> a_oIdxList, List<T> a_oValueList) {
+	public static void ExSetVals<T>(this List<T> a_oSender, List<int> a_oIdxList, List<T> a_oValList) {
 		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oIdxList != null && a_oValueList != null);
+		CAccess.Assert(a_oIdxList != null && a_oValList != null);
 
 		for(int i = 0; i < a_oIdxList.Count; ++i) {
-			a_oSender.ExSetValue(a_oIdxList[i], a_oValueList[i]);
+			a_oSender.ExSetVal(a_oIdxList[i], a_oValList[i]);
 		}
 	}
 
 	//! 값을 변경한다
-	public static void ExSetValues<Key, Value>(this Dictionary<Key, Value> a_oSender, Dictionary<Key, Value> a_oValueList) {
-		CAccess.Assert(a_oSender != null && a_oValueList != null);
+	public static void ExSetVals<Key, Val>(this Dictionary<Key, Val> a_oSender, Dictionary<Key, Val> a_oValList) {
+		CAccess.Assert(a_oSender != null && a_oValList != null);
 
-		foreach(var stKeyValue in a_oValueList) {
-			a_oSender.ExSetValue(stKeyValue.Key, stKeyValue.Value);
+		foreach(var stKeyVal in a_oValList) {
+			a_oSender.ExSetVal(stKeyVal.Key, stKeyVal.Value);
 		}
 	}
 
 	//! 필드 값을 변경한다
-	public static void ExSetFieldValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oValue) {
+	public static void ExSetFieldVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oVal) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oFieldInfo = typeof(T).GetField(a_oName, a_eBindingFlags);
 
-		oFieldInfo.SetValue(a_oSender, a_oValue);
+		oFieldInfo.SetValue(a_oSender, a_oVal);
 	}
 
 	//! 런타임 필드 값을 변경한다
-	public static void ExSetRuntimeFieldValue<T>(this object a_oSender, string a_oName, object a_oValue) {
+	public static void ExSetRuntimeFieldVal<T>(this object a_oSender, string a_oName, object a_oVal) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oFieldInfos = typeof(T).GetRuntimeFields();
 
 		foreach(var oFieldInfo in oFieldInfos) {
 			// 필드 이름이 동일 할 경우
 			if(oFieldInfo.Name.ExIsEquals(a_oName)) {
-				oFieldInfo.SetValue(a_oSender, a_oValue);
+				oFieldInfo.SetValue(a_oSender, a_oVal);
 			}
 		}
 	}
 
 	//! 프로퍼티 값을 변경한다
-	public static void ExSetPropertyValue<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oValue) {
+	public static void ExSetPropertyVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oVal) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oPropertyInfo = typeof(T).GetProperty(a_oName, a_eBindingFlags);
 
-		oPropertyInfo.SetValue(a_oSender, a_oValue);
+		oPropertyInfo.SetValue(a_oSender, a_oVal);
 	}
 
 	//! 런타임 프로퍼티 값을 변경한다
-	public static void ExSetRuntimePropertyValue<T>(this object a_oSender, string a_oName, object a_oValue) {
+	public static void ExSetRuntimePropertyVal<T>(this object a_oSender, string a_oName, object a_oVal) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oPropertyInfos = typeof(T).GetRuntimeProperties();
 		
 		foreach(var oPropertyInfo in oPropertyInfos) {
 			// 프로퍼티 이름이 동일 할 경우
 			if(oPropertyInfo.Name.ExIsEquals(a_oName)) {
-				oPropertyInfo.SetValue(a_oSender, a_oValue);
+				oPropertyInfo.SetValue(a_oSender, a_oVal);
 			}
 		}
 	}

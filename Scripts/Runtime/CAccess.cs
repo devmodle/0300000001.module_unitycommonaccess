@@ -101,17 +101,17 @@ public static partial class CAccess {
 
 	#region 제네릭 클래스 함수
 	//! 열거형 값을 반환한다
-	public static T[] GetEnumValues<T>() {
+	public static T[] GetEnumVals<T>() {
 		return System.Enum.GetValues(typeof(T)) as T[];
 	}
 
 	//! 열거형 문자열을 반환한다
 	public static string[] GetEnumStrs<T>() {
-		var oEnumValues = CAccess.GetEnumValues<T>();
-		var oEnumStrs = new string[oEnumValues.Length];
+		var oEnumVals = CAccess.GetEnumVals<T>();
+		var oEnumStrs = new string[oEnumVals.Length];
 
-		for(int i = 0; i < oEnumValues.Length; ++i) {
-			oEnumStrs[i] = oEnumValues[i].ToString();
+		for(int i = 0; i < oEnumVals.Length; ++i) {
+			oEnumStrs[i] = oEnumVals[i].ToString();
 		}
 
 		return oEnumStrs;

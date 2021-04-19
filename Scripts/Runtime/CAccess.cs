@@ -9,7 +9,7 @@ public static partial class CAccess {
 	#region 클래스 함수
 	//! 자정 시간을 반환한다
 	public static System.DateTime GetMidnightTime() {
-		return System.DateTime.Today.AddDays(KCDefine.B_VALUE_1_DBL);
+		return System.DateTime.Today.AddDays(KCDefine.B_VAL_1_DBL);
 	}
 	
 	//! 자정 시간 간격을 반환한다

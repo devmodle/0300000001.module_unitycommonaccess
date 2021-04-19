@@ -37,12 +37,12 @@ public static partial class CAccessExtension {
 	#region 클래스 함수
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this EUserType a_eSender) {
-		return a_eSender > EUserType.NONE && a_eSender < EUserType.MAX_VALUE;
+		return a_eSender > EUserType.NONE && a_eSender < EUserType.MAX_VAL;
 	}
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this EDeviceType a_eSender) {
-		return a_eSender > EDeviceType.NONE && a_eSender < EDeviceType.MAX_VALUE;
+		return a_eSender > EDeviceType.NONE && a_eSender < EDeviceType.MAX_VAL;
 	}
 
 	//! 유효 여부를 검사한다
@@ -62,7 +62,7 @@ public static partial class CAccessExtension {
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this SpriteAtlas a_oSender) {
-		return a_oSender != null && a_oSender.spriteCount > KCDefine.B_VALUE_0_INT;
+		return a_oSender != null && a_oSender.spriteCount > KCDefine.B_VAL_0_INT;
 	}
 
 	//! 인덱스 유효 여부를 검사한다
@@ -144,11 +144,11 @@ public static partial class CAccessExtension {
 		float fAspect = stScreenSize.x / stScreenSize.y;
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
 
-		float fNormPosX = ((a_oSender.position.x * KCDefine.B_VALUE_2_FLT) / stScreenSize.x) - KCDefine.B_VALUE_1_FLT;
-		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * KCDefine.B_VALUE_2_FLT) / stScreenSize.y) - KCDefine.B_VALUE_1_FLT, KCDefine.B_VALUE_0_FLT);
+		float fNormPosX = ((a_oSender.position.x * KCDefine.B_VAL_2_FLT) / stScreenSize.x) - KCDefine.B_VAL_1_FLT;
+		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * KCDefine.B_VAL_2_FLT) / stScreenSize.y) - KCDefine.B_VAL_1_FLT, KCDefine.B_VAL_0_FLT);
 
-		stNormPos.x *= (fScreenWidth / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE;
-		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE;
+		stNormPos.x *= (fScreenWidth / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
+		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
 
 		return stNormPos;
 	}
@@ -181,8 +181,8 @@ public static partial class CAccessExtension {
 	public static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
 		var stResolution = CAccess.GetResolution();
 
-		float fPosX = Mathf.Clamp(a_stSender.x, (stResolution.x / -KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.x / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE);
-		float fPosY = Mathf.Clamp(a_stSender.y, (stResolution.y / -KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.y / KCDefine.B_VALUE_2_FLT) * KCDefine.B_UNIT_SCALE);
+		float fPosX = Mathf.Clamp(a_stSender.x, (stResolution.x / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.x / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE);
+		float fPosY = Mathf.Clamp(a_stSender.y, (stResolution.y / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.y / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE);
 
 		return new Vector3(fPosX, fPosY, a_stSender.z);
 	}
@@ -231,7 +231,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oViewport != null && a_oContents != null);
 
 		float fNormPosH = a_oSender.ExGetNormPosH(a_oViewport, a_oContents, a_stPos);
-		return new Vector3(fNormPosH, a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos), KCDefine.B_VALUE_0_FLT);
+		return new Vector3(fNormPosH, a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos), KCDefine.B_VAL_0_FLT);
 	}
 
 	//! 스크롤 뷰 수직 정규 위치를 반환한다
@@ -323,7 +323,7 @@ public static partial class CAccessExtension {
 	//! 컬링 마스크를 변경한다
 	public static void ExSetCullingMask(this Camera a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_0_INT : a_oSender.cullingMask;
+		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
 
 		// 레이어 리스트가 유효 할 경우
 		if(a_oLayerList != null) {
@@ -334,7 +334,7 @@ public static partial class CAccessExtension {
 	//! 컬링 마스크를 변경한다
 	public static void ExSetCullingMask(this Light a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VALUE_0_INT : a_oSender.cullingMask;
+		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
 
 		// 레이어가 유효 할 경우
 		if(a_oLayerList.ExIsValid()) {
@@ -349,7 +349,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		
 		var stLayerMask = a_oSender.eventMask;
-		stLayerMask.value = a_bIsReset ? KCDefine.B_VALUE_0_INT : a_oSender.eventMask.value;
+		stLayerMask.value = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.eventMask.value;
 
 		// 레이어 리스트가 유효 할 경우
 		if(a_oLayerList != null) {
@@ -718,7 +718,7 @@ public static partial class CAccessExtension {
 #if ADS_MODULE_ENABLE
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this EAdsType a_eSender) {
-		return a_eSender > EAdsType.NONE && a_eSender < EAdsType.MAX_VALUE;
+		return a_eSender > EAdsType.NONE && a_eSender < EAdsType.MAX_VAL;
 	}
 #endif			// #if ADS_MODULE_ENABLE
 
@@ -739,13 +739,13 @@ public static partial class CAccessExtension {
 #if NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다
 	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
-		int nSumValue = KCDefine.B_VALUE_0_INT;
+		int nSumValue = KCDefine.B_VAL_0_INT;
 
 		for(int i = 0; i < CAccessExtension.m_oAuthOpts.Length; ++i) {
 			nSumValue += (int)(a_eSender & CAccessExtension.m_oAuthOpts[i]);
 		}
 
-		return nSumValue != KCDefine.B_VALUE_0_INT;
+		return nSumValue != KCDefine.B_VAL_0_INT;
 	}
 
 	//! 인증 요청 완료 여부를 검사한다

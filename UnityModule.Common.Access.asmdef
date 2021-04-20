@@ -5,6 +5,7 @@
         "UnityModule.Common.Define",
         "UnityModule.Common.Externals",
         "UnityEngine.Purchasing",
+        "UnityEngine.Purchasing.Stores",
         "Unity.Notifications.iOS",
         "Unity.Notifications.Android",
         "DOTween.Modules",

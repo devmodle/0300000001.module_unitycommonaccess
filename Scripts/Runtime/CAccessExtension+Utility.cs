@@ -139,13 +139,12 @@ public static partial class CAccessExtension {
 	//! 캔버스 월드 위치를 반환한다
 	public static Vector3 ExGetWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		var stScreenSize = CAccess.GetScreenSize();
 
-		float fAspect = stScreenSize.x / stScreenSize.y;
+		float fAspect = CAccess.ScreenSize.x / CAccess.ScreenSize.y;
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
 
-		float fNormPosX = ((a_oSender.position.x * KCDefine.B_VAL_2_FLT) / stScreenSize.x) - KCDefine.B_VAL_1_FLT;
-		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * KCDefine.B_VAL_2_FLT) / stScreenSize.y) - KCDefine.B_VAL_1_FLT, KCDefine.B_VAL_0_FLT);
+		float fNormPosX = ((a_oSender.position.x * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_FLT;
+		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT, KCDefine.B_VAL_0_FLT);
 
 		stNormPos.x *= (fScreenWidth / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
 		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
@@ -179,10 +178,8 @@ public static partial class CAccessExtension {
 
 	//! 보정된 캔버스 월드 위치를 반환한다
 	public static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
-		var stResolution = CAccess.GetResolution();
-
-		float fPosX = Mathf.Clamp(a_stSender.x, (stResolution.x / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.x / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE);
-		float fPosY = Mathf.Clamp(a_stSender.y, (stResolution.y / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE, (stResolution.y / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE);
+		float fPosX = Mathf.Clamp(a_stSender.x, (CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE, (CAccess.Resolution.x / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE);
+		float fPosY = Mathf.Clamp(a_stSender.y, (CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE, (CAccess.Resolution.y / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE);
 
 		return new Vector3(fPosX, fPosY, a_stSender.z);
 	}

@@ -6,25 +6,19 @@ using UnityEngine;
 
 //! 기본 접근자
 public static partial class CAccess {
+	#region 클래스 프로퍼티
+	public static string MidnightDeltaTimeStr {
+		get {
+			var stDateTime = new System.DateTime(CAccess.MidnightDeltaTime.Ticks);
+			return stDateTime.ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
+		}
+	}
+
+	public static System.DateTime MidnightTime => System.DateTime.Today.AddDays(KCDefine.B_VAL_1_DBL);
+	public static System.TimeSpan MidnightDeltaTime => CAccess.MidnightTime - System.DateTime.Now;
+	#endregion			// 클래스 프로퍼티
+
 	#region 클래스 함수
-	//! 자정 시간을 반환한다
-	public static System.DateTime GetMidnightTime() {
-		return System.DateTime.Today.AddDays(KCDefine.B_VAL_1_DBL);
-	}
-	
-	//! 자정 시간 간격을 반환한다
-	public static System.TimeSpan GetMidnightDeltaTime() {
-		return CAccess.GetMidnightTime() - System.DateTime.Now;
-	}
-
-	//! 자정 시간 간격을 반환한다
-	public static string GetMidnightDeltaTimeStr() {
-		var stDeltaTime = CAccess.GetMidnightDeltaTime();
-		var stDateTime = new System.DateTime(stDeltaTime.Ticks);
-
-		return stDateTime.ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
-	}
-
 	//! 버전 문자열을 반환한다
 	public static string GetVerStr(string a_oVer, EUserType a_eUserType) {
 		// 유저 타입이 유효하지 않을 경우

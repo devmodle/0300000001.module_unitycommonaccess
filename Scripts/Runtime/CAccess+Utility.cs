@@ -22,47 +22,124 @@ using UnityEngine.Purchasing;
 
 //! 유틸리티 접근자
 public static partial class CAccess {
+	#region 클래스 프로퍼티
+	public static bool IsSupportsHapticFeedback {
+		get {
+#if UNITY_EDITOR || !(HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID))
+			return false;
+#else
+#if UNITY_IOS
+			var oVer = new System.Version(Device.systemVersion);
+			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK);
+
+			// 햅틱 피드백 지원 버전 일 경우
+			if(nCompare >= KCDefine.B_COMPARE_EQUALS) {
+				string oModel = Device.generation.ToString();
+				bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
+
+				for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS.Length; ++i) {
+					var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS[i];
+
+					// 햅틱 피드백 지원 모델 일 경우
+					if(bIsiPhone && eModel == Device.generation) {
+						return true;
+					}
+				}
+			}
+
+			return false;
+#else
+			return true;
+#endif			// #if UNITY_IOS		
+#endif			// #if UNITY_EDITOR
+		}
+	}
+
+	public static float ResolutionScale {
+		get {
+			float fScale = KCDefine.B_VAL_1_FLT;
+			float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
+
+			// 화면 너비를 벗어났을 경우
+			if(CAccess.ScreenSize.x.ExIsLess(CAccess.ScreenSize.y * fAspect)) {
+				fScale = CAccess.ScreenSize.x / (CAccess.ScreenSize.y * fAspect);
+			}
+			
+			return fScale;
+		}
+	}
+
+	public static EDeviceType DeviceType {
+		get {
+#if UNITY_IOS
+			string oModel = Device.generation.ToString();
+			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
+
+			// iPhone, iPad 일 경우
+			if(bIsiPhone || oModel.Contains(KCDefine.U_MODEL_N_IPAD)) {
+				return bIsiPhone ? EDeviceType.PHONE : EDeviceType.TABLET;
+			}
+#endif			// #if UNITY_IOS
+
+			float fMaxLength = Mathf.Max(CAccess.ScreenSize.x, CAccess.ScreenSize.y);
+			float fMinLength = Mathf.Min(CAccess.ScreenSize.x, CAccess.ScreenSize.y);
+
+			float fAspect = fMaxLength / fMinLength;
+			bool bIsTablet = CAccess.ScreenInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
+
+			return bIsTablet ? EDeviceType.TABLET : EDeviceType.PHONE;
+		}
+	}
+
+	public static Rect SafeArea {
+		get {
+			// 앱이 실행 중 일 경우
+			if(Application.isPlaying) {
+				return Screen.safeArea;
+			}
+
+			return new Rect(KCDefine.B_VAL_0_FLT, KCDefine.B_VAL_0_FLT, Camera.main.pixelWidth, Camera.main.pixelHeight);
+		}
+	}
+
+	public static Vector3 ScreenSize {
+		get {
+			// 앱이 실행 중 일 경우
+			if(Application.isPlaying) {
+#if UNITY_EDITOR
+				return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
+#else
+				return new Vector3(Screen.width, Screen.height, KCDefine.B_VAL_0_FLT);
+#endif			// #if UNITY_EDITOR			
+			}
+
+			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
+		}
+	}
+
+	public static bool IsEditor => Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
+	public static bool IsStandalone => Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.WindowsPlayer;
+
+	public static bool IsMac => Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
+	public static bool IsWnds => Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
+	public static bool IsDesktop => CAccess.IsMac || CAccess.IsWnds;
+
+	public static bool IsMobile => Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
+	public static bool IsConsole => Application.platform == RuntimePlatform.PS4 || Application.platform == RuntimePlatform.XboxOne;
+	public static bool IsHandheldConsole => Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
+
+	public static float DPI => Screen.dpi;
+	public static float ScreenInches => (CAccess.ScreenSize / Screen.dpi).magnitude;
+
+	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
+	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
+	public static float TopScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
+	public static float BottomScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
+
+	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
+	#endregion			// 클래스 프로퍼티
+
 	#region 클래스 함수
-	//! 에디터 여부를 검사한다
-	public static bool IsEditor() {
-		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
-	}
-
-	//! 데스크 탑 여부를 검사한다
-	public static bool IsDesktop() {
-		return CAccess.IsMac() || CAccess.IsWnds();
-	}
-
-	//! 독립 플랫폼 여부를 검사한다
-	public static bool IsStandalone() {
-		return Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.WindowsPlayer;
-	}
-
-	//! 맥 여부를 검사한다
-	public static bool IsMac() {
-		return Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
-	}
-
-	//! 윈도우 여부를 검사한다
-	public static bool IsWnds() {
-		return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
-	}
-
-	//! 모바일 여부를 검사한다
-	public static bool IsMobile() {
-		return Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
-	}
-
-	//! 콘솔 여부를 검사한다
-	public static bool IsConsole() {
-		return Application.platform == RuntimePlatform.PS4 || Application.platform == RuntimePlatform.XboxOne;
-	}
-
-	//! 휴대용 콘솔 여부를 검사한다
-	public static bool IsHandheldConsole() {
-		return Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
-	}
-
 	//! 권한 유효 여부를 검사한다
 	public static bool IsEnablePermission(string a_oPermission) {
 		CAccess.Assert(a_oPermission.ExIsValid());
@@ -73,156 +150,15 @@ public static partial class CAccess {
 		return false;
 #endif			// #if UNITY_ANDROID
 	}
-
-	//! 햅틱 피드백 지원 여부를 검사한다
-	public static bool IsSupportsHapticFeedback() {
-#if UNITY_EDITOR || !(HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID))
-		return false;
-#else
-#if UNITY_IOS
-		var oVer = new System.Version(Device.systemVersion);
-		int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK);
-
-		// 햅틱 피드백 지원 버전 일 경우
-		if(nCompare >= KCDefine.B_COMPARE_EQUALS) {
-			string oModel = Device.generation.ToString();
-			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
-
-			for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS.Length; ++i) {
-				var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS[i];
-
-				// 햅틱 피드백 지원 모델 일 경우
-				if(bIsiPhone && eModel == Device.generation) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-#else
-		return true;
-#endif			// #if UNITY_IOS		
-#endif			// #if UNITY_EDITOR
-	}
-
-	//! DPI 를 반환한다
-	public static float GetDPI() {
-		return Screen.dpi;
-	}
-
-	//! 디바이스 타입을 반환한다
-	public static EDeviceType GetDeviceType() {
-#if UNITY_IOS
-		string oModel = Device.generation.ToString();
-		bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
-
-		// iPhone, iPad 일 경우
-		if(bIsiPhone || oModel.Contains(KCDefine.U_MODEL_N_IPAD)) {
-			return bIsiPhone ? EDeviceType.PHONE : EDeviceType.TABLET;
-		}
-#endif			// #if UNITY_IOS
-
-		var stScreenSize = CAccess.GetScreenSize();
-		float fScreenInches = CAccess.GetScreenInches();
-
-		float fMaxLength = Mathf.Max(stScreenSize.x, stScreenSize.y);
-		float fMinLength = Mathf.Min(stScreenSize.x, stScreenSize.y);
-
-		float fAspect = fMaxLength / fMinLength;
-		bool bIsTablet = fScreenInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
-
-		return bIsTablet ? EDeviceType.TABLET : EDeviceType.PHONE;
-	}
 	
-	//! 안전 영역을 반환한다
-	public static Rect GetSafeArea() {
-		// 앱이 실행 중 일 경우
-		if(Application.isPlaying) {
-			return Screen.safeArea;
-		}
-
-		return new Rect(KCDefine.B_VAL_0_FLT, KCDefine.B_VAL_0_FLT, Camera.main.pixelWidth, Camera.main.pixelHeight);
-	}
-
 	//! 배너 광고 높이를 반환한다
 	public static float GetBannerAdsHeight(float a_fDesignHeight) {
 		CAccess.Assert(a_fDesignHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
 
-		float fDPI = CAccess.GetDPI();
-		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.GetScreenSize().y;
-		float fBannerAdsHeight = a_fDesignHeight * (fDPI / KCDefine.B_DEF_DPI);
+		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y;
+		float fBannerAdsHeight = a_fDesignHeight * (CAccess.DPI / KCDefine.B_DEF_DPI);
 
-		return (fBannerAdsHeight * fPercent) / CAccess.GetResolutionScale();
-	}
-
-	//! 화면 인치를 반환한다
-	public static float GetScreenInches() {
-		var stScreenSize = CAccess.GetScreenSize() / Screen.dpi;
-		return stScreenSize.magnitude;
-	}
-
-	//! 화면 크기를 반환한다
-	public static Vector3 GetScreenSize() {
-		// 앱이 실행 중 일 경우
-		if(Application.isPlaying) {
-#if UNITY_EDITOR
-			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
-#else
-			return new Vector3(Screen.width, Screen.height, KCDefine.B_VAL_0_FLT);
-#endif			// #if UNITY_EDITOR			
-		}
-
-		return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
-	}
-
-	//! 해상도를 반환한다
-	public static Vector3 GetResolution() {
-		float fScale = CAccess.GetResolutionScale();
-		return new Vector3(KCDefine.B_SCREEN_WIDTH, KCDefine.B_SCREEN_HEIGHT, KCDefine.B_VAL_0_FLT) * fScale;
-	}
-
-	//! 해상도 비율을 반환한다
-	public static float GetResolutionScale() {
-		float fScale = KCDefine.B_VAL_1_FLT;
-		float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
-
-		float fScreenWidth = CAccess.GetScreenSize().x;
-		float fScreenHeight = CAccess.GetScreenSize().y;
-
-		// 화면 너비를 벗어났을 경우
-		if(fScreenWidth.ExIsLess(fScreenHeight * fAspect)) {
-			fScale = fScreenWidth / (fScreenHeight * fAspect);
-		}
-		
-		return fScale;
-	}
-
-	//! 왼쪽 화면 비율을 반환한다
-	public static float GetLeftScreenScale() {
-		var stSafeArea = CAccess.GetSafeArea();
-		return stSafeArea.x / CAccess.GetScreenSize().x;
-	}
-
-	//! 오른쪽 화면 비율을 반환한다
-	public static float GetRightScreenScale() {
-		var stSafeArea = CAccess.GetSafeArea();
-		float fScreenWidth = CAccess.GetScreenSize().x;
-
-		return (fScreenWidth - (stSafeArea.x + stSafeArea.width)) / fScreenWidth;
-	}
-
-	//! 상단 화면 비율을 반환한다
-	public static float GetTopScreenScale() {
-		var stSafeArea = CAccess.GetSafeArea();
-		float fScreenHeight = CAccess.GetScreenSize().y;
-
-		return (fScreenHeight - (stSafeArea.y + stSafeArea.height)) / fScreenHeight;
-	}
-
-	//! 하단 화면 비율을 반환한다
-	public static float GetBottomScreenScale() {
-		var stSafeArea = CAccess.GetSafeArea();
-		return stSafeArea.y / CAccess.GetScreenSize().y;
+		return (fBannerAdsHeight * fPercent) / CAccess.ResolutionScale;
 	}
 	
 	//! 값을 할당한다

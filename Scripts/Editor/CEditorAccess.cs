@@ -8,17 +8,12 @@ using UnityEditor;
 
 //! 에디터 기본 접근
 public static partial class CEditorAccess {
+	#region 클래스 프로퍼티
+	public static bool IsEnableDrawGizmos => !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
+	public static bool IsEnableUpdateState => !Application.isPlaying && !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
+	#endregion			// 클래스 프로퍼티
+
 	#region 클래스 함수
-	//! 상태 갱신 가능 여부를 검사한다
-	public static bool IsEnableUpdateState() {
-		return !Application.isPlaying && !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
-	}
-
-	//! 기즈모 그리기 가능 여부를 검사한다
-	public static bool IsEnableDrawGizmos() {
-		return !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
-	}
-
 	//! 활성 객체를 반환한다
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		var oObj = Selection.activeGameObject;

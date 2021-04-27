@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 using UnityEngine.SceneManagement;
 using Unity.Linq;
+using EnhancedUI.EnhancedScroller;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -543,6 +544,14 @@ public static partial class CAccessExtension {
 	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fVal) {
 		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
 		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal);
+	}
+
+	//! 스크롤 위치를 변경한다
+	public static void ExSetScrollPos(this EnhancedScroller a_oSender, float a_fVal) {
+		CAccess.Assert(a_oSender != null);
+		float fPos = Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, a_oSender.ScrollSize);
+
+		a_oSender.ScrollPosition = fPos;
 	}
 	
 	//! 자식 객체를 탐색한다

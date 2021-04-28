@@ -205,7 +205,7 @@ public static partial class CAccess {
 	}
 #endif			// #if UNITY_EDITOR
 
-#if UNITY_IOS
+#if UNITY_IOS && APPLE_LOGIN_ENABLE
 	//! 애플 로그인 지원 여부를 검사한다
 	public static bool IsSupportsLoginWithApple() {
 #if UNITY_EDITOR
@@ -217,7 +217,7 @@ public static partial class CAccess {
 		return nCompare >= KCDefine.B_COMPARE_EQUALS;
 #endif			// #if UNITY_EDITOR
 	}
-#endif			// #if UNITY_IOS
+#endif			// #if UNITY_IOS && APPLE_LOGIN_ENABLE
 
 #if PURCHASE_MODULE_ENABLE
 	//! 가격 문자열을 반환한다

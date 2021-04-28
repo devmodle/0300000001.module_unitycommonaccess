@@ -12,15 +12,13 @@ using EnhancedUI.EnhancedScroller;
 using UnityEditor;
 #endif			// #if UNITY_EDITOR
 
-#if UNITY_IOS
 #if APPLE_LOGIN_ENABLE
 using UnityEngine.SignInWithApple;
 #endif			// #if APPLE_LOGIN_ENABLE
 
-#if NOTI_MODULE_ENABLE
+#if UNITY_IOS && NOTI_MODULE_ENABLE
 using Unity.Notifications.iOS;
-#endif			// #if NOTI_MODULE_ENABLE
-#endif			// #if UNITY_IOS
+#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 
 //! 유틸리티 접근 확장 클래스
 public static partial class CAccessExtension {
@@ -721,14 +719,6 @@ public static partial class CAccessExtension {
 	}
 #endif			// #if UNITY_EDITOR
 
-#if ADS_MODULE_ENABLE
-	//! 유효 여부를 검사한다
-	public static bool ExIsValid(this EAdsType a_eSender) {
-		return a_eSender > EAdsType.NONE && a_eSender < EAdsType.MAX_VAL;
-	}
-#endif			// #if ADS_MODULE_ENABLE
-
-#if UNITY_IOS
 #if APPLE_LOGIN_ENABLE
 	//! 유효 여부를 검사한다
 	public static bool ExIsValidUserInfo(this SignInWithApple.CallbackArgs a_stSender) {
@@ -742,7 +732,14 @@ public static partial class CAccessExtension {
 	}
 #endif			// #if APPLE_LOGIN_ENABLE
 
-#if NOTI_MODULE_ENABLE
+#if ADS_MODULE_ENABLE
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this EAdsType a_eSender) {
+		return a_eSender > EAdsType.NONE && a_eSender < EAdsType.MAX_VAL;
+	}
+#endif			// #if ADS_MODULE_ENABLE
+
+#if UNITY_IOS && NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다
 	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
 		int nSumVal = KCDefine.B_VAL_0_INT;
@@ -758,7 +755,6 @@ public static partial class CAccessExtension {
 	public static bool ExIsCompleteRequest(this AuthorizationRequest a_oSender) {
 		return a_oSender != null && a_oSender.IsFinished;
 	}
-#endif			// #if NOTI_MODULE_ENABLE
-#endif			// #if UNITY_IOS
+#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
 }

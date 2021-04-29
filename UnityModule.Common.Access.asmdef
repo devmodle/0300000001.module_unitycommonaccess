@@ -4,6 +4,7 @@
     "references": [
         "UnityModule.Common.Define",
         "UnityModule.Common.Externals",
+        "Unity.InputSystem",
         "UnityEngine.Purchasing",
         "UnityEngine.Purchasing.Stores",
         "Unity.Notifications.iOS",

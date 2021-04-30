@@ -722,13 +722,12 @@ public static partial class CAccessExtension {
 #if APPLE_LOGIN_ENABLE
 	//! 유효 여부를 검사한다
 	public static bool ExIsValidUserInfo(this SignInWithApple.CallbackArgs a_stSender) {
-		return !a_stSender.error.ExIsValid() && a_stSender.userInfo.userId.ExIsValid();
+		return a_stSender.userInfo.userId.ExIsValid() && !a_stSender.error.ExIsValid();
 	}
 
 	//! 유효 여부를 검사한다
 	public static bool ExIsValidCredentialState(this SignInWithApple.CallbackArgs a_stSender) {
-		bool bIsAuth = a_stSender.credentialState == UserCredentialState.Authorized;
-		return bIsAuth && !a_stSender.error.ExIsValid();
+		return a_stSender.credentialState != UserCredentialState.NotFound && !a_stSender.error.ExIsValid();
 	}
 #endif			// #if APPLE_LOGIN_ENABLE
 

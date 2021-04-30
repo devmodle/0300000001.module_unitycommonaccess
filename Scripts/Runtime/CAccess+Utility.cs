@@ -55,7 +55,7 @@ public static partial class CAccess {
 #else
 			return true;
 #endif			// #if UNITY_IOS		
-#endif			// #if UNITY_EDITOR
+#endif			// #if UNITY_EDITOR || !(HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID))
 		}
 	}
 

@@ -95,29 +95,23 @@ public static partial class CAccess {
 		}
 	}
 
-	public static Rect SafeArea {
+	public static Vector3 ScreenSize {
 		get {
-			// 앱이 실행 중 일 경우
-			if(Application.isPlaying) {
-				return Screen.safeArea;
-			}
-
-			return new Rect(KCDefine.B_VAL_0_FLT, KCDefine.B_VAL_0_FLT, Camera.main.pixelWidth, Camera.main.pixelHeight);
+#if UNITY_EDITOR
+			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
+#else
+			return new Vector3(Screen.width, Screen.height, KCDefine.B_VAL_0_FLT);
+#endif			// #if UNITY_EDITOR
 		}
 	}
 
-	public static Vector3 ScreenSize {
+	public static Rect SafeArea {
 		get {
-			// 앱이 실행 중 일 경우
-			if(Application.isPlaying) {
 #if UNITY_EDITOR
-				return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
+			return new Rect(KCDefine.B_VAL_0_FLT, KCDefine.B_VAL_0_FLT, Camera.main.pixelWidth, Camera.main.pixelHeight);
 #else
-				return new Vector3(Screen.width, Screen.height, KCDefine.B_VAL_0_FLT);
-#endif			// #if UNITY_EDITOR			
-			}
-
-			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
+			return Screen.safeArea;
+#endif			// #if UNITY_EDITOR
 		}
 	}
 

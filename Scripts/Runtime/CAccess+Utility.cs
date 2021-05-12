@@ -29,9 +29,7 @@ public static partial class CAccess {
 	#region 클래스 프로퍼티
 	public static bool IsSupportsHapticFeedback {
 		get {
-#if UNITY_EDITOR || !(HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID))
-			return false;
-#else
+#if HAPTIC_FEEDBACK_ENABLE && (UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID)
 #if UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
 			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK);
@@ -54,8 +52,10 @@ public static partial class CAccess {
 			return false;
 #else
 			return true;
-#endif			// #if UNITY_IOS		
-#endif			// #if UNITY_EDITOR || !(HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID))
+#endif			// #if UNITY_IOS
+#else
+			return false;
+#endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID)
 		}
 	}
 
@@ -235,20 +235,6 @@ public static partial class CAccess {
 	}
 #endif			// #if UNITY_EDITOR
 
-#if UNITY_IOS && APPLE_LOGIN_ENABLE
-	//! 애플 로그인 지원 여부를 검사한다
-	public static bool IsSupportsLoginWithApple() {
-#if UNITY_EDITOR
-		return false;
-#else
-		var oVer = new System.Version(Device.systemVersion);
-		int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_LOGIN_WITH_APPLE);
-		
-		return nCompare >= KCDefine.B_COMPARE_EQUALS;
-#endif			// #if UNITY_EDITOR
-	}
-#endif			// #if UNITY_IOS && APPLE_LOGIN_ENABLE
-
 #if PURCHASE_MODULE_ENABLE
 	//! 가격 문자열을 반환한다
 	public static string GetPriceStr(Product a_oProduct) {
@@ -261,4 +247,39 @@ public static partial class CAccess {
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
+
+	#region 조건부 클래스 프로퍼티
+#if UNITY_IOS
+#if ADS_MODULE_ENABLE
+	public static bool IsNeedConsentView {
+		get {
+#if UNITY_EDITOR
+			return false;
+#else
+			var oVer = new System.Version(Device.systemVersion);
+			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW);
+
+			return nCompare >= KCDefine.B_COMPARE_EQUALS;
+#endif			// #if UNITY_EDITOR
+		}
+	}
+#endif			// #if ADS_MODULE_ENABLE
+
+#if APPLE_LOGIN_ENABLE
+	//! 애플 로그인 지원 여부를 검사한다
+	public static bool IsSupportsLoginWithApple {
+		get {
+#if UNITY_EDITOR
+			return false;
+#else
+		var oVer = new System.Version(Device.systemVersion);
+			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_LOGIN_WITH_APPLE);
+			
+			return nCompare >= KCDefine.B_COMPARE_EQUALS;
+#endif			// #if UNITY_EDITOR
+		}
+	}
+#endif			// #if APPLE_LOGIN_ENABLE
+#endif			// #if UNITY_IOS
+	#endregion			// 조건부 클래스 프로퍼티
 }

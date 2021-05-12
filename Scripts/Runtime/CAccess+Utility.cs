@@ -186,7 +186,7 @@ public static partial class CAccess {
 		CAccess.Assert(a_fDesignHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
 
 		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y;
-		float fBannerAdsHeight = a_fDesignHeight * (CAccess.DPI / KCDefine.B_DEF_DPI);
+		float fBannerAdsHeight = a_fDesignHeight * (CAccess.DPI / KCDefine.B_DPI);
 
 		return (fBannerAdsHeight * fPercent) / CAccess.ResolutionScale;
 	}
@@ -251,7 +251,7 @@ public static partial class CAccess {
 	#region 조건부 클래스 프로퍼티
 #if UNITY_IOS
 #if ADS_MODULE_ENABLE
-	public static bool IsNeedConsentView {
+	public static bool IsEnableShowConsentView {
 		get {
 #if UNITY_EDITOR
 			return false;

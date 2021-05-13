@@ -210,8 +210,10 @@ public static partial class CAccess {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
 		var oRes = Resources.Load<T>(a_oFilePath);
-		bool bIsExistsRes = oRes != null;
+		var oType = typeof(T);
 
+		bool bIsExistsRes = !oType.Equals(typeof(TextAsset)) ? oRes != null : (oRes as TextAsset).ExIsValid();
+		
 		// 자동 제거 모드 일 경우
 		if(bIsExistsRes && a_bIsAutoUnload) {
 			Resources.UnloadAsset(oRes);
@@ -250,21 +252,6 @@ public static partial class CAccess {
 
 	#region 조건부 클래스 프로퍼티
 #if UNITY_IOS
-#if ADS_MODULE_ENABLE
-	public static bool IsEnableShowConsentView {
-		get {
-#if UNITY_EDITOR
-			return false;
-#else
-			var oVer = new System.Version(Device.systemVersion);
-			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW);
-
-			return nCompare >= KCDefine.B_COMPARE_EQUALS;
-#endif			// #if UNITY_EDITOR
-		}
-	}
-#endif			// #if ADS_MODULE_ENABLE
-
 #if APPLE_LOGIN_ENABLE
 	//! 애플 로그인 지원 여부를 검사한다
 	public static bool IsSupportsLoginWithApple {
@@ -280,6 +267,21 @@ public static partial class CAccess {
 		}
 	}
 #endif			// #if APPLE_LOGIN_ENABLE
+
+#if ADS_MODULE_ENABLE
+	public static bool IsEnableShowConsentView {
+		get {
+#if UNITY_EDITOR
+			return false;
+#else
+			var oVer = new System.Version(Device.systemVersion);
+			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW);
+
+			return nCompare >= KCDefine.B_COMPARE_EQUALS;
+#endif			// #if UNITY_EDITOR
+		}
+	}
+#endif			// #if ADS_MODULE_ENABLE
 #endif			// #if UNITY_IOS
 	#endregion			// 조건부 클래스 프로퍼티
 }

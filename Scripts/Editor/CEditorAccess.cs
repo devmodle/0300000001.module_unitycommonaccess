@@ -39,6 +39,8 @@ public static partial class CEditorAccess {
 
 	//! 그래픽 API 를 변경한다
 	public static void SetGraphicAPI(BuildTarget a_eTarget, GraphicsDeviceType[] a_oDeviceTypes, bool a_bIsEnableAuto = true) {
+		CAccess.Assert(a_oDeviceTypes.ExIsValid());
+
 		PlayerSettings.SetGraphicsAPIs(a_eTarget, a_oDeviceTypes);
 		PlayerSettings.SetUseDefaultGraphicsAPIs(a_eTarget, a_bIsEnableAuto);
 	}

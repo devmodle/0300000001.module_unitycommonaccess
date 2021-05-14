@@ -27,6 +27,19 @@ using UnityEngine.Purchasing;
 //! 유틸리티 접근자
 public static partial class CAccess {
 	#region 클래스 프로퍼티
+	public static bool IsEnableShowConsentView {
+		get {
+#if UNITY_EDITOR || !UNITY_IOS
+			return false;
+#else
+			var oVer = new System.Version(Device.systemVersion);
+			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW);
+
+			return nCompare >= KCDefine.B_COMPARE_EQUALS;
+#endif			// #if UNITY_EDITOR || !UNITY_IOS
+		}
+	}
+
 	public static bool IsSupportsHapticFeedback {
 		get {
 #if HAPTIC_FEEDBACK_ENABLE && (UNITY_EDITOR || UNITY_IOS || UNITY_ANDROID)
@@ -251,8 +264,7 @@ public static partial class CAccess {
 	#endregion			// 조건부 클래스 함수
 
 	#region 조건부 클래스 프로퍼티
-#if UNITY_IOS
-#if APPLE_LOGIN_ENABLE
+#if UNITY_IOS && APPLE_LOGIN_ENABLE
 	//! 애플 로그인 지원 여부를 검사한다
 	public static bool IsSupportsLoginWithApple {
 		get {
@@ -266,22 +278,6 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 		}
 	}
-#endif			// #if APPLE_LOGIN_ENABLE
-
-#if ADS_MODULE_ENABLE
-	public static bool IsEnableShowConsentView {
-		get {
-#if UNITY_EDITOR
-			return false;
-#else
-			var oVer = new System.Version(Device.systemVersion);
-			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW);
-
-			return nCompare >= KCDefine.B_COMPARE_EQUALS;
-#endif			// #if UNITY_EDITOR
-		}
-	}
-#endif			// #if ADS_MODULE_ENABLE
-#endif			// #if UNITY_IOS
+#endif			// #if UNITY_IOS && APPLE_LOGIN_ENABLE
 	#endregion			// 조건부 클래스 프로퍼티
 }

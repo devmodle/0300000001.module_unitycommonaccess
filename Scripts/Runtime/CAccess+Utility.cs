@@ -33,9 +33,7 @@ public static partial class CAccess {
 			return false;
 #else
 			var oVer = new System.Version(Device.systemVersion);
-			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW);
-
-			return nCompare >= KCDefine.B_COMPARE_EQUALS;
+			return oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
 #endif			// #if UNITY_EDITOR || !UNITY_IOS
 		}
 	}

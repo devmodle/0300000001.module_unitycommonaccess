@@ -1,13 +1,13 @@
 {
-  "name": "unitymodule.common.access",
+  "name": "module.unitycommonaccess",
   "version": "1.5.7",
-  "displayName": "UnityModule.Common.Access",
+  "displayName": "Module.UnityCommonAccess",
   "author": {
     "name": "dante",
     "email": "are2341@nate.com"
   },
   "dependencies": {
-	"unitymodule.common.define": "https://9tap:NT9studio!@gitlab.com/9tapmodule.repository/000001.module_unitycommondefine_client.git#1.5.7",
-	"unitymodule.common.externals": "https://9tap:NT9studio!@gitlab.com/9tapmodule.repository/000001.module_unitycommonexternals_client.git#1.5.7"
+	"module.unitycommondefine": "https://9tap:NT9studio!@gitlab.com/9tapmodule.repository/000001.module_unitycommondefine_client.git#1.5.7",
+	"module.unitycommonexternals": "https://9tap:NT9studio!@gitlab.com/9tapmodule.repository/000001.module_unitycommonexternals_client.git#1.5.7"
   }
 }

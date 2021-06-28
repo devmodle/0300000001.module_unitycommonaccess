@@ -1,9 +1,9 @@
 {
-    "name": "UnityModule.Common.Access",
+    "name": "Module.UnityCommonAccess",
     "rootNamespace": "",
     "references": [
-        "UnityModule.Common.Define",
-        "UnityModule.Common.Externals",
+        "Module.UnityCommonDefine",
+        "Module.UnityCommonExternals",
         "Unity.InputSystem",
         "UnityEngine.Purchasing",
         "UnityEngine.Purchasing.Stores",

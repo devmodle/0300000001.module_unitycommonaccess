@@ -366,6 +366,14 @@ public static partial class CAccessExtension {
 	}
 
 	//! 정렬 순서를 변경한다
+	public static void ExSetSortingOrder(this LineRenderer a_oSender, STSortingOrderInfo a_stOrderInfo) {
+		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
+
+		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
+		a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+	}
+	
+	//! 정렬 순서를 변경한다
 	public static void ExSetSortingOrder(this SpriteRenderer a_oSender, STSortingOrderInfo a_stOrderInfo) {
 		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
 

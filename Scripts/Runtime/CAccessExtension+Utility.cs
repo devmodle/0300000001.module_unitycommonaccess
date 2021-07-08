@@ -89,6 +89,101 @@ public static partial class CAccessExtension {
 		return bIsEquals && a_stSender.w.ExIsEquals(a_stRhs.w);
 	}
 
+	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this List<Vector2> a_oSender, List<Vector2> a_oVecList) {
+		CAccess.Assert(a_oSender != null && a_oVecList != null);
+
+		// 길이가 다를 경우
+		if(a_oSender.Count != a_oVecList.Count) {
+			return false;
+		}
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			// 동일하지 않을 경우
+			if(!a_oSender[i].ExIsEquals(a_oVecList[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this List<Vector3> a_oSender, List<Vector3> a_oVecList) {
+		CAccess.Assert(a_oSender != null && a_oVecList != null);
+		
+		// 길이가 다를 경우
+		if(a_oSender.Count != a_oVecList.Count) {
+			return false;
+		}
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			// 동일하지 않을 경우
+			if(!a_oSender[i].ExIsEquals(a_oVecList[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this List<Vector4> a_oSender, List<Vector4> a_oVecList) {
+		CAccess.Assert(a_oSender != null && a_oVecList != null);
+		
+		// 길이가 다를 경우
+		if(a_oSender.Count != a_oVecList.Count) {
+			return false;
+		}
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			// 동일하지 않을 경우
+			if(!a_oSender[i].ExIsEquals(a_oVecList[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this List<Vector2Int> a_oSender, List<Vector2Int> a_oVecList) {
+		CAccess.Assert(a_oSender != null && a_oVecList != null);
+
+		// 길이가 다를 경우
+		if(a_oSender.Count != a_oVecList.Count) {
+			return false;
+		}
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			// 동일하지 않을 경우
+			if(!a_oSender[i].Equals(a_oVecList[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this List<Vector3Int> a_oSender, List<Vector3Int> a_oVecList) {
+		CAccess.Assert(a_oSender != null && a_oVecList != null);
+		
+		// 길이가 다를 경우
+		if(a_oSender.Count != a_oVecList.Count) {
+			return false;
+		}
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			// 동일하지 않을 경우
+			if(!a_oSender[i].Equals(a_oVecList[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
 	//! 색상을 반환한다
 	public static Color ExGetAlphaColor(this Color a_stSender, float a_fAlpha) {
 		a_stSender.a = a_fAlpha;
@@ -316,6 +411,14 @@ public static partial class CAccessExtension {
 
 		a_oSender.enabled = false;
 		a_oSender.gameObject.ExSetEnableComponent<ContentSizeFitter>(a_bIsEnable);
+	}
+
+	//! 너비를 변경한다
+	public static void ExSetWidth(this LineRenderer a_oSender, float a_fWidth) {
+		CAccess.Assert(a_oSender != null);
+
+		a_oSender.startWidth = a_fWidth;
+		a_oSender.endWidth = a_fWidth;
 	}
 
 	//! 컬링 마스크를 변경한다

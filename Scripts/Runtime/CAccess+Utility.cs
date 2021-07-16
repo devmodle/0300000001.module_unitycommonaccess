@@ -158,7 +158,7 @@ public static partial class CAccess {
 		}
 	}
 
-	public static bool IsBeginTouch {
+	public static bool IsTouchBegin {
 		get {
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 			return Touchscreen.current.press.wasPressedThisFrame;
@@ -168,7 +168,7 @@ public static partial class CAccess {
 		}
 	}
 
-	public static bool IsEndTouch {
+	public static bool IsTouchEnd {
 		get {
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 			return Touchscreen.current.press.wasReleasedThisFrame;

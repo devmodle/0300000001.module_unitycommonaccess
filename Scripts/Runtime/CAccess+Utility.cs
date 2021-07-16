@@ -16,9 +16,9 @@ using UnityEngine.iOS;
 using UnityEngine.Android;
 #endif			// #if UNITY_ANDROID
 
-#if INPUT_SYSTEM_ENABLE
+#if INPUT_SYSTEM_MODULE_ENABLE
 using UnityEngine.InputSystem;
-#endif			// #if INPUT_SYSTEM_ENABLE
+#endif			// #if INPUT_SYSTEM_MODULE_ENABLE
 
 #if PURCHASE_MODULE_ENABLE
 using UnityEngine.Purchasing;
@@ -147,7 +147,7 @@ public static partial class CAccess {
 
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
 
-#if INPUT_SYSTEM_ENABLE
+#if INPUT_SYSTEM_MODULE_ENABLE
 	public static bool IsTouch {
 		get {
 #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
@@ -177,7 +177,7 @@ public static partial class CAccess {
 #endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
 		}
 	}
-#endif			// #if INPUT_SYSTEM_ENABLE
+#endif			// #if INPUT_SYSTEM_MODULE_ENABLE
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수

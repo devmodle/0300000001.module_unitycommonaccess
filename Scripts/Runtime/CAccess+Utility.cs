@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using EnhancedUI.EnhancedScroller;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -203,15 +204,23 @@ public static partial class CAccess {
 	}
 	
 	//! 값을 할당한다
-	public static void AssignVal(ref Tween a_oLhs, Tween a_oRhs) {
+	public static void AssignVal(ref DG.Tweening.Tween a_oLhs, DG.Tweening.Tween a_oRhs) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs;
 	}
 	
 	//! 값을 할당한다
-	public static void AssignVal(ref Sequence a_oLhs, Tween a_oRhs) {
+	public static void AssignVal(ref Sequence a_oLhs, DG.Tweening.Tween a_oRhs) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs as Sequence;
+	}
+
+	//! 델리게이트를 할당한다
+	public static void AssignDelegate(EnhancedScroller a_oScroller, IEnhancedScrollerDelegate a_oDelegate) {
+		// 스크롤러가 존재 할 경우
+		if(a_oScroller != null) {
+			a_oScroller.Delegate = a_oDelegate;
+		}
 	}
 	#endregion			// 클래스 함수
 

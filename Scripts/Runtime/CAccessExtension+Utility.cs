@@ -72,6 +72,12 @@ public static partial class CAccessExtension {
 		return a_nIdx > KCDefine.B_IDX_INVALID && a_nIdx < a_oSender.Count;
 	}
 
+	//! 인덱스 유효 여부를 검사한다
+	public static bool ExIsValidIdx(this EnhancedScroller a_oSender, int a_nIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_nIdx > KCDefine.B_IDX_INVALID && a_nIdx < a_oSender.NumberOfCells;
+	}
+
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this Vector2 a_stSender, Vector2 a_stRhs) {
 		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y);
@@ -421,6 +427,45 @@ public static partial class CAccessExtension {
 		a_oSender.endWidth = a_fWidth;
 	}
 
+	//! 일반 색상을 변경한다
+	public static void ExSetNormColor(this Button a_oSender, Color a_stColor, bool a_bIsCheckNull = true) {
+		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+
+		// 버튼이 존재 할 경우
+		if(a_oSender != null) {
+			var stColorBlock = a_oSender.colors;
+			stColorBlock.normalColor = a_stColor;
+
+			a_oSender.colors = stColorBlock;
+		}
+	}
+
+	//! 선택 색상을 변경한다
+	public static void ExSetSelColor(this Button a_oSender, Color a_stColor, bool a_bIsCheckNull = true) {
+		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+
+		// 버튼이 존재 할 경우
+		if(a_oSender != null) {
+			var stColorBlock = a_oSender.colors;
+			stColorBlock.selectedColor = a_stColor;
+
+			a_oSender.colors = stColorBlock;
+		}
+	}
+
+	//! 비활성 색상을 변경한다
+	public static void ExSetDisableColor(this Button a_oSender, Color a_stColor, bool a_bIsCheckNull = true) {
+		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+
+		// 버튼이 존재 할 경우
+		if(a_oSender != null) {
+			var stColorBlock = a_oSender.colors;
+			stColorBlock.disabledColor = a_stColor;
+
+			a_oSender.colors = stColorBlock;
+		}
+	}
+
 	//! 컬링 마스크를 변경한다
 	public static void ExSetCullingMask(this Camera a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
 		CAccess.Assert(a_oSender != null);
@@ -502,9 +547,13 @@ public static partial class CAccessExtension {
 	}
 
 	//! 비율을 변경한다
-	public static void ExSetScale(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_fVal, a_fVal, a_fVal);
+	public static void ExSetScale(this GameObject a_oSender, float a_fVal, bool a_bIsCheckNull = true) {
+		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localScale = new Vector3(a_fVal, a_fVal, a_fVal);
+		}
 	}
 
 	//! X 축 비율을 변경한다
@@ -658,11 +707,25 @@ public static partial class CAccessExtension {
 	}
 
 	//! 스크롤 위치를 변경한다
-	public static void ExSetScrollPos(this EnhancedScroller a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		float fPos = Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, a_oSender.ScrollSize);
+	public static void ExSetScrollPos(this EnhancedScroller a_oSender, float a_fVal, bool a_bIsCheckNull = true) {
+		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
 
-		a_oSender.ScrollPosition = fPos;
+		// 스크롤러가 존재 할 경우
+		if(a_oSender != null) {
+			float fPos = Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, KCDefine.B_VAL_1_FLT);
+			a_oSender.ScrollPosition = fPos;
+		}
+	}
+
+	//! 데이터를 다시 로드한다
+	public static void ExReloadData(this EnhancedScroller a_oSender, int a_nDataIdx, bool a_bIsCheckNull = true) {
+		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+
+		// 스크롤러가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.ReloadData();
+			a_oSender.ExSetScrollPos(0.0f, a_bIsCheckNull);
+		}
 	}
 	
 	//! 자식 객체를 탐색한다

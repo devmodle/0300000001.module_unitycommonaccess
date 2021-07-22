@@ -216,8 +216,8 @@ public static partial class CAccess {
 	}
 
 	//! 텍스트를 할당한다
-	public static void AssignText(Text a_oText, string a_oStr, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oText != null);
+	public static void AssignText(Text a_oText, string a_oStr, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oText != null);
 
 		// 텍스트가 존재 할 경우
 		if(a_oText != null) {
@@ -226,8 +226,8 @@ public static partial class CAccess {
 	}
 
 	//! 텍스트를 할당한다
-	public static void AssignText(InputField a_oInput, string a_oStr, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oInput != null);
+	public static void AssignText(InputField a_oInput, string a_oStr, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oInput != null);
 
 		// 입력 필드가 존재 할 경우
 		if(a_oInput != null) {
@@ -236,8 +236,8 @@ public static partial class CAccess {
 	}
 
 	//! 색상을 할당한다
-	public static void AssignColor(Graphic a_oGraphic, Color a_stColor, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oGraphic != null);
+	public static void AssignColor(Graphic a_oGraphic, Color a_stColor, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oGraphic != null);
 
 		// 그래픽이 존재 할 경우
 		if(a_oGraphic != null) {
@@ -246,8 +246,8 @@ public static partial class CAccess {
 	}
 
 	//! 델리게이트를 할당한다
-	public static void AssignDelegate(EnhancedScroller a_oScroller, IEnhancedScrollerDelegate a_oDelegate, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oScroller != null);
+	public static void AssignDelegate(EnhancedScroller a_oScroller, IEnhancedScrollerDelegate a_oDelegate, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oScroller != null);
 
 		// 스크롤러가 존재 할 경우
 		if(a_oScroller != null) {

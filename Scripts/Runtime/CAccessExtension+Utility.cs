@@ -428,8 +428,8 @@ public static partial class CAccessExtension {
 	}
 
 	//! 일반 색상을 변경한다
-	public static void ExSetNormColor(this Button a_oSender, Color a_stColor, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+	public static void ExSetNormColor(this Button a_oSender, Color a_stColor, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oSender != null);
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
@@ -441,8 +441,8 @@ public static partial class CAccessExtension {
 	}
 
 	//! 선택 색상을 변경한다
-	public static void ExSetSelColor(this Button a_oSender, Color a_stColor, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+	public static void ExSetSelColor(this Button a_oSender, Color a_stColor, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oSender != null);
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
@@ -454,8 +454,8 @@ public static partial class CAccessExtension {
 	}
 
 	//! 비활성 색상을 변경한다
-	public static void ExSetDisableColor(this Button a_oSender, Color a_stColor, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+	public static void ExSetDisableColor(this Button a_oSender, Color a_stColor, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oSender != null);
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
@@ -547,8 +547,8 @@ public static partial class CAccessExtension {
 	}
 
 	//! 비율을 변경한다
-	public static void ExSetScale(this GameObject a_oSender, float a_fVal, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+	public static void ExSetScale(this GameObject a_oSender, float a_fVal, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oSender != null);
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
@@ -707,8 +707,8 @@ public static partial class CAccessExtension {
 	}
 
 	//! 스크롤 위치를 변경한다
-	public static void ExSetScrollPos(this EnhancedScroller a_oSender, float a_fVal, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+	public static void ExSetScrollPos(this EnhancedScroller a_oSender, float a_fVal, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oSender != null);
 
 		// 스크롤러가 존재 할 경우
 		if(a_oSender != null) {
@@ -718,13 +718,13 @@ public static partial class CAccessExtension {
 	}
 
 	//! 데이터를 다시 로드한다
-	public static void ExReloadData(this EnhancedScroller a_oSender, int a_nDataIdx, bool a_bIsCheckNull = true) {
-		CAccess.Assert(!a_bIsCheckNull || a_oSender != null);
+	public static void ExReloadData(this EnhancedScroller a_oSender, int a_nDataIdx, bool a_bIsEnableNullAssert = true) {
+		CAccess.Assert(!a_bIsEnableNullAssert || a_oSender != null);
 
 		// 스크롤러가 존재 할 경우
 		if(a_oSender != null) {
 			a_oSender.ReloadData();
-			a_oSender.ExSetScrollPos(0.0f, a_bIsCheckNull);
+			a_oSender.ExSetScrollPos(0.0f, a_bIsEnableNullAssert);
 		}
 	}
 	

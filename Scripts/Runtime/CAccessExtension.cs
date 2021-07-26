@@ -261,6 +261,11 @@ public static partial class CAccessExtension {
 	}
 
 	//! 유효 여부를 검사한다
+	public static bool ExIsValid<T>(this HashSet<T> a_oSender) {
+		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
+	}
+
+	//! 유효 여부를 검사한다
 	public static bool ExIsValid<Key, Val>(this Dictionary<Key, Val> a_oSender) {
 		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
 	}
@@ -477,11 +482,14 @@ public static partial class CAccessExtension {
 	}
 
 	//! 프로퍼티 값을 변경한다
-	public static void ExSetPropertyVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oVal) {
-		CAccess.Assert(a_oName.ExIsValid());
-		var oPropertyInfo = typeof(T).GetProperty(a_oName, a_eBindingFlags);
+	public static void ExSetPropertyVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, object a_oVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oName.ExIsValid());
 
-		oPropertyInfo.SetValue(a_oSender, a_oVal);
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid()) {
+			var oPropertyInfo = typeof(T).GetProperty(a_oName, a_eBindingFlags);
+			oPropertyInfo?.SetValue(a_oSender, a_oVal);
+		}
 	}
 
 	//! 런타임 프로퍼티 값을 변경한다

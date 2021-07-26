@@ -214,46 +214,6 @@ public static partial class CAccess {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs as Sequence;
 	}
-
-	//! 텍스트를 할당한다
-	public static void AssignText(Text a_oText, string a_oStr, bool a_bIsEnableNullAssert = true) {
-		CAccess.Assert(!a_bIsEnableNullAssert || a_oText != null);
-
-		// 텍스트가 존재 할 경우
-		if(a_oText != null) {
-			a_oText.text = a_oStr;
-		}
-	}
-
-	//! 텍스트를 할당한다
-	public static void AssignText(InputField a_oInput, string a_oStr, bool a_bIsEnableNullAssert = true) {
-		CAccess.Assert(!a_bIsEnableNullAssert || a_oInput != null);
-
-		// 입력 필드가 존재 할 경우
-		if(a_oInput != null) {
-			a_oInput.text = a_oStr;
-		}
-	}
-
-	//! 색상을 할당한다
-	public static void AssignColor(Graphic a_oGraphic, Color a_stColor, bool a_bIsEnableNullAssert = true) {
-		CAccess.Assert(!a_bIsEnableNullAssert || a_oGraphic != null);
-
-		// 그래픽이 존재 할 경우
-		if(a_oGraphic != null) {
-			a_oGraphic.color = a_stColor;
-		}
-	}
-
-	//! 델리게이트를 할당한다
-	public static void AssignDelegate(EnhancedScroller a_oScroller, IEnhancedScrollerDelegate a_oDelegate, bool a_bIsEnableNullAssert = true) {
-		CAccess.Assert(!a_bIsEnableNullAssert || a_oScroller != null);
-
-		// 스크롤러가 존재 할 경우
-		if(a_oScroller != null) {
-			a_oScroller.Delegate = a_oDelegate;
-		}
-	}
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
@@ -262,9 +222,7 @@ public static partial class CAccess {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
 		var oRes = Resources.Load<T>(a_oFilePath);
-		var oType = typeof(T);
-
-		bool bIsExistsRes = !oType.Equals(typeof(TextAsset)) ? oRes != null : (oRes as TextAsset).ExIsValid();
+		bool bIsExistsRes = !typeof(T).Equals(typeof(TextAsset)) ? oRes != null : (oRes as TextAsset).ExIsValid();
 		
 		// 자동 제거 모드 일 경우
 		if(bIsExistsRes && a_bIsAutoUnload) {
@@ -272,6 +230,11 @@ public static partial class CAccess {
 		}
 
 		return bIsExistsRes;
+	}
+
+	//! 값을 할당한다
+	public static void AssignVal<T>(ref T a_tLhs, T a_tRhs, T a_tDefVal = null) where T : class {
+		a_tLhs = a_tRhs ?? a_tDefVal;
 	}
 	#endregion			// 제네릭 클래스 함수
 
@@ -297,7 +260,7 @@ public static partial class CAccess {
 		decimal dclPrice = a_oProduct.metadata.localizedPrice;
 		string oCurrencyCode = a_oProduct.metadata.isoCurrencyCode;
 		
-		return string.Format(KCDefine.B_TEXT_FMT_PRICE, oCurrencyCode, dclPrice);		
+		return string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, oCurrencyCode, dclPrice);		
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수

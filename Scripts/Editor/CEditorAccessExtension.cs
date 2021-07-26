@@ -36,6 +36,8 @@ public static partial class CEditorAccessExtension {
 
 		return a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;
 	}
+
+	
 	#endregion			// 클래스 함수
 
 	#region 조건부 클래스 함수

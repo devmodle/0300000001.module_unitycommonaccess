@@ -241,13 +241,17 @@ public static partial class CAccess {
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다
-	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder) {
-		CAccess.Assert(a_oScript != null);
-		int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
+	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oScript != null);
 
-		// 기존 순서와 다를 경우
-		if(nOrder != a_nOrder) {
-			MonoImporter.SetExecutionOrder(a_oScript, a_nOrder);
+		// 스크립트가 존재 할 경우
+		if(a_oScript != null) {
+			int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
+
+			// 기존 순서와 다를 경우
+			if(nOrder != a_nOrder) {
+				MonoImporter.SetExecutionOrder(a_oScript, a_nOrder);
+			}
 		}
 	}
 #endif			// #if UNITY_EDITOR

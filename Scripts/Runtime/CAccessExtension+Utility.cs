@@ -412,19 +412,45 @@ public static partial class CAccessExtension {
 	}
 
 	//! 활성화 여부를 변경한다
-	public static void ExSetEnable(this LayoutGroup a_oSender, bool a_bIsEnable) {
-		CAccess.Assert(a_oSender != null);
+	public static void ExSetEnable(this Behaviour a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		a_oSender.enabled = false;
-		a_oSender.gameObject.ExSetEnableComponent<ContentSizeFitter>(a_bIsEnable);
+		// 컴포넌트가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.enabled = a_bIsEnable;
+		}
+	}
+
+	//! 활성화 여부를 변경한다
+	public static void ExSetEnable(this LayoutGroup a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 레이아웃이 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.enabled = a_bIsEnable;
+			a_oSender.gameObject.ExSetEnableComponent<ContentSizeFitter>(a_bIsEnable);
+		}
+	}
+
+	//! 상호 작용 여부를 변경한다
+	public static void ExSetInteractable(this Selectable a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 선택자가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.interactable = a_bIsEnable;
+		}
 	}
 
 	//! 너비를 변경한다
-	public static void ExSetWidth(this LineRenderer a_oSender, float a_fWidth) {
-		CAccess.Assert(a_oSender != null);
+	public static void ExSetWidth(this LineRenderer a_oSender, float a_fWidth, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		a_oSender.startWidth = a_fWidth;
-		a_oSender.endWidth = a_fWidth;
+		// 라인이 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.startWidth = a_fWidth;
+			a_oSender.endWidth = a_fWidth;
+		}
 	}
 
 	//! 일반 색상을 변경한다
@@ -467,83 +493,95 @@ public static partial class CAccessExtension {
 	}
 
 	//! 컬링 마스크를 변경한다
-	public static void ExSetCullingMask(this Camera a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
+	public static void ExSetCullingMask(this Camera a_oSender, List<int> a_oLayerList, bool a_bIsReset = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oLayerList != null));
 
-		// 레이어 리스트가 유효 할 경우
-		if(a_oLayerList != null) {
+		// 카메라가 존재 할 경우
+		if(a_oSender != null && a_oLayerList != null) {
+			a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
 			a_oSender.cullingMask |= a_oLayerList.ExToBits();
 		}
 	}
 
 	//! 컬링 마스크를 변경한다
-	public static void ExSetCullingMask(this Light a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
+	public static void ExSetCullingMask(this Light a_oSender, List<int> a_oLayerList, bool a_bIsReset = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oLayerList != null));
 
-		// 레이어가 유효 할 경우
-		if(a_oLayerList.ExIsValid()) {
-			for(int i = 0; i < a_oLayerList.Count; ++i) {
-				a_oSender.cullingMask |= a_oLayerList.ExToBits();
-			}
+		// 광원이 존재 할 경우
+		if(a_oSender != null && a_oLayerList != null) {
+			a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
+			a_oSender.cullingMask |= a_oLayerList.ExToBits();
 		}
 	}
 
 	//! 이벤트 마스크를 변경한다
-	public static void ExSetEventMask(this PhysicsRaycaster a_oSender, List<int> a_oLayerList, bool a_bIsReset = true) {
-		CAccess.Assert(a_oSender != null);
-		
-		var stLayerMask = a_oSender.eventMask;
-		stLayerMask.value = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.eventMask.value;
+	public static void ExSetEventMask(this PhysicsRaycaster a_oSender, List<int> a_oLayerList, bool a_bIsReset = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oLayerList != null));
 
-		// 레이어 리스트가 유효 할 경우
-		if(a_oLayerList != null) {
+		// 광선 추적이 존재 할 경우
+		if(a_oSender != null && a_oLayerList != null) {
+			var stLayerMask = a_oSender.eventMask;
+			stLayerMask.value = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.eventMask.value;
 			stLayerMask.value |= a_oLayerList.ExToBits();
+
+			a_oSender.eventMask = stLayerMask;
 		}
-
-		a_oSender.eventMask = stLayerMask;
 	}
 
 	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this Canvas a_oSender, STSortingOrderInfo a_stOrderInfo) {
-		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
+	public static void ExSetSortingOrder(this Canvas a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
 
-		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
-		a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+		// 캔버스가 존재 할 경우
+		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
+			a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+			a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
+		}
 	}
 
 	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this LineRenderer a_oSender, STSortingOrderInfo a_stOrderInfo) {
-		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
+	public static void ExSetSortingOrder(this LineRenderer a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
 
-		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
-		a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+		// 라인이 존재 할 경우
+		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
+			a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+			a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
+		}
 	}
 	
 	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this SpriteRenderer a_oSender, STSortingOrderInfo a_stOrderInfo) {
-		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
+	public static void ExSetSortingOrder(this SpriteRenderer a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
 
-		a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
-		a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+		// 스프라이트가 존재 할 경우
+		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
+			a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+			a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
+		}
 	}
 
 	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this ParticleSystem a_oSender, STSortingOrderInfo a_stOrderInfo) {
-		CAccess.Assert(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid());
+	public static void ExSetSortingOrder(this ParticleSystem a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
 
-		var oRenderer = a_oSender.GetComponent<Renderer>();
-		oRenderer.sortingLayerName = a_stOrderInfo.m_oLayer;
-		oRenderer.sortingOrder = a_stOrderInfo.m_nOrder;
+		// 파티클이 존재 할 경우
+		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
+			var oRenderer = a_oSender.GetComponent<Renderer>();
+			oRenderer.sortingOrder = a_stOrderInfo.m_nOrder;
+			oRenderer.sortingLayerName = a_stOrderInfo.m_oLayer;
+		}
 	}
 
 	//! 색상을 변경한다
-	public static void ExSetStartColor(this ParticleSystem a_oSender, Color a_stMinColor, Color a_stMaxColor) {
-		CAccess.Assert(a_oSender != null);
+	public static void ExSetStartColor(this ParticleSystem a_oSender, Color a_stMinColor, Color a_stMaxColor, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		var oMainModule = a_oSender.main;
-		oMainModule.startColor = new ParticleSystem.MinMaxGradient(a_stMinColor, a_stMaxColor);
+		// 파티클이 존재 할 경우
+		if(a_oSender != null) {
+			var oMainModule = a_oSender.main;
+			oMainModule.startColor = new ParticleSystem.MinMaxGradient(a_stMinColor, a_stMaxColor);
+		}
 	}
 
 	//! 비율을 변경한다
@@ -557,153 +595,253 @@ public static partial class CAccessExtension {
 	}
 
 	//! X 축 비율을 변경한다
-	public static void ExSetScaleX(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_fVal, a_oSender.transform.localScale.y, a_oSender.transform.localScale.z);
+	public static void ExSetScaleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localScale = new Vector3(a_fVal, a_oSender.transform.localScale.y, a_oSender.transform.localScale.z);
+		}
 	}
 
 	//! Y 축 비율을 변경한다
-	public static void ExSetScaleY(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_fVal, a_oSender.transform.localScale.z);
+	public static void ExSetScaleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_fVal, a_oSender.transform.localScale.z);
+		}
 	}
 
 	//! Z 축 비율을 변경한다
-	public static void ExSetScaleZ(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_oSender.transform.localScale.y, a_fVal);
+	public static void ExSetScaleZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_oSender.transform.localScale.y, a_fVal);
+		}
 	}
 
 	//! 월드 각도를 변경한다
-	public static void ExSetWorldAngle(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_fVal, a_fVal, a_fVal);
+	public static void ExSetWorldAngle(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.eulerAngles = new Vector3(a_fVal, a_fVal, a_fVal);
+		}
 	}
 
 	//! 월드 X 축 각도를 변경한다
-	public static void ExSetWorldAngleX(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_fVal, a_oSender.transform.eulerAngles.y, a_oSender.transform.eulerAngles.z);
+	public static void ExSetWorldAngleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.eulerAngles = new Vector3(a_fVal, a_oSender.transform.eulerAngles.y, a_oSender.transform.eulerAngles.z);
+		}
 	}
 	
 	//! 월드 Y 축 각도를 변경한다
-	public static void ExSetWorldAngleY(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_fVal, a_oSender.transform.eulerAngles.z);
+	public static void ExSetWorldAngleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_fVal, a_oSender.transform.eulerAngles.z);
+		}
 	}
 
 	//! 월드 Z 축 각도를 변경한다
-	public static void ExSetWorldAngleZ(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_oSender.transform.eulerAngles.y, a_fVal);
+	public static void ExSetWorldAngleZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.eulerAngles = new Vector3(a_oSender.transform.eulerAngles.x, a_oSender.transform.eulerAngles.y, a_fVal);
+		}
 	}
 
 	//! 로컬 각도를 변경한다
-	public static void ExSetLocalAngle(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_fVal, a_fVal, a_fVal);
+	public static void ExSetLocalAngle(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localEulerAngles = new Vector3(a_fVal, a_fVal, a_fVal);
+		}
 	}
 
 	//! 로컬 X 축 각도를 변경한다
-	public static void ExSetLocalAngleX(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_fVal, a_oSender.transform.localEulerAngles.y, a_oSender.transform.localEulerAngles.z);
+	public static void ExSetLocalAngleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localEulerAngles = new Vector3(a_fVal, a_oSender.transform.localEulerAngles.y, a_oSender.transform.localEulerAngles.z);
+		}
 	}
 	
 	//! 로컬 Y 축 각도를 변경한다
-	public static void ExSetLocalAngleY(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_fVal, a_oSender.transform.localEulerAngles.z);
+	public static void ExSetLocalAngleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_fVal, a_oSender.transform.localEulerAngles.z);
+		}
 	}
 
 	//! 로컬 Z 축 각도를 변경한다
-	public static void ExSetLocalAngleZ(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_oSender.transform.localEulerAngles.y, a_fVal);
+	public static void ExSetLocalAngleZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localEulerAngles = new Vector3(a_oSender.transform.localEulerAngles.x, a_oSender.transform.localEulerAngles.y, a_fVal);
+		}
 	}
 
 	//! 월드 위치를 변경한다
-	public static void ExSetWorldPos(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_fVal, a_fVal, a_fVal);
+	public static void ExSetWorldPos(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.position = new Vector3(a_fVal, a_fVal, a_fVal);
+		}
 	}
 
 	//! 월드 X 축 위치를 변경한다
-	public static void ExSetWorldPosX(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_fVal, a_oSender.transform.position.y, a_oSender.transform.position.z);
+	public static void ExSetWorldPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.position = new Vector3(a_fVal, a_oSender.transform.position.y, a_oSender.transform.position.z);
+		}
 	}
 	
 	//! 월드 Y 축 위치를 변경한다
-	public static void ExSetWorldPosY(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_fVal, a_oSender.transform.position.z);
+	public static void ExSetWorldPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_fVal, a_oSender.transform.position.z);
+		}
 	}
 
 	//! 월드 Z 축 위치를 변경한다
-	public static void ExSetWorldPosZ(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_oSender.transform.position.y, a_fVal);
+	public static void ExSetWorldPosZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.position = new Vector3(a_oSender.transform.position.x, a_oSender.transform.position.y, a_fVal);
+		}
 	}
 
 	//! 로컬 위치를 변경한다
-	public static void ExSetLocalPos(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_fVal, a_fVal, a_fVal);
+	public static void ExSetLocalPos(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localPosition = new Vector3(a_fVal, a_fVal, a_fVal);
+		}
 	}
 
 	//! 로컬 X 축 위치를 변경한다
-	public static void ExSetLocalPosX(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_fVal, a_oSender.transform.localPosition.y, a_oSender.transform.localPosition.z);
+	public static void ExSetLocalPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localPosition = new Vector3(a_fVal, a_oSender.transform.localPosition.y, a_oSender.transform.localPosition.z);
+		}
 	}
 	
 	//! 로컬 Y 축 위치를 변경한다
-	public static void ExSetLocalPosY(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_fVal, a_oSender.transform.localPosition.z);
+	public static void ExSetLocalPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_fVal, a_oSender.transform.localPosition.z);
+		}
 	}
 
 	//! 로컬 Z 축 위치를 변경한다
-	public static void ExSetLocalPosZ(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null);
-		a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_oSender.transform.localPosition.y, a_fVal);
+	public static void ExSetLocalPosZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.localPosition = new Vector3(a_oSender.transform.localPosition.x, a_oSender.transform.localPosition.y, a_fVal);
+		}
 	}
 
 	//! 크기 간격을 변경한다
-	public static void ExSetSizeDelta(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fVal, a_fVal);
+	public static void ExSetSizeDelta(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+			(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fVal, a_fVal);
+		}
 	}
 
 	//! X 축 크기 간격을 변경한다
-	public static void ExSetSizeDeltaX(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fVal, (a_oSender.transform as RectTransform).sizeDelta.y);
+	public static void ExSetSizeDeltaX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+			(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_fVal, (a_oSender.transform as RectTransform).sizeDelta.y);
+		}
 	}
 
 	//! Y 축 크기 간격을 변경한다
-	public static void ExSetSizeDeltaY(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).sizeDelta = new Vector2((a_oSender.transform as RectTransform).sizeDelta.x, a_fVal);
+	public static void ExSetSizeDeltaY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+			(a_oSender.transform as RectTransform).sizeDelta = new Vector2((a_oSender.transform as RectTransform).sizeDelta.x, a_fVal);
+		}
 	}
 
 	//! 앵커 위치를 변경한다
-	public static void ExSetAnchorPos(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fVal, a_fVal);
+	public static void ExSetAnchorPos(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+			(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fVal, a_fVal);
+		}
 	}
 
 	//! X 축 앵커 위치를 변경한다
-	public static void ExSetAnchorPosX(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fVal, (a_oSender.transform as RectTransform).anchoredPosition.y);
+	public static void ExSetAnchorPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+			(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fVal, (a_oSender.transform as RectTransform).anchoredPosition.y);
+		}
 	}
 
 	//! Y 축 앵커 위치를 변경한다
-	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fVal) {
-		CAccess.Assert(a_oSender != null && (a_oSender.transform as RectTransform) != null);
-		(a_oSender.transform as RectTransform).anchoredPosition = new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal);
+	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+			(a_oSender.transform as RectTransform).anchoredPosition = new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal);
+		}
 	}
 
 	//! 스크롤 위치를 변경한다
@@ -712,7 +850,8 @@ public static partial class CAccessExtension {
 
 		// 스크롤러가 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.SetScrollPositionImmediately(Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, a_oSender.ScrollSize));
+			float fScrollPos = Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, a_oSender.ScrollSize);
+			a_oSender.SetScrollPositionImmediately(fScrollPos);
 		}
 	}
 
@@ -789,130 +928,157 @@ public static partial class CAccessExtension {
 	}
 	
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponent<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Component {
-		CAccess.Assert(a_oSender != null);
-		var oComponent = a_oSender.GetComponentInChildren<T>() as Behaviour;
+	public static void ExSetEnableComponent<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		// 컴포넌트가 존재 할 경우
-		if(oComponent != null) {
-			oComponent.enabled = a_bIsEnable;
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			var oComponent = a_oSender.GetComponentInChildren<T>() as Behaviour;
+			oComponent.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponent<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Component {
-		CAccess.Assert(a_oName.ExIsValid());
-		var oObj = a_stSender.ExFindChild(a_oName);
+	public static void ExSetEnableComponent<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || a_oName.ExIsValid());
 
-		oObj.ExSetEnableComponent<T>(a_bIsEnable);
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid()) {
+			var oObj = a_stSender.ExFindChild(a_oName);
+			oObj.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
 	}
 
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponent<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Component {
-		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
-		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+	public static void ExSetEnableComponent<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oName.ExIsValid()));
 
-		oObj.ExSetEnableComponent<T>(a_bIsEnable);
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oName.ExIsValid()) {
+			var oObj = a_oSender?.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
 	}
 
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponents<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Component {
-		CAccess.Assert(a_oSender != null);
-		var oComponents = a_oSender.GetComponentsInChildren<T>();
+	public static void ExSetEnableComponents<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		for(int i = 0; i < oComponents.Length; ++i) {
-			var oComponent = oComponents[i] as Behaviour;
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			var oComponents = a_oSender.GetComponentsInChildren<T>();
 
-			// 컴포넌트가 존재 할 경우
-			if(oComponent != null) {
-				oComponent.enabled = a_bIsEnable;
+			for(int i = 0; i < oComponents.Length; ++i) {
+				var oComponent = oComponents[i] as Behaviour;
+				oComponent.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 			}
 		}
 	}
 
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponents<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Component {
-		CAccess.Assert(a_oName.ExIsValid());
-		var oObj = a_stSender.ExFindChild(a_oName);
+	public static void ExSetEnableComponents<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || a_oName.ExIsValid());
 
-		oObj.ExSetEnableComponents<T>(a_bIsEnable);
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid()) {
+			var oObj = a_stSender.ExFindChild(a_oName);
+			oObj.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
 	}
 
 	//! 컴포넌트 활성 여부를 변경한다
-	public static void ExSetEnableComponents<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Component {
-		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
-		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+	public static void ExSetEnableComponents<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oName.ExIsValid()));
 
-		oObj.ExSetEnableComponents<T>(a_bIsEnable);
-	}
-
-	//! 컴포넌트 상호 작용 여부를 변경한다
-	public static void ExSetInteractable<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Selectable {
-		CAccess.Assert(a_oSender != null);
-		var oComponent = a_oSender.GetComponentInChildren<T>();
-
-		// 컴포넌트가 존재 할 경우
-		if(oComponent != null) {
-			oComponent.interactable = a_bIsEnable;
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oName.ExIsValid()) {
+			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
 	//! 컴포넌트 상호 작용 여부를 변경한다
-	public static void ExSetInteractable<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Selectable {
-		CAccess.Assert(a_oName.ExIsValid());
-		var oObj = a_stSender.ExFindChild(a_oName);
+	public static void ExSetInteractable<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Selectable {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		oObj.ExSetInteractable<T>(a_bIsEnable);
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			var oComponent = a_oSender.GetComponentInChildren<T>();
+			oComponent.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
+		}
 	}
 
 	//! 컴포넌트 상호 작용 여부를 변경한다
-	public static void ExSetInteractable<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Selectable {
-		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
-		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+	public static void ExSetInteractable<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Selectable {
+		CAccess.Assert(!a_bIsEnableAssert || a_oName.ExIsValid());
 
-		oObj.ExSetInteractable<T>(a_bIsEnable);
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid()) {
+			var oObj = a_stSender.ExFindChild(a_oName);
+			oObj.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
 	}
 
 	//! 컴포넌트 상호 작용 여부를 변경한다
-	public static void ExSetInteractables<T>(this GameObject a_oSender, bool a_bIsEnable) where T : Selectable {
-		CAccess.Assert(a_oSender != null);
-		var oComponents = a_oSender.GetComponentsInChildren<T>();
+	public static void ExSetInteractable<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true, bool a_bIsEnableAssert = true) where T : Selectable {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null && a_oName.ExIsValid());
 
-		for(int i = 0; i < oComponents.Length; ++i) {
-			var oComponent = oComponents[i];
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oName.ExIsValid()) {
+			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
+	}
 
-			// 컴포넌트가 존재 할 경우
-			if(oComponent != null) {
-				oComponent.interactable = a_bIsEnable;
+	//! 컴포넌트 상호 작용 여부를 변경한다
+	public static void ExSetInteractables<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Selectable {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			var oComponents = a_oSender.GetComponentsInChildren<T>();
+
+			for(int i = 0; i < oComponents.Length; ++i) {
+				var oComponent = oComponents[i];
+				oComponent.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
 			}
 		}
 	}
 
 	//! 컴포넌트 상호 작용 여부를 변경한다
-	public static void ExSetInteractables<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable) where T : Selectable {
-		CAccess.Assert(a_oName.ExIsValid());
-		var oObj = a_stSender.ExFindChild(a_oName);
+	public static void ExSetInteractables<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Selectable {
+		CAccess.Assert(!a_bIsEnableAssert || a_oName.ExIsValid());
 
-		oObj.ExSetInteractables<T>(a_bIsEnable);
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid()) {
+			var oObj = a_stSender.ExFindChild(a_oName);
+			oObj.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
 	}
 
 	//! 컴포넌트 상호 작용 여부를 변경한다
-	public static void ExSetInteractables<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true) where T : Selectable {
-		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
-		var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+	public static void ExSetInteractables<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true, bool a_bIsEnableAssert = true) where T : Selectable {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oName.ExIsValid()));
 
-		oObj.ExSetInteractables<T>(a_bIsEnable);
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oName.ExIsValid()) {
+			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
 	}
 	#endregion			// 제네릭 클래스 함수
 	
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	//! 스크립트 순서를 변경한다
-	public static void ExSetScriptOrder(this MonoBehaviour a_oSender, int a_nOrder) {
-		CAccess.Assert(a_oSender != null);
-		var oMonoScript = MonoScript.FromMonoBehaviour(a_oSender);
+	public static void ExSetScriptOrder(this MonoBehaviour a_oSender, int a_nOrder, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		CAccess.SetScriptOrder(oMonoScript, a_nOrder);
+		// 컴포넌트가 존재 할 경우
+		if(a_oSender != null) {
+			var oMonoScript = MonoScript.FromMonoBehaviour(a_oSender);
+			CAccess.SetScriptOrder(oMonoScript, a_nOrder, a_bIsEnableAssert);
+		}
 	}
 #endif			// #if UNITY_EDITOR
 

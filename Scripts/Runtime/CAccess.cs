@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
+using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 
 //! 기본 접근자
 public static partial class CAccess {

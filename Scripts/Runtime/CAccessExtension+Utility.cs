@@ -864,7 +864,7 @@ public static partial class CAccessExtension {
 			a_oSender.Delegate = a_oDelegate;
 		}
 	}
-
+	
 	//! 데이터를 다시 로드한다
 	public static void ExReloadData(this EnhancedScroller a_oSender, int a_nDataIdx, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);

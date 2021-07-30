@@ -432,6 +432,16 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	//! 활성화 여부를 변경한다
+	public static void ExSetActive(this Behaviour a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 컴포넌트가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.gameObject?.SetActive(a_bIsEnable);
+		}
+	}
+	
 	//! 상호 작용 여부를 변경한다
 	public static void ExSetInteractable(this Selectable a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -918,13 +928,13 @@ public static partial class CAccessExtension {
 	//! 텍스트를 변경한다
 	public static void ExSetText<T>(this object a_oSender, string a_oStr, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-		a_oSender.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_TEXT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oStr, a_bIsEnableAssert);
+		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_TEXT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oStr, a_bIsEnableAssert);
 	}
 
 	//! 색상을 변경한다
 	public static void ExSetColor<T>(this object a_oSender, Color a_stColor, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-		a_oSender.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_COLOR, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_stColor, a_bIsEnableAssert);
+		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_COLOR, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_stColor, a_bIsEnableAssert);
 	}
 	
 	//! 컴포넌트 활성 여부를 변경한다
@@ -934,7 +944,7 @@ public static partial class CAccessExtension {
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
 			var oComponent = a_oSender.GetComponentInChildren<T>() as Behaviour;
-			oComponent.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
+			oComponent?.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -945,7 +955,7 @@ public static partial class CAccessExtension {
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
 			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
+			oObj?.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -955,8 +965,8 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender?.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
+			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj?.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -969,8 +979,7 @@ public static partial class CAccessExtension {
 			var oComponents = a_oSender.GetComponentsInChildren<T>();
 
 			for(int i = 0; i < oComponents.Length; ++i) {
-				var oComponent = oComponents[i] as Behaviour;
-				oComponent.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
+				(oComponents[i] as Behaviour)?.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -982,7 +991,7 @@ public static partial class CAccessExtension {
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
 			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
+			oObj?.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -992,8 +1001,8 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
+			var oObj = a_oSender?.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj?.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1004,7 +1013,7 @@ public static partial class CAccessExtension {
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
 			var oComponent = a_oSender.GetComponentInChildren<T>();
-			oComponent.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
+			oComponent?.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1015,7 +1024,7 @@ public static partial class CAccessExtension {
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
 			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
+			oObj?.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1026,7 +1035,7 @@ public static partial class CAccessExtension {
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
 			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
+			oObj?.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1039,8 +1048,7 @@ public static partial class CAccessExtension {
 			var oComponents = a_oSender.GetComponentsInChildren<T>();
 
 			for(int i = 0; i < oComponents.Length; ++i) {
-				var oComponent = oComponents[i];
-				oComponent.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
+				oComponents[i]?.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
 			}
 		}
 	}
@@ -1052,7 +1060,7 @@ public static partial class CAccessExtension {
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
 			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
+			oObj?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1063,7 +1071,7 @@ public static partial class CAccessExtension {
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
 			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
+			oObj?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 	#endregion			// 제네릭 클래스 함수

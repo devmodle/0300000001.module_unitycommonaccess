@@ -428,7 +428,7 @@ public static partial class CAccessExtension {
 		// 레이아웃이 존재 할 경우
 		if(a_oSender != null) {
 			a_oSender.enabled = a_bIsEnable;
-			a_oSender.gameObject.ExSetEnableComponent<ContentSizeFitter>(a_bIsEnable);
+			a_oSender.GetComponent<ContentSizeFitter>()?.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 

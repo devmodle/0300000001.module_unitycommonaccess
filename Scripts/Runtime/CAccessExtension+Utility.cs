@@ -550,21 +550,10 @@ public static partial class CAccessExtension {
 	}
 
 	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this LineRenderer a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
+	public static void ExSetSortingOrder(this Renderer a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
 
-		// 라인이 존재 할 경우
-		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
-			a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
-			a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
-		}
-	}
-	
-	//! 정렬 순서를 변경한다
-	public static void ExSetSortingOrder(this SpriteRenderer a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
-
-		// 스프라이트가 존재 할 경우
+		// 렌더러가 존재 할 경우
 		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
 			a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
 			a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
@@ -577,9 +566,8 @@ public static partial class CAccessExtension {
 
 		// 파티클이 존재 할 경우
 		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
-			var oRenderer = a_oSender.GetComponent<Renderer>();
-			oRenderer.sortingOrder = a_stOrderInfo.m_nOrder;
-			oRenderer.sortingLayerName = a_stOrderInfo.m_oLayer;
+			var oRenderer = a_oSender.GetComponent<ParticleSystemRenderer>();
+			oRenderer?.ExSetSortingOrder(a_stOrderInfo, a_bIsEnableAssert);
 		}
 	}
 

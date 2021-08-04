@@ -96,6 +96,11 @@ public static partial class CAccessExtension {
 	}
 
 	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this STIdxInfo a_stSender, STIdxInfo a_stRhs) {
+		return a_stSender.m_nX == a_stRhs.m_nX && a_stSender.m_nY == a_stRhs.m_nY && a_stSender.m_nZ == a_stRhs.m_nZ;
+	}
+
+	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this List<Vector2> a_oSender, List<Vector2> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
 
@@ -460,6 +465,17 @@ public static partial class CAccessExtension {
 		if(a_oSender != null) {
 			a_oSender.startWidth = a_fWidth;
 			a_oSender.endWidth = a_fWidth;
+		}
+	}
+
+	//! 위치를 설정한다
+	public static void ExSetPositions(this LineRenderer a_oSender, List<Vector3> a_oPosList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oPosList != null));
+
+		// 라인이 존재 할 경우
+		if(a_oSender != null && a_oPosList != null) {
+			a_oSender.positionCount = a_oPosList.Count;
+			a_oSender.SetPositions(a_oPosList.ToArray());
 		}
 	}
 

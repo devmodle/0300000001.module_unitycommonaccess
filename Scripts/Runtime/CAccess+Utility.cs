@@ -234,7 +234,7 @@ public static partial class CAccess {
 
 	//! 값을 할당한다
 	public static void AssignVal<T>(ref T a_tLhs, T a_tRhs, T a_tDefVal = null) where T : class {
-		a_tLhs = (a_tRhs != null) ? a_tRhs : a_tDefVal;
+		a_tLhs = a_tRhs ?? a_tDefVal;
 	}
 	#endregion			// 제네릭 클래스 함수
 

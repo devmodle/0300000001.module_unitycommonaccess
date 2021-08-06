@@ -457,6 +457,16 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	//! 상호 작용 여부를 변경한다
+	public static void ExSetRaycastTarget(this Graphic a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 그래픽스가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.raycastTarget = a_bIsEnable;
+		}
+	}
+
 	//! 너비를 변경한다
 	public static void ExSetWidth(this LineRenderer a_oSender, float a_fWidth, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -1043,7 +1053,40 @@ public static partial class CAccessExtension {
 		}
 	}
 
-	//! 컴포넌트 상호 작용 여부를 변경한다
+	//! 컴포넌트 광선 추적 타겟 여부를 변경한다
+	public static void ExSetRaycastTarget<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Graphic {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			var oComponent = a_oSender.GetComponentInChildren<T>();
+			oComponent?.ExSetRaycastTarget(a_bIsEnable, a_bIsEnableAssert);
+		}
+	}
+
+	//! 컴포넌트 광선 추적 타겟 여부를 변경한다
+	public static void ExSetRaycastTarget<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Graphic {
+		CAccess.Assert(!a_bIsEnableAssert || a_oName.ExIsValid());
+
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid()) {
+			var oObj = a_stSender.ExFindChild(a_oName);
+			oObj?.ExSetRaycastTarget<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
+	}
+
+	//! 컴포넌트 광선 추적 타겟 여부를 변경한다
+	public static void ExSetRaycastTarget<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true, bool a_bIsEnableAssert = true) where T : Graphic {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null && a_oName.ExIsValid());
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oName.ExIsValid()) {
+			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj?.ExSetRaycastTarget<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
+	}
+
+	//! 컴포넌트 광선 추적 타겟 여부를 변경한다
 	public static void ExSetInteractables<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Selectable {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
@@ -1076,6 +1119,42 @@ public static partial class CAccessExtension {
 		if(a_oSender != null && a_oName.ExIsValid()) {
 			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
 			oObj?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
+	}
+	
+	//! 컴포넌트 광선 추적 타겟 여부를 변경한다
+	public static void ExSetRaycastTargets<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Graphic {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			var oComponents = a_oSender.GetComponentsInChildren<T>();
+
+			for(int i = 0; i < oComponents.Length; ++i) {
+				oComponents[i]?.ExSetRaycastTarget(a_bIsEnable, a_bIsEnableAssert);
+			}
+		}
+	}
+
+	//! 컴포넌트 광선 추적 타겟 여부를 변경한다
+	public static void ExSetRaycastTargets<T>(this Scene a_stSender, string a_oName, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Graphic {
+		CAccess.Assert(!a_bIsEnableAssert || a_oName.ExIsValid());
+
+		// 이름이 유효 할 경우
+		if(a_oName.ExIsValid()) {
+			var oObj = a_stSender.ExFindChild(a_oName);
+			oObj?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
+	}
+
+	//! 컴포넌트 광선 추적 타겟 여부를 변경한다
+	public static void ExSetRaycastTargets<T>(this GameObject a_oSender, string a_oName, bool a_bIsEnable, bool a_bIsIncludeSelf = true, bool a_bIsEnableAssert = true) where T : Graphic {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oName.ExIsValid()));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oName.ExIsValid()) {
+			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
+			oObj?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 	#endregion			// 제네릭 클래스 함수

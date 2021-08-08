@@ -729,12 +729,12 @@ public static partial class CAccessExtension {
 	}
 
 	//! 월드 위치를 변경한다
-	public static void ExSetWorldPos(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+	public static void ExSetWorldPos(this GameObject a_oSender, Vector3 a_stPos, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.transform.position = new Vector3(a_fVal, a_fVal, a_fVal);
+			a_oSender.transform.position = a_stPos;
 		}
 	}
 
@@ -769,12 +769,12 @@ public static partial class CAccessExtension {
 	}
 
 	//! 로컬 위치를 변경한다
-	public static void ExSetLocalPos(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+	public static void ExSetLocalPos(this GameObject a_oSender, Vector3 a_stPos, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.transform.localPosition = new Vector3(a_fVal, a_fVal, a_fVal);
+			a_oSender.transform.localPosition = a_stPos;
 		}
 	}
 
@@ -839,12 +839,12 @@ public static partial class CAccessExtension {
 	}
 
 	//! 앵커 위치를 변경한다
-	public static void ExSetAnchorPos(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+	public static void ExSetAnchorPos(this GameObject a_oSender, Vector3 a_stPos, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
-			(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_fVal, a_fVal);
+			(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_stPos.x, a_stPos.y);
 		}
 	}
 

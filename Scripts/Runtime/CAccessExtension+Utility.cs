@@ -246,17 +246,7 @@ public static partial class CAccessExtension {
 	//! 캔버스 월드 위치를 반환한다
 	public static Vector3 ExGetWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
-
-		float fAspect = CAccess.ScreenSize.x / CAccess.ScreenSize.y;
-		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
-
-		float fNormPosX = ((a_oSender.position.x * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_FLT;
-		var stNormPos = new Vector3(fNormPosX, ((a_oSender.position.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT, KCDefine.B_VAL_0_FLT);
-
-		stNormPos.x *= (fScreenWidth / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
-		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
-
-		return stNormPos;
+		return a_oSender.position.ExGetWorldPos();
 	}
 
 	//! 캔버스 로컬 위치를 반환한다
@@ -327,6 +317,19 @@ public static partial class CAccessExtension {
 		var stPos = a_oSender.ExGetCorrectWorldScalePos(a_stScale);
 
 		return stPos.ExToLocal(a_oObj);
+	}
+
+	//! 캔버스 월드 간격을 반환한다
+	public static Vector3 ExGetWorldDelta(this PointerEventData a_oSender) {
+		return a_oSender.pointerPressRaycast.screenPosition.ExGetWorldPos() - a_oSender.pointerCurrentRaycast.screenPosition.ExGetWorldPos();
+	}
+
+	//! 캔버스 로컬 간격을 반환한다
+	public static Vector3 ExGetLocalDelta(this PointerEventData a_oSender, GameObject a_oObj) {
+		var stPosA = a_oSender.pointerPressRaycast.screenPosition.ExGetWorldPos();
+		var stPosB = a_oSender.pointerCurrentRaycast.screenPosition.ExGetWorldPos();
+
+		return stPosA.ExToLocal(a_oObj) - stPosB.ExToLocal(a_oObj);
 	}
 	
 	//! 스크롤 뷰 정규 위치를 반환한다
@@ -935,6 +938,20 @@ public static partial class CAccessExtension {
 		}
 
 		return null;
+	}
+
+	//! 캔버스 월드 위치를 반환한다
+	private static Vector3 ExGetWorldPos(this Vector2 a_stSender) {
+		float fAspect = CAccess.ScreenSize.x / CAccess.ScreenSize.y;
+		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
+
+		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_FLT;
+		var stNormPos = new Vector3(fNormPosX, ((a_stSender.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT, KCDefine.B_VAL_0_FLT);
+
+		stNormPos.x *= (fScreenWidth / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
+		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_SCALE;
+
+		return stNormPos;
 	}
 	#endregion			// 클래스 함수
 

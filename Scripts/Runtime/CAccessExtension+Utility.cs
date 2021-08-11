@@ -967,6 +967,12 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_COLOR, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_stColor, a_bIsEnableAssert);
 	}
+
+	//! 스프라이트를 변경한다
+	public static void ExSetSprite<T>(this object a_oSender, Sprite a_oSprite, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_SPRITE, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oSprite, a_bIsEnableAssert);
+	}
 	
 	//! 컴포넌트 활성 여부를 변경한다
 	public static void ExSetEnableComponent<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Component {

@@ -196,11 +196,9 @@ public static partial class CAccess {
 	//! 배너 광고 높이를 반환한다
 	public static float GetBannerAdsHeight(float a_fDesignHeight) {
 		CAccess.Assert(a_fDesignHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
-
-		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y;
 		float fBannerAdsHeight = a_fDesignHeight * (CAccess.DPI / KCDefine.B_DPI);
-
-		return (fBannerAdsHeight * fPercent) / CAccess.ResolutionScale;
+		
+		return fBannerAdsHeight / CAccess.ResolutionScale;
 	}
 	
 	//! 값을 할당한다

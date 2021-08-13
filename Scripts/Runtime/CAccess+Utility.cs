@@ -194,11 +194,22 @@ public static partial class CAccess {
 	}
 	
 	//! 배너 광고 높이를 반환한다
-	public static float GetBannerAdsHeight(float a_fDesignHeight) {
-		CAccess.Assert(a_fDesignHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
-		float fBannerAdsHeight = a_fDesignHeight * (CAccess.DPI / KCDefine.B_DPI);
+	public static float GetBannerAdsHeight(float a_fHeight) {
+		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
+
+		float fPercent = Screen.height / KCDefine.B_SCREEN_HEIGHT;
+		float fBannerAdsHeight = CAccess.GetBannerAdsScreenHeight(a_fHeight);
 		
-		return fBannerAdsHeight / CAccess.ResolutionScale;
+		return (fBannerAdsHeight * fPercent) / CAccess.ResolutionScale;
+	}
+
+	//! 배너 광고 화면 높이를 반환한다
+	public static float GetBannerAdsScreenHeight(float a_fHeight) {
+#if UNITY_EDITOR || MODE_PORTRAIT_ENABLE
+		return a_fHeight * (CAccess.DPI / KCDefine.B_DPI);
+#else
+		return (a_fHeight * KCDefine.U_SCALE_LANDSCAPE_BANNER_ADS_HEIGHT) * (CAccess.DPI / KCDefine.B_DPI);
+#endif			// #if UNITY_EDITOR || MODE_PORTRAIT_ENABLE
 	}
 	
 	//! 값을 할당한다

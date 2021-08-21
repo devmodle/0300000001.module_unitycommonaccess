@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using EnhancedUI.EnhancedScroller;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,10 +15,6 @@ using UnityEngine.iOS;
 #if UNITY_ANDROID
 using UnityEngine.Android;
 #endif			// #if UNITY_ANDROID
-
-#if INPUT_SYSTEM_MODULE_ENABLE
-using UnityEngine.InputSystem;
-#endif			// #if INPUT_SYSTEM_MODULE_ENABLE
 
 #if PURCHASE_MODULE_ENABLE
 using UnityEngine.Purchasing;
@@ -147,38 +142,6 @@ public static partial class CAccess {
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
-
-#if INPUT_SYSTEM_MODULE_ENABLE
-	public static bool IsTouch {
-		get {
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-			return Touchscreen.current.press.isPressed;
-#else
-			return Mouse.current.press.isPressed;
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-		}
-	}
-
-	public static bool IsTouchBegin {
-		get {
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-			return Touchscreen.current.press.wasPressedThisFrame;
-#else
-			return Mouse.current.press.wasPressedThisFrame;
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-		}
-	}
-
-	public static bool IsTouchEnd {
-		get {
-#if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-			return Touchscreen.current.press.wasReleasedThisFrame;
-#else
-			return Mouse.current.press.wasReleasedThisFrame;
-#endif			// #if !UNITY_EDITOR && (UNITY_IOS || UNITY_ANDROID)
-		}
-	}
-#endif			// #if INPUT_SYSTEM_MODULE_ENABLE
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수

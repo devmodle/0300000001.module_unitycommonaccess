@@ -23,7 +23,7 @@ public static partial class CAccess {
 	//! 유저 문자열을 반환한다
 	public static string GetUserStr(EUserType a_eUserType) {
 		// 유저 타입이 유효하지 않을 경우
-		if(a_eUserType.ExIsValid()) {
+		if(!a_eUserType.ExIsValid()) {
 			return KCDefine.B_TOKEN_USER_UNKNOWN;
 		}
 

@@ -236,7 +236,7 @@ public static partial class CAccess {
 		decimal dclPrice = a_oProduct.metadata.localizedPrice;
 		string oCurrencyCode = a_oProduct.metadata.isoCurrencyCode;
 		
-		return string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, oCurrencyCode, dclPrice);		
+		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, oCurrencyCode, dclPrice);		
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수

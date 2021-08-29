@@ -160,7 +160,7 @@ public static partial class CAccess {
 	public static float GetBannerAdsHeight(float a_fHeight) {
 		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
 
-		float fPercent = KCDefine.B_SCREEN_HEIGHT / (float)Screen.height;
+		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y;
 		float fBannerAdsHeight = CAccess.GetBannerAdsScreenHeight(a_fHeight);
 		
 		return (fBannerAdsHeight * fPercent) / CAccess.ResolutionScale;

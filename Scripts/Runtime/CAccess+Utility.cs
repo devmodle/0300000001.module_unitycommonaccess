@@ -70,16 +70,6 @@ public static partial class CAccess {
 		}
 	}
 
-	public static float DPI {
-		get {
-#if UNITY_EDITOR
-			return KCDefine.B_EDITOR_DPI;
-#else
-			return Screen.dpi;
-#endif			// #if UNITY_EDITOR
-		}
-	}
-
 	public static float ResolutionScale {
 		get {
 			float fScale = KCDefine.B_VAL_1_FLT;
@@ -98,21 +88,17 @@ public static partial class CAccess {
 		get {
 #if UNITY_IOS
 			string oModel = Device.generation.ToString();
-			bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
-
-			// iPhone, iPad 일 경우
-			if(bIsiPhone || oModel.Contains(KCDefine.U_MODEL_N_IPAD)) {
-				return bIsiPhone ? EDeviceType.PHONE : EDeviceType.TABLET;
-			}
+			return oModel.Contains(KCDefine.U_MODEL_N_IPAD) ? EDeviceType.TABLET : EDeviceType.PHONE;
+#else
+			return EDeviceType.PHONE;
 #endif			// #if UNITY_IOS
 
-			float fMaxLength = Mathf.Max(CAccess.ScreenSize.x, CAccess.ScreenSize.y);
-			float fMinLength = Mathf.Min(CAccess.ScreenSize.x, CAccess.ScreenSize.y);
+			// FIXME: 추후 테블릿 여부 검사 로직 수정 필요
+			// float fScreenWidth = CAccess.ScreenSize.x / Screen.dpi;
+			// float fScreenHeight = CAccess.ScreenSize.y / Screen.dpi;
+			// float fDiagonalInches = Mathf.Sqrt(Mathf.Pow(fScreenWidth, KCDefine.B_VAL_2_FLT) + Mathf.Pow(fScreenHeight, KCDefine.B_VAL_2_FLT));
 
-			float fAspect = fMaxLength / fMinLength;
-			bool bIsTablet = CAccess.ScreenInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) && fAspect.ExIsLess(KCDefine.U_UNIT_TABLET_ASPECT);
-
-			return bIsTablet ? EDeviceType.TABLET : EDeviceType.PHONE;
+			// return fDiagonalInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) ? EDeviceType.TABLET : EDeviceType.PHONE;
 		}
 	}
 
@@ -152,7 +138,7 @@ public static partial class CAccess {
 	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
-	public static float ScreenInches => (CAccess.ScreenSize / CAccess.DPI).magnitude;
+	public static float DPI => Screen.dpi;
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
 	#endregion			// 클래스 프로퍼티
 

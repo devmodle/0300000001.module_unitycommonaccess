@@ -25,12 +25,16 @@ public static partial class CAccess {
 	#region 클래스 프로퍼티
 	public static bool IsEnableShowConsentView {
 		get {
-#if UNITY_EDITOR || !UNITY_IOS
-			return false;
-#else
+#if UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
 			return oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
-#endif			// #if UNITY_EDITOR || !UNITY_IOS
+#else
+#if UNITY_EDITOR
+			return true;
+#else
+			return false;
+#endif			// #if UNITY_EDITOR
+#endif			// #if UNITY_IOS
 		}
 	}
 
@@ -63,6 +67,16 @@ public static partial class CAccess {
 #else
 			return false;
 #endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+		}
+	}
+
+	public static float DPI {
+		get {
+#if UNITY_EDITOR
+			return KCDefine.B_EDITOR_DPI;
+#else
+			return Screen.dpi;
+#endif			// #if UNITY_EDITOR
 		}
 	}
 
@@ -133,14 +147,12 @@ public static partial class CAccess {
 	public static bool IsConsole => Application.platform == RuntimePlatform.PS4 || Application.platform == RuntimePlatform.XboxOne;
 	public static bool IsHandheldConsole => Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
 
-	public static float DPI => Screen.dpi;
-	public static float ScreenInches => (CAccess.ScreenSize / Screen.dpi).magnitude;
-
 	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
 	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
+	public static float ScreenInches => (CAccess.ScreenSize / CAccess.DPI).magnitude;
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
 	#endregion			// 클래스 프로퍼티
 

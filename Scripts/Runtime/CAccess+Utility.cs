@@ -25,48 +25,43 @@ public static partial class CAccess {
 	#region 클래스 프로퍼티
 	public static bool IsEnableShowConsentView {
 		get {
-#if UNITY_IOS
+#if !UNITY_EDITOR && UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
 			return oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
-#else
-#if UNITY_EDITOR
-			return true;
-#else
+#elif !UNITY_EDITOR && UNITY_ANDROID
 			return false;
-#endif			// #if UNITY_EDITOR
-#endif			// #if UNITY_IOS
+#else
+			return true;
+#endif			// #if !UNITY_EDITOR && UNITY_IOS
 		}
 	}
 
 	public static bool IsSupportsHapticFeedback {
 		get {
-#if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
-#if UNITY_IOS
+#if (!UNITY_EDITOR && UNITY_IOS) && HAPTIC_FEEDBACK_ENABLE
 			var oVer = new System.Version(Device.systemVersion);
 			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK);
 
 			// 햅틱 피드백 지원 버전 일 경우
 			if(nCompare >= KCDefine.B_COMPARE_EQUALS) {
 				string oModel = Device.generation.ToString();
-				bool bIsiPhone = oModel.Contains(KCDefine.U_MODEL_N_IPHONE);
-
+				
 				for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS.Length; ++i) {
 					var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS[i];
 
 					// 햅틱 피드백 지원 모델 일 경우
-					if(bIsiPhone && eModel == Device.generation) {
+					if(eModel == Device.generation && oModel.Contains(KCDefine.U_MODEL_N_IPHONE)) {
 						return true;
 					}
 				}
 			}
 
 			return false;
-#else
+#elif (!UNITY_EDITOR && UNITY_ANDROID) && HAPTIC_FEEDBACK_ENABLE
 			return true;
-#endif			// #if UNITY_IOS
 #else
 			return false;
-#endif			// #if HAPTIC_FEEDBACK_ENABLE && (UNITY_IOS || UNITY_ANDROID)
+#endif			// #if (!UNITY_EDITOR && UNITY_IOS) && HAPTIC_FEEDBACK_ENABLE
 		}
 	}
 
@@ -247,7 +242,7 @@ public static partial class CAccess {
 #if UNITY_EDITOR
 			return false;
 #else
-		var oVer = new System.Version(Device.systemVersion);
+			var oVer = new System.Version(Device.systemVersion);
 			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_LOGIN_WITH_APPLE);
 			
 			return nCompare >= KCDefine.B_COMPARE_EQUALS;

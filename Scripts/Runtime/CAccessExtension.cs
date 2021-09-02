@@ -36,7 +36,7 @@ public static partial class CAccessExtension {
 
 	//! 언어 유효 여부를 검사한다
 	public static bool ExIsValidLanguage(this string a_oSender) {
-		return a_oSender.ExIsValid() && !a_oSender.ExIsEquals(KCDefine.B_UNKNOWN_LANGUAGE);
+		return a_oSender.ExIsValid() && !a_oSender.Equals(KCDefine.B_UNKNOWN_LANGUAGE);
 	}
 
 	//! 국가 코드 유효 여부를 검사한다
@@ -47,7 +47,7 @@ public static partial class CAccessExtension {
 		}
 
 		string oCountryCode = a_oSender.ToUpper();
-		return !oCountryCode.ExIsEquals(KCDefine.B_UNKNOWN_COUNTRY_CODE);
+		return !oCountryCode.Equals(KCDefine.B_UNKNOWN_COUNTRY_CODE);
 	}
 
 	//! 동일 여부를 검사한다
@@ -59,18 +59,6 @@ public static partial class CAccessExtension {
 	public static bool ExIsEquals(this double a_dblSender, double a_dblRhs) {
 		double dblDeltaTime = System.Math.Abs(a_dblSender) - System.Math.Abs(a_dblRhs);
 		return dblDeltaTime >= -double.Epsilon && dblDeltaTime <= double.Epsilon;
-	}
-
-	//! 동일 여부를 검사한다
-	public static bool ExIsEquals(this string a_oSender, string a_oStr) {
-		CAccess.Assert(a_oSender != null && a_oStr != null);
-		return a_oSender.Equals(a_oStr);
-	}
-
-	//! 포함 여부를 검사한다
-	public static bool ExIsContains(this string a_oSender, string a_oStr) {
-		CAccess.Assert(a_oSender != null && a_oStr != null);
-		return a_oSender.Contains(a_oStr);
 	}
 
 	//! 작음 여부를 검사한다
@@ -126,7 +114,7 @@ public static partial class CAccessExtension {
 
 		for(int i = 0; i < KCDefine.B_EU_COUNTRY_CODES.Length; ++i) {
 			// 국가 코드가 동일 할 경우
-			if(oCountryCode.ExIsEquals(KCDefine.B_EU_COUNTRY_CODES[i])) {
+			if(oCountryCode.Equals(KCDefine.B_EU_COUNTRY_CODES[i])) {
 				return true;
 			}
 		}
@@ -201,7 +189,7 @@ public static partial class CAccessExtension {
 	public static string ExGetReplaceStr(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VAL_1_INT) {
 		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());
 
-		for(int i = 0; i < a_nReplaceTimes && a_oSender.ExIsContains(a_oTarget); ++i) {
+		for(int i = 0; i < a_nReplaceTimes && a_oSender.Contains(a_oTarget); ++i) {
 			a_oSender = a_oSender.Replace(a_oTarget, a_oReplace);
 		}
 
@@ -366,7 +354,7 @@ public static partial class CAccessExtension {
 
 		foreach(var oFieldInfo in oFieldInfos) {
 			// 필드 이름이 동일 할 경우
-			if(oFieldInfo.Name.ExIsEquals(a_oName)) {
+			if(oFieldInfo.Name.Equals(a_oName)) {
 				return oFieldInfo.GetValue(a_oSender);
 			}
 		}
@@ -389,7 +377,7 @@ public static partial class CAccessExtension {
 		
 		foreach(var oPropertyInfo in oPropertyInfos) {
 			// 프로퍼티 이름과 동일 할 경우
-			if(oPropertyInfo.Name.ExIsEquals(a_oName)) {
+			if(oPropertyInfo.Name.Equals(a_oName)) {
 				return oPropertyInfo.GetValue(a_oSender);
 			}
 		}
@@ -486,7 +474,7 @@ public static partial class CAccessExtension {
 
 			foreach(var oFieldInfo in oFieldInfos) {
 				// 필드 이름이 동일 할 경우
-				if(oFieldInfo.Name.ExIsEquals(a_oName)) {
+				if(oFieldInfo.Name.Equals(a_oName)) {
 					oFieldInfo.SetValue(a_oSender, a_oVal);
 				}
 			}
@@ -514,7 +502,7 @@ public static partial class CAccessExtension {
 
 			foreach(var oPropertyInfo in oPropertyInfos) {
 				// 프로퍼티 이름이 동일 할 경우
-				if(oPropertyInfo.Name.ExIsEquals(a_oName)) {
+				if(oPropertyInfo.Name.Equals(a_oName)) {
 					oPropertyInfo.SetValue(a_oSender, a_oVal);
 				}
 			}

@@ -929,10 +929,10 @@ public static partial class CAccessExtension {
 		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
 
 		foreach(var oObj in oEnumerator) {
-			bool bIsEquals = oObj.name.ExIsEquals(a_oName);
+			bool bIsEquals = oObj.name.Equals(a_oName);
 			
 			// 이름이 동일 할 경우
-			if(bIsEquals || (a_bIsEnableSubName && oObj.name.ExIsContains(a_oName))) {
+			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
 				return oObj;
 			}
 		}

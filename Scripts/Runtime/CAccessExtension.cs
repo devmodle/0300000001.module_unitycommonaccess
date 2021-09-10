@@ -250,7 +250,7 @@ public static partial class CAccessExtension {
 	}
 	
 	//! 유효 여부를 검사한다
-	public static bool ExIsValid<Key, Val>(this Dictionary<Key, Val> a_oSender) {
+	public static bool ExIsValid<K, V>(this Dictionary<K, V> a_oSender) {
 		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
 	}
 
@@ -334,7 +334,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 반환한다
-	public static Val ExGetVal<Key, Val>(this Dictionary<Key, Val> a_oSender, Key a_tKey, Val a_tDefVal) {
+	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ContainsKey(a_tKey) ? a_oSender[a_tKey] : a_tDefVal;
 	}
@@ -406,7 +406,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 변경한다
-	public static void ExSetVal<Key, Val>(this Dictionary<Key, Val> a_oSender, Key a_tKey, Val a_tVal, bool a_bIsEnableAssert = true) {
+	public static void ExSetVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 키가 유효 할 경우
@@ -442,7 +442,7 @@ public static partial class CAccessExtension {
 	}
 
 	//! 값을 변경한다
-	public static void ExSetVals<Key, Val>(this Dictionary<Key, Val> a_oSender, Dictionary<Key, Val> a_oValDict, bool a_bIsEnableAssert = true) {
+	public static void ExSetVals<K, V>(this Dictionary<K, V> a_oSender, Dictionary<K, V> a_oValDict, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oValDict != null));
 
 		// 값이 존재 할 경우

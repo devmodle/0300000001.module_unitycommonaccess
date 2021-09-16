@@ -199,9 +199,7 @@ public static partial class CAccessExtension {
 	//! 파일 이름이 변경 된 경로를 반환한다
 	public static string ExGetReplaceFileNamePath(this string a_oSender, string a_oFileName, bool a_bIsResetExtension = false) {
 		CAccess.Assert(a_oSender.ExIsValid() && a_oFileName.ExIsValid());
-		var oFileName = a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender);
-
-		return a_oSender.ExGetReplaceStr(oFileName, a_oFileName);
+		return a_oSender.ExGetReplaceStr(a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender), a_oFileName);
 	}
 
 	//! 리스트 => 비트로 변환한다
@@ -240,8 +238,7 @@ public static partial class CAccessExtension {
 			return false;
 		}
 
-		bool bIsValid = a_oSender.GetLength(KCDefine.B_VAL_0_INT) > KCDefine.B_VAL_0_INT;
-		return bIsValid && a_oSender.GetLength(KCDefine.B_VAL_1_INT) > KCDefine.B_VAL_0_INT;
+		return a_oSender.GetLength(KCDefine.B_VAL_0_INT) > KCDefine.B_VAL_0_INT && a_oSender.GetLength(KCDefine.B_VAL_1_INT) > KCDefine.B_VAL_0_INT;
 	}
 
 	//! 유효 여부를 검사한다
@@ -267,8 +264,7 @@ public static partial class CAccessExtension {
 		int nNumRows = a_oSender.GetLength(KCDefine.B_VAL_0_INT);
 		int nNumCols = a_oSender.GetLength(KCDefine.B_VAL_1_INT);
 
-		bool bIsValid = a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < nNumRows;
-		return bIsValid && a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < nNumCols;
+		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < nNumRows) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < nNumCols);
 	}
 
 	//! 인덱스 유효 여부룰 검사한다
@@ -310,9 +306,7 @@ public static partial class CAccessExtension {
 	//! 완료 여부를 검사한다
 	public static bool ExIsComplete<T>(this Task<T> a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		var oTask = a_oSender as Task;
-
-		return oTask.ExIsComplete() && a_oSender.Result != null;
+		return (a_oSender as Task).ExIsComplete() && a_oSender.Result != null;
 	}
 
 	//! 값을 반환한다
@@ -342,9 +336,7 @@ public static partial class CAccessExtension {
 	//! 필드 값을 반환한다
 	public static object ExGetFieldVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
 		CAccess.Assert(a_oName.ExIsValid());
-		var oFieldInfo = typeof(T).GetField(a_oName, a_eBindingFlags);
-
-		return oFieldInfo.GetValue(a_oSender);
+		return typeof(T).GetField(a_oName, a_eBindingFlags).GetValue(a_oSender);
 	}
 
 	//! 런타임 필드 값을 반환한다
@@ -365,9 +357,7 @@ public static partial class CAccessExtension {
 	//! 프로퍼티 값을 반환한다
 	public static object ExGetPropertyVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
 		CAccess.Assert(a_oName.ExIsValid());
-		var oPropertyInfo = typeof(T).GetProperty(a_oName, a_eBindingFlags);
-
-		return oPropertyInfo.GetValue(a_oSender);
+		return typeof(T).GetProperty(a_oName, a_eBindingFlags).GetValue(a_oSender);
 	}
 
 	//! 런타임 프로퍼티 값을 반환한다
@@ -459,8 +449,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oFieldInfo = typeof(T).GetField(a_oName, a_eBindingFlags);
-			oFieldInfo.SetValue(a_oSender, a_oVal);
+			typeof(T).GetField(a_oName, a_eBindingFlags).SetValue(a_oSender, a_oVal);
 		}
 	}
 
@@ -487,8 +476,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oPropertyInfo = typeof(T).GetProperty(a_oName, a_eBindingFlags);
-			oPropertyInfo?.SetValue(a_oSender, a_oVal);
+			typeof(T).GetProperty(a_oName, a_eBindingFlags).SetValue(a_oSender, a_oVal);
 		}
 	}
 

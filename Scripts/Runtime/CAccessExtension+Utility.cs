@@ -85,25 +85,23 @@ public static partial class CAccessExtension {
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this Vector3 a_stSender, Vector3 a_stRhs) {
-		bool bIsEquals = CAccessExtension.ExIsEquals((Vector2)a_stSender, (Vector2)a_stRhs);
-		return bIsEquals && a_stSender.z.ExIsEquals(a_stRhs.z);
+		return CAccessExtension.ExIsEquals((Vector2)a_stSender, (Vector2)a_stRhs) && a_stSender.z.ExIsEquals(a_stRhs.z);
 	}
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this Vector4 a_stSender, Vector4 a_stRhs) {
-		bool bIsEquals = CAccessExtension.ExIsEquals((Vector3)a_stSender, (Vector3)a_stRhs);
-		return bIsEquals && a_stSender.w.ExIsEquals(a_stRhs.w);
+		return CAccessExtension.ExIsEquals((Vector3)a_stSender, (Vector3)a_stRhs) && a_stSender.w.ExIsEquals(a_stRhs.w);
+	}
+
+	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this STIdxInfo a_stSender, STIdxInfo a_stRhs) {
+		return (a_stSender.m_nX == a_stRhs.m_nX) && (a_stSender.m_nY == a_stRhs.m_nY) && (a_stSender.m_nZ == a_stRhs.m_nZ);
 	}
 	
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this List<Vector2> a_oSender, List<Vector2> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
 
-		// 길이가 다를 경우
-		if(a_oSender.Count != a_oVecList.Count) {
-			return false;
-		}
-
 		for(int i = 0; i < a_oSender.Count; ++i) {
 			// 동일하지 않을 경우
 			if(!a_oSender[i].ExIsEquals(a_oVecList[i])) {
@@ -111,17 +109,12 @@ public static partial class CAccessExtension {
 			}
 		}
 
-		return true;
+		return a_oSender.Count == a_oVecList.Count;
 	}
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this List<Vector3> a_oSender, List<Vector3> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
-		
-		// 길이가 다를 경우
-		if(a_oSender.Count != a_oVecList.Count) {
-			return false;
-		}
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
 			// 동일하지 않을 경우
@@ -130,17 +123,12 @@ public static partial class CAccessExtension {
 			}
 		}
 
-		return true;
+		return a_oSender.Count == a_oVecList.Count;
 	}
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this List<Vector4> a_oSender, List<Vector4> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
-		
-		// 길이가 다를 경우
-		if(a_oSender.Count != a_oVecList.Count) {
-			return false;
-		}
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
 			// 동일하지 않을 경우
@@ -149,18 +137,13 @@ public static partial class CAccessExtension {
 			}
 		}
 
-		return true;
+		return a_oSender.Count == a_oVecList.Count;
 	}
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this List<Vector2Int> a_oSender, List<Vector2Int> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
 
-		// 길이가 다를 경우
-		if(a_oSender.Count != a_oVecList.Count) {
-			return false;
-		}
-
 		for(int i = 0; i < a_oSender.Count; ++i) {
 			// 동일하지 않을 경우
 			if(!a_oSender[i].Equals(a_oVecList[i])) {
@@ -168,17 +151,12 @@ public static partial class CAccessExtension {
 			}
 		}
 
-		return true;
+		return a_oSender.Count == a_oVecList.Count;
 	}
 
 	//! 동일 여부를 검사한다
 	public static bool ExIsEquals(this List<Vector3Int> a_oSender, List<Vector3Int> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
-		
-		// 길이가 다를 경우
-		if(a_oSender.Count != a_oVecList.Count) {
-			return false;
-		}
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
 			// 동일하지 않을 경우
@@ -187,13 +165,26 @@ public static partial class CAccessExtension {
 			}
 		}
 
-		return true;
+		return a_oSender.Count == a_oVecList.Count;
+	}
+
+	//! 동일 여부를 검사한다
+	public static bool ExIsEquals(this List<STIdxInfo> a_oSender, List<STIdxInfo> a_oIdxInfoList) {
+		CAccess.Assert(a_oSender != null && a_oIdxInfoList != null);
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			// 동일하지 않을 경우
+			if(!a_oSender[i].Equals(a_oIdxInfoList[i])) {
+				return false;
+			}
+		}
+
+		return a_oSender.Count == a_oIdxInfoList.Count;
 	}
 	
 	//! 색상을 반환한다
 	public static Color ExGetAlphaColor(this Color a_stSender, float a_fAlpha) {
-		a_stSender.a = a_fAlpha;
-		return a_stSender;
+		return new Color(a_stSender.r, a_stSender.g, a_stSender.b, a_fAlpha);
 	}
 
 	//! X 축 간격을 반환한다
@@ -213,29 +204,17 @@ public static partial class CAccessExtension {
 
 	//! 비율 벡터를 반환한다
 	public static Vector2 ExGetScaleVector(this Vector2 a_stSender, Vector2 a_stScale) {
-		a_stSender.x *= a_stScale.x;
-		a_stSender.y *= a_stScale.y;
-
-		return a_stSender;
+		return new Vector2(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y);
 	}
 
 	//! 비율 벡터를 반환한다
 	public static Vector3 ExGetScaleVector(this Vector3 a_stSender, Vector3 a_stScale) {
-		a_stSender.x *= a_stScale.x;
-		a_stSender.y *= a_stScale.y;
-		a_stSender.z *= a_stScale.z;
-
-		return a_stSender;
+		return new Vector3(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y, a_stSender.z * a_stScale.z);
 	}
 
 	//! 비율 벡터를 반환한다
 	public static Vector4 ExGetScaleVector(this Vector4 a_stSender, Vector4 a_stScale) {
-		a_stSender.x *= a_stScale.x;
-		a_stSender.y *= a_stScale.y;
-		a_stSender.z *= a_stScale.z;
-		a_stSender.w *= a_stScale.w;
-
-		return a_stSender;
+		return new Vector4(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y, a_stSender.z * a_stScale.z, a_stSender.w * a_stScale.w);
 	}
 	
 	//! 캔버스 월드 위치를 반환한다
@@ -247,25 +226,19 @@ public static partial class CAccessExtension {
 	//! 캔버스 로컬 위치를 반환한다
 	public static Vector3 ExGetLocalPos(this PointerEventData a_oSender, GameObject a_oObj) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
-		var stPos = a_oSender.ExGetWorldPos();
-
-		return stPos.ExToLocal(a_oObj);
+		return a_oSender.ExGetWorldPos().ExToLocal(a_oObj);
 	}
 
 	//! 캔버스 월드 비율 위치를 반환한다
 	public static Vector3 ExGetWorldScalePos(this PointerEventData a_oSender, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null);
-		var stPos = a_oSender.ExGetWorldPos();
-
-		return stPos.ExGetScaleVector(a_stScale);
+		return a_oSender.ExGetWorldPos().ExGetScaleVector(a_stScale);
 	}
 
 	//! 캔버스 로컬 비율 위치를 반환한다
 	public static Vector3 ExGetLocalScalePos(this PointerEventData a_oSender, GameObject a_oObj, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
-		var stPos = a_oSender.ExGetWorldScalePos(a_stScale);
-
-		return stPos.ExToLocal(a_oObj);
+		return a_oSender.ExGetWorldScalePos(a_stScale).ExToLocal(a_oObj);
 	}
 
 	//! 보정된 캔버스 월드 위치를 반환한다
@@ -279,39 +252,30 @@ public static partial class CAccessExtension {
 	//! 보정된 캔버스 월드 위치를 반환한다
 	public static Vector3 ExGetCorrectWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		var stPos = a_oSender.ExGetWorldPos();
-
-		return stPos.ExGetCorrectWorldPos();
+		return a_oSender.ExGetWorldPos().ExGetCorrectWorldPos();
 	}
 
 	//! 보정된 캔버스 로컬 위치를 반환한다
 	public static Vector3 ExGetCorrectLocalPos(this PointerEventData a_oSender, GameObject a_oObj) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
-		var stPos = a_oSender.ExGetCorrectWorldPos();
-
-		return stPos.ExToLocal(a_oObj);
+		return a_oSender.ExGetCorrectWorldPos().ExToLocal(a_oObj);
 	}
 
 	//! 보정된 캔버스 월드 비율 위치를 반환한다
 	public static Vector3 ExGetCorrectWorldScalePos(this Vector3 a_oSender, Vector3 a_stScale) {
-		var stPos = a_oSender.ExGetScaleVector(a_stScale);
-		return stPos.ExGetCorrectWorldPos();
+		return a_oSender.ExGetScaleVector(a_stScale).ExGetCorrectWorldPos();
 	}
 
 	//! 보정된 캔버스 월드 비율 위치를 반환한다
 	public static Vector3 ExGetCorrectWorldScalePos(this PointerEventData a_oSender, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null);
-		var stPos = a_oSender.ExGetWorldScalePos(a_stScale);
-
-		return stPos.ExGetCorrectWorldPos();
+		return a_oSender.ExGetWorldScalePos(a_stScale).ExGetCorrectWorldPos();
 	}
 
 	//! 보정된 캔버스 로컬 비율 위치를 반환한다
 	public static Vector3 ExGetCorrectLocalScalePos(this PointerEventData a_oSender, GameObject a_oObj, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
-		var stPos = a_oSender.ExGetCorrectWorldScalePos(a_stScale);
-
-		return stPos.ExToLocal(a_oObj);
+		return a_oSender.ExGetCorrectWorldScalePos(a_stScale).ExToLocal(a_oObj);
 	}
 
 	//! 캔버스 월드 간격을 반환한다
@@ -332,8 +296,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		CAccess.Assert(a_oViewport != null && a_oContents != null);
 
-		float fNormPosH = a_oSender.ExGetNormPosH(a_oViewport, a_oContents, a_stPos);
-		return new Vector3(fNormPosH, a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos), KCDefine.B_VAL_0_FLT);
+		return new Vector3(a_oSender.ExGetNormPosH(a_oViewport, a_oContents, a_stPos), a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos), KCDefine.B_VAL_0_FLT);
 	}
 
 	//! 스크롤 뷰 수직 정규 위치를 반환한다

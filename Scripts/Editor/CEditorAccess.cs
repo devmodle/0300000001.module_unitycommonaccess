@@ -30,12 +30,13 @@ public static partial class CEditorAccess {
 	
 	//! 안드로이드 이름을 반환한다
 	public static string GetAndroidName(EAndroidType a_eType) {
-		// 원 스토어 일 경우
-		if(a_eType == EAndroidType.ONE_STORE) {
-			return KCDefine.B_PLATFORM_N_ONE_STORE;
+		switch(a_eType) {
+			case EAndroidType.AMAZON: return KCDefine.B_PLATFORM_N_AMAZON;
+			case EAndroidType.ONE_STORE: return KCDefine.B_PLATFORM_N_ONE_STORE;
+			case EAndroidType.GALAXY_STORE: return KCDefine.B_PLATFORM_N_GALAXY_STORE;
 		}
 
-		return (a_eType == EAndroidType.GALAXY_STORE) ? KCDefine.B_PLATFORM_N_GALAXY_STORE : KCDefine.B_PLATFORM_N_GOOGLE;
+		return KCDefine.B_PLATFORM_N_GOOGLE;
 	}
 
 	//! 그래픽 API 를 변경한다

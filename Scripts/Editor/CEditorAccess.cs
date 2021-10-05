@@ -23,11 +23,6 @@ public static partial class CEditorAccess {
 		return bIsInvalidObj ? null : oObj;
 	}
 
-	//! 독립 플랫폼 이름을 반환한다
-	public static string GetStandaloneName(EStandaloneType a_eType) {
-		return (a_eType == EStandaloneType.WNDS) ? KCDefine.B_PLATFORM_N_WNDS : KCDefine.B_PLATFORM_N_MAC;
-	}
-	
 	//! 안드로이드 이름을 반환한다
 	public static string GetAndroidName(EAndroidType a_eType) {
 		switch(a_eType) {
@@ -37,6 +32,11 @@ public static partial class CEditorAccess {
 		}
 
 		return KCDefine.B_PLATFORM_N_GOOGLE;
+	}
+
+	//! 독립 플랫폼 이름을 반환한다
+	public static string GetStandaloneName(EStandaloneType a_eType) {
+		return (a_eType == EStandaloneType.WNDS) ? KCDefine.B_PLATFORM_N_WNDS : KCDefine.B_PLATFORM_N_MAC;
 	}
 
 	//! 그래픽 API 를 변경한다

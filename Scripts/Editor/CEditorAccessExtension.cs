@@ -23,9 +23,7 @@ public static partial class CEditorAccessExtension {
 	//! 유효 여부를 검사한다
 	public static bool ExIsValid(this BuildTarget a_eSender) {
 		bool bIsMobile = a_eSender == BuildTarget.iOS || a_eSender == BuildTarget.Android;
-		bool bIsStandalone = a_eSender == BuildTarget.StandaloneOSX || a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64;
-		
-		return bIsMobile || bIsStandalone;
+		return bIsMobile || (a_eSender == BuildTarget.StandaloneOSX || a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64);
 	}
 
 	//! 완료 여부를 검사한다

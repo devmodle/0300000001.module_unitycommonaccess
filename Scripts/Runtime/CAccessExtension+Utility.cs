@@ -1168,10 +1168,17 @@ public static partial class CAccessExtension {
 
 #if ADS_MODULE_ENABLE
 	//! 유효 여부를 검사한다
-	public static bool ExIsValid(this EAdsType a_eSender) {
-		return a_eSender > EAdsType.NONE && a_eSender < EAdsType.MAX_VAL;
+	public static bool ExIsValid(this EAdsPlatform a_eSender) {
+		return a_eSender > EAdsPlatform.NONE && a_eSender < EAdsPlatform.MAX_VAL;
 	}
 #endif			// #if ADS_MODULE_ENABLE
+
+#if PURCHASE_MODULE_ENABLE
+	//! 유효 여부를 검사한다
+	public static bool ExIsValid(this EPurchasePlatform a_eSender) {
+		return a_eSender > EPurchasePlatform.NONE && a_eSender < EPurchasePlatform.MAX_VAL;
+	}
+#endif			// #if PURCHASE_MODULE_ENABLE
 
 #if UNITY_IOS && NOTI_MODULE_ENABLE
 	//! 인증 옵션 유효 여부를 검사한다

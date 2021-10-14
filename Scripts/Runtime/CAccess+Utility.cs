@@ -117,16 +117,12 @@ public static partial class CAccess {
 		}
 	}
 
-	public static bool IsEditor => Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
+	public static bool IsMobile => Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
 	public static bool IsStandalone => Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.WindowsPlayer;
-
+	
 	public static bool IsMac => Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
 	public static bool IsWnds => Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
-	public static bool IsDesktop => CAccess.IsMac || CAccess.IsWnds;
-
-	public static bool IsMobile => Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
-	public static bool IsConsole => Application.platform == RuntimePlatform.PS4 || Application.platform == RuntimePlatform.XboxOne;
-	public static bool IsHandheldConsole => Application.platform == RuntimePlatform.Stadia || Application.platform == RuntimePlatform.Switch;
+	public static bool IsEditor => Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
 
 	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;

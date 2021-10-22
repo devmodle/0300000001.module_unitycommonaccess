@@ -243,8 +243,8 @@ public static partial class CAccessExtension {
 
 	//! 보정된 캔버스 월드 위치를 반환한다
 	public static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
-		float fPosX = Mathf.Clamp(a_stSender.x, (CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_PIXELS_PER_UNIT_SCALE, (CAccess.Resolution.x / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_PIXELS_PER_UNIT_SCALE);
-		float fPosY = Mathf.Clamp(a_stSender.y, (CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_PIXELS_PER_UNIT_SCALE, (CAccess.Resolution.y / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_PIXELS_PER_UNIT_SCALE);
+		float fPosX = Mathf.Clamp(a_stSender.x, CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.x / KCDefine.B_VAL_2_FLT);
+		float fPosY = Mathf.Clamp(a_stSender.y, CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT);
 
 		return new Vector3(fPosX, fPosY, a_stSender.z);
 	}
@@ -608,7 +608,7 @@ public static partial class CAccessExtension {
 			a_oSender.transform.localScale = new Vector3(a_oSender.transform.localScale.x, a_oSender.transform.localScale.y, a_fVal);
 		}
 	}
-
+	
 	//! 월드 각도를 변경한다
 	public static void ExSetWorldAngle(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -869,8 +869,8 @@ public static partial class CAccessExtension {
 		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_FLT;
 		var stNormPos = new Vector3(fNormPosX, ((a_stSender.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT, KCDefine.B_VAL_0_FLT);
 
-		stNormPos.x *= (fScreenWidth / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_PIXELS_PER_UNIT_SCALE;
-		stNormPos.y *= (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT) * KCDefine.B_UNIT_PIXELS_PER_UNIT_SCALE;
+		stNormPos.x *= fScreenWidth / KCDefine.B_VAL_2_FLT;
+		stNormPos.y *= KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT;
 
 		return stNormPos;
 	}

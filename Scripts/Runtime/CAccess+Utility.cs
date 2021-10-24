@@ -20,7 +20,7 @@ using UnityEngine.Android;
 using UnityEngine.Purchasing;
 #endif			// #if PURCHASE_MODULE_ENABLE
 
-//! 유틸리티 접근자
+/** 유틸리티 접근자 */
 public static partial class CAccess {
 	#region 클래스 프로퍼티
 	public static bool IsEnableShowConsentView {
@@ -134,7 +134,7 @@ public static partial class CAccess {
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
-	//! 권한 유효 여부를 검사한다
+	/** 권한 유효 여부를 검사한다 */
 	public static bool IsEnablePermission(string a_oPermission) {
 		CAccess.Assert(a_oPermission.ExIsValid());
 
@@ -145,7 +145,7 @@ public static partial class CAccess {
 #endif			// #if UNITY_ANDROID
 	}
 	
-	//! 배너 광고 높이를 반환한다
+	/** 배너 광고 높이를 반환한다 */
 	public static float GetBannerAdsHeight(float a_fHeight) {
 		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
 
@@ -155,7 +155,7 @@ public static partial class CAccess {
 		return (fBannerAdsHeight * fPercent) / CAccess.ResolutionScale;
 	}
 
-	//! 배너 광고 화면 높이를 반환한다
+	/** 배너 광고 화면 높이를 반환한다 */
 	public static float GetBannerAdsScreenHeight(float a_fHeight) {
 #if UNITY_EDITOR || MODE_PORTRAIT_ENABLE
 		return a_fHeight * (CAccess.DPI / KCDefine.B_DPI);
@@ -164,13 +164,13 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR || MODE_PORTRAIT_ENABLE
 	}
 	
-	//! 값을 할당한다
+	/** 값을 할당한다 */
 	public static void AssignVal(ref DG.Tweening.Tween a_oLhs, DG.Tweening.Tween a_oRhs) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs;
 	}
 	
-	//! 값을 할당한다
+	/** 값을 할당한다 */
 	public static void AssignVal(ref Sequence a_oLhs, DG.Tweening.Tween a_oRhs) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs as Sequence;
@@ -178,7 +178,7 @@ public static partial class CAccess {
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
-	//! 리소스 존재 여부를 검사한다
+	/** 리소스 존재 여부를 검사한다 */
 	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
@@ -193,7 +193,7 @@ public static partial class CAccess {
 		return bIsExistsRes;
 	}
 
-	//! 값을 할당한다
+	/** 값을 할당한다 */
 	public static void AssignVal<T>(ref T a_tLhs, T a_tRhs, T a_tDefVal = null) where T : class {
 		a_tLhs = a_tRhs ?? a_tDefVal;
 	}
@@ -201,7 +201,7 @@ public static partial class CAccess {
 
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
-	//! 스크립트 순서를 변경한다
+	/** 스크립트 순서를 변경한다 */
 	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oScript != null);
 
@@ -218,7 +218,7 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 
 #if PURCHASE_MODULE_ENABLE
-	//! 가격 문자열을 반환한다
+	/** 가격 문자열을 반환한다 */
 	public static string GetPriceStr(Product a_oProduct) {
 		CAccess.Assert(a_oProduct != null);
 
@@ -232,7 +232,7 @@ public static partial class CAccess {
 
 	#region 조건부 클래스 프로퍼티
 #if UNITY_IOS && APPLE_LOGIN_ENABLE
-	//! 애플 로그인 지원 여부를 검사한다
+	/** 애플 로그인 지원 여부를 검사한다 */
 	public static bool IsSupportsLoginWithApple {
 		get {
 #if UNITY_EDITOR

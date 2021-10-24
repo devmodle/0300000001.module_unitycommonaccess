@@ -12,21 +12,21 @@ using UnityEditor.PackageManager.Requests;
 using UnityEditor.iOS.Xcode;
 #endif			// #if UNITY_IOS
 
-//! 에디터 기본 접근 확장 클래스
+/** 에디터 기본 접근 확장 클래스 */
 public static partial class CEditorAccessExtension {
 	#region 클래스 함수
-	//! 유효 여부를 검사한다
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EBuildType a_eSender) {
 		return a_eSender > EBuildType.NONE && a_eSender < EBuildType.MAX_VAL;
 	}
 
-	//! 유효 여부를 검사한다
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this BuildTarget a_eSender) {
 		bool bIsMobile = a_eSender == BuildTarget.iOS || a_eSender == BuildTarget.Android;
 		return bIsMobile || (a_eSender == BuildTarget.StandaloneOSX || a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64);
 	}
 
-	//! 완료 여부를 검사한다
+	/** 완료 여부를 검사한다 */
 	public static bool ExIsComplete(this Request a_oSender) {
 		// 요청이 유효하지 않을 경우
 		if(a_oSender == null) {
@@ -41,12 +41,12 @@ public static partial class CEditorAccessExtension {
 
 	#region 조건부 클래스 함수
 #if UNITY_IOS
-	//! 유효 여부를 검사한다
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this PlistDocument a_oSender) {
 		return a_oSender != null && a_oSender.root != null;
 	}
 
-	//! 포함 여부를 검사한다
+	/** 포함 여부를 검사한다 */
 	public static bool ExIsContainsAdsNetworkID(this PlistElementArray a_oSender, string a_oNetworkID) {
 		CAccess.Assert(a_oSender != null && a_oNetworkID.ExIsValid());
 
@@ -63,7 +63,7 @@ public static partial class CEditorAccessExtension {
 		return false;
 	}
 
-	//! 배열을 반환한다
+	/** 배열을 반환한다 */
 	public static PlistElementArray ExGetArray(this PlistDocument a_oSender, string a_oKey) {
 		CAccess.Assert(a_oSender.ExIsValid());
 
@@ -74,7 +74,7 @@ public static partial class CEditorAccessExtension {
 		}
 	}
 
-	//! 딕셔너리를 반환한다
+	/** 딕셔너리를 반환한다 */
 	public static PlistElementDict ExGetDict(this PlistDocument a_oSender, string a_oKey) {
 		CAccess.Assert(a_oSender.ExIsValid());
 

@@ -10,7 +10,6 @@ using UnityEditor;
 /** 에디터 기본 접근 */
 public static partial class CEditorAccess {
 	#region 클래스 프로퍼티
-	public static bool IsEnableDrawGizmos => !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
 	public static bool IsEnableUpdateState => !Application.isPlaying && !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
 	#endregion			// 클래스 프로퍼티
 

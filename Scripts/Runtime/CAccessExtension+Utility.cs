@@ -13,10 +13,6 @@ using UnityEditor;
 #endif			// #if UNITY_EDITOR
 
 #if UNITY_IOS
-#if APPLE_LOGIN_ENABLE
-using UnityEngine.SignInWithApple;
-#endif			// #if APPLE_LOGIN_ENABLE
-
 #if NOTI_MODULE_ENABLE
 using Unity.Notifications.iOS;
 #endif			// #if NOTI_MODULE_ENABLE
@@ -1153,18 +1149,6 @@ public static partial class CAccessExtension {
 		}
 	}
 #endif			// #if UNITY_EDITOR
-
-#if UNITY_IOS && APPLE_LOGIN_ENABLE
-	/** 유효 여부를 검사한다 */
-	public static bool ExIsValidUserInfo(this SignInWithApple.CallbackArgs a_stSender) {
-		return a_stSender.userInfo.userId.ExIsValid() && !a_stSender.error.ExIsValid();
-	}
-
-	/** 유효 여부를 검사한다 */
-	public static bool ExIsValidCredentialState(this SignInWithApple.CallbackArgs a_stSender) {
-		return a_stSender.credentialState != UserCredentialState.NotFound && !a_stSender.error.ExIsValid();
-	}
-#endif			// #if UNITY_IOS && APPLE_LOGIN_ENABLE
 
 #if ADS_MODULE_ENABLE
 	/** 유효 여부를 검사한다 */

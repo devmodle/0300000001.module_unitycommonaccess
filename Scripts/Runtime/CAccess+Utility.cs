@@ -221,22 +221,4 @@ public static partial class CAccess {
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
-
-	#region 조건부 클래스 프로퍼티
-#if UNITY_IOS && APPLE_LOGIN_ENABLE
-	/** 애플 로그인 지원 여부를 검사한다 */
-	public static bool IsSupportsLoginWithApple {
-		get {
-#if UNITY_EDITOR
-			return false;
-#else
-			var oVer = new System.Version(Device.systemVersion);
-			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_LOGIN_WITH_APPLE);
-			
-			return nCompare >= KCDefine.B_COMPARE_EQUALS;
-#endif			// #if UNITY_EDITOR
-		}
-	}
-#endif			// #if UNITY_IOS && APPLE_LOGIN_ENABLE
-	#endregion			// 조건부 클래스 프로퍼티
 }

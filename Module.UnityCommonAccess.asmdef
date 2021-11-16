@@ -10,7 +10,8 @@
         "Unity.Notifications.iOS",
         "Unity.Notifications.Android",
         "DOTween.Modules",
-        "DOTweenPro.Scripts"
+        "DOTweenPro.Scripts",
+        "AppleAuth"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -45,15 +45,7 @@ public static partial class CAccess {
 			// 햅틱 피드백 지원 버전 일 경우
 			if(nCompare >= KCDefine.B_COMPARE_EQUALS) {
 				string oModel = Device.generation.ToString();
-				
-				for(int i = 0; i < KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS.Length; ++i) {
-					var eModel = KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS[i];
-
-					// 햅틱 피드백 지원 모델 일 경우
-					if(eModel == Device.generation && oModel.Contains(KCDefine.U_MODEL_N_IPHONE)) {
-						return true;
-					}
-				}
+				return oModel.Contains(KCDefine.U_MODEL_N_IPHONE) && KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS.Contains(Device.generation);
 			}
 
 			return false;

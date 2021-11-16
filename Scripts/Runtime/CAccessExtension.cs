@@ -110,16 +110,7 @@ public static partial class CAccessExtension {
 	/** 유럽 연합 여부를 검사한다 */
 	public static bool ExIsEU(this string a_oSender) {
 		CAccess.Assert(a_oSender.ExIsValid());
-		string oCountryCode = a_oSender.ToUpper();
-
-		for(int i = 0; i < KCDefine.B_EU_COUNTRY_CODES.Length; ++i) {
-			// 국가 코드가 동일 할 경우
-			if(oCountryCode.Equals(KCDefine.B_EU_COUNTRY_CODES[i])) {
-				return true;
-			}
-		}
-
-		return false;
+		return KCDefine.B_EU_COUNTRY_CODES.Contains(a_oSender.ToUpper());
 	}
 
 	/** 변경 된 값을 반환한다 */

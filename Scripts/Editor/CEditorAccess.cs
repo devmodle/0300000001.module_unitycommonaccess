@@ -14,6 +14,11 @@ public static partial class CEditorAccess {
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
+	/** 에셋 존재 여부를 검사한다 */
+	public static bool IsExistsAsset(string a_oFilePath) {
+		return AssetDatabase.GetMainAssetTypeAtPath(a_oFilePath) != null;
+	}
+
 	/** 활성 객체를 반환한다 */
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		var oObj = Selection.activeGameObject;

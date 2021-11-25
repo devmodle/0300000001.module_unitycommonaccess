@@ -216,7 +216,7 @@ public static partial class CAccessExtension {
 	/** 캔버스 월드 위치를 반환한다 */
 	public static Vector3 ExGetWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.position.ExGetWorldPos();
+		return a_oSender.position.ExTo3D().ExGetWorldPos();
 	}
 
 	/** 캔버스 로컬 위치를 반환한다 */
@@ -276,15 +276,18 @@ public static partial class CAccessExtension {
 
 	/** 캔버스 월드 간격을 반환한다 */
 	public static Vector3 ExGetWorldDelta(this PointerEventData a_oSender) {
-		return a_oSender.pointerPressRaycast.screenPosition.ExGetWorldPos() - a_oSender.pointerCurrentRaycast.screenPosition.ExGetWorldPos();
+		var stPosA = a_oSender.pointerPressRaycast.screenPosition.ExTo3D();
+		var stPosB = a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D();
+
+		return stPosA.ExGetWorldPos() - stPosB.ExGetWorldPos();
 	}
 
 	/** 캔버스 로컬 간격을 반환한다 */
 	public static Vector3 ExGetLocalDelta(this PointerEventData a_oSender, GameObject a_oObj) {
-		var stPosA = a_oSender.pointerPressRaycast.screenPosition.ExGetWorldPos();
-		var stPosB = a_oSender.pointerCurrentRaycast.screenPosition.ExGetWorldPos();
+		var stPosA = a_oSender.pointerPressRaycast.screenPosition.ExTo3D();
+		var stPosB = a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D();
 
-		return stPosA.ExToLocal(a_oObj) - stPosB.ExToLocal(a_oObj);
+		return stPosA.ExGetWorldPos().ExToLocal(a_oObj) - stPosB.ExGetWorldPos().ExToLocal(a_oObj);
 	}
 	
 	/** 스크롤 뷰 정규 위치를 반환한다 */
@@ -858,17 +861,19 @@ public static partial class CAccessExtension {
 	}
 
 	/** 캔버스 월드 위치를 반환한다 */
-	private static Vector3 ExGetWorldPos(this Vector2 a_stSender) {
+	private static Vector3 ExGetWorldPos(this Vector3 a_stSender) {
 		float fAspect = CAccess.ScreenSize.x / CAccess.ScreenSize.y;
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
-
+		
 		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_FLT;
-		var stNormPos = new Vector3(fNormPosX, ((a_stSender.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT, KCDefine.B_VAL_0_FLT);
+		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT;
 
-		stNormPos.x *= fScreenWidth / KCDefine.B_VAL_2_FLT;
-		stNormPos.y *= KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT;
+		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_FLT), fNormPosY * (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT), a_stSender.z);
+	}
 
-		return stNormPos;
+	/** 2 차원 => 3 차원으로 변환한다 */
+	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_FLT) {
+		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
 	}
 
 	/** 자식 객체를 탐색한다 */

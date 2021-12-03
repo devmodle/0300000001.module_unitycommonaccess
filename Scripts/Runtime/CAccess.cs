@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -101,20 +102,21 @@ public static partial class CAccess {
 
 	#region 제네릭 클래스 함수
 	/** 열거형 값을 반환한다 */
-	public static T[] GetEnumVals<T>() {
-		return System.Enum.GetValues(typeof(T)) as T[];
+	public static List<T> GetEnumVals<T>() {
+		var oEnumVals = System.Enum.GetValues(typeof(T));
+		return (oEnumVals as T[]).ToList();
 	}
 
 	/** 열거형 문자열을 반환한다 */
-	public static string[] GetEnumStrs<T>() {
-		var oEnumVals = CAccess.GetEnumVals<T>();
-		var oEnumStrs = new string[oEnumVals.Length];
+	public static List<string> GetEnumStrs<T>() {
+		var oEnumStrList = new List<string>();
+		var oEnumValList = CAccess.GetEnumVals<T>();
 
-		for(int i = 0; i < oEnumVals.Length; ++i) {
-			oEnumStrs[i] = oEnumVals[i].ToString();
+		for(int i = 0; i < oEnumValList.Count; ++i) {
+			oEnumStrList.Add(oEnumValList[i].ToString());
 		}
 
-		return oEnumStrs;
+		return oEnumStrList;
 	}
 	#endregion			// 제네릭 클래스 함수
 }

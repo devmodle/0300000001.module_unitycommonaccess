@@ -22,11 +22,8 @@ using Unity.Notifications.iOS;
 public static partial class CAccessExtension {
 	#region 클래스 변수
 #if UNITY_IOS && NOTI_MODULE_ENABLE
-	private static AuthorizationOption[] m_oAuthOpts = new AuthorizationOption[] {
-		AuthorizationOption.Badge,
-		AuthorizationOption.Sound,
-		AuthorizationOption.Alert,
-		AuthorizationOption.CarPlay
+	private static List<AuthorizationOption> m_oAuthOptList = new List<AuthorizationOption>() {
+		AuthorizationOption.Badge, AuthorizationOption.Sound, AuthorizationOption.Alert, AuthorizationOption.CarPlay
 	};
 #endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 	#endregion			// 클래스 변수
@@ -1174,8 +1171,8 @@ public static partial class CAccessExtension {
 	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
 		int nSumVal = KCDefine.B_VAL_0_INT;
 
-		for(int i = 0; i < CAccessExtension.m_oAuthOpts.Length; ++i) {
-			nSumVal += (int)(a_eSender & CAccessExtension.m_oAuthOpts[i]);
+		for(int i = 0; i < CAccessExtension.m_oAuthOptList.Count; ++i) {
+			nSumVal += (int)(a_eSender & CAccessExtension.m_oAuthOptList[i]);
 		}
 
 		return nSumVal != KCDefine.B_VAL_0_INT;

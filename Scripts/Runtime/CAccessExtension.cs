@@ -158,16 +158,16 @@ public static partial class CAccessExtension {
 	public static Vector2Int ExGetPrevIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_2D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
-
-		return a_stSender + KCDefine.B_IDX_OFFSETS_PREV_2D[(int)a_eDirection];
+		
+		return a_stSender + KCDefine.B_IDX_OFFSET_INFOS_2D[(int)a_eDirection].Item1;
 	}
 	
 	/** 다음 인덱스를 반환한다 */
 	public static Vector2Int ExGetNextIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_2D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
-
-		return a_stSender + KCDefine.B_IDX_OFFSETS_NEXT_2D[(int)a_eDirection];
+		
+		return a_stSender + KCDefine.B_IDX_OFFSET_INFOS_2D[(int)a_eDirection].Item2;
 	}
 
 	/** 괄호 문자열을 반환한다 */

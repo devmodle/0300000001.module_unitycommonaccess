@@ -110,7 +110,7 @@ public static partial class CAccessExtension {
 	/** 유럽 연합 여부를 검사한다 */
 	public static bool ExIsEU(this string a_oSender) {
 		CAccess.Assert(a_oSender.ExIsValid());
-		return KCDefine.B_EU_COUNTRY_CODES.Contains(a_oSender.ToUpper());
+		return KCDefine.B_EU_COUNTRY_CODE_LIST.Contains(a_oSender.ToUpper());
 	}
 
 	/** 변경 된 값을 반환한다 */
@@ -159,7 +159,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_2D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
 		
-		return a_stSender + KCDefine.B_IDX_OFFSET_INFOS_2D[(int)a_eDirection].Item1;
+		return a_stSender + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1;
 	}
 	
 	/** 다음 인덱스를 반환한다 */
@@ -167,7 +167,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_2D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
 		
-		return a_stSender + KCDefine.B_IDX_OFFSET_INFOS_2D[(int)a_eDirection].Item2;
+		return a_stSender + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2;
 	}
 
 	/** 괄호 문자열을 반환한다 */

@@ -45,7 +45,7 @@ public static partial class CAccess {
 			// 햅틱 피드백 지원 버전 일 경우
 			if(nCompare >= KCDefine.B_COMPARE_EQUALS) {
 				string oModel = Device.generation.ToString();
-				return oModel.Contains(KCDefine.U_MODEL_N_IPHONE) && KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODELS.Contains(Device.generation);
+				return oModel.Contains(KCDefine.U_MODEL_N_IPHONE) && KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODEL_LIST.Contains(Device.generation);
 			}
 
 			return false;

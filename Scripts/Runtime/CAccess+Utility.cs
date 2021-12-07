@@ -98,6 +98,13 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 		}
 	}
+	
+	public static Vector3 DesktopScreenSize {
+		get {
+			float fScreenWidth = Screen.currentResolution.width * 0.95f;
+			return new Vector3(fScreenWidth, fScreenWidth * (KCDefine.B_LANDSCAPE_SCREEN_HEIGHT / (float)KCDefine.B_LANDSCAPE_SCREEN_WIDTH), KCDefine.B_VAL_0_FLT);
+		}
+	}
 
 	public static Rect SafeArea {
 		get {

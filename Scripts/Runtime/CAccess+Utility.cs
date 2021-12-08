@@ -38,7 +38,7 @@ public static partial class CAccess {
 
 	public static bool IsSupportsHapticFeedback {
 		get {
-#if (!UNITY_EDITOR && UNITY_IOS) && HAPTIC_FEEDBACK_ENABLE
+#if !UNITY_EDITOR && UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
 			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK);
 
@@ -49,11 +49,11 @@ public static partial class CAccess {
 			}
 
 			return false;
-#elif (!UNITY_EDITOR && UNITY_ANDROID) && HAPTIC_FEEDBACK_ENABLE
+#elif !UNITY_EDITOR && UNITY_ANDROID
 			return true;
 #else
 			return false;
-#endif			// #if (!UNITY_EDITOR && UNITY_IOS) && HAPTIC_FEEDBACK_ENABLE
+#endif			// #if !UNITY_EDITOR && UNITY_IOS
 		}
 	}
 

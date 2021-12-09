@@ -59,15 +59,8 @@ public static partial class CAccess {
 
 	public static float ResolutionScale {
 		get {
-			float fScale = KCDefine.B_VAL_1_FLT;
 			float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
-
-			// 화면 너비를 벗어났을 경우
-			if(CAccess.ScreenSize.x.ExIsLess(CAccess.ScreenSize.y * fAspect)) {
-				fScale = CAccess.ScreenSize.x / (CAccess.ScreenSize.y * fAspect);
-			}
-			
-			return fScale;
+			return CAccess.ScreenSize.x.ExIsLess(CAccess.ScreenSize.y * fAspect) ? CAccess.ScreenSize.x / (CAccess.ScreenSize.y * fAspect) : KCDefine.B_VAL_1_FLT;
 		}
 	}
 
@@ -101,7 +94,7 @@ public static partial class CAccess {
 	
 	public static Vector3 DesktopScreenSize {
 		get {
-			float fScreenWidth = Screen.currentResolution.width * 0.95f;
+			float fScreenWidth = Screen.currentResolution.width * KCDefine.B_DESKTOP_SCREEN_RATE;
 			return new Vector3(fScreenWidth, fScreenWidth * (KCDefine.B_LANDSCAPE_SCREEN_HEIGHT / (float)KCDefine.B_LANDSCAPE_SCREEN_WIDTH), KCDefine.B_VAL_0_FLT);
 		}
 	}
@@ -147,11 +140,9 @@ public static partial class CAccess {
 	/** 배너 광고 높이를 반환한다 */
 	public static float GetBannerAdsHeight(float a_fHeight) {
 		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
-
 		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y;
-		float fBannerAdsHeight = CAccess.GetBannerAdsScreenHeight(a_fHeight);
-		
-		return (fBannerAdsHeight * fPercent) / CAccess.ResolutionScale;
+
+		return (CAccess.GetBannerAdsScreenHeight(a_fHeight) * fPercent) / CAccess.ResolutionScale;
 	}
 
 	/** 배너 광고 화면 높이를 반환한다 */
@@ -182,7 +173,7 @@ public static partial class CAccess {
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
 		var oRes = Resources.Load<T>(a_oFilePath);
-		bool bIsExistsRes = !typeof(T).Equals(typeof(TextAsset)) ? oRes != null : (oRes as TextAsset).ExIsValid();
+		bool bIsExistsRes = typeof(T).Equals(typeof(TextAsset)) ? (oRes as TextAsset).ExIsValid() : oRes != null;
 		
 		// 자동 제거 모드 일 경우
 		if(bIsExistsRes && a_bIsAutoUnload) {
@@ -220,11 +211,7 @@ public static partial class CAccess {
 	/** 가격 문자열을 반환한다 */
 	public static string GetPriceStr(Product a_oProduct) {
 		CAccess.Assert(a_oProduct != null);
-
-		decimal dclPrice = a_oProduct.metadata.localizedPrice;
-		string oCurrencyCode = a_oProduct.metadata.isoCurrencyCode;
-		
-		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, oCurrencyCode, dclPrice);		
+		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);		
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수

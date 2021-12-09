@@ -41,13 +41,7 @@ public static partial class CAccessExtension {
 
 	/** 국가 코드 유효 여부를 검사한다 */
 	public static bool ExIsValidCountryCode(this string a_oSender) {
-		// 국가 코드가 유효하지 않을 경우
-		if(!a_oSender.ExIsValid()) {
-			return false;
-		}
-
-		string oCountryCode = a_oSender.ToUpper();
-		return !oCountryCode.Equals(KCDefine.B_UNKNOWN_COUNTRY_CODE);
+		return a_oSender.ExIsValid() && !a_oSender.ToUpper().Equals(KCDefine.B_UNKNOWN_COUNTRY_CODE);
 	}
 
 	/** 동일 여부를 검사한다 */
@@ -113,17 +107,6 @@ public static partial class CAccessExtension {
 		return KCDefine.B_EU_COUNTRY_CODE_LIST.Contains(a_oSender.ToUpper());
 	}
 
-	/** 변경 된 값을 반환한다 */
-	public static int ExGetReplaceZeroVal(this int a_nSender, int a_nNumDigits) {
-		int nDivideVal = KCDefine.B_VAL_1_INT;
-
-		for(int i = 0; i < a_nNumDigits; ++i) {
-			nDivideVal *= 10;
-		}
-
-		return (a_nSender / nDivideVal) * nDivideVal;
-	}
-
 	/** 시간 간격을 반환한다 */
 	public static double ExGetDeltaTime(this System.DateTime a_stSender, System.DateTime a_stRhs) {
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
@@ -168,12 +151,6 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
 		
 		return a_stSender + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2;
-	}
-
-	/** 괄호 문자열을 반환한다 */
-	public static string ExGetBracketStr(this string a_oSender) {
-		CAccess.Assert(a_oSender != null);
-		return string.Format(KCDefine.B_TEXT_FMT_BRACKET, a_oSender);
 	}
 
 	/** 변경 된 문자열을 반환한다 */
@@ -224,12 +201,7 @@ public static partial class CAccessExtension {
 
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid<T>(this T[,] a_oSender) {
-		// 배열이 유효하지 않을 경우
-		if(a_oSender == null) {
-			return false;
-		}
-
-		return a_oSender.GetLength(KCDefine.B_VAL_0_INT) > KCDefine.B_VAL_0_INT && a_oSender.GetLength(KCDefine.B_VAL_1_INT) > KCDefine.B_VAL_0_INT;
+		return a_oSender != null && a_oSender.GetLength(KCDefine.B_VAL_0_INT) > KCDefine.B_VAL_0_INT && a_oSender.GetLength(KCDefine.B_VAL_1_INT) > KCDefine.B_VAL_0_INT;
 	}
 
 	/** 유효 여부를 검사한다 */
@@ -251,11 +223,7 @@ public static partial class CAccessExtension {
 	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx<T>(this T[,] a_oSender, Vector2Int a_stIdx) {
 		CAccess.Assert(a_oSender != null);
-
-		int nNumRows = a_oSender.GetLength(KCDefine.B_VAL_0_INT);
-		int nNumCols = a_oSender.GetLength(KCDefine.B_VAL_1_INT);
-
-		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < nNumRows) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < nNumCols);
+		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_0_INT)) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_1_INT));
 	}
 
 	/** 인덱스 유효 여부룰 검사한다 */
@@ -377,6 +345,16 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 변경한다 */
+	public static void ExSetVal<T>(this T[,] a_oSender, Vector2Int a_stIdx, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 인덱스가 유효 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_stIdx)) {
+			a_oSender[a_stIdx.y, a_stIdx.x] = a_tVal;
+		}
+	}
+
+	/** 값을 변경한다 */
 	public static void ExSetVal<T>(this List<T> a_oSender, int a_nIdx, T a_tVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
@@ -398,9 +376,8 @@ public static partial class CAccessExtension {
 
 	/** 값을 변경한다 */
 	public static void ExSetVals<T>(this T[] a_oSender, List<int> a_oIdxList, List<T> a_oValList, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-		CAccess.Assert(!a_bIsEnableAssert || (a_oIdxList != null && a_oValList != null));
-
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oIdxList != null && a_oValList != null));
+		
 		// 값이 존재 할 경우
 		if(a_oIdxList != null && (a_oIdxList != null && a_oValList != null)) {
 			for(int i = 0; i < a_oIdxList.Count; ++i) {
@@ -411,8 +388,7 @@ public static partial class CAccessExtension {
 
 	/** 값을 변경한다 */
 	public static void ExSetVals<T>(this List<T> a_oSender, List<int> a_oIdxList, List<T> a_oValList, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-		CAccess.Assert(!a_bIsEnableAssert || (a_oIdxList != null && a_oValList != null));
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oIdxList != null && a_oValList != null));
 
 		// 값이 존재 할 경우
 		if(a_oIdxList != null && (a_oIdxList != null && a_oValList != null)) {

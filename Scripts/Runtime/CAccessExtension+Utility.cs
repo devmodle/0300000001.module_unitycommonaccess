@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -46,12 +47,7 @@ public static partial class CAccessExtension {
 
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this TextAsset a_oSender) {
-		// 텍스트 에셋이 유효하지 않을 경우
-		if(a_oSender == null) {
-			return false;
-		}
-		
-		return a_oSender.text.ExIsValid() || a_oSender.bytes.ExIsValid();
+		return a_oSender != null && (a_oSender.text.ExIsValid() || a_oSender.bytes.ExIsValid());
 	}
 
 	/** 유효 여부를 검사한다 */
@@ -180,6 +176,42 @@ public static partial class CAccessExtension {
 		return new Color(a_stSender.r, a_stSender.g, a_stSender.b, a_fAlpha);
 	}
 
+	/** 일반 색상을 반환한다 */
+	public static ColorBlock ExGetNormColor(this ColorBlock a_stSender, Color a_stColor) {
+		a_stSender.normalColor = a_stColor;
+		return a_stSender;
+	}
+
+	/** 프레스 색상을 반환한다 */
+	public static ColorBlock ExGetPressColor(this ColorBlock a_stSender, Color a_stColor) {
+		a_stSender.pressedColor = a_stColor;
+		return a_stSender;
+	}
+
+	/** 선택 색상을 반환한다 */
+	public static ColorBlock ExGetSelColor(this ColorBlock a_stSender, Color a_stColor) {
+		a_stSender.selectedColor = a_stColor;
+		return a_stSender;
+	}
+
+	/** 하이라이트 색상을 반환한다 */
+	public static ColorBlock ExGetHighlightColor(this ColorBlock a_stSender, Color a_stColor) {
+		a_stSender.highlightedColor = a_stColor;
+		return a_stSender;
+	}
+
+	/** 비활성 색상을 반환한다 */
+	public static ColorBlock ExGetDisableColor(this ColorBlock a_stSender, Color a_stColor) {
+		a_stSender.disabledColor = a_stColor;
+		return a_stSender;
+	}
+
+	/** 레이어 값을 반환한다 */
+	public static LayerMask ExGetLayerVal(this LayerMask a_stSender, int a_nVal) {
+		a_stSender.value = a_nVal;
+		return a_stSender;
+	}
+
 	/** X 축 간격을 반환한다 */
 	public static float ExGetDeltaX(this Vector3 a_stSender, Vector3 a_stRhs) {
 		return (a_stSender - a_stRhs).x;
@@ -236,10 +268,7 @@ public static partial class CAccessExtension {
 
 	/** 보정된 캔버스 월드 위치를 반환한다 */
 	public static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
-		float fPosX = Mathf.Clamp(a_stSender.x, CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.x / KCDefine.B_VAL_2_FLT);
-		float fPosY = Mathf.Clamp(a_stSender.y, CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT);
-
-		return new Vector3(fPosX, fPosY, a_stSender.z);
+		return new Vector3(Mathf.Clamp(a_stSender.x, CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.x / KCDefine.B_VAL_2_FLT), Mathf.Clamp(a_stSender.y, CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT), a_stSender.z);
 	}
 
 	/** 보정된 캔버스 월드 위치를 반환한다 */
@@ -273,48 +302,30 @@ public static partial class CAccessExtension {
 
 	/** 캔버스 월드 간격을 반환한다 */
 	public static Vector3 ExGetWorldDelta(this PointerEventData a_oSender) {
-		var stPosA = a_oSender.pointerPressRaycast.screenPosition.ExTo3D();
-		var stPosB = a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D();
-
-		return stPosA.ExGetWorldPos() - stPosB.ExGetWorldPos();
+		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExGetWorldPos() - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExGetWorldPos();
 	}
 
 	/** 캔버스 로컬 간격을 반환한다 */
 	public static Vector3 ExGetLocalDelta(this PointerEventData a_oSender, GameObject a_oObj) {
-		var stPosA = a_oSender.pointerPressRaycast.screenPosition.ExTo3D();
-		var stPosB = a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D();
-
-		return stPosA.ExGetWorldPos().ExToLocal(a_oObj) - stPosB.ExGetWorldPos().ExToLocal(a_oObj);
+		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oObj) - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oObj);
 	}
 	
 	/** 스크롤 뷰 정규 위치를 반환한다 */
 	public static Vector3 ExGetNormPos(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
-		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContents != null);
-
+		CAccess.Assert(a_oSender != null && a_oViewport != null && a_oContents != null);
 		return new Vector3(a_oSender.ExGetNormPosH(a_oViewport, a_oContents, a_stPos), a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos), KCDefine.B_VAL_0_FLT);
 	}
 
 	/** 스크롤 뷰 수직 정규 위치를 반환한다 */
 	public static float ExGetNormPosV(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
-		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContents != null);
-
-		var oViewportTrans = a_oViewport.transform as RectTransform;
-		var oContentsTrans = a_oContents.transform as RectTransform;
-
-		return Mathf.Clamp01((a_stPos.y - oViewportTrans.rect.height) / (oContentsTrans.rect.height - oViewportTrans.rect.height));
+		CAccess.Assert(a_oSender != null && a_oViewport != null && a_oContents != null);
+		return Mathf.Clamp01((a_stPos.y - (a_oViewport.transform as RectTransform).rect.height) / ((a_oContents.transform as RectTransform).rect.height - (a_oViewport.transform as RectTransform).rect.height));
 	}
 
 	/** 스크롤 뷰 수평 정규 위치를 반환한다 */
 	public static float ExGetNormPosH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
-		CAccess.Assert(a_oSender != null);
-		CAccess.Assert(a_oViewport != null && a_oContents != null);
-
-		var oViewportTrans = a_oViewport.transform as RectTransform;
-		var oContentsTrans = a_oContents.transform as RectTransform;
-
-		return Mathf.Clamp01((a_stPos.x - oViewportTrans.rect.width) / (oContentsTrans.rect.width - oViewportTrans.rect.width));
+		CAccess.Assert(a_oSender != null && a_oViewport != null && a_oContents != null);
+		return Mathf.Clamp01((a_stPos.x - (a_oViewport.transform as RectTransform).rect.width) / ((a_oContents.transform as RectTransform).rect.width - (a_oViewport.transform as RectTransform).rect.width));
 	}
 
 	/** 자식을 반환한다 */
@@ -336,29 +347,17 @@ public static partial class CAccessExtension {
 	/** 자식을 반환한다 */
 	public static List<GameObject> ExGetChildren(this GameObject a_oSender, bool a_bIsIncludeSelf = true) {
 		CAccess.Assert(a_oSender != null);
-
-		var oObjList = new List<GameObject>();
 		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
 
-		foreach(var oObj in oEnumerator) {
-			oObjList.Add(oObj);
-		}
-
-		return oObjList;
+		return oEnumerator.ToList();
 	}
 
 	/** 부모를 반환한다 */
 	public static List<GameObject> ExGetParents(this GameObject a_oSender, bool a_bIsIncludeSelf = true) {
 		CAccess.Assert(a_oSender != null);
-
-		var oObjList = new List<GameObject>();
 		var oEnumerator = a_bIsIncludeSelf ? a_oSender.AncestorsAndSelf() : a_oSender.Ancestors();
 
-		foreach(var oObj in oEnumerator) {
-			oObjList.Add(oObj);
-		}
-
-		return oObjList;
+		return oEnumerator.ToList();
 	}
 
 	/** 크기 형식 문자열을 반환한다 */
@@ -452,10 +451,7 @@ public static partial class CAccessExtension {
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
-			var stColorBlock = a_oSender.colors;
-			stColorBlock.normalColor = a_stColor;
-
-			a_oSender.colors = stColorBlock;
+			a_oSender.colors = a_oSender.colors.ExGetNormColor(a_stColor);
 		}
 	}
 
@@ -465,10 +461,7 @@ public static partial class CAccessExtension {
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
-			var stColorBlock = a_oSender.colors;
-			stColorBlock.selectedColor = a_stColor;
-
-			a_oSender.colors = stColorBlock;
+			a_oSender.colors = a_oSender.colors.ExGetSelColor(a_stColor);
 		}
 	}
 
@@ -478,10 +471,7 @@ public static partial class CAccessExtension {
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
-			var stColorBlock = a_oSender.colors;
-			stColorBlock.disabledColor = a_stColor;
-
-			a_oSender.colors = stColorBlock;
+			a_oSender.colors = a_oSender.colors.ExGetDisableColor(a_stColor);
 		}
 	}
 
@@ -513,10 +503,9 @@ public static partial class CAccessExtension {
 
 		// 광선 추적이 존재 할 경우
 		if(a_oSender != null && a_oLayerList != null) {
-			var stLayerMask = a_oSender.eventMask;
-			stLayerMask.value = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.eventMask.value;
+			var stLayerMask = a_oSender.eventMask.ExGetLayerVal(a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.eventMask.value);
 			stLayerMask.value |= a_oLayerList.ExToBits();
-
+			
 			a_oSender.eventMask = stLayerMask;
 		}
 	}
@@ -549,8 +538,7 @@ public static partial class CAccessExtension {
 
 		// 파티클이 존재 할 경우
 		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
-			var oRenderer = a_oSender.GetComponent<ParticleSystemRenderer>();
-			oRenderer?.ExSetSortingOrder(a_stOrderInfo, a_bIsEnableAssert);
+			a_oSender.GetComponent<ParticleSystemRenderer>()?.ExSetSortingOrder(a_stOrderInfo, a_bIsEnableAssert);
 		}
 	}
 
@@ -859,12 +847,10 @@ public static partial class CAccessExtension {
 
 	/** 캔버스 월드 위치를 반환한다 */
 	private static Vector3 ExGetWorldPos(this Vector3 a_stSender) {
-		float fAspect = CAccess.ScreenSize.x / CAccess.ScreenSize.y;
-		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * fAspect;
-		
 		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_FLT;
 		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT;
 
+		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * (CAccess.ScreenSize.x / CAccess.ScreenSize.y);
 		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_FLT), fNormPosY * (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT), a_stSender.z);
 	}
 
@@ -936,8 +922,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
-			var oComponent = a_oSender.GetComponentInChildren<T>() as Behaviour;
-			oComponent?.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
+			(a_oSender.GetComponentInChildren<T>() as Behaviour)?.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -947,8 +932,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj?.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_stSender.ExFindChild(a_oName)?.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -958,8 +942,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj?.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetEnableComponent<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -983,8 +966,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj?.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_stSender.ExFindChild(a_oName)?.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -994,8 +976,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender?.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj?.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetEnableComponents<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1005,8 +986,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
-			var oComponent = a_oSender.GetComponentInChildren<T>();
-			oComponent?.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.GetComponentInChildren<T>()?.ExSetInteractable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1016,8 +996,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj?.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_stSender.ExFindChild(a_oName)?.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1027,8 +1006,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj?.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetInteractable<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1038,8 +1016,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
-			var oComponent = a_oSender.GetComponentInChildren<T>();
-			oComponent?.ExSetRaycastTarget(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.GetComponentInChildren<T>()?.ExSetRaycastTarget(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1049,8 +1026,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj?.ExSetRaycastTarget<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_stSender.ExFindChild(a_oName)?.ExSetRaycastTarget<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1060,8 +1036,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj?.ExSetRaycastTarget<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetRaycastTarget<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1085,8 +1060,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_stSender.ExFindChild(a_oName)?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1096,8 +1070,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 	
@@ -1121,8 +1094,7 @@ public static partial class CAccessExtension {
 
 		// 이름이 유효 할 경우
 		if(a_oName.ExIsValid()) {
-			var oObj = a_stSender.ExFindChild(a_oName);
-			oObj?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_stSender.ExFindChild(a_oName)?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 
@@ -1132,8 +1104,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
-			var oObj = a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf);
-			oObj?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
+			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
 	#endregion			// 제네릭 클래스 함수
@@ -1146,8 +1117,7 @@ public static partial class CAccessExtension {
 
 		// 컴포넌트가 존재 할 경우
 		if(a_oSender != null) {
-			var oMonoScript = MonoScript.FromMonoBehaviour(a_oSender);
-			CAccess.SetScriptOrder(oMonoScript, a_nOrder, a_bIsEnableAssert);
+			CAccess.SetScriptOrder(MonoScript.FromMonoBehaviour(a_oSender), a_nOrder, a_bIsEnableAssert);
 		}
 	}
 #endif			// #if UNITY_EDITOR
@@ -1176,11 +1146,6 @@ public static partial class CAccessExtension {
 		}
 
 		return nSumVal != KCDefine.B_VAL_0_INT;
-	}
-
-	/** 인증 요청 완료 여부를 검사한다 */
-	public static bool ExIsCompleteRequest(this AuthorizationRequest a_oSender) {
-		return a_oSender != null && a_oSender.IsFinished;
 	}
 #endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수

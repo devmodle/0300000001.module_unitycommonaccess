@@ -22,9 +22,7 @@ public static partial class CEditorAccess {
 	/** 활성 객체를 반환한다 */
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		var oObj = Selection.activeGameObject;
-		bool bIsInvalidObj = a_bIsInHierarchy && (oObj != null && !oObj.activeInHierarchy);
-
-		return bIsInvalidObj ? null : oObj;
+		return (a_bIsInHierarchy && (oObj != null && !oObj.activeInHierarchy)) ? null : oObj;
 	}
 
 	/** 안드로이드 이름을 반환한다 */

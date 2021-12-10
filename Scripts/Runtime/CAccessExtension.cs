@@ -289,7 +289,7 @@ public static partial class CAccessExtension {
 	/** 값을 반환한다 */
 	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ContainsKey(a_tKey) ? a_oSender[a_tKey] : a_tDefVal;
+		return a_oSender.TryGetValue(a_tKey, out V tVal) ? tVal : a_tDefVal;
 	}
 
 	/** 필드 값을 반환한다 */

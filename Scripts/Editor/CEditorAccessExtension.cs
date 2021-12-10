@@ -54,7 +54,7 @@ public static partial class CEditorAccessExtension {
 			var oValDict = a_oSender.values[i].AsDict();
 
 			// 광고 네트워크 식별자가 존재 할 경우
-			if(oValDict.values.ContainsKey(KCEditorDefine.B_KEY_IOS_ADS_NETWORK_ID) && oValDict.values[KCEditorDefine.B_KEY_IOS_ADS_NETWORK_ID].AsString().Equals(a_oNetworkID)) {
+			if(oValDict.values.TryGetValue(KCEditorDefine.B_KEY_IOS_ADS_NETWORK_ID, out PlistElement oElement) && oElement.AsString().Equals(a_oNetworkID)) {
 				return true;
 			}
 		}

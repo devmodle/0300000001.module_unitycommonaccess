@@ -64,6 +64,13 @@ public static partial class CAccess {
 		}
 	}
 
+	public static float DesktopResolutionScale {
+		get {
+			float fAspect = KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT;
+			return CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesktopScreenSize.y * fAspect) ? CAccess.DesktopScreenSize.x / (CAccess.DesktopScreenSize.y * fAspect) : KCDefine.B_VAL_1_FLT;
+		}
+	}
+
 	public static EDeviceType DeviceType {
 		get {
 #if UNITY_IOS
@@ -91,11 +98,14 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 		}
 	}
-	
-	public static Vector3 DesktopScreenSize {
+
+	public static Vector3 CorrectDesktopScreenSize {
 		get {
-			float fScreenWidth = Screen.currentResolution.width * KCDefine.B_DESKTOP_SCREEN_RATE;
-			return new Vector3(fScreenWidth, fScreenWidth * (KCDefine.B_LANDSCAPE_SCREEN_HEIGHT / (float)KCDefine.B_LANDSCAPE_SCREEN_WIDTH), KCDefine.B_VAL_0_FLT);
+#if UNITY_STANDALONE && (DEBUG || DEVELOPMENT_BUILD)
+			return (CAccess.DesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE) * CAccess.DesktopResolutionScale;
+#else
+			return CAccess.DesktopScreenSize;
+#endif			// #if UNITY_STANDALONE && (DEBUG || DEVELOPMENT_BUILD)
 		}
 	}
 
@@ -108,21 +118,15 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 		}
 	}
-
-	public static bool IsMobile => Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.Android;
-	public static bool IsStandalone => Application.platform == RuntimePlatform.OSXPlayer || Application.platform == RuntimePlatform.WindowsPlayer;
 	
-	public static bool IsMac => Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer;
-	public static bool IsWnds => Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
-	public static bool IsEditor => Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.WindowsEditor;
-
+	public static float DPI => Screen.dpi;
 	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
 	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
-	public static float DPI => Screen.dpi;
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
+	public static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, KCDefine.B_VAL_0_FLT);
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수

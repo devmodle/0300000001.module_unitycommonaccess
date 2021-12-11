@@ -57,20 +57,6 @@ public static partial class CAccess {
 		}
 	}
 
-	public static float ResolutionScale {
-		get {
-			float fAspect = KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT;
-			return CAccess.ScreenSize.x.ExIsLess(CAccess.ScreenSize.y * fAspect) ? CAccess.ScreenSize.x / (CAccess.ScreenSize.y * fAspect) : KCDefine.B_VAL_1_FLT;
-		}
-	}
-
-	public static float DesktopResolutionScale {
-		get {
-			float fAspect = KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT;
-			return CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesktopScreenSize.y * fAspect) ? CAccess.DesktopScreenSize.x / (CAccess.DesktopScreenSize.y * fAspect) : KCDefine.B_VAL_1_FLT;
-		}
-	}
-
 	public static EDeviceType DeviceType {
 		get {
 #if UNITY_IOS
@@ -99,13 +85,13 @@ public static partial class CAccess {
 		}
 	}
 
-	public static Vector3 CorrectDesktopScreenSize {
+	public static Vector3 DesignScreenSize {
 		get {
-#if UNITY_STANDALONE && (DEBUG || DEVELOPMENT_BUILD)
-			return (CAccess.DesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE) * CAccess.DesktopResolutionScale;
+#if UNITY_EDITOR
+			return new Vector3(Camera.main.pixelHeight * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
 #else
-			return CAccess.DesktopScreenSize;
-#endif			// #if UNITY_STANDALONE && (DEBUG || DEVELOPMENT_BUILD)
+			return new Vector3(Screen.height * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), Screen.height, KCDefine.B_VAL_0_FLT);
+#endif			// #if UNITY_EDITOR
 		}
 	}
 
@@ -118,15 +104,23 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 		}
 	}
-	
+
 	public static float DPI => Screen.dpi;
+	
 	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
 	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
+	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.DesignScreenSize.x) ? CAccess.ScreenSize.x / CAccess.DesignScreenSize.x : KCDefine.B_VAL_1_FLT;
+	public static float DesktopResolutionScale => CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesignDesktopScreenSize.x) ? CAccess.DesktopScreenSize.x / CAccess.DesignDesktopScreenSize.x : KCDefine.B_VAL_1_FLT;
+
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
 	public static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, KCDefine.B_VAL_0_FLT);
+	public static Vector3 DesignDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
+	public static Vector3 CorrectDesktopScreenSize => CAccess.DesignCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
+	
+	private static Vector3 DesignCorrectDesktopScreenSize => CAccess.DesignDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수

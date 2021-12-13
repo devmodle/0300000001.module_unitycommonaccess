@@ -819,8 +819,7 @@ public static partial class CAccessExtension {
 
 		// 스크롤러가 존재 할 경우
 		if(a_oSender != null) {
-			float fScrollPos = Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, a_oSender.ScrollSize);
-			a_oSender.SetScrollPositionImmediately(fScrollPos);
+			a_oSender.SetScrollPositionImmediately(Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, a_oSender.ScrollSize));
 		}
 	}
 

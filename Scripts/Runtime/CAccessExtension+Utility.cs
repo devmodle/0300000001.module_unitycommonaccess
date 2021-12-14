@@ -8,6 +8,7 @@ using UnityEngine.U2D;
 using UnityEngine.SceneManagement;
 using Unity.Linq;
 using EnhancedUI.EnhancedScroller;
+using TMPro;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -434,6 +435,27 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	/** 텍스트를 변경한다 */
+	public static void ExSetText(this Text a_oSender, string a_oStr, STFontSetInfo a_stFontSetInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()));
+
+		// 텍스트가 존재 할 경우
+		if(a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()) {
+			a_oSender.text = a_oStr;
+			a_oSender.font = Resources.Load<Font>(a_stFontSetInfo.m_oPath);
+		}
+	}
+
+	/** 텍스트를 변경한다 */
+	public static void ExSetText(this TMP_Text a_oSender, string a_oStr, STFontSetInfo a_stFontSetInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()));
+
+		if(a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()) {
+			a_oSender.text = a_oStr;
+			a_oSender.font = Resources.Load<TMP_FontAsset>(a_stFontSetInfo.m_oPath);
+		}
+	}
+	
 	/** 위치를 설정한다 */
 	public static void ExSetPositions(this LineRenderer a_oSender, List<Vector3> a_oPosList, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oPosList != null));
@@ -902,7 +924,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_TEXT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oStr, a_bIsEnableAssert);
 	}
-
+	
 	/** 색상을 변경한다 */
 	public static void ExSetColor<T>(this object a_oSender, Color a_stColor, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -913,6 +935,18 @@ public static partial class CAccessExtension {
 	public static void ExSetSprite<T>(this object a_oSender, Sprite a_oSprite, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_SPRITE, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oSprite, a_bIsEnableAssert);
+	}
+
+	/** 폰트를 변경한다 */
+	public static void ExSetFont<T>(this object a_oSender, Font a_oFont, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_FONT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oFont, a_bIsEnableAssert);
+	}
+
+	/** 폰트를 변경한다 */
+	public static void ExSetFont<T>(this object a_oSender, TMP_FontAsset a_oTMPFont, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_FONT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oTMPFont, a_bIsEnableAssert);
 	}
 	
 	/** 컴포넌트 활성 여부를 변경한다 */

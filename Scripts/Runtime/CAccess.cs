@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,12 +16,18 @@ public static partial class CAccess {
 			return stDateTime.ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
 		}
 	}
-
+	
 	public static System.DateTime MidnightTime => System.DateTime.Today.AddDays(KCDefine.B_VAL_1_DBL);
 	public static System.TimeSpan MidnightDeltaTime => CAccess.MidnightTime - System.DateTime.Now;
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
+	/** 한글 여부를 검사한다 */
+	public static bool IsKorean(string a_oStr) {
+		CAccess.Assert(a_oStr != null);
+		return Regex.IsMatch(a_oStr, KCDefine.B_STR_KOREAN_PATTERN);
+	}
+
 	/** 유저 문자열을 반환한다 */
 	public static string GetUserStr(EUserType a_eUserType) {
 		// 유저 타입이 유효하지 않을 경우

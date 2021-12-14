@@ -9,6 +9,7 @@
         "UnityEngine.Purchasing.Stores",
         "Unity.Notifications.iOS",
         "Unity.Notifications.Android",
+        "Unity.TextMeshPro",
         "DOTween.Modules",
         "DOTweenPro.Scripts",
         "AppleAuth"

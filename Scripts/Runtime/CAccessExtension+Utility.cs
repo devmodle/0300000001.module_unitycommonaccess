@@ -42,6 +42,11 @@ public static partial class CAccessExtension {
 	}
 
 	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this EFontSet a_eSender) {
+		return a_eSender > EFontSet.NONE && a_eSender < EFontSet.MAX_VAL;
+	}
+
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this SystemLanguage a_eSender) {
 		return a_eSender >= SystemLanguage.Afrikaans && a_eSender < SystemLanguage.Unknown;
 	}
@@ -450,9 +455,42 @@ public static partial class CAccessExtension {
 	public static void ExSetText(this TMP_Text a_oSender, string a_oStr, STFontSetInfo a_stFontSetInfo, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()));
 
+		// 텍스트가 존재 할 경우
 		if(a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()) {
 			a_oSender.text = a_oStr;
 			a_oSender.font = Resources.Load<TMP_FontAsset>(a_stFontSetInfo.m_oPath);
+		}
+	}
+
+	/** 텍스트를 변경한다 */
+	public static void ExSetText(this InputField a_oSender, string a_oStr, STFontSetInfo a_stFontSetInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()));
+
+		// 입력 필드가 존재 할 경우
+		if(a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()) {
+			a_oSender.text = a_oStr;
+			var oTexts = a_oSender.GetComponentsInChildren<Text>();
+
+			for(int i = 0; i < oTexts.Length; ++i) {
+				oTexts[i].font = Resources.Load<Font>(a_stFontSetInfo.m_oPath);
+			}
+		}
+	}
+
+	/** 텍스트를 변경한다 */
+	public static void ExSetText(this TMP_InputField a_oSender, string a_oStr, STFontSetInfo a_stFontSetInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()));
+
+		// 입력 필드가 존재 할 경우
+		if(a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()) {
+			a_oSender.text = a_oStr;
+			a_oSender.fontAsset = Resources.Load<TMP_FontAsset>(a_stFontSetInfo.m_oPath);
+
+			var oTexts = a_oSender.GetComponentsInChildren<TMP_Text>();
+
+			for(int i = 0; i < oTexts.Length; ++i) {
+				oTexts[i].font = Resources.Load<TMP_FontAsset>(a_stFontSetInfo.m_oPath);
+			}
 		}
 	}
 	
@@ -919,12 +957,6 @@ public static partial class CAccessExtension {
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
-	/** 텍스트를 변경한다 */
-	public static void ExSetText<T>(this object a_oSender, string a_oStr, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_TEXT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oStr, a_bIsEnableAssert);
-	}
-	
 	/** 색상을 변경한다 */
 	public static void ExSetColor<T>(this object a_oSender, Color a_stColor, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -937,18 +969,6 @@ public static partial class CAccessExtension {
 		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_SPRITE, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oSprite, a_bIsEnableAssert);
 	}
 
-	/** 폰트를 변경한다 */
-	public static void ExSetFont<T>(this object a_oSender, Font a_oFont, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_FONT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oFont, a_bIsEnableAssert);
-	}
-
-	/** 폰트를 변경한다 */
-	public static void ExSetFont<T>(this object a_oSender, TMP_FontAsset a_oTMPFont, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-		a_oSender?.ExSetPropertyVal<T>(KCDefine.U_PROPERTY_N_FONT, KCDefine.B_BINDING_F_PUBLIC_INSTANCE, a_oTMPFont, a_bIsEnableAssert);
-	}
-	
 	/** 컴포넌트 활성 여부를 변경한다 */
 	public static void ExSetEnableComponent<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Component {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);

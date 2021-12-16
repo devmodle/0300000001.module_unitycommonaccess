@@ -27,6 +27,25 @@ public static partial class CAccess {
 		CAccess.Assert(a_oStr != null);
 		return Regex.IsMatch(a_oStr, KCDefine.B_STR_KOREAN_PATTERN);
 	}
+	
+	/** 랜덤 확률을 반환한다 */
+	public static (int, float) GetRandPercent(List<float> a_oPercentList) {
+		CAccess.Assert(a_oPercentList.ExIsValid());
+
+		float fPercent = KCDefine.B_VAL_0_FLT;
+		float fComparePercent = Random.Range(KCDefine.B_VAL_0_FLT, a_oPercentList.Sum((a_fPercent) => a_fPercent));
+
+		for(int i = 0; i < a_oPercentList.Count - KCDefine.B_VAL_1_INT; ++i) {
+			fPercent += a_oPercentList[i];
+
+			// 확률이 일치 할 경우
+			if(fPercent.ExIsGreate(fComparePercent)) {
+				return (i, a_oPercentList[i]);
+			}
+		}
+
+		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.Last());
+	}
 
 	/** 유저 문자열을 반환한다 */
 	public static string GetUserStr(EUserType a_eUserType) {
@@ -67,6 +86,16 @@ public static partial class CAccess {
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
 	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_EMPTY_STR) {
 		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
+	}
+
+	/** 값을 비교한다 */
+	private static int ExCompare(this float a_fSender, float a_fRhs) {
+		// 값이 동일 할 경우
+		if(a_fSender.ExIsEquals(a_fRhs)) {
+			return KCDefine.B_COMPARE_EQUALS;
+		}
+
+		return a_fSender.ExIsLess(a_fRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
 	}
 	#endregion			// 클래스 함수
 

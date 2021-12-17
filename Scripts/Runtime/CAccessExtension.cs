@@ -170,13 +170,25 @@ public static partial class CAccessExtension {
 		return a_oSender.ExGetReplaceStr(a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender), a_oFileName);
 	}
 
+	/** 값 => 왼쪽 쉬프트 비트로 변환한다 */
+	public static int ExToLShiftBits(this int a_nSender, int a_nOffset) {
+		CAccess.Assert(a_nOffset >= KCDefine.B_VAL_0_INT);
+		return a_nSender << a_nOffset;
+	}
+
+	/** 값 => 오른쪽 쉬프트 비트로 변환한다 */
+	public static int ExToRShiftBits(this int a_nSender, int a_nOffset) {
+		CAccess.Assert(a_nOffset >= KCDefine.B_VAL_0_INT);
+		return a_nSender >> a_nOffset;
+	}
+
 	/** 리스트 => 비트로 변환한다 */
 	public static int ExToBits(this List<int> a_oSender) {
 		CAccess.Assert(a_oSender != null);
 		int nVal = KCDefine.B_VAL_0_INT;
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
-			nVal |= KCDefine.B_VAL_1_INT << a_oSender[i];
+			nVal |= KCDefine.B_VAL_1_INT.ExToLShiftBits(a_oSender[i]);
 		}
 
 		return nVal;
@@ -235,31 +247,13 @@ public static partial class CAccessExtension {
 	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains<T>(this T[] a_oSender, T a_tVal) {
 		CAccess.Assert(a_oSender != null);
-
-		for(int i = 0; i < a_oSender.Length; ++i) {
-			// 값이 동일 할 경우
-			if(a_oSender[i].Equals(a_tVal)) {
-				return true;
-			}
-		}
-
-		return false;
+		return System.Array.FindIndex(a_oSender, (a_tCompareVal) => a_tVal.Equals(a_tCompareVal)) > KCDefine.B_IDX_INVALID;
 	}
 
 	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains<T>(this T[,] a_oSender, T a_tVal) {
 		CAccess.Assert(a_oSender != null);
-
-		for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VAL_0_INT); ++i) {
-			for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
-				// 값이 동일 할 경우
-				if(a_oSender[i, j].Equals(a_tVal)) {
-					return true;
-				}
-			}
-		}
-
-		return false;
+		return System.Array.FindIndex(a_oSender.ExToSingleArray(), (a_tCompareVal) => a_tVal.Equals(a_tCompareVal)) > KCDefine.B_IDX_INVALID;
 	}
 
 	/** 완료 여부를 검사한다 */
@@ -462,6 +456,30 @@ public static partial class CAccessExtension {
 				}
 			}
 		}
+	}
+
+	/** 2 차원 배열 => 1 차원 배열로 복사한다 */
+	private static void ExCopyToSingleArray<T>(this T[,] a_oSender, T[] a_oDestVals, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && a_oDestVals != null) {
+			for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VAL_0_INT); ++i) {
+				for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
+					a_oDestVals.ExSetVal((i * a_oSender.GetLength(KCDefine.B_VAL_1_INT)) + j, a_oSender[i, j], a_bIsEnableAssert);
+				}
+			}
+		}
+	}
+
+	/** 2 차원 배열 => 1 차원 배열로 변환한다 */
+	private static T[] ExToSingleArray<T>(this T[,] a_oSender) {
+		CAccess.Assert(a_oSender.ExIsValid());
+
+		var oVals = new T[a_oSender.Length];
+		a_oSender.ExCopyToSingleArray(oVals);
+
+		return oVals;
 	}
 	#endregion			// 제네릭 클래스 함수
 }

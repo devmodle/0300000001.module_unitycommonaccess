@@ -26,6 +26,11 @@ public static partial class CEditorAccess {
 		return (a_bIsInHierarchy && (oObj != null && !oObj.activeInHierarchy)) ? null : oObj;
 	}
 
+	/** iOS 이름을 반환한다 */
+	public static string GetiOSName(EiOSType a_eType) {
+		return KCDefine.B_PLATFORM_N_APPLE;
+	}
+
 	/** 안드로이드 이름을 반환한다 */
 	public static string GetAndroidName(EAndroidType a_eType) {
 		return (a_eType == EAndroidType.AMAZON) ? KCDefine.B_PLATFORM_N_AMAZON : KCDefine.B_PLATFORM_N_GOOGLE;

@@ -440,6 +440,16 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	/** 태그를 변경한다 */
+	public static void ExSetTag(this Component a_oSender, string a_oTag, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oTag != null));
+
+		// 컴포넌트가 존재 할 경우
+		if(a_oSender != null && a_oTag != null && !a_oSender.CompareTag(a_oTag)) {
+			a_oSender.tag = a_oTag;
+		}
+	}
+
 	/** 텍스트를 변경한다 */
 	public static void ExSetText(this Text a_oSender, string a_oStr, STFontSetInfo a_stFontSetInfo, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stFontSetInfo.m_oPath.ExIsValid()));

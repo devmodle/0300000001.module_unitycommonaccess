@@ -28,17 +28,27 @@ public static partial class CEditorAccess {
 
 	/** iOS 이름을 반환한다 */
 	public static string GetiOSName(EiOSType a_eType) {
-		return KCDefine.B_PLATFORM_N_APPLE;
+		switch(a_eType) {
+			default: return KCDefine.B_PLATFORM_N_IOS_APPLE;
+		}
 	}
 
 	/** 안드로이드 이름을 반환한다 */
 	public static string GetAndroidName(EAndroidType a_eType) {
-		return (a_eType == EAndroidType.AMAZON) ? KCDefine.B_PLATFORM_N_AMAZON : KCDefine.B_PLATFORM_N_GOOGLE;
+		switch(a_eType) {
+			case EAndroidType.AMAZON: return KCDefine.B_PLATFORM_N_ANDROID_AMAZON;
+			case EAndroidType.ONE_STORE: return KCDefine.B_PLATFORM_N_ANDROID_ONE_STORE;
+			default: return KCDefine.B_PLATFORM_N_ANDROID_GOOGLE;
+		}
 	}
 
 	/** 독립 플랫폼 이름을 반환한다 */
 	public static string GetStandaloneName(EStandaloneType a_eType) {
-		return (a_eType == EStandaloneType.WNDS) ? KCDefine.B_PLATFORM_N_WNDS : KCDefine.B_PLATFORM_N_MAC;
+		switch(a_eType) {
+			case EStandaloneType.MAC_STEAM: return KCDefine.B_PLATFORM_N_MAC_STEAM;
+			case EStandaloneType.WNDS_STEAM: return KCDefine.B_PLATFORM_N_WNDS_STEAM;
+			default: return KCDefine.B_PLATFORM_N_MAC_APPLE;
+		}
 	}
 
 	/** 그래픽 API 를 변경한다 */

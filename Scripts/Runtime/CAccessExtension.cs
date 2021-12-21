@@ -10,6 +10,11 @@ using UnityEngine.UI;
 public static partial class CAccessExtension {
 	#region 클래스 함수
 	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this string a_oSender) {
+		return a_oSender != null && a_oSender.Length > KCDefine.B_VAL_0_INT;
+	}
+
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this System.DateTime a_stSender) {
 		return a_stSender.Ticks >= KCDefine.B_VAL_0_LONG;
 	}
@@ -17,11 +22,6 @@ public static partial class CAccessExtension {
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this System.TimeSpan a_stSender) {
 		return a_stSender.Ticks >= KCDefine.B_VAL_0_LONG;
-	}
-
-	/** 유효 여부를 검사한다 */
-	public static bool ExIsValid(this string a_oSender) {
-		return a_oSender != null && a_oSender.Length > KCDefine.B_VAL_0_INT;
 	}
 
 	/** 빌드 번호 유효 여부를 검사한다 */

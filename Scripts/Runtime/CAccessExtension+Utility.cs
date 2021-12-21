@@ -25,7 +25,7 @@ public static partial class CAccessExtension {
 	#region 클래스 변수
 #if UNITY_IOS && NOTI_MODULE_ENABLE
 	private static List<AuthorizationOption> m_oAuthOptList = new List<AuthorizationOption>() {
-		AuthorizationOption.Badge, AuthorizationOption.Sound, AuthorizationOption.Alert, AuthorizationOption.CarPlay
+		AuthorizationOption.Badge, AuthorizationOption.Sound, AuthorizationOption.Alert
 	};
 #endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 	#endregion			// 클래스 변수
@@ -332,6 +332,20 @@ public static partial class CAccessExtension {
 	public static float ExGetNormPosH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null && a_oViewport != null && a_oContents != null);
 		return Mathf.Clamp01((a_stPos.x - (a_oViewport.transform as RectTransform).rect.width) / ((a_oContents.transform as RectTransform).rect.width - (a_oViewport.transform as RectTransform).rect.width));
+	}
+
+	/** 계층 경로를 반환한다 */
+	public static string ExGetHierarchyPath(this GameObject a_oSender) {
+		CAccess.Assert(a_oSender != null);
+
+		var oParentList = a_oSender.ExGetParents();
+		var oStrBuilder = new System.Text.StringBuilder();
+
+		for(int i = oParentList.Count - KCDefine.B_VAL_1_INT; i >= 0; --i) {
+			oStrBuilder.AppendFormat(KCDefine.B_TEXT_FMT_2_COMBINE, oParentList[i].name, (i <= KCDefine.B_VAL_0_INT) ? string.Empty : KCDefine.B_TOKEN_SPLASH);
+		}
+
+		return oStrBuilder.ToString();
 	}
 
 	/** 자식을 반환한다 */

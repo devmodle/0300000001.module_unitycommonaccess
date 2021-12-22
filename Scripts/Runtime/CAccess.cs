@@ -22,12 +22,18 @@ public static partial class CAccess {
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
-	/** 한글 여부를 검사한다 */
+	/** 한국어 여부를 검사한다 */
 	public static bool IsKorean(string a_oStr) {
 		CAccess.Assert(a_oStr != null);
 		return Regex.IsMatch(a_oStr, KCDefine.B_STR_KOREAN_PATTERN);
 	}
-	
+
+	/** 영어 여부를 검사한다 */
+	public static bool IsEnglish(string a_oStr) {
+		CAccess.Assert(a_oStr != null);
+		return Regex.IsMatch(a_oStr, KCDefine.B_STR_ENGLISH_PATTERN);
+	}
+
 	/** 랜덤 확률을 반환한다 */
 	public static (int, float) GetRandPercent(List<float> a_oPercentList) {
 		CAccess.Assert(a_oPercentList.ExIsValid());

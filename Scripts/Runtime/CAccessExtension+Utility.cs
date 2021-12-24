@@ -412,16 +412,6 @@ public static partial class CAccessExtension {
 			a_oSender.GetComponent<ContentSizeFitter>()?.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
-
-	/** 활성화 여부를 변경한다 */
-	public static void ExSetActive(this Behaviour a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-
-		// 컴포넌트가 존재 할 경우
-		if(a_oSender != null) {
-			a_oSender.gameObject?.SetActive(a_bIsEnable);
-		}
-	}
 	
 	/** 상호 작용 여부를 변경한다 */
 	public static void ExSetInteractable(this Selectable a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {

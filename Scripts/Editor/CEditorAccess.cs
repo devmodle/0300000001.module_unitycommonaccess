@@ -36,18 +36,18 @@ public static partial class CEditorAccess {
 	/** 안드로이드 프로젝트 이름을 반환한다 */
 	public static string GetAndroidProjName(EAndroidType a_eType) {
 		switch(a_eType) {
-			case EAndroidType.AMAZON: return KCEditorDefine.B_ANDROID_GOOGLE_BUILD_PROJ_N_JENKINS;
-			case EAndroidType.ONE_STORE: return KCEditorDefine.B_ANDROID_AMAZON_BUILD_PROJ_N_JENKINS;
-			default: return KCEditorDefine.B_ANDROID_ONE_STORE_BUILD_PROJ_N_JENKINS;
+			case EAndroidType.AMAZON: return KCEditorDefine.B_ANDROID_AMAZON_BUILD_PROJ_N_JENKINS;
+			case EAndroidType.ONE_STORE: return KCEditorDefine.B_ANDROID_ONE_STORE_BUILD_PROJ_N_JENKINS;
+			default: return KCEditorDefine.B_ANDROID_GOOGLE_BUILD_PROJ_N_JENKINS;
 		}
 	}
 	
 	/** 독립 플랫폼 프로젝트 이름을 반환한다 */
 	public static string GetStandaloneProjName(EStandaloneType a_eType) {
 		switch(a_eType) {
-			case EStandaloneType.MAC_STEAM: return KCEditorDefine.B_STANDALONE_MAC_APPLE_BUILD_PROJ_N_JENKINS;
-			case EStandaloneType.WNDS_STEAM: return KCEditorDefine.B_STANDALONE_MAC_STEAM_BUILD_PROJ_N_JENKINS;
-			default: return KCEditorDefine.B_STANDALONE_WNDS_STEAM_BUILD_PROJ_N_JENKINS;
+			case EStandaloneType.MAC_STEAM: return KCEditorDefine.B_STANDALONE_MAC_STEAM_BUILD_PROJ_N_JENKINS;
+			case EStandaloneType.WNDS_STEAM: return KCEditorDefine.B_STANDALONE_WNDS_STEAM_BUILD_PROJ_N_JENKINS;
+			default: return KCEditorDefine.B_STANDALONE_MAC_APPLE_BUILD_PROJ_N_JENKINS;
 		}
 	}
 

@@ -31,6 +31,16 @@ public static partial class CAccessExtension {
 	#endregion			// 클래스 변수
 
 	#region 클래스 함수
+	/** 맥 여부를 검사한다 */
+	public static bool ExIsMac(this EStandaloneType a_eSender) {
+		return a_eSender == EStandaloneType.MAC_APPLE || a_eSender == EStandaloneType.MAC_STEAM;
+	}
+
+	/** 윈도우즈 여부를 검사한다 */
+	public static bool ExIsWnds(this EStandaloneType a_eSender) {
+		return a_eSender == EStandaloneType.WNDS_STEAM;
+	}
+
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EUserType a_eSender) {
 		return a_eSender > EUserType.NONE && a_eSender < EUserType.MAX_VAL;

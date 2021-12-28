@@ -26,16 +26,6 @@ public static partial class CEditorAccessExtension {
 		return bIsMobile || (a_eSender == BuildTarget.StandaloneOSX || a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64);
 	}
 
-	/** 맥 여부를 검사한다 */
-	public static bool ExIsMac(this EStandaloneType a_eSender) {
-		return a_eSender == EStandaloneType.MAC_APPLE || a_eSender == EStandaloneType.MAC_STEAM;
-	}
-
-	/** 윈도우즈 여부를 검사한다 */
-	public static bool ExIsWnds(this EStandaloneType a_eSender) {
-		return a_eSender == EStandaloneType.WNDS_STEAM;
-	}
-
 	/** 완료 여부를 검사한다 */
 	public static bool ExIsComplete(this Request a_oSender) {
 		CAccess.Assert(a_oSender != null);

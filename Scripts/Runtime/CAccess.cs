@@ -60,7 +60,7 @@ public static partial class CAccess {
 			return KCDefine.B_TOKEN_USER_UNKNOWN;
 		}
 
-		return (a_eUserType == EUserType.USER_A) ? KCDefine.B_TOKEN_USER_A : KCDefine.B_TOKEN_USER_B;
+		return (a_eUserType == EUserType.A) ? KCDefine.B_TOKEN_USER_A : KCDefine.B_TOKEN_USER_B;
 	}
 
 	/** 버전 문자열을 반환한다 */

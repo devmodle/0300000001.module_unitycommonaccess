@@ -178,15 +178,15 @@ public static partial class CAccess {
 	}
 	
 	/** 값을 할당한다 */
-	public static void AssignVal(ref DG.Tweening.Tween a_oLhs, DG.Tweening.Tween a_oRhs) {
+	public static void AssignVal(ref DG.Tweening.Tween a_oLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_oLhs?.Kill();
-		a_oLhs = a_oRhs;
+		a_oLhs = a_oRhs ?? a_oDefVal;
 	}
 	
 	/** 값을 할당한다 */
-	public static void AssignVal(ref Sequence a_oLhs, DG.Tweening.Tween a_oRhs) {
+	public static void AssignVal(ref Sequence a_oLhs, Sequence a_oRhs, Sequence a_oDefVal = null) {
 		a_oLhs?.Kill();
-		a_oLhs = a_oRhs as Sequence;
+		a_oLhs = a_oRhs ?? a_oDefVal;
 	}
 	#endregion			// 클래스 함수
 
@@ -234,7 +234,7 @@ public static partial class CAccess {
 	/** 가격 문자열을 반환한다 */
 	public static string GetPriceStr(Product a_oProduct) {
 		CAccess.Assert(a_oProduct != null);
-		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);		
+		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수

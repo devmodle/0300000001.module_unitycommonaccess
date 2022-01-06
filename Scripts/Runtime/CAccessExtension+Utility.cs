@@ -366,8 +366,7 @@ public static partial class CAccessExtension {
 		// 객체가 존재 할 경우
 		if(oObjs.ExIsValid()) {
 			for(int i = 0; i < oObjs.Length; ++i) {
-				var oChildObjList = oObjs[i].ExGetChildren();
-				oObjList.AddRange(oChildObjList);
+				oObjList.AddRange(oObjs[i].ExGetChildren());
 			}
 		}
 
@@ -377,17 +376,13 @@ public static partial class CAccessExtension {
 	/** 자식을 반환한다 */
 	public static List<GameObject> ExGetChildren(this GameObject a_oSender, bool a_bIsIncludeSelf = true) {
 		CAccess.Assert(a_oSender != null);
-		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
-
-		return oEnumerator.ToList();
+		return (a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants()).ToList();
 	}
 
 	/** 부모를 반환한다 */
 	public static List<GameObject> ExGetParents(this GameObject a_oSender, bool a_bIsIncludeSelf = true) {
 		CAccess.Assert(a_oSender != null);
-		var oEnumerator = a_bIsIncludeSelf ? a_oSender.AncestorsAndSelf() : a_oSender.Ancestors();
-
-		return oEnumerator.ToList();
+		return (a_bIsIncludeSelf ? a_oSender.AncestorsAndSelf() : a_oSender.Ancestors()).ToList();
 	}
 
 	/** 크기 형식 문자열을 반환한다 */

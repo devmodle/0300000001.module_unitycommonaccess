@@ -279,13 +279,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExIsValidIdx(a_nIdx) ? a_oSender[a_nIdx] : a_tDefVal;
 	}
-
-	/** 값을 반환한다 */
-	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tDefVal) {
-		CAccess.Assert(a_oSender != null);
-		return a_oSender.TryGetValue(a_tKey, out V tVal) ? tVal : a_tDefVal;
-	}
-
+	
 	/** 필드 값을 반환한다 */
 	public static object ExGetFieldVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
 		CAccess.Assert(a_oName.ExIsValid());

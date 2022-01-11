@@ -36,12 +36,12 @@ public static partial class CAccessExtension {
 
 	/** 언어 유효 여부를 검사한다 */
 	public static bool ExIsValidLanguage(this string a_oSender) {
-		return a_oSender.ExIsValid() && !a_oSender.Equals(KCDefine.B_UNKNOWN_STR);
+		return a_oSender.ExIsValid() && !a_oSender.Equals(KCDefine.B_TEXT_UNKNOWN);
 	}
 
 	/** 국가 코드 유효 여부를 검사한다 */
 	public static bool ExIsValidCountryCode(this string a_oSender) {
-		return a_oSender.ExIsValid() && !a_oSender.ToUpper().Equals(KCDefine.B_UNKNOWN_STR);
+		return a_oSender.ExIsValid() && !a_oSender.ToUpper().Equals(KCDefine.B_TEXT_UNKNOWN);
 	}
 
 	/** 동일 여부를 검사한다 */

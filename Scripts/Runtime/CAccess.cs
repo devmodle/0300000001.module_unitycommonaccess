@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,18 +21,6 @@ public static partial class CAccess {
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
-	/** 한국어 여부를 검사한다 */
-	public static bool IsKorean(string a_oStr) {
-		CAccess.Assert(a_oStr != null);
-		return Regex.IsMatch(a_oStr, KCDefine.B_STR_KOREAN_PATTERN);
-	}
-
-	/** 영어 여부를 검사한다 */
-	public static bool IsEnglish(string a_oStr) {
-		CAccess.Assert(a_oStr != null);
-		return Regex.IsMatch(a_oStr, KCDefine.B_STR_ENGLISH_PATTERN);
-	}
-
 	/** 랜덤 확률을 반환한다 */
 	public static (int, float) GetRandPercent(List<float> a_oPercentList) {
 		CAccess.Assert(a_oPercentList.ExIsValid());
@@ -90,7 +77,7 @@ public static partial class CAccess {
 
 	/** 조건을 검사한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_EMPTY_STR) {
+	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_TEXT_EMPTY) {
 		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
 	}
 

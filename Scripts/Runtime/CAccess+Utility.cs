@@ -62,16 +62,16 @@ public static partial class CAccess {
 #if UNITY_IOS
 			string oModel = Device.generation.ToString();
 			return oModel.Contains(KCDefine.U_MODEL_N_IPAD) ? EDeviceType.TABLET : EDeviceType.PHONE;
-#else
+#elif UNITY_ANDROID
+			// TODO: 테블릿 여부 검사 로직 구현 필요
 			return EDeviceType.PHONE;
+#else
+			switch(Application.platform) {
+				case RuntimePlatform.PS4: case RuntimePlatform.PS5: case RuntimePlatform.XboxOne: case RuntimePlatform.GameCoreXboxOne: case RuntimePlatform.GameCoreXboxSeries: return EDeviceType.CONSOLE;
+				case RuntimePlatform.Stadia: case RuntimePlatform.Switch: return EDeviceType.HANDHELD_CONSOLE;
+				default: return EDeviceType.UNKNOWN;
+			}
 #endif			// #if UNITY_IOS
-
-			// FIXME: 추후 테블릿 여부 검사 로직 수정 필요
-			// float fScreenWidth = CAccess.ScreenSize.x / Screen.dpi;
-			// float fScreenHeight = CAccess.ScreenSize.y / Screen.dpi;
-			// float fDiagonalInches = Mathf.Sqrt(Mathf.Pow(fScreenWidth, KCDefine.B_VAL_2_FLT) + Mathf.Pow(fScreenHeight, KCDefine.B_VAL_2_FLT));
-
-			// return fDiagonalInches.ExIsGreate(KCDefine.U_UNIT_TABLET_INCHES) ? EDeviceType.TABLET : EDeviceType.PHONE;
 		}
 	}
 

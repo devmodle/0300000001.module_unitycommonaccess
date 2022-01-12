@@ -20,6 +20,12 @@ public static partial class CEditorAccess {
 		return AssetDatabase.GetMainAssetTypeAtPath(a_oFilePath) != null;
 	}
 
+	/** 전처리기 심볼 포함 여부를 검사한다 */
+	public static bool IsContainsDefineSymbol(BuildTargetGroup a_eTargetGroup, string a_oSymbol) {
+		PlayerSettings.GetScriptingDefineSymbolsForGroup(a_eTargetGroup, out string[] oDefineSymbols);
+		return oDefineSymbols.ExIsValid() && oDefineSymbols.ExIsContains(a_oSymbol);
+	}
+
 	/** 활성 객체를 반환한다 */
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		var oObj = Selection.activeGameObject;

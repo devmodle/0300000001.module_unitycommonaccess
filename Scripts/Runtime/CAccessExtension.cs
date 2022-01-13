@@ -24,6 +24,21 @@ public static partial class CAccessExtension {
 		return a_stSender.Ticks >= KCDefine.B_VAL_0_LONG;
 	}
 
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx(this int a_nSender) {
+		return a_nSender > KCDefine.B_IDX_INVALID;
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx(this Vector2Int a_stSender) {
+		return a_stSender.x > KCDefine.B_IDX_INVALID && a_stSender.y > KCDefine.B_IDX_INVALID;
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx(this Vector3Int a_stSender) {
+		return CAccessExtension.ExIsValidIdx((Vector2Int)a_stSender) && a_stSender.z > KCDefine.B_IDX_INVALID;
+	}
+
 	/** 빌드 번호 유효 여부를 검사한다 */
 	public static bool ExIsValidBuildNum(this int a_nSender) {
 		return a_nSender >= KCDefine.B_MIN_BUILD_NUM;

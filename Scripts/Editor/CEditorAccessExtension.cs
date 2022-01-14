@@ -16,8 +16,8 @@ using UnityEditor.iOS.Xcode;
 public static partial class CEditorAccessExtension {
 	#region 클래스 함수
 	/** 유효 여부를 검사한다 */
-	public static bool ExIsValid(this EBuildType a_eSender) {
-		return a_eSender > EBuildType.NONE && a_eSender < EBuildType.MAX_VAL;
+	public static bool ExIsValid(this EBuildMode a_eSender) {
+		return a_eSender > EBuildMode.NONE && a_eSender < EBuildMode.MAX_VAL;
 	}
 
 	/** 유효 여부를 검사한다 */

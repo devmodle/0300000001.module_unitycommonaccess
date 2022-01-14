@@ -105,7 +105,8 @@ public static partial class CAccess {
 		}
 	}
 
-	public static float DPI => Screen.dpi;
+	public static bool IsEnableMSAA => SystemInfo.supportsMultisampledTextures != KCDefine.B_VAL_0_INT;
+	public static float ScreenDPI => Screen.dpi;
 	
 	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
@@ -138,18 +139,7 @@ public static partial class CAccess {
 	/** 배너 광고 높이를 반환한다 */
 	public static float GetBannerAdsHeight(float a_fHeight) {
 		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
-		float fPercent = KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y;
-
-		return (CAccess.GetBannerAdsScreenHeight(a_fHeight) * fPercent) / CAccess.ResolutionScale;
-	}
-
-	/** 배너 광고 화면 높이를 반환한다 */
-	public static float GetBannerAdsScreenHeight(float a_fHeight) {
-#if UNITY_EDITOR || MODE_PORTRAIT_ENABLE
-		return a_fHeight * (CAccess.DPI / KCDefine.B_DPI);
-#else
-		return (a_fHeight * KCDefine.U_SCALE_LANDSCAPE_BANNER_ADS_HEIGHT) * (CAccess.DPI / KCDefine.B_DPI);
-#endif			// #if UNITY_EDITOR || MODE_PORTRAIT_ENABLE
+		return (a_fHeight.ExDPIPixelsToPixels() * (KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y)) / CAccess.ResolutionScale;
 	}
 
 	/** iOS 이름을 반환한다 */
@@ -187,6 +177,11 @@ public static partial class CAccess {
 	public static void AssignVal(ref Sequence a_oLhs, Sequence a_oRhs, Sequence a_oDefVal = null) {
 		a_oLhs?.Kill();
 		a_oLhs = a_oRhs ?? a_oDefVal;
+	}
+
+	/** DPI 픽셀 => 픽셀로 변환한다 */
+	private static float ExDPIPixelsToPixels(this float a_fSender) {
+		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
 	}
 	#endregion			// 클래스 함수
 

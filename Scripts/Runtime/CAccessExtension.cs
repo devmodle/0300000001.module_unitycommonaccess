@@ -266,9 +266,57 @@ public static partial class CAccessExtension {
 	}
 
 	/** 포함 여부를 검사한다 */
+	public static bool ExIsContains<T>(this T[] a_oSender, List<T> a_oValList) {
+		CAccess.Assert(a_oSender != null && a_oValList != null);
+
+		for(int i = 0; i < a_oValList.Count; ++i) {
+			// 값이 없을 경우
+			if(!a_oSender.ExIsContains(a_oValList[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains<T>(this T[,] a_oSender, T a_tVal) {
 		CAccess.Assert(a_oSender != null);
-		return System.Array.FindIndex(a_oSender.ExToSingleArray(), (a_tCompareVal) => a_tVal.Equals(a_tCompareVal)) > KCDefine.B_IDX_INVALID;
+		return a_oSender.ExToSingleArray().ExIsContains(a_tVal);
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContains<T>(this T[,] a_oSender, List<T> a_oValList) {
+		CAccess.Assert(a_oSender != null && a_oValList != null);
+		return a_oSender.ExToSingleArray().ExIsContains(a_oValList);
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContains<T>(this List<T> a_oSender, List<T> a_oValList) {
+		CAccess.Assert(a_oSender != null && a_oValList != null);
+
+		for(int i = 0; i < a_oValList.Count; ++i) {
+			// 값이 없을 경우
+			if(!a_oSender.Contains(a_oValList[i])) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContains<K, V>(this Dictionary<K, V> a_oSender, List<K> a_oKeyList) {
+		CAccess.Assert(a_oSender != null && a_oKeyList != null);
+
+		for(int i = 0; i < a_oKeyList.Count; ++i) {
+			// 값이 없을 경우
+			if(!a_oSender.ContainsKey(a_oKeyList[i])) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/** 완료 여부를 검사한다 */
@@ -378,25 +426,25 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 변경한다 */
-	public static void ExSetVals<T>(this T[] a_oSender, List<int> a_oIdxList, List<T> a_oValList, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oIdxList != null && a_oValList != null));
-		
-		// 값이 존재 할 경우
-		if(a_oIdxList != null && (a_oIdxList != null && a_oValList != null)) {
-			for(int i = 0; i < a_oIdxList.Count; ++i) {
-				a_oSender.ExSetVal(a_oIdxList[i], a_oValList[i], a_bIsEnableAssert);
+	public static void ExSetVals<T>(this T[] a_oSender, List<(int, T)> a_oValInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oValInfoList != null));
+
+		// 값이 유효 할 경우
+		if(a_oSender != null && a_oValInfoList != null) {
+			for(int i = 0; i < a_oValInfoList.Count; ++i) {
+				a_oSender.ExSetVal(a_oValInfoList[i].Item1, a_oValInfoList[i].Item2, a_bIsEnableAssert);
 			}
 		}
 	}
 
 	/** 값을 변경한다 */
-	public static void ExSetVals<T>(this List<T> a_oSender, List<int> a_oIdxList, List<T> a_oValList, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oIdxList != null && a_oValList != null));
+	public static void ExSetVals<T>(this List<T> a_oSender, List<(int, T)> a_oValInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oValInfoList != null));
 
-		// 값이 존재 할 경우
-		if(a_oIdxList != null && (a_oIdxList != null && a_oValList != null)) {
-			for(int i = 0; i < a_oIdxList.Count; ++i) {
-				a_oSender.ExSetVal(a_oIdxList[i], a_oValList[i], a_bIsEnableAssert);
+		// 값이 유효 할 경우
+		if(a_oSender != null && a_oValInfoList != null) {
+			for(int i = 0; i < a_oValInfoList.Count; ++i) {
+				a_oSender.ExSetVal(a_oValInfoList[i].Item1, a_oValInfoList[i].Item2, a_bIsEnableAssert);
 			}
 		}
 	}

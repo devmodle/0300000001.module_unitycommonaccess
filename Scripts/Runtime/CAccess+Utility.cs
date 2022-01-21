@@ -96,13 +96,13 @@ public static partial class CAccess {
 	}
 
 	public static bool IsEnableMSAA => SystemInfo.supportsMultisampledTextures != KCDefine.B_VAL_0_INT;
-	public static float ScreenDPI => Screen.dpi;
-	
+
 	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
 	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
+	public static float ScreenDPI => Screen.dpi;
 	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.DesignScreenSize.x) ? CAccess.ScreenSize.x / CAccess.DesignScreenSize.x : KCDefine.B_VAL_1_FLT;
 	public static float DesktopResolutionScale => CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesignDesktopScreenSize.x) ? CAccess.DesktopScreenSize.x / CAccess.DesignDesktopScreenSize.x : KCDefine.B_VAL_1_FLT;
 

@@ -21,25 +21,6 @@ public static partial class CAccess {
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
-	/** 랜덤 확률을 반환한다 */
-	public static (int, float) GetRandPercent(List<float> a_oPercentList) {
-		CAccess.Assert(a_oPercentList.ExIsValid());
-
-		float fPercent = KCDefine.B_VAL_0_FLT;
-		float fComparePercent = Random.Range(KCDefine.B_VAL_0_FLT, a_oPercentList.Sum((a_fPercent) => a_fPercent));
-
-		for(int i = 0; i < a_oPercentList.Count - KCDefine.B_VAL_1_INT; ++i) {
-			fPercent += a_oPercentList[i];
-
-			// 확률이 일치 할 경우
-			if(fPercent.ExIsGreate(fComparePercent)) {
-				return (i, a_oPercentList[i]);
-			}
-		}
-
-		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.Last());
-	}
-
 	/** 유저 문자열을 반환한다 */
 	public static string GetUserStr(EUserType a_eUserType) {
 		// 유저 타입이 유효하지 않을 경우
@@ -73,6 +54,25 @@ public static partial class CAccess {
 		}
 		
 		return File.Open(a_oFilePath, FileMode.Create, FileAccess.Write);
+	}
+
+	/** 랜덤 확률을 반환한다 */
+	public static (int, float) GetRandPercent(List<float> a_oPercentList) {
+		CAccess.Assert(a_oPercentList.ExIsValid());
+
+		float fPercent = Random.Range(KCDefine.B_VAL_0_FLT, a_oPercentList.Sum((a_fPercent) => a_fPercent));
+		float fComparePercent = KCDefine.B_VAL_0_FLT;
+
+		for(int i = 0; i < a_oPercentList.Count - KCDefine.B_VAL_1_INT; ++i) {
+			fComparePercent += Mathf.Abs(a_oPercentList[i]);
+
+			// 확률을 만족 할 경우
+			if(fPercent.ExIsLessEquals(fComparePercent) && !Mathf.Abs(a_oPercentList[i]).ExIsEquals(KCDefine.B_VAL_0_FLT)) {
+				return (i, a_oPercentList[i]);
+			}
+		}
+		
+		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.Last());
 	}
 
 	/** 조건을 검사한다 */

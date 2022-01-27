@@ -197,6 +197,17 @@ public static partial class CAccessExtension {
 		return a_nSender >> a_nOffset;
 	}
 
+	/** 비트 => 리스트로 변환한다 */
+	public static List<int> ExToBits(this int a_nSender) {
+		var oBitList = new List<int>();
+
+		for(int i = 0; i < sizeof(int) * KCDefine.B_UNIT_BITS_PER_BYTE; ++i) {
+			oBitList.Add(((a_nSender & KCDefine.B_VAL_1_INT.ExToLShiftBits(i)) != KCDefine.B_VAL_0_INT) ? KCDefine.B_VAL_1_INT : KCDefine.B_VAL_0_INT);
+		}
+
+		return oBitList;
+	}
+
 	/** 리스트 => 비트로 변환한다 */
 	public static int ExToBits(this List<int> a_oSender) {
 		CAccess.Assert(a_oSender != null);

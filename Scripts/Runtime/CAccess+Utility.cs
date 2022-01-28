@@ -57,6 +57,30 @@ public static partial class CAccess {
 		}
 	}
 
+	public static string UniversalRPPath {
+		get {
+#if HIGH_QUALITY_LEVEL_ENABLE
+			return KCDefine.U_PIPELINE_P_G_HIGH_QUALITY_UNIVERSAL_RP_ASSET;
+#elif ULTRA_QUALITY_LEVEL_ENABLE
+			return KCDefine.U_PIPELINE_P_G_ULTRA_QUALITY_UNIVERSAL_RP_ASSET;
+#else
+			return KCDefine.U_PIPELINE_P_G_NORM_QUALITY_UNIVERSAL_RP_ASSET;
+#endif			// #if HIGH_QUALITY_LEVEL_ENABLE
+		}
+	}
+
+	public static string PostProcessingSettingsPath {
+		get {
+#if HIGH_QUALITY_LEVEL_ENABLE
+			return KCDefine.U_ASSET_P_G_HIGH_QUALITY_POST_PROCESSING_SETTINGS;
+#elif ULTRA_QUALITY_LEVEL_ENABLE
+			return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_POST_PROCESSING_SETTINGS;
+#else
+			return KCDefine.U_ASSET_P_G_NORM_QUALITY_POST_PROCESSING_SETTINGS;
+#endif			// #if HIGH_QUALITY_LEVEL_ENABLE
+		}
+	}
+
 	public static EDeviceType DeviceType {
 		get {
 #if UNITY_IOS
@@ -72,6 +96,18 @@ public static partial class CAccess {
 				default: return EDeviceType.UNKNOWN;
 			}
 #endif			// #if UNITY_IOS
+		}
+	}
+
+	public static EQualityLevel AutoQualityLevel {
+		get {
+#if HIGH_QUALITY_LEVEL_ENABLE
+			return EQualityLevel.HIGH;
+#elif ULTRA_QUALITY_LEVEL_ENABLE
+			return EQualityLevel.ULTRA;
+#else
+			return EQualityLevel.NORM;
+#endif			// #if HIGH_QUALITY_LEVEL_ENABLE
 		}
 	}
 

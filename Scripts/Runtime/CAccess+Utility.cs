@@ -57,30 +57,6 @@ public static partial class CAccess {
 		}
 	}
 
-	public static string UniversalRPPath {
-		get {
-#if HIGH_QUALITY_LEVEL_ENABLE
-			return KCDefine.U_PIPELINE_P_G_HIGH_QUALITY_UNIVERSAL_RP_ASSET;
-#elif ULTRA_QUALITY_LEVEL_ENABLE
-			return KCDefine.U_PIPELINE_P_G_ULTRA_QUALITY_UNIVERSAL_RP_ASSET;
-#else
-			return KCDefine.U_PIPELINE_P_G_NORM_QUALITY_UNIVERSAL_RP_ASSET;
-#endif			// #if HIGH_QUALITY_LEVEL_ENABLE
-		}
-	}
-
-	public static string PostProcessingSettingsPath {
-		get {
-#if HIGH_QUALITY_LEVEL_ENABLE
-			return KCDefine.U_ASSET_P_G_HIGH_QUALITY_POST_PROCESSING_SETTINGS;
-#elif ULTRA_QUALITY_LEVEL_ENABLE
-			return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_POST_PROCESSING_SETTINGS;
-#else
-			return KCDefine.U_ASSET_P_G_NORM_QUALITY_POST_PROCESSING_SETTINGS;
-#endif			// #if HIGH_QUALITY_LEVEL_ENABLE
-		}
-	}
-
 	public static EDeviceType DeviceType {
 		get {
 #if UNITY_IOS
@@ -99,7 +75,7 @@ public static partial class CAccess {
 		}
 	}
 
-	public static EQualityLevel AutoQualityLevel {
+	public static EQualityLevel QualityLevel {
 		get {
 #if HIGH_QUALITY_LEVEL_ENABLE
 			return EQualityLevel.HIGH;
@@ -193,7 +169,25 @@ public static partial class CAccess {
 			default: return KCDefine.B_PLATFORM_N_STANDALONE_MAC_APPLE;
 		}
 	}
-	
+
+	/** 렌더링 파이프라인 경로를 반환한다 */
+	public static string GetRenderingPipelinePath(EQualityLevel a_eQualityLevel) {
+		switch(a_eQualityLevel) {
+			case EQualityLevel.HIGH: return KCDefine.U_PIPELINE_P_G_HIGH_QUALITY_UNIVERSAL_RP_ASSET;
+			case EQualityLevel.ULTRA: return KCDefine.U_PIPELINE_P_G_ULTRA_QUALITY_UNIVERSAL_RP_ASSET;
+			default: return KCDefine.U_PIPELINE_P_G_NORM_QUALITY_UNIVERSAL_RP_ASSET;
+		}
+	}
+
+	/** 포스트 프로세싱 설정 경로를 반환한다 */
+	public static string GetPostProcessingSettingsPath(EQualityLevel a_eQualityLevel) {
+		switch(a_eQualityLevel) {
+			case EQualityLevel.HIGH: return KCDefine.U_ASSET_P_G_HIGH_QUALITY_POST_PROCESSING_SETTINGS;
+			case EQualityLevel.ULTRA: return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_POST_PROCESSING_SETTINGS;
+			default: return KCDefine.U_ASSET_P_G_NORM_QUALITY_POST_PROCESSING_SETTINGS;
+		}
+	}
+		
 	/** 값을 할당한다 */
 	public static void AssignVal(ref DG.Tweening.Tween a_oLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_oLhs?.Kill();

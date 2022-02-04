@@ -10,7 +10,7 @@ using UnityEditor;
 /** 에디터 기본 접근 */
 public static partial class CEditorAccess {
 	#region 클래스 프로퍼티
-	public static bool IsEnableUpdateState => !Application.isPlaying && !EditorApplication.isCompiling && !BuildPipeline.isBuildingPlayer;
+	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isCompiling && !EditorApplication.isUpdating && !EditorApplication.isPlayingOrWillChangePlaymode;
 	public static System.Type GameViewType => typeof(Editor).Assembly.GetType(KCEditorDefine.B_VIEW_N_GAME);
 	#endregion			// 클래스 프로퍼티
 

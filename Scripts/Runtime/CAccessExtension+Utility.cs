@@ -283,11 +283,6 @@ public static partial class CAccessExtension {
 	}
 
 	/** 보정된 캔버스 월드 위치를 반환한다 */
-	public static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
-		return new Vector3(Mathf.Clamp(a_stSender.x, CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.x / KCDefine.B_VAL_2_FLT), Mathf.Clamp(a_stSender.y, CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT), a_stSender.z);
-	}
-
-	/** 보정된 캔버스 월드 위치를 반환한다 */
 	public static Vector3 ExGetCorrectWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExGetWorldPos().ExGetCorrectWorldPos();
@@ -297,11 +292,6 @@ public static partial class CAccessExtension {
 	public static Vector3 ExGetCorrectLocalPos(this PointerEventData a_oSender, GameObject a_oObj) {
 		CAccess.Assert(a_oSender != null && a_oObj != null);
 		return a_oSender.ExGetCorrectWorldPos().ExToLocal(a_oObj);
-	}
-
-	/** 보정된 캔버스 월드 비율 위치를 반환한다 */
-	public static Vector3 ExGetCorrectWorldScalePos(this Vector3 a_oSender, Vector3 a_stScale) {
-		return a_oSender.ExGetScaleVector(a_stScale).ExGetCorrectWorldPos();
 	}
 
 	/** 보정된 캔버스 월드 비율 위치를 반환한다 */
@@ -834,9 +824,17 @@ public static partial class CAccessExtension {
 		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT;
 
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * (CAccess.ScreenSize.x / CAccess.ScreenSize.y);
-		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_FLT), fNormPosY * (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT), a_stSender.z);
+		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_FLT), fNormPosY * (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT), a_stSender.z) * KCDefine.B_UNIT_SCALE;
 	}
 
+	/** 보정된 캔버스 월드 위치를 반환한다 */
+	private static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
+		var stMinPos = new Vector3(CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT, KCDefine.B_VAL_0_FLT) * KCDefine.B_UNIT_SCALE;
+		var stMaxPos = new Vector3(CAccess.Resolution.x / KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT, KCDefine.B_VAL_0_FLT) * KCDefine.B_UNIT_SCALE;
+
+		return new Vector3(Mathf.Clamp(a_stSender.x, stMinPos.x, stMaxPos.x), Mathf.Clamp(a_stSender.y, stMinPos.y, stMaxPos.y), a_stSender.z);
+	}
+	
 	/** 2 차원 => 3 차원으로 변환한다 */
 	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_FLT) {
 		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);

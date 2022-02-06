@@ -622,6 +622,16 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	/** 레이어를 설정한다 */
+	public static void ExSetLayer(this GameObject a_oSender, int a_nLayer, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.layer = a_nLayer;
+		}
+	}
+
 	/** 비율을 변경한다 */
 	public static void ExSetScale(this GameObject a_oSender, Vector3 a_stScale, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);

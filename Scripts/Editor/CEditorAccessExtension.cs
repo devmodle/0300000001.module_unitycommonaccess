@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.Linq;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -30,6 +31,23 @@ public static partial class CEditorAccessExtension {
 	public static bool ExIsComplete(this Request a_oSender) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;
+	}
+
+	/** 정적 에디터 플래그를 설정한다 */
+	public static void ExSetStaticEditorFlags(this GameObject a_oSender, StaticEditorFlags a_eFlags, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			var oEnumerator = a_oSender.DescendantsAndSelf();
+
+			foreach(var oObj in oEnumerator) {
+				// 플래그 설정이 필요 할 경우
+				if(GameObjectUtility.GetStaticEditorFlags(oObj) != a_eFlags) {
+					GameObjectUtility.SetStaticEditorFlags(oObj, a_eFlags);
+				}
+			}
+		}
 	}
 	#endregion			// 클래스 함수
 

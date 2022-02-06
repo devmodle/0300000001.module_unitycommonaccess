@@ -189,15 +189,15 @@ public static partial class CAccess {
 	}
 		
 	/** 값을 할당한다 */
-	public static void AssignVal(ref DG.Tweening.Tween a_oLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oLhs?.Kill();
-		a_oLhs = a_oRhs ?? a_oDefVal;
+	public static void AssignVal(ref DG.Tweening.Tween a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+		a_rLhs?.Kill();
+		a_rLhs = a_oRhs ?? a_oDefVal;
 	}
 	
 	/** 값을 할당한다 */
-	public static void AssignVal(ref Sequence a_oLhs, Sequence a_oRhs, Sequence a_oDefVal = null) {
-		a_oLhs?.Kill();
-		a_oLhs = a_oRhs ?? a_oDefVal;
+	public static void AssignVal(ref Sequence a_rLhs, Sequence a_oRhs, Sequence a_oDefVal = null) {
+		a_rLhs?.Kill();
+		a_rLhs = a_oRhs ?? a_oDefVal;
 	}
 
 	/** DPI 픽셀 => 픽셀로 변환한다 */
@@ -223,8 +223,8 @@ public static partial class CAccess {
 	}
 
 	/** 값을 할당한다 */
-	public static void AssignVal<T>(ref T a_tLhs, T a_tRhs, T a_tDefVal = null) where T : class {
-		a_tLhs = a_tRhs ?? a_tDefVal;
+	public static void AssignVal<T>(ref T a_rtLhs, T a_tRhs, T a_tDefVal = null) where T : class {
+		a_rtLhs = a_tRhs ?? a_tDefVal;
 	}
 	#endregion			// 제네릭 클래스 함수
 

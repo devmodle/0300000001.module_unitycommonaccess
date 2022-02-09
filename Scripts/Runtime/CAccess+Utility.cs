@@ -74,19 +74,7 @@ public static partial class CAccess {
 #endif			// #if UNITY_IOS
 		}
 	}
-
-	public static EQualityLevel QualityLevel {
-		get {
-#if HIGH_QUALITY_LEVEL_ENABLE
-			return EQualityLevel.HIGH;
-#elif ULTRA_QUALITY_LEVEL_ENABLE
-			return EQualityLevel.ULTRA;
-#else
-			return EQualityLevel.NORM;
-#endif			// #if HIGH_QUALITY_LEVEL_ENABLE
-		}
-	}
-
+	
 	public static Vector3 ScreenSize {
 		get {
 #if UNITY_EDITOR

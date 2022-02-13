@@ -161,9 +161,9 @@ public static partial class CAccess {
 	/** 렌더링 파이프라인 경로를 반환한다 */
 	public static string GetRenderingPipelinePath(EQualityLevel a_eQualityLevel) {
 		switch(a_eQualityLevel) {
-			case EQualityLevel.HIGH: return KCDefine.U_PIPELINE_P_G_HIGH_QUALITY_UNIVERSAL_RP_ASSET;
-			case EQualityLevel.ULTRA: return KCDefine.U_PIPELINE_P_G_ULTRA_QUALITY_UNIVERSAL_RP_ASSET;
-			default: return KCDefine.U_PIPELINE_P_G_NORM_QUALITY_UNIVERSAL_RP_ASSET;
+			case EQualityLevel.HIGH: return KCDefine.U_ASSET_P_G_HIGH_QUALITY_UNIVERSAL_RP;
+			case EQualityLevel.ULTRA: return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_UNIVERSAL_RP;
+			default: return KCDefine.U_ASSET_P_G_NORM_QUALITY_UNIVERSAL_RP;
 		}
 	}
 

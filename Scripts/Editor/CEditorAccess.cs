@@ -60,9 +60,8 @@ public static partial class CEditorAccess {
 	/** 독립 플랫폼 프로젝트 이름을 반환한다 */
 	public static string GetStandaloneProjName(EStandaloneType a_eType) {
 		switch(a_eType) {
-			case EStandaloneType.MAC_STEAM: return KCEditorDefine.B_STANDALONE_MAC_STEAM_BUILD_PROJ_N_JENKINS;
 			case EStandaloneType.WNDS_STEAM: return KCEditorDefine.B_STANDALONE_WNDS_STEAM_BUILD_PROJ_N_JENKINS;
-			default: return KCEditorDefine.B_STANDALONE_MAC_APPLE_BUILD_PROJ_N_JENKINS;
+			default: return KCEditorDefine.B_STANDALONE_MAC_STEAM_BUILD_PROJ_N_JENKINS;
 		}
 	}
 

@@ -144,7 +144,6 @@ public static partial class CAccess {
 	public static string GetAndroidName(EAndroidType a_eType) {
 		switch(a_eType) {
 			case EAndroidType.AMAZON: return KCDefine.B_PLATFORM_N_ANDROID_AMAZON;
-			case EAndroidType.ONE_STORE: return KCDefine.B_PLATFORM_N_ANDROID_ONE_STORE;
 			default: return KCDefine.B_PLATFORM_N_ANDROID_GOOGLE;
 		}
 	}

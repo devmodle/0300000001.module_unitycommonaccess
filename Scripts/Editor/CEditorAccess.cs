@@ -48,7 +48,6 @@ public static partial class CEditorAccess {
 	public static string GetAndroidProjName(EAndroidType a_eType) {
 		switch(a_eType) {
 			case EAndroidType.AMAZON: return KCEditorDefine.B_ANDROID_AMAZON_BUILD_PROJ_N_JENKINS;
-			case EAndroidType.ONE_STORE: return KCEditorDefine.B_ANDROID_ONE_STORE_BUILD_PROJ_N_JENKINS;
 			default: return KCEditorDefine.B_ANDROID_GOOGLE_BUILD_PROJ_N_JENKINS;
 		}
 	}

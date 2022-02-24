@@ -787,6 +787,16 @@ public static partial class CAccessExtension {
 		a_oSender?.ExSetAnchorPos(new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal), a_bIsEnableAssert);
 	}
 
+	/** 부모를 변경한다 */
+	public static void ExSetParent(this GameObject a_oSender, GameObject a_oParent, bool a_bIsStayWorldState = false, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.transform.SetParent(a_oParent?.transform, a_bIsStayWorldState);
+		}
+	}
+
 	/** 스크롤 위치를 변경한다 */
 	public static void ExSetScrollPos(this EnhancedScroller a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);

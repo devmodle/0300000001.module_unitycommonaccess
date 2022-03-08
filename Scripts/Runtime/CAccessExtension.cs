@@ -122,6 +122,30 @@ public static partial class CAccessExtension {
 		return KCDefine.B_EU_COUNTRY_CODE_LIST.Contains(a_oSender.ToUpper());
 	}
 
+	/** 범위 포함 여부를 검사한다 */
+	public static bool ExIsInRange(this int a_nSender, int a_nMinVal, int a_nMaxVal) {
+		CAccessExtension.LessCorrectSwap(ref a_nMinVal, ref a_nMaxVal);
+		return a_nSender >= a_nMinVal && a_nSender <= a_nMaxVal;
+	}
+
+	/** 범위 포함 여부를 검사한다 */
+	public static bool ExIsInRange(this long a_nSender, long a_nMinVal, long a_nMaxVal) {
+		CAccessExtension.LessCorrectSwap(ref a_nMinVal, ref a_nMaxVal);
+		return a_nSender >= a_nMinVal && a_nSender <= a_nMaxVal;
+	}
+
+	/** 범위 포함 여부를 검사한다 */
+	public static bool ExIsInRange(this float a_fSender, float a_fMinVal, float a_fMaxVal) {
+		CAccessExtension.LessCorrectSwap(ref a_fMinVal, ref a_fMaxVal);
+		return a_fSender.ExIsGreateEquals(a_fMinVal) && a_fSender.ExIsLessEquals(a_fMaxVal);
+	}
+
+	/** 범위 포함 여부를 검사한다 */
+	public static bool ExIsInRange(this double a_dblSender, double a_dblMinVal, double a_dblMaxVal) {
+		CAccessExtension.LessCorrectSwap(ref a_dblMinVal, ref a_dblMaxVal);
+		return a_dblSender.ExIsGreateEquals(a_dblMinVal) && a_dblSender.ExIsLessEquals(a_dblMaxVal);
+	}
+
 	/** 시간 간격을 반환한다 */
 	public static double ExGetDeltaTime(this System.DateTime a_stSender, System.DateTime a_stRhs) {
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
@@ -228,6 +252,22 @@ public static partial class CAccessExtension {
 	/** 월드 => 로컬로 변환한다 */
 	public static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oObj, bool a_bIsCoord = true) {
 		return a_bIsCoord ? a_oObj.transform.InverseTransformPoint(a_stSender) : a_oObj.transform.InverseTransformDirection(a_stSender);
+	}
+
+	/** 값을 교환한다 */
+	private static void LessCorrectSwap(ref float a_rfLhs, ref float a_rfRhs) {
+		// 보정이 필요 할 경우
+		if(a_rfLhs.ExIsGreate(a_rfRhs)) {
+			CAccessExtension.Swap(ref a_rfLhs, ref a_rfRhs);
+		}
+	}
+
+	/** 값을 교환한다 */
+	private static void LessCorrectSwap(ref double a_rdblLhs, ref double a_rdblRhs) {
+		// 보정이 필요 할 경우
+		if(a_rdblLhs.ExIsGreate(a_rdblRhs)) {
+			CAccessExtension.Swap(ref a_rdblLhs, ref a_rdblRhs);
+		}
 	}
 	#endregion			// 클래스 함수
 
@@ -523,6 +563,19 @@ public static partial class CAccessExtension {
 					oPropertyInfo.SetValue(a_oSender, a_oVal);
 				}
 			}
+		}
+	}
+
+	/** 값을 교환한다 */
+	private static void Swap<T>(ref T a_rtLhs, ref T a_rtRhs) {
+		T tTemp = a_rtLhs; a_rtLhs = a_rtRhs; a_rtRhs = tTemp;
+	}
+
+	/** 값을 교환한다 */
+	private static void LessCorrectSwap<T>(ref T a_rtLhs, ref T a_rtRhs) where T : System.IComparable<T> {
+		// 보정이 필요 할 경우
+		if(a_rtLhs.CompareTo(a_rtRhs) > KCDefine.B_COMPARE_EQUALS) {
+			CAccessExtension.Swap(ref a_rtLhs, ref a_rtRhs);
 		}
 	}
 

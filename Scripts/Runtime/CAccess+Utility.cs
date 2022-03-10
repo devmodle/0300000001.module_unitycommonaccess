@@ -94,9 +94,7 @@ public static partial class CAccess {
 #endif			// #if UNITY_EDITOR
 		}
 	}
-
-	public static bool IsEnableMSAA => SystemInfo.supportsMultisampledTextures != KCDefine.B_VAL_0_INT;
-
+	
 	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
 	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;

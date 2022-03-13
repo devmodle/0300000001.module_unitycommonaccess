@@ -192,6 +192,23 @@ public static partial class CAccessExtension {
 		return a_stSender + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2;
 	}
 
+	/** 직교 방향을 반환한다 */
+	public static Vector2 ExGetOrthogonal(this Vector2 a_stSender, EOrthogonal a_eOrthogonal) {
+		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector2(-a_stSender.y, a_stSender.x).normalized : new Vector2(a_stSender.y, -a_stSender.x).normalized;
+	}
+
+	/** 직교 방향을 반환한다 */
+	public static Vector3 ExGetOrthogonal(this Vector3 a_stSender, EOrthogonal a_eOrthogonal) {
+		var stDirection = ((Vector2)a_stSender).ExGetOrthogonal(a_eOrthogonal);
+		return new Vector3(stDirection.x, stDirection.y, a_stSender.z).normalized;
+	}
+
+	/** 직교 방향을 반환한다 */
+	public static Vector4 ExGetOrthogonal(this Vector4 a_stSender, EOrthogonal a_eOrthogonal) {
+		var stDirection = ((Vector3)a_stSender).ExGetOrthogonal(a_eOrthogonal);
+		return new Vector4(stDirection.x, stDirection.y, stDirection.z, a_stSender.w).normalized;
+	}
+
 	/** 변경 된 문자열을 반환한다 */
 	public static string ExGetReplaceStr(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VAL_1_INT) {
 		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());

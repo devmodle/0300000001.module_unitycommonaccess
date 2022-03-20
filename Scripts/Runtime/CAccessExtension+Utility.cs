@@ -324,6 +324,30 @@ public static partial class CAccessExtension {
 		return Mathf.Clamp01((a_stPos.x - (a_oViewport.transform as RectTransform).rect.width) / ((a_oContents.transform as RectTransform).rect.width - (a_oViewport.transform as RectTransform).rect.width));
 	}
 
+	/** 크기 반격을 반환한다 */
+	public static Vector3 ExGetSizeDelta(this GameObject a_oSender) {
+		CAccess.Assert(a_oSender != null && a_oSender.transform as RectTransform != null);
+		return (a_oSender.transform as RectTransform).sizeDelta.ExTo3D();
+	}
+
+	/** 앵커 위치를 반환한다 */
+	public static Vector3 ExGetAnchorPos(this GameObject a_oSender) {
+		CAccess.Assert(a_oSender != null && a_oSender.transform as RectTransform != null);
+		return (a_oSender.transform as RectTransform).anchoredPosition.ExTo3D();
+	}
+
+	/** 최소 앵커를 반환한다 */
+	public static Vector3 ExGetAnchorMin(this GameObject a_oSender) {
+		CAccess.Assert(a_oSender != null && a_oSender.transform as RectTransform != null);
+		return (a_oSender.transform as RectTransform).anchorMin.ExTo3D();
+	}
+
+	/** 최대 앵커를 반환한다 */
+	public static Vector3 ExGetAnchorMax(this GameObject a_oSender) {
+		CAccess.Assert(a_oSender != null && a_oSender.transform as RectTransform != null);
+		return (a_oSender.transform as RectTransform).anchorMax.ExTo3D();
+	}
+
 	/** 계층 경로를 반환한다 */
 	public static string ExGetHierarchyPath(this GameObject a_oSender) {
 		CAccess.Assert(a_oSender != null);
@@ -749,10 +773,10 @@ public static partial class CAccessExtension {
 
 	/** 크기 간격을 변경한다 */
 	public static void ExSetSizeDelta(this GameObject a_oSender, Vector3 a_stSize, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oSender.transform as RectTransform != null));
 
 		// 객체가 존재 할 경우
-		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
 			(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_stSize.x, a_stSize.y);
 		}
 	}
@@ -769,10 +793,10 @@ public static partial class CAccessExtension {
 
 	/** 앵커 위치를 변경한다 */
 	public static void ExSetAnchorPos(this GameObject a_oSender, Vector3 a_stPos, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && (a_oSender.transform as RectTransform) != null));
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oSender.transform as RectTransform != null));
 
 		// 객체가 존재 할 경우
-		if(a_oSender != null && (a_oSender.transform as RectTransform) != null) {
+		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
 			(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_stPos.x, a_stPos.y);
 		}
 	}
@@ -785,6 +809,24 @@ public static partial class CAccessExtension {
 	/** Y 축 앵커 위치를 변경한다 */
 	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetAnchorPos(new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal), a_bIsEnableAssert);
+	}
+
+	/** 최소 앵커를 변경한다 */
+	public static void ExSetAnchorMin(this GameObject a_oSender, Vector3 a_stAnchor, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oSender.transform as RectTransform != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
+			(a_oSender.transform as RectTransform).anchorMin = a_stAnchor.ExTo2D();
+		}
+	}
+
+	/** 최대 앵커를 변경한다 */
+	public static void ExSetAnchorMax(this GameObject a_oSender, Vector3 a_stAnchor, bool a_bIsEnableAssert = true) {
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
+			(a_oSender.transform as RectTransform).anchorMax = a_stAnchor.ExTo2D();
+		}
 	}
 
 	/** 부모를 변경한다 */
@@ -843,6 +885,11 @@ public static partial class CAccessExtension {
 		var stMaxPos = new Vector3(CAccess.Resolution.x / KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT, KCDefine.B_VAL_0_FLT) * KCDefine.B_UNIT_SCALE;
 
 		return new Vector3(Mathf.Clamp(a_stSender.x, stMinPos.x, stMaxPos.x), Mathf.Clamp(a_stSender.y, stMinPos.y, stMaxPos.y), a_stSender.z);
+	}
+
+	/** 3 차원 => 2 차원으로 변환한다 */
+	private static Vector2 ExTo2D(this Vector3 a_stSender) {
+		return new Vector2(a_stSender.x, a_stSender.y);
 	}
 	
 	/** 2 차원 => 3 차원으로 변환한다 */

@@ -31,12 +31,12 @@ public static partial class CAccessExtension {
 
 	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx(this Vector2Int a_stSender) {
-		return a_stSender.x > KCDefine.B_IDX_INVALID && a_stSender.y > KCDefine.B_IDX_INVALID;
+		return a_stSender.ExTo3D().ExIsValidIdx();
 	}
 
 	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx(this Vector3Int a_stSender) {
-		return CAccessExtension.ExIsValidIdx((Vector2Int)a_stSender) && a_stSender.z > KCDefine.B_IDX_INVALID;
+		return a_stSender.x > KCDefine.B_IDX_INVALID && a_stSender.y > KCDefine.B_IDX_INVALID && a_stSender.z > KCDefine.B_IDX_INVALID;
 	}
 
 	/** 빌드 번호 유효 여부를 검사한다 */
@@ -177,38 +177,41 @@ public static partial class CAccessExtension {
 	}
 
 	/** 이전 인덱스를 반환한다 */
-	public static Vector2Int ExGetPrevIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
-		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_2D));
+	public static Vector3Int ExGetPrevIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
+		return a_stSender.ExTo3D().ExGetPrevIdx(a_eDirection);
+	}
+
+	/** 이전 인덱스를 반환한다 */
+	public static Vector3Int ExGetPrevIdx(this Vector3Int a_stSender, EDirection a_eDirection) {
+		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_3D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
-		
-		return a_stSender + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1;
+
+		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1.x, a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1.y, a_stSender.z);
+	}
+
+	/** 다음 인덱스를 반환한다 */
+	public static Vector3Int ExGetNextIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
+		return a_stSender.ExTo3D().ExGetNextIdx(a_eDirection);
 	}
 	
 	/** 다음 인덱스를 반환한다 */
-	public static Vector2Int ExGetNextIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
-		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_2D));
+	public static Vector3Int ExGetNextIdx(this Vector3Int a_stSender, EDirection a_eDirection) {
+		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_3D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
 		
-		return a_stSender + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2;
+		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.x, a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.y, a_stSender.z);
 	}
 
 	/** 직교 방향을 반환한다 */
-	public static Vector2 ExGetOrthogonal(this Vector2 a_stSender, EOrthogonal a_eOrthogonal) {
-		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector2(-a_stSender.y, a_stSender.x).normalized : new Vector2(a_stSender.y, -a_stSender.x).normalized;
+	public static Vector3 ExGetOrthogonal(this Vector2 a_stSender, EOrthogonal a_eOrthogonal) {
+		return a_stSender.ExTo3D().ExGetOrthogonal(a_eOrthogonal);
 	}
 
 	/** 직교 방향을 반환한다 */
 	public static Vector3 ExGetOrthogonal(this Vector3 a_stSender, EOrthogonal a_eOrthogonal) {
-		var stDirection = ((Vector2)a_stSender).ExGetOrthogonal(a_eOrthogonal);
-		return new Vector3(stDirection.x, stDirection.y, a_stSender.z).normalized;
+		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z).normalized : new Vector3(a_stSender.y, -a_stSender.x, a_stSender.z).normalized;
 	}
-
-	/** 직교 방향을 반환한다 */
-	public static Vector4 ExGetOrthogonal(this Vector4 a_stSender, EOrthogonal a_eOrthogonal) {
-		var stDirection = ((Vector3)a_stSender).ExGetOrthogonal(a_eOrthogonal);
-		return new Vector4(stDirection.x, stDirection.y, stDirection.z, a_stSender.w).normalized;
-	}
-
+	
 	/** 변경 된 문자열을 반환한다 */
 	public static string ExGetReplaceStr(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VAL_1_INT) {
 		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());
@@ -271,6 +274,11 @@ public static partial class CAccessExtension {
 		return a_bIsCoord ? a_oObj.transform.InverseTransformPoint(a_stSender) : a_oObj.transform.InverseTransformDirection(a_stSender);
 	}
 
+	/** 2 차원 => 3 차원으로 변환한다 */
+	private static Vector3Int ExTo3D(this Vector2Int a_stSender, int a_nZ = KCDefine.B_VAL_0_INT) {
+		return new Vector3Int(a_stSender.x, a_stSender.y, a_nZ);
+	}
+
 	/** 값을 교환한다 */
 	private static void LessCorrectSwap(ref float a_rfLhs, ref float a_rfRhs) {
 		// 보정이 필요 할 경우
@@ -316,7 +324,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 인덱스 유효 여부를 검사한다 */
-	public static bool ExIsValidIdx<T>(this T[,] a_oSender, Vector2Int a_stIdx) {
+	public static bool ExIsValidIdx<T>(this T[,] a_oSender, Vector3Int a_stIdx) {
 		CAccess.Assert(a_oSender != null);
 		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_0_INT)) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_1_INT));
 	}
@@ -400,7 +408,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 반환한다 */
-	public static T ExGetVal<T>(this T[,] a_oSender, Vector2Int a_stIdx, T a_tDefVal) {
+	public static T ExGetVal<T>(this T[,] a_oSender, Vector3Int a_stIdx, T a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y, a_stIdx.x] : a_tDefVal;
 	}
@@ -464,7 +472,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 변경한다 */
-	public static void ExSetVal<T>(this T[,] a_oSender, Vector2Int a_stIdx, T a_tVal, bool a_bIsEnableAssert = true) {
+	public static void ExSetVal<T>(this T[,] a_oSender, Vector3Int a_stIdx, T a_tVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 인덱스가 유효 할 경우

@@ -205,11 +205,6 @@ public static partial class CAccess {
 
 		return bIsExistsRes;
 	}
-
-	/** 값을 할당한다 */
-	public static void AssignVal<T>(ref T a_rtLhs, T a_tRhs, T a_tDefVal = null) where T : class {
-		a_rtLhs = a_tRhs ?? a_tDefVal;
-	}
 	#endregion			// 제네릭 클래스 함수
 
 	#region 조건부 클래스 함수

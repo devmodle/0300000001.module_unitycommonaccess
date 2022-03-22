@@ -74,18 +74,13 @@ public static partial class CAccessExtension {
 	}
 	
 	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this Vector2 a_stSender, Vector2 a_stRhs) {
-		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y);
+	public static bool ExIsEquals(this Vector2 a_stSender, Vector3 a_stRhs) {
+		return a_stSender.ExTo3D().ExIsEquals(a_stRhs);
 	}
 
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this Vector3 a_stSender, Vector3 a_stRhs) {
-		return CAccessExtension.ExIsEquals((Vector2)a_stSender, (Vector2)a_stRhs) && a_stSender.z.ExIsEquals(a_stRhs.z);
-	}
-
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this Vector4 a_stSender, Vector4 a_stRhs) {
-		return CAccessExtension.ExIsEquals((Vector3)a_stSender, (Vector3)a_stRhs) && a_stSender.w.ExIsEquals(a_stRhs.w);
+		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y) && a_stSender.z.ExIsEquals(a_stRhs.z);
 	}
 
 	/** 동일 여부를 검사한다 */
@@ -120,21 +115,7 @@ public static partial class CAccessExtension {
 
 		return a_oSender.Count == a_oVecList.Count;
 	}
-
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this List<Vector4> a_oSender, List<Vector4> a_oVecList) {
-		CAccess.Assert(a_oSender != null && a_oVecList != null);
-
-		for(int i = 0; i < a_oSender.Count; ++i) {
-			// 동일하지 않을 경우
-			if(!a_oSender[i].ExIsEquals(a_oVecList[i])) {
-				return false;
-			}
-		}
-
-		return a_oSender.Count == a_oVecList.Count;
-	}
-
+	
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this List<Vector2Int> a_oSender, List<Vector2Int> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
@@ -234,18 +215,13 @@ public static partial class CAccessExtension {
 	}
 
 	/** 비율 벡터를 반환한다 */
-	public static Vector2 ExGetScaleVector(this Vector2 a_stSender, Vector2 a_stScale) {
-		return new Vector2(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y);
+	public static Vector3 ExGetScaleVec(this Vector2 a_stSender, Vector3 a_stScale) {
+		return a_stSender.ExTo3D().ExGetScaleVec(a_stScale);
 	}
 
 	/** 비율 벡터를 반환한다 */
-	public static Vector3 ExGetScaleVector(this Vector3 a_stSender, Vector3 a_stScale) {
+	public static Vector3 ExGetScaleVec(this Vector3 a_stSender, Vector3 a_stScale) {
 		return new Vector3(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y, a_stSender.z * a_stScale.z);
-	}
-
-	/** 비율 벡터를 반환한다 */
-	public static Vector4 ExGetScaleVector(this Vector4 a_stSender, Vector4 a_stScale) {
-		return new Vector4(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y, a_stSender.z * a_stScale.z, a_stSender.w * a_stScale.w);
 	}
 	
 	/** 캔버스 월드 위치를 반환한다 */
@@ -263,7 +239,7 @@ public static partial class CAccessExtension {
 	/** 캔버스 월드 비율 위치를 반환한다 */
 	public static Vector3 ExGetWorldScalePos(this PointerEventData a_oSender, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExGetWorldPos().ExGetScaleVector(a_stScale);
+		return a_oSender.ExGetWorldPos().ExGetScaleVec(a_stScale);
 	}
 
 	/** 캔버스 로컬 비율 위치를 반환한다 */
@@ -777,18 +753,18 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
-			(a_oSender.transform as RectTransform).sizeDelta = new Vector2(a_stSize.x, a_stSize.y);
+			(a_oSender.transform as RectTransform).sizeDelta = a_stSize;
 		}
 	}
 
 	/** X 축 크기 간격을 변경한다 */
 	public static void ExSetSizeDeltaX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetSizeDelta(new Vector2(a_fVal, (a_oSender.transform as RectTransform).sizeDelta.y), a_bIsEnableAssert);
+		a_oSender?.ExSetSizeDelta(new Vector3(a_fVal, (a_oSender.transform as RectTransform).sizeDelta.y, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
 	}
 
 	/** Y 축 크기 간격을 변경한다 */
 	public static void ExSetSizeDeltaY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetSizeDelta(new Vector2((a_oSender.transform as RectTransform).sizeDelta.x, a_fVal), a_bIsEnableAssert);
+		a_oSender?.ExSetSizeDelta(new Vector3((a_oSender.transform as RectTransform).sizeDelta.x, a_fVal, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
 	}
 
 	/** 앵커 위치를 변경한다 */
@@ -797,18 +773,18 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
-			(a_oSender.transform as RectTransform).anchoredPosition = new Vector2(a_stPos.x, a_stPos.y);
+			(a_oSender.transform as RectTransform).anchoredPosition = a_stPos;
 		}
 	}
 
 	/** X 축 앵커 위치를 변경한다 */
 	public static void ExSetAnchorPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetAnchorPos(new Vector2(a_fVal, (a_oSender.transform as RectTransform).anchoredPosition.y), a_bIsEnableAssert);
+		a_oSender?.ExSetAnchorPos(new Vector3(a_fVal, (a_oSender.transform as RectTransform).anchoredPosition.y, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
 	}
 
 	/** Y 축 앵커 위치를 변경한다 */
 	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetAnchorPos(new Vector2((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal), a_bIsEnableAssert);
+		a_oSender?.ExSetAnchorPos(new Vector3((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
 	}
 
 	/** 최소 앵커를 변경한다 */
@@ -817,7 +793,7 @@ public static partial class CAccessExtension {
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
-			(a_oSender.transform as RectTransform).anchorMin = a_stAnchor.ExTo2D();
+			(a_oSender.transform as RectTransform).anchorMin = a_stAnchor;
 		}
 	}
 
@@ -825,7 +801,7 @@ public static partial class CAccessExtension {
 	public static void ExSetAnchorMax(this GameObject a_oSender, Vector3 a_stAnchor, bool a_bIsEnableAssert = true) {
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
-			(a_oSender.transform as RectTransform).anchorMax = a_stAnchor.ExTo2D();
+			(a_oSender.transform as RectTransform).anchorMax = a_stAnchor;
 		}
 	}
 
@@ -885,11 +861,6 @@ public static partial class CAccessExtension {
 		var stMaxPos = new Vector3(CAccess.Resolution.x / KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT, KCDefine.B_VAL_0_FLT) * KCDefine.B_UNIT_SCALE;
 
 		return new Vector3(Mathf.Clamp(a_stSender.x, stMinPos.x, stMaxPos.x), Mathf.Clamp(a_stSender.y, stMinPos.y, stMaxPos.y), a_stSender.z);
-	}
-
-	/** 3 차원 => 2 차원으로 변환한다 */
-	private static Vector2 ExTo2D(this Vector3 a_stSender) {
-		return new Vector2(a_stSender.x, a_stSender.y);
 	}
 	
 	/** 2 차원 => 3 차원으로 변환한다 */

@@ -10,8 +10,7 @@ using UnityEditor;
 /** 에디터 기본 접근 */
 public static partial class CEditorAccess {
 	#region 클래스 프로퍼티
-	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isCompiling && !EditorApplication.isUpdating && !EditorApplication.isPlayingOrWillChangePlaymode;
-	public static System.Type GameViewType => typeof(Editor).Assembly.GetType(KCEditorDefine.B_VIEW_N_GAME);
+	public static bool IsEnableUpdateState => !EditorApplication.isCompiling && !EditorApplication.isUpdating && !BuildPipeline.isBuildingPlayer && !EditorApplication.isPlayingOrWillChangePlaymode;
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
@@ -28,8 +27,7 @@ public static partial class CEditorAccess {
 
 	/** 활성 객체를 반환한다 */
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
-		var oObj = Selection.activeGameObject;
-		return (a_bIsInHierarchy && (oObj != null && !oObj.activeInHierarchy)) ? null : oObj;
+		return (a_bIsInHierarchy && (Selection.activeGameObject != null && !Selection.activeGameObject.activeInHierarchy)) ? null : Selection.activeGameObject;
 	}
 
 	/** iOS 프로젝트 이름을 반환한다 */

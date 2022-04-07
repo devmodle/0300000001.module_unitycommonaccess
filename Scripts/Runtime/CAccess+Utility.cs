@@ -23,11 +23,11 @@ using UnityEngine.Purchasing;
 /** 유틸리티 접근자 */
 public static partial class CAccess {
 	#region 클래스 프로퍼티
-	public static bool IsEnableShowConsentView {
+	public static bool IsNeedsTrackingConsent {
 		get {
 #if !UNITY_EDITOR && UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
-			return oVer.CompareTo(KCDefine.U_MIN_VER_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
+			return oVer.CompareTo(KCDefine.U_MIN_VER_TRACKING_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
 #elif !UNITY_EDITOR && UNITY_ANDROID
 			return false;
 #else

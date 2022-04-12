@@ -418,6 +418,20 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExIsValidIdx(a_nIdx) ? a_oSender[a_nIdx] : a_tDefVal;
 	}
+
+	/** 값을 반환한다 */
+	public static T ExGetVal<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare, T a_tDefVal) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+		return a_oSender.ExGetVal(a_oSender.FindIndex(a_oCompare), a_tDefVal);
+	}
+
+	/** 값을 반환한다 */
+	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<V> a_oCompare, V a_tDefVal) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+		var oResult = a_oSender.ExFindVal(a_oCompare);
+		
+		return oResult.Item1 ? a_oSender[oResult.Item2] : a_tDefVal;
+	}
 	
 	/** 필드 값을 반환한다 */
 	public static object ExGetFieldVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
@@ -626,6 +640,20 @@ public static partial class CAccessExtension {
 		a_oSender.ExCopyToSingleArray(oVals);
 
 		return oVals;
+	}
+
+	/** 값을 탐색한다 */
+	private static (bool, K) ExFindVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<V> a_oCompare) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+
+		foreach(var stKeyVal in a_oSender) {
+			// 값이 존재 할 경우
+			if(a_oCompare(stKeyVal.Value)) {
+				return (true, stKeyVal.Key);
+			}
+		}
+		
+		return (false, default(K));
 	}
 	#endregion			// 제네릭 클래스 함수
 }

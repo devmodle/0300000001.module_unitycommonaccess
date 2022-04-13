@@ -280,18 +280,18 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 교환한다 */
-	private static void LessCorrectSwap(ref float a_rfLhs, ref float a_rfRhs) {
+	private static void LessCorrectSwap(ref float a_fLhs, ref float a_fRhs) {
 		// 보정이 필요 할 경우
-		if(a_rfLhs.ExIsGreate(a_rfRhs)) {
-			CAccessExtension.Swap(ref a_rfLhs, ref a_rfRhs);
+		if(a_fLhs.ExIsGreate(a_fRhs)) {
+			CAccessExtension.Swap(ref a_fLhs, ref a_fRhs);
 		}
 	}
 
 	/** 값을 교환한다 */
-	private static void LessCorrectSwap(ref double a_rdblLhs, ref double a_rdblRhs) {
+	private static void LessCorrectSwap(ref double a_dblLhs, ref double a_dblRhs) {
 		// 보정이 필요 할 경우
-		if(a_rdblLhs.ExIsGreate(a_rdblRhs)) {
-			CAccessExtension.Swap(ref a_rdblLhs, ref a_rdblRhs);
+		if(a_dblLhs.ExIsGreate(a_dblRhs)) {
+			CAccessExtension.Swap(ref a_dblLhs, ref a_dblRhs);
 		}
 	}
 	#endregion			// 클래스 함수
@@ -606,15 +606,15 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 교환한다 */
-	private static void Swap<T>(ref T a_rtLhs, ref T a_rtRhs) {
-		T tTemp = a_rtLhs; a_rtLhs = a_rtRhs; a_rtRhs = tTemp;
+	private static void Swap<T>(ref T a_tLhs, ref T a_tRhs) {
+		T tTemp = a_tLhs; a_tLhs = a_tRhs; a_tRhs = tTemp;
 	}
 
 	/** 값을 교환한다 */
-	private static void LessCorrectSwap<T>(ref T a_rtLhs, ref T a_rtRhs) where T : System.IComparable<T> {
+	private static void LessCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
-		if(a_rtLhs.CompareTo(a_rtRhs) > KCDefine.B_COMPARE_EQUALS) {
-			CAccessExtension.Swap(ref a_rtLhs, ref a_rtRhs);
+		if(a_tLhs.CompareTo(a_tRhs) > KCDefine.B_COMPARE_EQUALS) {
+			CAccessExtension.Swap(ref a_tLhs, ref a_tRhs);
 		}
 	}
 

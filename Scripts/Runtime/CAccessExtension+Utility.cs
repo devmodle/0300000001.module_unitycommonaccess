@@ -1144,18 +1144,5 @@ public static partial class CAccessExtension {
 		return a_eSender > EPurchasePlatform.NONE && a_eSender < EPurchasePlatform.MAX_VAL;
 	}
 #endif			// #if PURCHASE_MODULE_ENABLE
-
-#if UNITY_IOS && NOTI_MODULE_ENABLE
-	/** 인증 옵션 유효 여부를 검사한다 */
-	public static bool ExIsValidAuthOpts(this AuthorizationOption a_eSender) {
-		int nSumVal = KCDefine.B_VAL_0_INT;
-
-		for(int i = 0; i < CAccessExtension.m_oAuthOptList.Count; ++i) {
-			nSumVal += (int)(a_eSender & CAccessExtension.m_oAuthOptList[i]);
-		}
-
-		return nSumVal != KCDefine.B_VAL_0_INT;
-	}
-#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
 	#endregion			// 조건부 클래스 함수
 }

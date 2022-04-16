@@ -533,42 +533,7 @@ public static partial class CAccessExtension {
 			a_oSender.colors = a_oSender.colors.ExGetDisableColor(a_stColor);
 		}
 	}
-
-	/** 컬링 마스크를 변경한다 */
-	public static void ExSetCullingMask(this Camera a_oSender, List<int> a_oLayerList, bool a_bIsReset = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oLayerList != null));
-
-		// 카메라가 존재 할 경우
-		if(a_oSender != null && a_oLayerList != null) {
-			a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
-			a_oSender.cullingMask |= a_oLayerList.ExToBits();
-		}
-	}
-
-	/** 컬링 마스크를 변경한다 */
-	public static void ExSetCullingMask(this Light a_oSender, List<int> a_oLayerList, bool a_bIsReset = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oLayerList != null));
-
-		// 광원이 존재 할 경우
-		if(a_oSender != null && a_oLayerList != null) {
-			a_oSender.cullingMask = a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.cullingMask;
-			a_oSender.cullingMask |= a_oLayerList.ExToBits();
-		}
-	}
-
-	/** 이벤트 마스크를 변경한다 */
-	public static void ExSetEventMask(this PhysicsRaycaster a_oSender, List<int> a_oLayerList, bool a_bIsReset = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oLayerList != null));
-
-		// 광선 추적이 존재 할 경우
-		if(a_oSender != null && a_oLayerList != null) {
-			var stLayerMask = a_oSender.eventMask.ExGetLayerVal(a_bIsReset ? KCDefine.B_VAL_0_INT : a_oSender.eventMask.value);
-			stLayerMask.value |= a_oLayerList.ExToBits();
-			
-			a_oSender.eventMask = stLayerMask;
-		}
-	}
-
+	
 	/** 정렬 순서를 변경한다 */
 	public static void ExSetSortingOrder(this Canvas a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));

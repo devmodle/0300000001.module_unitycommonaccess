@@ -26,9 +26,9 @@ public static partial class CEditorAccessExtension {
 		bool bIsMobile = a_eSender == BuildTarget.iOS || a_eSender == BuildTarget.Android;
 		return bIsMobile || (a_eSender == BuildTarget.StandaloneOSX || a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64);
 	}
-
-	/** 완료 여부를 검사한다 */
-	public static bool ExIsComplete(this Request a_oSender) {
+	
+	/** 성공 완료 여부를 검사한다 */
+	public static bool ExIsCompleteSuccess(this Request a_oSender) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;
 	}

@@ -24,6 +24,11 @@ public static partial class CAccessExtension {
 		return a_stSender.Ticks >= KCDefine.B_VAL_0_LONG;
 	}
 
+	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this SimpleJSON.JSONNode a_oSender) {
+		return a_oSender != null && a_oSender.ExIsValid() && !a_oSender.Value.Equals(KCDefine.B_TEXT_NULL);
+	}
+
 	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx(this int a_nSender) {
 		return a_nSender > KCDefine.B_IDX_INVALID;

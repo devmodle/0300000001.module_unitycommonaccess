@@ -9,12 +9,8 @@ using UnityEngine.UI;
 /** 기본 접근자 */
 public static partial class CAccess {
 	#region 클래스 프로퍼티
-	public static string MidnightDeltaTimeStr {
-		get {
-			var stDateTime = new System.DateTime(CAccess.MidnightDeltaTime.Ticks);
-			return stDateTime.ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
-		}
-	}
+	public static bool IsSupportMSAA => SystemInfo.supportsMultisampledTextures > KCDefine.B_VAL_0_INT;
+	public static string MidnightDeltaTimeStr => new System.DateTime(CAccess.MidnightDeltaTime.Ticks).ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
 	
 	public static System.DateTime MidnightTime => System.DateTime.Today.AddDays(KCDefine.B_VAL_1_DBL);
 	public static System.TimeSpan MidnightDeltaTime => CAccess.MidnightTime - System.DateTime.Now;

@@ -8,12 +8,32 @@ using UnityEngine.Rendering;
 using UnityEditor;
 
 /** 에디터 기본 접근 */
+[InitializeOnLoad]
 public static partial class CEditorAccess {
+	#region 클래스 변수
+	private static bool m_bIsImportAssets = false;
+	#endregion			// 클래스 변수
+
 	#region 클래스 프로퍼티
-	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode;
+	public static bool IsEnableUpdateState => !CEditorAccess.m_bIsImportAssets && !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode;
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
+	/** 생성자 */
+	static CEditorAccess() {
+		AssetDatabase.importPackageStarted -= CEditorAccess.OnStartAssetImport;
+		AssetDatabase.importPackageStarted += CEditorAccess.OnStartAssetImport;
+
+		AssetDatabase.importPackageCompleted -= CEditorAccess.OnCompleteAssetImport;
+		AssetDatabase.importPackageCompleted += CEditorAccess.OnCompleteAssetImport;
+
+		AssetDatabase.importPackageCancelled -= CEditorAccess.OnCompleteAssetImport;
+		AssetDatabase.importPackageCancelled += CEditorAccess.OnCompleteAssetImport;
+
+		AssetDatabase.importPackageFailed -= CEditorAccess.OnFailAssetImport;
+		AssetDatabase.importPackageFailed += CEditorAccess.OnFailAssetImport;
+	}
+
 	/** 에셋 존재 여부를 검사한다 */
 	public static bool IsExistsAsset(string a_oFilePath) {
 		return AssetDatabase.GetMainAssetTypeAtPath(a_oFilePath) != null;
@@ -77,6 +97,21 @@ public static partial class CEditorAccess {
 			PlayerSettings.SetGraphicsAPIs(a_eTarget, a_oDeviceTypeList.ToArray());
 			PlayerSettings.SetUseDefaultGraphicsAPIs(a_eTarget, a_bIsEnableAuto);
 		}
+	}
+
+	/** 에셋 임포트가 시작했을 경우 */
+	private static void OnStartAssetImport(string a_oAssetName) {
+		CEditorAccess.m_bIsImportAssets = true;
+	}
+
+	/** 에셋 임포트가 완료 되었을 경우 */
+	private static void OnCompleteAssetImport(string a_oAssetName) {
+		CEditorAccess.m_bIsImportAssets = false;
+	}
+
+	/** 에셋 임포트가 실패했을 경우 */
+	private static void OnFailAssetImport(string a_oAssetName, string a_oErrorMsg) {
+		CEditorAccess.m_bIsImportAssets = false;
 	}
 	#endregion			// 클래스 함수
 }

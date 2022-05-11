@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -48,6 +50,11 @@ public static partial class CEditorAccess {
 	/** 활성 객체를 반환한다 */
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		return (a_bIsInHierarchy && (Selection.activeGameObject != null && !Selection.activeGameObject.activeInHierarchy)) ? null : Selection.activeGameObject;
+	}
+
+	/** 씬 디렉토리 이름을 반환한다 */
+	public static string GetSceneDirName(Scene a_stScene) {
+		return KCEditorDefine.B_DIR_N_SCENE_DICT.GetValueOrDefault(a_stScene.name, (!a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_01) && !a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_02)) ? Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ) : Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_EDITOR));
 	}
 
 	/** iOS 프로젝트 이름을 반환한다 */

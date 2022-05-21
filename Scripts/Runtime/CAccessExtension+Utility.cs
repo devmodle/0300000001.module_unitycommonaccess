@@ -231,8 +231,7 @@ public static partial class CAccessExtension {
 
 	/** 직교 벡터를 반환한다 */
 	public static Vector3 ExGetOrthogonalVec(this Vector3 a_stSender, EOrthogonal a_eOrthogonal) {
-		var stOrthogonal = new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z);
-		return (a_eOrthogonal == EOrthogonal.CW) ? stOrthogonal : stOrthogonal * -KCDefine.B_VAL_1_FLT;
+		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z) : new Vector3(a_stSender.y, -a_stSender.x, a_stSender.z);
 	}
 	
 	/** 캔버스 월드 위치를 반환한다 */

@@ -224,6 +224,17 @@ public static partial class CAccessExtension {
 		return new Vector3(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y, a_stSender.z * a_stScale.z);
 	}
 	
+	/** 직교 벡터를 반환한다 */
+	public static Vector3 ExGetOrthogonalVec(this Vector2 a_stSender, EOrthogonal a_eOrthogonal) {
+		return a_stSender.ExTo3D().ExGetOrthogonalVec(a_eOrthogonal);
+	}
+
+	/** 직교 벡터를 반환한다 */
+	public static Vector3 ExGetOrthogonalVec(this Vector3 a_stSender, EOrthogonal a_eOrthogonal) {
+		var stOrthogonal = new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z);
+		return (a_eOrthogonal == EOrthogonal.CW) ? stOrthogonal : stOrthogonal * -KCDefine.B_VAL_1_FLT;
+	}
+	
 	/** 캔버스 월드 위치를 반환한다 */
 	public static Vector3 ExGetWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);

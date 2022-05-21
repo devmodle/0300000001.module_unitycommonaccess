@@ -212,16 +212,6 @@ public static partial class CAccessExtension {
 		
 		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.x, a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.y, a_stSender.z);
 	}
-
-	/** 직교 방향을 반환한다 */
-	public static Vector3 ExGetOrthogonal(this Vector2 a_stSender, EOrthogonal a_eOrthogonal) {
-		return a_stSender.ExTo3D().ExGetOrthogonal(a_eOrthogonal);
-	}
-
-	/** 직교 방향을 반환한다 */
-	public static Vector3 ExGetOrthogonal(this Vector3 a_stSender, EOrthogonal a_eOrthogonal) {
-		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z).normalized : new Vector3(a_stSender.y, -a_stSender.x, a_stSender.z).normalized;
-	}
 	
 	/** 변경 된 문자열을 반환한다 */
 	public static string ExGetReplaceStr(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VAL_1_INT) {

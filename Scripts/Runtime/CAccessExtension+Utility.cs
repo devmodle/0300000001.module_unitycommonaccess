@@ -72,6 +72,11 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		return a_nIdx > KCDefine.B_IDX_INVALID && a_nIdx < a_oSender.NumberOfCells;
 	}
+
+	/** 동일 여부를 검사한다 */
+	public static bool ExIsEquals(this Color a_stSender, Color a_stRhs) {
+		return a_stSender.r.ExIsEquals(a_stRhs.r) && a_stSender.g.ExIsEquals(a_stRhs.g) && a_stSender.b.ExIsEquals(a_stRhs.b) && a_stSender.a.ExIsEquals(a_stRhs.a);
+	}
 	
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this Vector2 a_stSender, Vector3 a_stRhs) {

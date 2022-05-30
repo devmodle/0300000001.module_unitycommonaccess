@@ -40,10 +40,9 @@ public static partial class CAccess {
 		get {
 #if !UNITY_EDITOR && UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
-			int nCompare = oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK);
 
 			// 햅틱 피드백 지원 버전 일 경우
-			if(nCompare >= KCDefine.B_COMPARE_EQUALS) {
+			if(oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK) >= KCDefine.B_COMPARE_EQUALS) {
 				string oModel = Device.generation.ToString();
 				return oModel.Contains(KCDefine.U_MODEL_N_IPHONE) && KCDefine.U_HAPTIC_FEEDBACK_SUPPORTS_MODEL_LIST.Contains(Device.generation);
 			}

@@ -59,15 +59,14 @@ public static partial class CAccess {
 	public static EDeviceType DeviceType {
 		get {
 #if UNITY_IOS
-			string oModel = Device.generation.ToString();
-			return oModel.Contains(KCDefine.U_MODEL_N_IPAD) ? EDeviceType.TABLET : EDeviceType.PHONE;
+			return Device.generation.ToString().Contains(KCDefine.U_MODEL_N_IPAD) ? EDeviceType.TABLET : EDeviceType.PHONE;
 #elif UNITY_ANDROID
 			// TODO: 테블릿 여부 검사 로직 구현 필요
 			return EDeviceType.PHONE;
 #else
 			switch(Application.platform) {
-				case RuntimePlatform.PS4: case RuntimePlatform.PS5: case RuntimePlatform.XboxOne: case RuntimePlatform.GameCoreXboxOne: case RuntimePlatform.GameCoreXboxSeries: return EDeviceType.CONSOLE;
-				case RuntimePlatform.Stadia: case RuntimePlatform.Switch: return EDeviceType.HANDHELD_CONSOLE;
+				case RuntimePlatform.PS4: case RuntimePlatform.PS5: case RuntimePlatform.XboxOne: return EDeviceType.CONSOLE;
+				case RuntimePlatform.Switch: case RuntimePlatform.Stadia: return EDeviceType.HANDHELD_CONSOLE;
 				default: return EDeviceType.UNKNOWN;
 			}
 #endif			// #if UNITY_IOS

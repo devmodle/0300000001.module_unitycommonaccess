@@ -104,10 +104,10 @@ public static partial class CAccess {
 
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
 	public static Vector3 DesignScreenSize => new Vector3(CAccess.ScreenSize.y * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), CAccess.ScreenSize.y, CAccess.ScreenSize.z);
-	public static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, KCDefine.B_VAL_0_FLT);
 	public static Vector3 DesignDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
 	public static Vector3 CorrectDesktopScreenSize => CAccess.DesignCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
 	
+	private static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, KCDefine.B_VAL_0_FLT);
 	private static Vector3 DesignCorrectDesktopScreenSize => CAccess.DesignDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
 	#endregion			// 클래스 프로퍼티
 

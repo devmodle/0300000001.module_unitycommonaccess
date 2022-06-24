@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 /** 기본 접근 확장 클래스 */
 public static partial class CAccessExtension {

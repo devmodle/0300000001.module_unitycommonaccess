@@ -7,9 +7,10 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.U2D;
 using UnityEngine.SceneManagement;
+using TMPro;
+using DG.Tweening;
 using Unity.Linq;
 using EnhancedUI.EnhancedScroller;
-using TMPro;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -167,6 +168,18 @@ public static partial class CAccessExtension {
 		}
 
 		return a_oSender.Count == a_oIdxInfoList.Count;
+	}
+
+	/** 값을 할당한다 */
+	public static void ExAssignVal(this List<DG.Tweening.Tween> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
+		a_oSender.ExSetVal(a_nIdx, a_oRhs ?? a_oDefVal, false);
+	}
+	
+	/** 값을 할당한다 */
+	public static void ExAssignVal(this List<Sequence> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
+		a_oSender.ExSetVal(a_nIdx, (a_oRhs ?? a_oDefVal) as Sequence, false);
 	}
 	
 	/** 색상을 반환한다 */
@@ -893,6 +906,18 @@ public static partial class CAccessExtension {
 	#endregion			// 클래스 함수
 
 	#region 제네릭 클래스 함수
+	/** 값을 할당한다 */
+	public static void ExAssignVal<K>(this Dictionary<K, DG.Tweening.Tween> a_oSender, K a_tKey, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+		a_oSender.GetValueOrDefault(a_tKey)?.Kill();
+		a_oSender.ExReplaceVal(a_tKey, a_oRhs ?? a_oDefVal, false);
+	}
+	
+	/** 값을 할당한다 */
+	public static void ExAssignVal<K>(this Dictionary<K, Sequence> a_oSender, K a_tKey, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+		a_oSender.GetValueOrDefault(a_tKey)?.Kill();
+		a_oSender.ExReplaceVal(a_tKey, (a_oRhs ?? a_oDefVal) as Sequence, false);
+	}
+
 	/** 텍스트를 변경한다 */
 	public static void ExSetText<T>(this object a_oSender, string a_oStr, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -1100,6 +1125,21 @@ public static partial class CAccessExtension {
 		// 객체가 존재 할 경우
 		if(a_oSender != null && a_oName.ExIsValid()) {
 			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
+		}
+	}
+
+	/** 값을 대체한다 */
+	private static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 딕셔너리가 존재 할 경우
+		if(a_oSender != null) {
+			// 값 대체가 가능 할 경우
+			if(a_oSender.ContainsKey(a_tKey)) {
+				a_oSender[a_tKey] = a_tVal;
+			} else {
+				a_oSender.Add(a_tKey, a_tVal);
+			}
 		}
 	}
 	#endregion			// 제네릭 클래스 함수

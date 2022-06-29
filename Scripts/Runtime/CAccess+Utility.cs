@@ -178,9 +178,9 @@ public static partial class CAccess {
 	}
 	
 	/** 값을 할당한다 */
-	public static void AssignVal(ref Sequence a_rLhs, Sequence a_oRhs, Sequence a_oDefVal = null) {
+	public static void AssignVal(ref Sequence a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_rLhs?.Kill();
-		a_rLhs = a_oRhs ?? a_oDefVal;
+		a_rLhs = (a_oRhs ?? a_oDefVal) as Sequence;
 	}
 
 	/** DPI 픽셀 => 픽셀로 변환한다 */

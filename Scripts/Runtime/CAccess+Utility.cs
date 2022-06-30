@@ -77,9 +77,9 @@ public static partial class CAccess {
 	public static Vector3 ScreenSize {
 		get {
 #if UNITY_EDITOR
-			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_FLT);
+			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_REAL);
 #else
-			return new Vector3(Screen.width, Screen.height, KCDefine.B_VAL_0_FLT);
+			return new Vector3(Screen.width, Screen.height, KCDefine.B_VAL_0_REAL);
 #endif			// #if UNITY_EDITOR
 		}
 	}
@@ -87,7 +87,7 @@ public static partial class CAccess {
 	public static Rect SafeArea {
 		get {
 #if UNITY_EDITOR
-			return new Rect(KCDefine.B_VAL_0_FLT, KCDefine.B_VAL_0_FLT, Camera.main.pixelWidth, Camera.main.pixelHeight);
+			return new Rect(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_0_REAL, Camera.main.pixelWidth, Camera.main.pixelHeight);
 #else
 			return Screen.safeArea;
 #endif			// #if UNITY_EDITOR
@@ -100,15 +100,15 @@ public static partial class CAccess {
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
 	public static float ScreenDPI => Screen.dpi;
-	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.DesignScreenSize.x) ? CAccess.ScreenSize.x / CAccess.DesignScreenSize.x : KCDefine.B_VAL_1_FLT;
-	public static float DesktopResolutionScale => CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesignDesktopScreenSize.x) ? CAccess.DesktopScreenSize.x / CAccess.DesignDesktopScreenSize.x : KCDefine.B_VAL_1_FLT;
+	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.DesignScreenSize.x) ? CAccess.ScreenSize.x / CAccess.DesignScreenSize.x : KCDefine.B_VAL_1_REAL;
+	public static float DesktopResolutionScale => CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesignDesktopScreenSize.x) ? CAccess.DesktopScreenSize.x / CAccess.DesignDesktopScreenSize.x : KCDefine.B_VAL_1_REAL;
 
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
 	public static Vector3 DesignScreenSize => new Vector3(CAccess.ScreenSize.y * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), CAccess.ScreenSize.y, CAccess.ScreenSize.z);
 	public static Vector3 DesignDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
 	public static Vector3 CorrectDesktopScreenSize => CAccess.DesignCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
 	
-	private static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, KCDefine.B_VAL_0_FLT);
+	private static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, KCDefine.B_VAL_0_REAL);
 	private static Vector3 DesignCorrectDesktopScreenSize => CAccess.DesignDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
 	#endregion			// 클래스 프로퍼티
 
@@ -126,7 +126,7 @@ public static partial class CAccess {
 	
 	/** 배너 광고 높이를 반환한다 */
 	public static float GetBannerAdsHeight(float a_fHeight) {
-		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_FLT));
+		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_REAL));
 		return (a_fHeight.ExDPIPixelsToPixels() * (KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y)) / CAccess.ResolutionScale;
 	}
 

@@ -17,12 +17,12 @@ public static partial class CAccessExtension {
 
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this System.DateTime a_stSender) {
-		return a_stSender.Ticks >= KCDefine.B_VAL_0_LONG;
+		return a_stSender.Ticks >= KCDefine.B_VAL_0_INT;
 	}
 
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this System.TimeSpan a_stSender) {
-		return a_stSender.Ticks >= KCDefine.B_VAL_0_LONG;
+		return a_stSender.Ticks >= KCDefine.B_VAL_0_INT;
 	}
 
 	/** 유효 여부를 검사한다 */

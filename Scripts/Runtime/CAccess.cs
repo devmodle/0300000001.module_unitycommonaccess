@@ -13,7 +13,7 @@ public static partial class CAccess {
 	public static bool IsSupportMSAA => SystemInfo.supportsMultisampledTextures > KCDefine.B_VAL_0_INT;
 	public static string MidnightDeltaTimeStr => new System.DateTime(CAccess.MidnightDeltaTime.Ticks).ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
 	
-	public static System.DateTime MidnightTime => System.DateTime.Today.AddDays(KCDefine.B_VAL_1_DBL);
+	public static System.DateTime MidnightTime => System.DateTime.Today.AddDays(KCDefine.B_VAL_1_REAL);
 	public static System.TimeSpan MidnightDeltaTime => CAccess.MidnightTime - System.DateTime.Now;
 	#endregion			// 클래스 프로퍼티
 
@@ -57,14 +57,14 @@ public static partial class CAccess {
 	public static (int, float) GetRandPercent(List<float> a_oPercentList) {
 		CAccess.Assert(a_oPercentList.ExIsValid());
 
-		float fPercent = Random.Range(KCDefine.B_VAL_0_FLT, a_oPercentList.Sum((a_fPercent) => a_fPercent));
-		float fComparePercent = KCDefine.B_VAL_0_FLT;
+		float fPercent = Random.Range(KCDefine.B_VAL_0_REAL, a_oPercentList.Sum((a_fPercent) => a_fPercent));
+		float fComparePercent = KCDefine.B_VAL_0_REAL;
 
 		for(int i = 0; i < a_oPercentList.Count - KCDefine.B_VAL_1_INT; ++i) {
 			fComparePercent += Mathf.Abs(a_oPercentList[i]);
 
 			// 확률을 만족 할 경우
-			if(fPercent.ExIsLessEquals(fComparePercent) && !Mathf.Abs(a_oPercentList[i]).ExIsEquals(KCDefine.B_VAL_0_FLT)) {
+			if(fPercent.ExIsLessEquals(fComparePercent) && !Mathf.Abs(a_oPercentList[i]).ExIsEquals(KCDefine.B_VAL_0_REAL)) {
 				return (i, a_oPercentList[i]);
 			}
 		}

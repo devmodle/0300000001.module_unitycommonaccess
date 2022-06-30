@@ -319,7 +319,7 @@ public static partial class CAccessExtension {
 	/** 스크롤 뷰 정규 위치를 반환한다 */
 	public static Vector3 ExGetNormPos(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null && a_oViewport != null && a_oContents != null);
-		return new Vector3(a_oSender.ExGetNormPosH(a_oViewport, a_oContents, a_stPos), a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos), KCDefine.B_VAL_0_FLT);
+		return new Vector3(a_oSender.ExGetNormPosH(a_oViewport, a_oContents, a_stPos), a_oSender.ExGetNormPosV(a_oViewport, a_oContents, a_stPos), KCDefine.B_VAL_0_REAL);
 	}
 
 	/** 스크롤 뷰 수직 정규 위치를 반환한다 */
@@ -758,12 +758,12 @@ public static partial class CAccessExtension {
 
 	/** X 축 크기 간격을 변경한다 */
 	public static void ExSetSizeDeltaX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetSizeDelta(new Vector3(a_fVal, (a_oSender.transform as RectTransform).sizeDelta.y, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
+		a_oSender?.ExSetSizeDelta(new Vector3(a_fVal, (a_oSender.transform as RectTransform).sizeDelta.y, KCDefine.B_VAL_0_REAL), a_bIsEnableAssert);
 	}
 
 	/** Y 축 크기 간격을 변경한다 */
 	public static void ExSetSizeDeltaY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetSizeDelta(new Vector3((a_oSender.transform as RectTransform).sizeDelta.x, a_fVal, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
+		a_oSender?.ExSetSizeDelta(new Vector3((a_oSender.transform as RectTransform).sizeDelta.x, a_fVal, KCDefine.B_VAL_0_REAL), a_bIsEnableAssert);
 	}
 
 	/** 앵커 위치를 변경한다 */
@@ -778,12 +778,12 @@ public static partial class CAccessExtension {
 
 	/** X 축 앵커 위치를 변경한다 */
 	public static void ExSetAnchorPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetAnchorPos(new Vector3(a_fVal, (a_oSender.transform as RectTransform).anchoredPosition.y, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
+		a_oSender?.ExSetAnchorPos(new Vector3(a_fVal, (a_oSender.transform as RectTransform).anchoredPosition.y, KCDefine.B_VAL_0_REAL), a_bIsEnableAssert);
 	}
 
 	/** Y 축 앵커 위치를 변경한다 */
 	public static void ExSetAnchorPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
-		a_oSender?.ExSetAnchorPos(new Vector3((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal, KCDefine.B_VAL_0_FLT), a_bIsEnableAssert);
+		a_oSender?.ExSetAnchorPos(new Vector3((a_oSender.transform as RectTransform).anchoredPosition.x, a_fVal, KCDefine.B_VAL_0_REAL), a_bIsEnableAssert);
 	}
 
 	/** 최소 앵커를 변경한다 */
@@ -820,7 +820,7 @@ public static partial class CAccessExtension {
 
 		// 스크롤러가 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.SetScrollPositionImmediately(Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_FLT, a_oSender.ScrollSize));
+			a_oSender.SetScrollPositionImmediately(Mathf.Clamp(a_fVal, KCDefine.B_VAL_0_REAL, a_oSender.ScrollSize));
 		}
 	}
 
@@ -847,23 +847,23 @@ public static partial class CAccessExtension {
 
 	/** 캔버스 월드 위치를 반환한다 */
 	private static Vector3 ExGetWorldPos(this Vector3 a_stSender) {
-		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_FLT;
-		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_FLT) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_FLT;
+		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_REAL) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_REAL;
+		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_REAL) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_REAL;
 
 		float fScreenWidth = KCDefine.B_SCREEN_HEIGHT * (CAccess.ScreenSize.x / CAccess.ScreenSize.y);
-		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_FLT), fNormPosY * (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_FLT), a_stSender.z) * KCDefine.B_UNIT_SCALE;
+		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_REAL), fNormPosY * (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_REAL), a_stSender.z) * KCDefine.B_UNIT_SCALE;
 	}
 
 	/** 보정된 캔버스 월드 위치를 반환한다 */
 	private static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
-		var stMinPos = new Vector3(CAccess.Resolution.x / -KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / -KCDefine.B_VAL_2_FLT, KCDefine.B_VAL_0_FLT) * KCDefine.B_UNIT_SCALE;
-		var stMaxPos = new Vector3(CAccess.Resolution.x / KCDefine.B_VAL_2_FLT, CAccess.Resolution.y / KCDefine.B_VAL_2_FLT, KCDefine.B_VAL_0_FLT) * KCDefine.B_UNIT_SCALE;
+		var stMinPos = new Vector3(CAccess.Resolution.x / -KCDefine.B_VAL_2_REAL, CAccess.Resolution.y / -KCDefine.B_VAL_2_REAL, KCDefine.B_VAL_0_REAL) * KCDefine.B_UNIT_SCALE;
+		var stMaxPos = new Vector3(CAccess.Resolution.x / KCDefine.B_VAL_2_REAL, CAccess.Resolution.y / KCDefine.B_VAL_2_REAL, KCDefine.B_VAL_0_REAL) * KCDefine.B_UNIT_SCALE;
 
 		return new Vector3(Mathf.Clamp(a_stSender.x, stMinPos.x, stMaxPos.x), Mathf.Clamp(a_stSender.y, stMinPos.y, stMaxPos.y), a_stSender.z);
 	}
 	
 	/** 2 차원 => 3 차원으로 변환한다 */
-	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_FLT) {
+	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_REAL) {
 		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
 	}
 

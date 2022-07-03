@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using System.Reflection;
@@ -346,15 +347,7 @@ public static partial class CAccessExtension {
 	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains<T>(this T[] a_oSender, List<T> a_oValList) {
 		CAccess.Assert(a_oSender != null && a_oValList != null);
-
-		for(int i = 0; i < a_oValList.Count; ++i) {
-			// 값이 없을 경우
-			if(!a_oSender.ExIsContains(a_oValList[i])) {
-				return false;
-			}
-		}
-
-		return true;
+		return a_oValList.All((a_tVal) => a_oSender.ExIsContains(a_tVal));
 	}
 
 	/** 포함 여부를 검사한다 */
@@ -372,29 +365,13 @@ public static partial class CAccessExtension {
 	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains<T>(this List<T> a_oSender, List<T> a_oValList) {
 		CAccess.Assert(a_oSender != null && a_oValList != null);
-
-		for(int i = 0; i < a_oValList.Count; ++i) {
-			// 값이 없을 경우
-			if(!a_oSender.Contains(a_oValList[i])) {
-				return false;
-			}
-		}
-
-		return true;
+		return a_oValList.All((a_tVal) => a_oSender.Contains(a_tVal));
 	}
 
 	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains<K, V>(this Dictionary<K, V> a_oSender, List<K> a_oKeyList) {
 		CAccess.Assert(a_oSender != null && a_oKeyList != null);
-
-		for(int i = 0; i < a_oKeyList.Count; ++i) {
-			// 값이 없을 경우
-			if(!a_oSender.ContainsKey(a_oKeyList[i])) {
-				return false;
-			}
-		}
-
-		return true;
+		return a_oKeyList.All((a_tKey) => a_oSender.ContainsKey(a_tKey));
 	}
 
 	/** 완료 여부를 검사한다 */

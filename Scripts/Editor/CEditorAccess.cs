@@ -60,9 +60,7 @@ public static partial class CEditorAccess {
 
 	/** iOS 프로젝트 이름을 반환한다 */
 	public static string GetiOSProjName(EiOSType a_eType) {
-		switch(a_eType) {
-			default: return KCEditorDefine.B_IOS_APPLE_BUILD_PROJ_N_JENKINS;
-		}
+		return KCEditorDefine.B_IOS_APPLE_BUILD_PROJ_N_JENKINS;
 	}
 
 	/** iOS 빌드 결과 경로를 반환한다 */
@@ -74,8 +72,9 @@ public static partial class CEditorAccess {
 	public static string GetAndroidProjName(EAndroidType a_eType) {
 		switch(a_eType) {
 			case EAndroidType.AMAZON: return KCEditorDefine.B_ANDROID_AMAZON_BUILD_PROJ_N_JENKINS;
-			default: return KCEditorDefine.B_ANDROID_GOOGLE_BUILD_PROJ_N_JENKINS;
 		}
+
+		return KCEditorDefine.B_ANDROID_GOOGLE_BUILD_PROJ_N_JENKINS;
 	}
 
 	/** 안드로이드 빌드 결과 경로를 반환한다 */
@@ -87,8 +86,9 @@ public static partial class CEditorAccess {
 	public static string GetStandaloneProjName(EStandaloneType a_eType) {
 		switch(a_eType) {
 			case EStandaloneType.WNDS_STEAM: return KCEditorDefine.B_STANDALONE_WNDS_STEAM_BUILD_PROJ_N_JENKINS;
-			default: return KCEditorDefine.B_STANDALONE_MAC_STEAM_BUILD_PROJ_N_JENKINS;
 		}
+
+		return KCEditorDefine.B_STANDALONE_MAC_STEAM_BUILD_PROJ_N_JENKINS;
 	}
 
 	/** 독립 플랫폼 빌드 결과 경로를 반환한다 */

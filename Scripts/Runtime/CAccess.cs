@@ -74,8 +74,8 @@ public static partial class CAccess {
 
 	/** 조건을 검사한다 */
 	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void Assert(bool a_bIsTrue, string a_oMsg = KCDefine.B_TEXT_EMPTY) {
-		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue, a_oMsg);
+	public static void Assert(bool a_bIsTrue) {
+		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue);
 	}
 
 	/** 값을 비교한다 */

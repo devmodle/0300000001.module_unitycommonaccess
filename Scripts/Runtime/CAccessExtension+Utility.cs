@@ -22,7 +22,7 @@ using Unity.Notifications.iOS;
 #endif			// #if NOTI_MODULE_ENABLE
 #endif			// #if UNITY_IOS
 
-/** 유틸리티 접근 확장 클래스 */
+/** 유틸리티 접근자 확장 클래스 */
 public static partial class CAccessExtension {
 	#region 클래스 변수
 #if UNITY_IOS && NOTI_MODULE_ENABLE

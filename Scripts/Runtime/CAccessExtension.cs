@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-/** 기본 접근 확장 클래스 */
+/** 기본 접근자 확장 클래스 */
 public static partial class CAccessExtension {
 	#region 클래스 함수
 	/** 유효 여부를 검사한다 */

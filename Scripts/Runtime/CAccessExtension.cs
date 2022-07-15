@@ -231,52 +231,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender.ExIsValid() && a_oFileName.ExIsValid());
 		return a_oSender.ExGetReplaceStr(a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender), a_oFileName);
 	}
-
-	/** 값 => 왼쪽 쉬프트 비트로 변환한다 */
-	public static int ExToLShiftBits(this int a_nSender, int a_nOffset) {
-		CAccess.Assert(a_nOffset >= KCDefine.B_VAL_0_INT);
-		return a_nSender << a_nOffset;
-	}
-
-	/** 값 => 오른쪽 쉬프트 비트로 변환한다 */
-	public static int ExToRShiftBits(this int a_nSender, int a_nOffset) {
-		CAccess.Assert(a_nOffset >= KCDefine.B_VAL_0_INT);
-		return a_nSender >> a_nOffset;
-	}
-
-	/** 비트 => 리스트로 변환한다 */
-	public static List<int> ExToBits(this int a_nSender) {
-		var oBitList = new List<int>();
-
-		for(int i = 0; i < sizeof(int) * KCDefine.B_UNIT_BITS_PER_BYTE; ++i) {
-			oBitList.Add(((a_nSender & KCDefine.B_VAL_1_INT.ExToLShiftBits(i)) != KCDefine.B_VAL_0_INT) ? KCDefine.B_VAL_1_INT : KCDefine.B_VAL_0_INT);
-		}
-
-		return oBitList;
-	}
-
-	/** 리스트 => 비트로 변환한다 */
-	public static int ExToBits(this List<int> a_oSender) {
-		CAccess.Assert(a_oSender != null);
-		int nVal = KCDefine.B_VAL_0_INT;
-
-		for(int i = 0; i < a_oSender.Count; ++i) {
-			nVal |= KCDefine.B_VAL_1_INT.ExToLShiftBits(a_oSender[i]);
-		}
-
-		return nVal;
-	}
-
-	/** 로컬 => 월드로 변환한다 */
-	public static Vector3 ExToWorld(this Vector3 a_stSender, GameObject a_oObj, bool a_bIsCoord = true) {
-		return a_bIsCoord ? a_oObj.transform.TransformPoint(a_stSender) : a_oObj.transform.TransformDirection(a_stSender);
-	}
-
-	/** 월드 => 로컬로 변환한다 */
-	public static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oObj, bool a_bIsCoord = true) {
-		return a_bIsCoord ? a_oObj.transform.InverseTransformPoint(a_stSender) : a_oObj.transform.InverseTransformDirection(a_stSender);
-	}
-
+	
 	/** 2 차원 => 3 차원으로 변환한다 */
 	private static Vector3Int ExTo3D(this Vector2Int a_stSender, int a_nZ = KCDefine.B_VAL_0_INT) {
 		return new Vector3Int(a_stSender.x, a_stSender.y, a_nZ);

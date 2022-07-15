@@ -867,6 +867,11 @@ public static partial class CAccessExtension {
 		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
 	}
 
+	/** 월드 => 로컬로 변환한다 */
+	private static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oObj, bool a_bIsCoord = true) {
+		return a_bIsCoord ? a_oObj.transform.InverseTransformPoint(a_stSender) : a_oObj.transform.InverseTransformDirection(a_stSender);
+	}
+
 	/** 자식 객체를 탐색한다 */
 	private static GameObject ExFindChild(this Scene a_stSender, string a_oName, bool a_bIsEnableSubName = false) {
 		CAccess.Assert(a_oName.ExIsValid());

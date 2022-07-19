@@ -258,62 +258,55 @@ public static partial class CAccessExtension {
 		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z) : new Vector3(a_stSender.y, -a_stSender.x, a_stSender.z);
 	}
 	
-	/** 캔버스 월드 위치를 반환한다 */
+	/** 월드 위치를 반환한다 */
 	public static Vector3 ExGetWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.position.ExTo3D().ExGetWorldPos();
 	}
 
-	/** 캔버스 로컬 위치를 반환한다 */
-	public static Vector3 ExGetLocalPos(this PointerEventData a_oSender, GameObject a_oObj) {
-		CAccess.Assert(a_oSender != null && a_oObj != null);
-		return a_oSender.ExGetWorldPos().ExToLocal(a_oObj);
+	/** 로컬 위치를 반환한다 */
+	public static Vector3 ExGetLocalPos(this PointerEventData a_oSender, GameObject a_oParent) {
+		CAccess.Assert(a_oSender != null && a_oParent != null);
+		return a_oSender.ExGetWorldPos().ExToLocal(a_oParent);
 	}
 
-	/** 캔버스 월드 비율 위치를 반환한다 */
+	/** 앵커 위치를 반환한다 */
+	public static Vector3 ExGetAnchorPos(this PointerEventData a_oSender, GameObject a_oParent) {
+		CAccess.Assert(a_oSender != null && a_oParent != null);
+		return a_oSender.position.ExTo3D().ExToLocal(a_oParent);
+	}
+
+	/** 월드 비율 위치를 반환한다 */
 	public static Vector3 ExGetWorldScalePos(this PointerEventData a_oSender, Vector3 a_stScale) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExGetWorldPos().ExGetScaleVec(a_stScale);
 	}
 
-	/** 캔버스 로컬 비율 위치를 반환한다 */
-	public static Vector3 ExGetLocalScalePos(this PointerEventData a_oSender, GameObject a_oObj, Vector3 a_stScale) {
-		CAccess.Assert(a_oSender != null && a_oObj != null);
-		return a_oSender.ExGetWorldScalePos(a_stScale).ExToLocal(a_oObj);
+	/** 로컬 비율 위치를 반환한다 */
+	public static Vector3 ExGetLocalScalePos(this PointerEventData a_oSender, GameObject a_oParent, Vector3 a_stScale) {
+		CAccess.Assert(a_oSender != null && a_oParent != null);
+		return a_oSender.ExGetLocalPos(a_oParent).ExGetScaleVec(a_stScale);
 	}
 
-	/** 보정된 캔버스 월드 위치를 반환한다 */
-	public static Vector3 ExGetCorrectWorldPos(this PointerEventData a_oSender) {
-		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExGetWorldPos().ExGetCorrectWorldPos();
+	/** 앵커 비율 위치를 반환한다 */
+	public static Vector3 ExGetAnchorScalePos(this PointerEventData a_oSender, GameObject a_oParent, Vector3 a_stScale) {
+		CAccess.Assert(a_oSender != null && a_oParent != null);
+		return a_oSender.ExGetAnchorPos(a_oParent).ExGetScaleVec(a_stScale);
 	}
 
-	/** 보정된 캔버스 로컬 위치를 반환한다 */
-	public static Vector3 ExGetCorrectLocalPos(this PointerEventData a_oSender, GameObject a_oObj) {
-		CAccess.Assert(a_oSender != null && a_oObj != null);
-		return a_oSender.ExGetCorrectWorldPos().ExToLocal(a_oObj);
-	}
-
-	/** 보정된 캔버스 월드 비율 위치를 반환한다 */
-	public static Vector3 ExGetCorrectWorldScalePos(this PointerEventData a_oSender, Vector3 a_stScale) {
-		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExGetWorldScalePos(a_stScale).ExGetCorrectWorldPos();
-	}
-
-	/** 보정된 캔버스 로컬 비율 위치를 반환한다 */
-	public static Vector3 ExGetCorrectLocalScalePos(this PointerEventData a_oSender, GameObject a_oObj, Vector3 a_stScale) {
-		CAccess.Assert(a_oSender != null && a_oObj != null);
-		return a_oSender.ExGetCorrectWorldScalePos(a_stScale).ExToLocal(a_oObj);
-	}
-
-	/** 캔버스 월드 간격을 반환한다 */
-	public static Vector3 ExGetWorldDelta(this PointerEventData a_oSender) {
+	/** 월드 간격을 반환한다 */
+	public static Vector3 ExGetWorldPosDelta(this PointerEventData a_oSender) {
 		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExGetWorldPos() - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExGetWorldPos();
 	}
 
-	/** 캔버스 로컬 간격을 반환한다 */
-	public static Vector3 ExGetLocalDelta(this PointerEventData a_oSender, GameObject a_oObj) {
-		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oObj) - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oObj);
+	/** 로컬 간격을 반환한다 */
+	public static Vector3 ExGetLocalPosDelta(this PointerEventData a_oSender, GameObject a_oParent) {
+		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oParent) - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oParent);
+	}
+
+	/** 앵커 간격을 반환한다 */
+	public static Vector3 ExGetAnchorPosDelta(this PointerEventData a_oSender, GameObject a_oParent) {
+		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExToLocal(a_oParent) - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExToLocal(a_oParent);
 	}
 	
 	/** 스크롤 뷰 정규 위치를 반환한다 */
@@ -845,7 +838,7 @@ public static partial class CAccessExtension {
 		}
 	}
 
-	/** 캔버스 월드 위치를 반환한다 */
+	/** 월드 위치를 반환한다 */
 	private static Vector3 ExGetWorldPos(this Vector3 a_stSender) {
 		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_REAL) / CAccess.ScreenSize.x) - KCDefine.B_VAL_1_REAL;
 		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_REAL) / CAccess.ScreenSize.y) - KCDefine.B_VAL_1_REAL;
@@ -854,22 +847,14 @@ public static partial class CAccessExtension {
 		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_REAL), fNormPosY * (KCDefine.B_SCREEN_HEIGHT / KCDefine.B_VAL_2_REAL), a_stSender.z) * KCDefine.B_UNIT_SCALE;
 	}
 
-	/** 보정된 캔버스 월드 위치를 반환한다 */
-	private static Vector3 ExGetCorrectWorldPos(this Vector3 a_stSender) {
-		var stMinPos = new Vector3(CAccess.Resolution.x / -KCDefine.B_VAL_2_REAL, CAccess.Resolution.y / -KCDefine.B_VAL_2_REAL, KCDefine.B_VAL_0_REAL) * KCDefine.B_UNIT_SCALE;
-		var stMaxPos = new Vector3(CAccess.Resolution.x / KCDefine.B_VAL_2_REAL, CAccess.Resolution.y / KCDefine.B_VAL_2_REAL, KCDefine.B_VAL_0_REAL) * KCDefine.B_UNIT_SCALE;
-
-		return new Vector3(Mathf.Clamp(a_stSender.x, stMinPos.x, stMaxPos.x), Mathf.Clamp(a_stSender.y, stMinPos.y, stMaxPos.y), a_stSender.z);
-	}
-	
 	/** 2 차원 => 3 차원으로 변환한다 */
 	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_REAL) {
 		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
 	}
 
 	/** 월드 => 로컬로 변환한다 */
-	private static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oObj, bool a_bIsCoord = true) {
-		return a_bIsCoord ? a_oObj.transform.InverseTransformPoint(a_stSender) : a_oObj.transform.InverseTransformDirection(a_stSender);
+	private static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oParent, bool a_bIsCoord = true) {
+		return a_bIsCoord ? a_oParent.transform.InverseTransformPoint(a_stSender) : a_oParent.transform.InverseTransformDirection(a_stSender);
 	}
 
 	/** 자식 객체를 탐색한다 */

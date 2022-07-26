@@ -114,8 +114,8 @@ public static partial class CAccess {
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
-	/** 권한 유효 여부를 검사한다 */
-	public static bool IsEnablePermission(string a_oPermission) {
+	/** 유저 권한 유효 여부를 검사한다 */
+	public static bool IsEnableUserPermission(string a_oPermission) {
 		CAccess.Assert(a_oPermission.ExIsValid());
 
 #if UNITY_ANDROID

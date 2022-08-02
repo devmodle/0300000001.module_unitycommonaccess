@@ -102,16 +102,6 @@ public static partial class CEditorAccessExtension {
 			return a_oSender.root.CreateDict(a_oKey);
 		}
 	}
-
-	/** 문자열을 추가한다 */
-	public static void ExAddStr(this PlistElementArray a_oSender, string a_oStr) {
-		CAccess.Assert(a_oSender != null && a_oStr.ExIsValid());
-
-		// 문자열 추가가 가능 할 경우
-		if(a_oSender != null && !a_oSender.ExIsContains(a_oStr)) {
-			a_oSender.AddString(a_oStr);
-		}
-	}
 #endif			// #if UNITY_IOS
 	#endregion			// 조건부 클래스 함수
 }

@@ -54,6 +54,16 @@ public static partial class CAccessExtension {
 	}
 
 	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this EVibrateType a_eSender) {
+		return a_eSender > EVibrateType.NONE && a_eSender < EVibrateType.MAX_VAL;
+	}
+
+	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this EVibrateStyle a_eSender) {
+		return a_eSender > EVibrateStyle.NONE && a_eSender < EVibrateStyle.MAX_VAL;
+	}
+
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this SystemLanguage a_eSender) {
 		return a_eSender >= SystemLanguage.Afrikaans && a_eSender < SystemLanguage.Unknown;
 	}

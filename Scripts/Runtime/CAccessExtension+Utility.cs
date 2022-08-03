@@ -369,7 +369,7 @@ public static partial class CAccessExtension {
 		var oStrBuilder = new System.Text.StringBuilder();
 
 		for(int i = oParentList.Count - KCDefine.B_VAL_1_INT; i >= 0; --i) {
-			oStrBuilder.AppendFormat(KCDefine.B_TEXT_FMT_2_COMBINE, oParentList[i].name, (i <= KCDefine.B_VAL_0_INT) ? string.Empty : KCDefine.B_TOKEN_SPLASH);
+			oStrBuilder.AppendFormat(KCDefine.B_TEXT_FMT_2_COMBINE, oParentList[i].name, (i <= KCDefine.B_VAL_0_INT) ? string.Empty : KCDefine.B_TOKEN_SLASH);
 		}
 
 		return oStrBuilder.ToString();

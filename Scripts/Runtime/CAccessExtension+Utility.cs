@@ -34,6 +34,11 @@ public static partial class CAccessExtension {
 
 	#region 클래스 함수
 	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this EValType a_eSender) {
+		return a_eSender > EValType.NONE && a_eSender < EValType.MAX_VAL;
+	}
+
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EUserType a_eSender) {
 		return a_eSender > EUserType.NONE && a_eSender < EUserType.MAX_VAL;
 	}

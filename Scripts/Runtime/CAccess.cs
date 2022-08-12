@@ -43,7 +43,7 @@ public static partial class CAccess {
 	/** 쓰기용 스트림을 반환한다 */
 	public static FileStream GetWriteStream(string a_oFilePath, bool a_bIsAutoCreateDir = true) {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oDirPath = Path.GetDirectoryName(a_oFilePath);
+		string oDirPath = Path.GetDirectoryName(a_oFilePath).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH);
 
 		// 디렉토리 자동 생성 모드 일 경우
 		if(a_bIsAutoCreateDir && oDirPath.ExIsValid() && !Directory.Exists(oDirPath)) {

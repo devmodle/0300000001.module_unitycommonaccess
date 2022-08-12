@@ -215,21 +215,10 @@ public static partial class CAccessExtension {
 		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.x, a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.y, a_stSender.z);
 	}
 	
-	/** 변경 된 문자열을 반환한다 */
-	public static string ExGetReplaceStr(this string a_oSender, string a_oTarget, string a_oReplace, int a_nReplaceTimes = KCDefine.B_VAL_1_INT) {
-		CAccess.Assert(a_oSender != null && a_oTarget.ExIsValid());
-
-		for(int i = 0; i < a_nReplaceTimes && a_oSender.Contains(a_oTarget); ++i) {
-			a_oSender = a_oSender.Replace(a_oTarget, a_oReplace);
-		}
-
-		return a_oSender;
-	}
-
 	/** 파일 이름이 변경 된 경로를 반환한다 */
 	public static string ExGetReplaceFileNamePath(this string a_oSender, string a_oFileName, bool a_bIsResetExtension = false) {
 		CAccess.Assert(a_oSender.ExIsValid() && a_oFileName.ExIsValid());
-		return a_oSender.ExGetReplaceStr(a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender), a_oFileName);
+		return a_oSender.Replace(a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender), a_oFileName);
 	}
 	
 	/** 2 차원 => 3 차원으로 변환한다 */

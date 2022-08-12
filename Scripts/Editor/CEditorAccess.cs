@@ -55,7 +55,7 @@ public static partial class CEditorAccess {
 
 	/** 씬 디렉토리 이름을 반환한다 */
 	public static string GetSceneDirName(Scene a_stScene) {
-		return KCEditorDefine.B_DIR_N_SCENE_DICT.GetValueOrDefault(a_stScene.name, (!a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_01) && !a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_02)) ? Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ) : Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_EDITOR));
+		return KCEditorDefine.B_DIR_N_SCENE_DICT.GetValueOrDefault(a_stScene.name, (!a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_01) && !a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_02)) ? Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH) : Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_EDITOR).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH));
 	}
 
 	/** iOS 프로젝트 이름을 반환한다 */

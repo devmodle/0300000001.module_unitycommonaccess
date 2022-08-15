@@ -13,12 +13,11 @@ using UnityEditor;
 /** 에디터 기본 접근 */
 [InitializeOnLoad]
 public static partial class CEditorAccess {
-	#region 클래스 변수
-	private static bool m_bIsImportAssets = false;
-	#endregion			// 클래스 변수
-
 	#region 클래스 프로퍼티
-	public static bool IsEnableUpdateState => !CEditorAccess.m_bIsImportAssets && !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode;
+	public static bool IsEnableUpdateState => !CEditorAccess.IsImportAssets && !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode;
+
+	/** =====> 기타 <===== */
+	private static bool IsImportAssets { get; set; } = false;
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수
@@ -109,17 +108,17 @@ public static partial class CEditorAccess {
 
 	/** 에셋 임포트가 시작했을 경우 */
 	private static void OnStartAssetImport(string a_oAssetName) {
-		CEditorAccess.m_bIsImportAssets = true;
+		CEditorAccess.IsImportAssets = true;
 	}
 
 	/** 에셋 임포트가 완료 되었을 경우 */
 	private static void OnCompleteAssetImport(string a_oAssetName) {
-		CEditorAccess.m_bIsImportAssets = false;
+		CEditorAccess.IsImportAssets = false;
 	}
 
 	/** 에셋 임포트가 실패했을 경우 */
 	private static void OnFailAssetImport(string a_oAssetName, string a_oErrorMsg) {
-		CEditorAccess.m_bIsImportAssets = false;
+		CEditorAccess.IsImportAssets = false;
 	}
 	#endregion			// 클래스 함수
 }

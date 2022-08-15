@@ -24,14 +24,6 @@ using Unity.Notifications.iOS;
 
 /** 유틸리티 접근자 확장 클래스 */
 public static partial class CAccessExtension {
-	#region 클래스 변수
-#if UNITY_IOS && NOTI_MODULE_ENABLE
-	private static List<AuthorizationOption> m_oAuthOptList = new List<AuthorizationOption>() {
-		AuthorizationOption.Badge, AuthorizationOption.Sound, AuthorizationOption.Alert
-	};
-#endif			// #if UNITY_IOS && NOTI_MODULE_ENABLE
-	#endregion			// 클래스 변수
-
 	#region 클래스 함수
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EValType a_eSender) {

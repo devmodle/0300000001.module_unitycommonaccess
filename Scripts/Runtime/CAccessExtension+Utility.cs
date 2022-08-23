@@ -365,7 +365,7 @@ public static partial class CAccessExtension {
 		var oParentList = a_oSender.ExGetParents();
 		var oStrBuilder = new System.Text.StringBuilder();
 
-		for(int i = oParentList.Count - KCDefine.B_VAL_1_INT; i >= 0; --i) {
+		for(int i = oParentList.Count - 1; i >= KCDefine.B_VAL_0_INT; --i) {
 			oStrBuilder.AppendFormat(KCDefine.B_TEXT_FMT_2_COMBINE, oParentList[i].name, (i <= KCDefine.B_VAL_0_INT) ? string.Empty : KCDefine.B_TOKEN_SLASH);
 		}
 

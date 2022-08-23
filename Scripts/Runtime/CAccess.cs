@@ -69,7 +69,7 @@ public static partial class CAccess {
 			}
 		}
 		
-		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.Last());
+		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.LastOrDefault());
 	}
 
 	/** 조건을 검사한다 */

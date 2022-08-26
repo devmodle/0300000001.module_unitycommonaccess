@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -104,6 +105,9 @@ public static partial class CAccess {
 	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.DesignScreenSize.x) ? CAccess.ScreenSize.x / CAccess.DesignScreenSize.x : KCDefine.B_VAL_1_REAL;
 	public static float ResolutionUnitScale => KCDefine.B_UNIT_SCALE * CAccess.ResolutionScale;
 	public static float DesktopResolutionScale => CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesignDesktopScreenSize.x) ? CAccess.DesktopScreenSize.x / CAccess.DesignDesktopScreenSize.x : KCDefine.B_VAL_1_REAL;
+
+	public static string ProductInfoTableLoadPath => File.Exists(KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO) ? KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO : KCDefine.U_TABLE_P_G_PRODUCT_INFO;
+	public static string ProductInfoTableSavePath => KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO;
 
 	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
 	public static Vector3 DesignScreenSize => new Vector3(CAccess.ScreenSize.y * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), CAccess.ScreenSize.y, CAccess.ScreenSize.z);

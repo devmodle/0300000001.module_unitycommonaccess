@@ -101,11 +101,6 @@ public static partial class CAccessExtension {
 	public static bool ExIsEquals(this Vector3 a_stSender, Vector3 a_stRhs) {
 		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y) && a_stSender.z.ExIsEquals(a_stRhs.z);
 	}
-
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this STIdxInfo a_stSender, STIdxInfo a_stRhs) {
-		return (a_stSender.m_nX == a_stRhs.m_nX) && (a_stSender.m_nY == a_stRhs.m_nY) && (a_stSender.m_nZ == a_stRhs.m_nZ);
-	}
 	
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this List<Vector2> a_oSender, List<Vector2> a_oVecList) {

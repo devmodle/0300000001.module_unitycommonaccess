@@ -101,21 +101,25 @@ public static partial class CAccess {
 	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
 	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
-	public static float ScreenDPI => Screen.dpi;
-	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.DesignScreenSize.x) ? CAccess.ScreenSize.x / CAccess.DesignScreenSize.x : KCDefine.B_VAL_1_REAL;
+	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.ResolutionScreenSize.x) ? CAccess.ScreenSize.x / CAccess.ResolutionScreenSize.x : KCDefine.B_VAL_1_REAL;
 	public static float ResolutionUnitScale => KCDefine.B_UNIT_SCALE * CAccess.ResolutionScale;
-	public static float DesktopResolutionScale => CAccess.DesktopScreenSize.x.ExIsLess(CAccess.DesignDesktopScreenSize.x) ? CAccess.DesktopScreenSize.x / CAccess.DesignDesktopScreenSize.x : KCDefine.B_VAL_1_REAL;
+	public static float DesktopResolutionScale => CAccess.DesktopScreenSize.x.ExIsLess(CAccess.ResolutionDesktopScreenSize.x) ? CAccess.DesktopScreenSize.x / CAccess.ResolutionDesktopScreenSize.x : KCDefine.B_VAL_1_REAL;
 
 	public static string ProductInfoTableLoadPath => File.Exists(KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO) ? KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO : KCDefine.U_TABLE_P_G_PRODUCT_INFO;
 	public static string ProductInfoTableSavePath => KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO;
 
-	public static Vector3 Resolution => KCDefine.B_SCREEN_SIZE * CAccess.ResolutionScale;
-	public static Vector3 DesignScreenSize => new Vector3(CAccess.ScreenSize.y * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), CAccess.ScreenSize.y, CAccess.ScreenSize.z);
-	public static Vector3 DesignDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
-	public static Vector3 CorrectDesktopScreenSize => CAccess.DesignCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
-	
-	private static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, KCDefine.B_VAL_0_REAL);
-	private static Vector3 DesignCorrectDesktopScreenSize => CAccess.DesignDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
+	public static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, CAccess.ScreenSize.z);
+	public static Vector3 CorrectDesktopScreenSize => CAccess.ResulitionCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
+
+	private static Vector3 ResolutionScreenSize => new Vector3(CAccess.ScreenSize.y * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), CAccess.ScreenSize.y, CAccess.ScreenSize.z);
+	private static Vector3 ResolutionDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
+	private static Vector3 ResulitionCorrectDesktopScreenSize => CAccess.ResolutionDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+	public static float ScreenDPI => KCDefine.B_PLATFORM_SCREEN_DPI * (CAccess.ScreenSize.y / KCDefine.B_DPI_SCREEN_HEIGHT);
+#else
+	public static float ScreenDPI => Screen.dpi;
+#endif			// #if UNITY_EDITOR || UNITY_STANDALONE
 	#endregion			// 클래스 프로퍼티
 
 	#region 클래스 함수

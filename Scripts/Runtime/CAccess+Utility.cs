@@ -96,10 +96,10 @@ public static partial class CAccess {
 		}
 	}
 	
-	public static float UpScreenScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
-	public static float DownScreenScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
-	public static float LeftScreenScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
-	public static float RightScreenScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
+	public static float UpSafeAreaScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
+	public static float DownSafeAreaScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
+	public static float LeftSafeAreaScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
+	public static float RightSafeAreaScale => (CAccess.ScreenSize.x - (CAccess.SafeArea.x + CAccess.SafeArea.width)) / CAccess.ScreenSize.x;
 
 	public static float ResolutionScale => CAccess.ScreenSize.x.ExIsLess(CAccess.ResolutionScreenSize.x) ? CAccess.ScreenSize.x / CAccess.ResolutionScreenSize.x : KCDefine.B_VAL_1_REAL;
 	public static float ResolutionUnitScale => KCDefine.B_UNIT_SCALE * CAccess.ResolutionScale;

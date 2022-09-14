@@ -11,6 +11,11 @@ using UnityEngine.Events;
 /** 기본 접근자 확장 클래스 */
 public static partial class CAccessExtension {
 	#region 클래스 함수
+	/** 정수 여부를 검사한다 */
+	public static bool ExIsInt(this decimal a_nSender) {
+		return (a_nSender % KCDefine.B_VAL_1_INT) == KCDefine.B_VAL_0_INT;
+	}
+	
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this string a_oSender) {
 		return a_oSender != null && a_oSender.Length > KCDefine.B_VAL_0_INT;

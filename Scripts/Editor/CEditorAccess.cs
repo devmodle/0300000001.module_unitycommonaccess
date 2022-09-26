@@ -22,11 +22,11 @@ public static partial class CEditorAccess {
 
 	#region 클래스 변수
 	private static Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>();
-	#endregion			// 클래스 변수
+	#endregion         // 클래스 변수                   
 
 	#region 클래스 프로퍼티
 	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode && !CEditorAccess.m_oBoolDict.GetValueOrDefault(EKey.IS_IMPORT_ASSETS);
-	#endregion			// 클래스 프로퍼티
+	#endregion          // 클래스 프로퍼티                     
 
 	#region 클래스 함수
 	/** 생성자 */
@@ -88,7 +88,7 @@ public static partial class CEditorAccess {
 	public static string GetAndroidBuildOutputPath(EAndroidType a_eType, string a_oBuildFileExtension) {
 		return string.Format(KCEditorDefine.B_BUILD_OUTPUT_P_FMT_ANDROID, CAccess.GetAndroidName(a_eType), a_oBuildFileExtension);
 	}
-	
+
 	/** 독립 플랫폼 프로젝트 이름을 반환한다 */
 	public static string GetStandaloneProjName(EStandaloneType a_eType) {
 		switch(a_eType) {
@@ -143,6 +143,6 @@ public static partial class CEditorAccess {
 			}
 		}
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 }
-#endif			// #if UNITY_EDITOR
+#endif         // #if UNITY_EDITOR                             

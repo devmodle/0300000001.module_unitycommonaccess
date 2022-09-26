@@ -14,13 +14,13 @@ using EnhancedUI.EnhancedScroller;
 
 #if UNITY_EDITOR
 using UnityEditor;
-#endif			// #if UNITY_EDITOR
+#endif            // #if UNITY_EDITOR                             
 
 #if UNITY_IOS
 #if NOTI_MODULE_ENABLE
 using Unity.Notifications.iOS;
-#endif			// #if NOTI_MODULE_ENABLE
-#endif			// #if UNITY_IOS
+#endif            // #if NOTI_MODULE_ENABLE                                   
+#endif            // #if UNITY_IOS                          
 
 /** 유틸리티 접근자 확장 클래스 */
 public static partial class CAccessExtension {
@@ -91,7 +91,7 @@ public static partial class CAccessExtension {
 	public static bool ExIsEquals(this Color a_stSender, Color a_stRhs) {
 		return a_stSender.r.ExIsEquals(a_stRhs.r) && a_stSender.g.ExIsEquals(a_stRhs.g) && a_stSender.b.ExIsEquals(a_stRhs.b) && a_stSender.a.ExIsEquals(a_stRhs.a);
 	}
-	
+
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this Vector2 a_stSender, Vector3 a_stRhs) {
 		return a_stSender.ExTo3D().ExIsEquals(a_stRhs);
@@ -101,7 +101,7 @@ public static partial class CAccessExtension {
 	public static bool ExIsEquals(this Vector3 a_stSender, Vector3 a_stRhs) {
 		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y) && a_stSender.z.ExIsEquals(a_stRhs.z);
 	}
-	
+
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this List<Vector2> a_oSender, List<Vector2> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
@@ -129,7 +129,7 @@ public static partial class CAccessExtension {
 
 		return a_oSender.Count == a_oVecList.Count;
 	}
-	
+
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this List<Vector2Int> a_oSender, List<Vector2Int> a_oVecList) {
 		CAccess.Assert(a_oSender != null && a_oVecList != null);
@@ -177,13 +177,13 @@ public static partial class CAccessExtension {
 		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
 		a_oSender.ExSetVal(a_nIdx, a_oRhs ?? a_oDefVal, false);
 	}
-	
+
 	/** 값을 할당한다 */
 	public static void ExAssignVal(this List<Sequence> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
 		a_oSender.ExSetVal(a_nIdx, (a_oRhs ?? a_oDefVal) as Sequence, false);
 	}
-	
+
 	/** 색상을 반환한다 */
 	public static Color ExGetAlphaColor(this Color a_stSender, float a_fAlpha) {
 		return new Color(a_stSender.r, a_stSender.g, a_stSender.b, a_fAlpha);
@@ -249,7 +249,7 @@ public static partial class CAccessExtension {
 	public static Vector3 ExGetScaleVec(this Vector3 a_stSender, Vector3 a_stScale) {
 		return new Vector3(a_stSender.x * a_stScale.x, a_stSender.y * a_stScale.y, a_stSender.z * a_stScale.z);
 	}
-	
+
 	/** 직교 벡터를 반환한다 */
 	public static Vector3 ExGetOrthogonalVec(this Vector2 a_stSender, EOrthogonal a_eOrthogonal) {
 		return a_stSender.ExTo3D().ExGetOrthogonalVec(a_eOrthogonal);
@@ -259,7 +259,7 @@ public static partial class CAccessExtension {
 	public static Vector3 ExGetOrthogonalVec(this Vector3 a_stSender, EOrthogonal a_eOrthogonal) {
 		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z) : new Vector3(a_stSender.y, -a_stSender.x, a_stSender.z);
 	}
-	
+
 	/** 월드 위치를 반환한다 */
 	public static Vector3 ExGetWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
@@ -310,7 +310,7 @@ public static partial class CAccessExtension {
 	public static Vector3 ExGetAnchorPosDelta(this PointerEventData a_oSender, GameObject a_oParent) {
 		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExToLocal(a_oParent) - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExToLocal(a_oParent);
 	}
-	
+
 	/** 스크롤 뷰 정규 위치를 반환한다 */
 	public static Vector3 ExGetNormPos(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null && a_oViewport != null && a_oContents != null);
@@ -426,7 +426,7 @@ public static partial class CAccessExtension {
 			a_oSender.GetComponent<ContentSizeFitter>()?.ExSetEnable(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
-	
+
 	/** 상호 작용 여부를 변경한다 */
 	public static void ExSetInteractable(this Selectable a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -521,7 +521,7 @@ public static partial class CAccessExtension {
 			}
 		}
 	}
-	
+
 	/** 위치를 설정한다 */
 	public static void ExSetPositions(this LineRenderer a_oSender, List<Vector3> a_oPosList, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oPosList != null));
@@ -562,7 +562,7 @@ public static partial class CAccessExtension {
 			a_oSender.colors = a_oSender.colors.ExGetDisableColor(a_stColor);
 		}
 	}
-	
+
 	/** 정렬 순서를 변경한다 */
 	public static void ExSetSortingOrder(this Canvas a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
@@ -640,7 +640,7 @@ public static partial class CAccessExtension {
 	public static void ExSetScaleZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetScale(new Vector3(a_oSender.transform.localScale.x, a_oSender.transform.localScale.y, a_fVal), a_bIsEnableAssert);
 	}
-	
+
 	/** 월드 각도를 변경한다 */
 	public static void ExSetWorldAngle(this GameObject a_oSender, Vector3 a_stAngle, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -655,7 +655,7 @@ public static partial class CAccessExtension {
 	public static void ExSetWorldAngleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetWorldAngle(new Vector3(a_fVal, a_oSender.transform.eulerAngles.y, a_oSender.transform.eulerAngles.z), a_bIsEnableAssert);
 	}
-	
+
 	/** 월드 Y 축 각도를 변경한다 */
 	public static void ExSetWorldAngleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetWorldAngle(new Vector3(a_oSender.transform.eulerAngles.x, a_fVal, a_oSender.transform.eulerAngles.z), a_bIsEnableAssert);
@@ -680,7 +680,7 @@ public static partial class CAccessExtension {
 	public static void ExSetLocalAngleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetLocalAngle(new Vector3(a_fVal, a_oSender.transform.localEulerAngles.y, a_oSender.transform.localEulerAngles.z), a_bIsEnableAssert);
 	}
-	
+
 	/** 로컬 Y 축 각도를 변경한다 */
 	public static void ExSetLocalAngleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetLocalAngle(new Vector3(a_oSender.transform.localEulerAngles.x, a_fVal, a_oSender.transform.localEulerAngles.z), a_bIsEnableAssert);
@@ -705,7 +705,7 @@ public static partial class CAccessExtension {
 	public static void ExSetWorldPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetWorldPos(new Vector3(a_fVal, a_oSender.transform.position.y, a_oSender.transform.position.z), a_bIsEnableAssert);
 	}
-	
+
 	/** 월드 Y 축 위치를 변경한다 */
 	public static void ExSetWorldPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetWorldPos(new Vector3(a_oSender.transform.position.x, a_fVal, a_oSender.transform.position.z), a_bIsEnableAssert);
@@ -730,7 +730,7 @@ public static partial class CAccessExtension {
 	public static void ExSetLocalPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetLocalPos(new Vector3(a_fVal, a_oSender.transform.localPosition.y, a_oSender.transform.localPosition.z), a_bIsEnableAssert);
 	}
-	
+
 	/** 로컬 Y 축 위치를 변경한다 */
 	public static void ExSetLocalPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
 		a_oSender?.ExSetLocalPos(new Vector3(a_oSender.transform.localPosition.x, a_fVal, a_oSender.transform.localPosition.z), a_bIsEnableAssert);
@@ -828,7 +828,7 @@ public static partial class CAccessExtension {
 			a_oSender.Delegate = a_oDelegate;
 		}
 	}
-	
+
 	/** 데이터를 다시 로드한다 */
 	public static void ExReloadData(this EnhancedScroller a_oSender, int a_nDataIdx, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -886,7 +886,7 @@ public static partial class CAccessExtension {
 
 		foreach(var oObj in oEnumerator) {
 			bool bIsEquals = oObj.name.Equals(a_oName);
-			
+
 			// 이름이 동일 할 경우
 			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
 				return oObj;
@@ -895,7 +895,7 @@ public static partial class CAccessExtension {
 
 		return null;
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 값을 할당한다 */
@@ -903,7 +903,7 @@ public static partial class CAccessExtension {
 		a_oSender.GetValueOrDefault(a_tKey)?.Kill();
 		a_oSender.ExReplaceVal(a_tKey, a_oRhs ?? a_oDefVal, false);
 	}
-	
+
 	/** 값을 할당한다 */
 	public static void ExAssignVal<K>(this Dictionary<K, Sequence> a_oSender, K a_tKey, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_oSender.GetValueOrDefault(a_tKey)?.Kill();
@@ -1085,7 +1085,7 @@ public static partial class CAccessExtension {
 			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetInteractables<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
-	
+
 	/** 컴포넌트 광선 추적 타겟 여부를 변경한다 */
 	public static void ExSetRaycastTargets<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) where T : Graphic {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -1134,8 +1134,8 @@ public static partial class CAccessExtension {
 			}
 		}
 	}
-	#endregion			// 제네릭 클래스 함수
-	
+	#endregion         // 제네릭 클래스 함수                       
+
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	/** 스크립트 순서를 변경한다 */
@@ -1147,20 +1147,20 @@ public static partial class CAccessExtension {
 			CAccess.SetScriptOrder(MonoScript.FromMonoBehaviour(a_oSender), a_nOrder, a_bIsEnableAssert);
 		}
 	}
-#endif			// #if UNITY_EDITOR
+#endif         // #if UNITY_EDITOR                             
 
 #if ADS_MODULE_ENABLE
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EAdsPlatform a_eSender) {
 		return a_eSender > EAdsPlatform.NONE && a_eSender < EAdsPlatform.MAX_VAL;
 	}
-#endif			// #if ADS_MODULE_ENABLE
+#endif         // #if ADS_MODULE_ENABLE                                  
 
 #if PURCHASE_MODULE_ENABLE
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EPurchasePlatform a_eSender) {
 		return a_eSender > EPurchasePlatform.NONE && a_eSender < EPurchasePlatform.MAX_VAL;
 	}
-#endif			// #if PURCHASE_MODULE_ENABLE
-	#endregion			// 조건부 클래스 함수
+#endif         // #if PURCHASE_MODULE_ENABLE                                       
+	#endregion         // 조건부 클래스 함수                       
 }

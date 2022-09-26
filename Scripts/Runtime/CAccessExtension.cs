@@ -15,7 +15,7 @@ public static partial class CAccessExtension {
 	public static bool ExIsInt(this decimal a_nSender) {
 		return (a_nSender % KCDefine.B_VAL_1_INT) == KCDefine.B_VAL_0_INT;
 	}
-	
+
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this string a_oSender) {
 		return a_oSender != null && a_oSender.Length > KCDefine.B_VAL_0_INT;
@@ -211,21 +211,21 @@ public static partial class CAccessExtension {
 	public static Vector3Int ExGetNextIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
 		return a_stSender.ExTo3D().ExGetNextIdx(a_eDirection);
 	}
-	
+
 	/** 다음 인덱스를 반환한다 */
 	public static Vector3Int ExGetNextIdx(this Vector3Int a_stSender, EDirection a_eDirection) {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_3D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
-		
+
 		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.x, a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.y, a_stSender.z);
 	}
-	
+
 	/** 파일 이름이 변경 된 경로를 반환한다 */
 	public static string ExGetReplaceFileNamePath(this string a_oSender, string a_oFileName, bool a_bIsResetExtension = false) {
 		CAccess.Assert(a_oSender.ExIsValid() && a_oFileName.ExIsValid());
 		return a_oSender.Replace(a_bIsResetExtension ? Path.GetFileName(a_oSender) : Path.GetFileNameWithoutExtension(a_oSender), a_oFileName);
 	}
-	
+
 	/** 2 차원 => 3 차원으로 변환한다 */
 	private static Vector3Int ExTo3D(this Vector2Int a_stSender, int a_nZ = KCDefine.B_VAL_0_INT) {
 		return new Vector3Int(a_stSender.x, a_stSender.y, a_nZ);
@@ -246,7 +246,7 @@ public static partial class CAccessExtension {
 			CAccessExtension.Swap(ref a_dblLhs, ref a_dblRhs);
 		}
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 유효 여부를 검사한다 */
@@ -263,7 +263,7 @@ public static partial class CAccessExtension {
 	public static bool ExIsValid<T>(this List<T> a_oSender) {
 		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
 	}
-	
+
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid<K, V>(this Dictionary<K, V> a_oSender) {
 		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
@@ -363,10 +363,10 @@ public static partial class CAccessExtension {
 	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<V> a_oCompare, V a_tDefVal) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
 		var oResult = a_oSender.ExFindVal(a_oCompare);
-		
+
 		return oResult.Item1 ? a_oSender[oResult.Item2] : a_tDefVal;
 	}
-	
+
 	/** 필드 값을 반환한다 */
 	public static object ExGetFieldVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
 		CAccess.Assert(a_oName.ExIsValid());
@@ -398,7 +398,7 @@ public static partial class CAccessExtension {
 	public static object ExGetRuntimePropertyVal<T>(this object a_oSender, string a_oName) {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oPropertyInfos = typeof(T).GetRuntimeProperties();
-		
+
 		foreach(var oPropertyInfo in oPropertyInfos) {
 			// 프로퍼티 이름과 동일 할 경우
 			if(oPropertyInfo.Name.Equals(a_oName)) {
@@ -586,8 +586,8 @@ public static partial class CAccessExtension {
 				return (true, stKeyVal.Key);
 			}
 		}
-		
+
 		return (false, default(K));
 	}
-	#endregion			// 제네릭 클래스 함수
+	#endregion         // 제네릭 클래스 함수                       
 }

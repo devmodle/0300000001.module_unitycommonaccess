@@ -12,10 +12,10 @@ public static partial class CAccess {
 	#region 클래스 프로퍼티
 	public static bool IsSupportMSAA => SystemInfo.supportsMultisampledTextures > KCDefine.B_VAL_0_INT;
 	public static string MidnightDeltaTimeStr => new System.DateTime(CAccess.MidnightDeltaTime.Ticks).ToString(KCDefine.B_DATE_T_FMT_HH_MM_SS);
-	
+
 	public static System.DateTime MidnightTime => System.DateTime.Today.AddDays(KCDefine.B_VAL_1_REAL);
 	public static System.TimeSpan MidnightDeltaTime => CAccess.MidnightTime - System.DateTime.Now;
-	#endregion			// 클래스 프로퍼티
+	#endregion            // 클래스 프로퍼티                     
 
 	#region 클래스 함수
 	/** 유저 문자열을 반환한다 */
@@ -68,7 +68,7 @@ public static partial class CAccess {
 				return (i, a_oPercentList[i]);
 			}
 		}
-		
+
 		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.LastOrDefault());
 	}
 
@@ -87,7 +87,7 @@ public static partial class CAccess {
 
 		return a_fSender.ExIsLess(a_fRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 열거형 값을 반환한다 */
@@ -106,5 +106,5 @@ public static partial class CAccess {
 
 		return oEnumStrList;
 	}
-	#endregion			// 제네릭 클래스 함수
+	#endregion         // 제네릭 클래스 함수                       
 }

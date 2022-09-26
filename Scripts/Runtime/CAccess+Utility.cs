@@ -8,19 +8,19 @@ using DG.Tweening;
 
 #if UNITY_EDITOR
 using UnityEditor;
-#endif			// #if UNITY_EDITOR
+#endif            // #if UNITY_EDITOR                             
 
 #if UNITY_IOS
 using UnityEngine.iOS;
-#endif			// #if UNITY_IOS
+#endif            // #if UNITY_IOS                          
 
 #if UNITY_ANDROID
 using UnityEngine.Android;
-#endif			// #if UNITY_ANDROID
+#endif            // #if UNITY_ANDROID                              
 
 #if PURCHASE_MODULE_ENABLE
 using UnityEngine.Purchasing;
-#endif			// #if PURCHASE_MODULE_ENABLE
+#endif            // #if PURCHASE_MODULE_ENABLE                                       
 
 /** 유틸리티 접근자 */
 public static partial class CAccess {
@@ -34,7 +34,7 @@ public static partial class CAccess {
 			return false;
 #else
 			return true;
-#endif			// #if !UNITY_EDITOR && UNITY_IOS
+#endif          // #if !UNITY_EDITOR && UNITY_IOS                                           
 		}
 	}
 
@@ -54,7 +54,7 @@ public static partial class CAccess {
 			return true;
 #else
 			return false;
-#endif			// #if !UNITY_EDITOR && UNITY_IOS
+#endif         // #if !UNITY_EDITOR && UNITY_IOS                                           
 		}
 	}
 
@@ -72,17 +72,17 @@ public static partial class CAccess {
 			}
 
 			return EDeviceType.UNKNOWN;
-#endif			// #if UNITY_IOS
+#endif           // #if UNITY_IOS                          
 		}
 	}
-	
+
 	public static Vector3 ScreenSize {
 		get {
 #if UNITY_EDITOR
 			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_REAL);
 #else
 			return new Vector3(Screen.width, Screen.height, KCDefine.B_VAL_0_REAL);
-#endif			// #if UNITY_EDITOR
+#endif           // #if UNITY_EDITOR                             
 		}
 	}
 
@@ -92,10 +92,10 @@ public static partial class CAccess {
 			return new Rect(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_0_REAL, Camera.main.pixelWidth, Camera.main.pixelHeight);
 #else
 			return Screen.safeArea;
-#endif			// #if UNITY_EDITOR
+#endif           // #if UNITY_EDITOR                             
 		}
 	}
-	
+
 	public static float UpSafeAreaScale => (CAccess.ScreenSize.y - (CAccess.SafeArea.y + CAccess.SafeArea.height)) / CAccess.ScreenSize.y;
 	public static float DownSafeAreaScale => CAccess.SafeArea.y / CAccess.ScreenSize.y;
 	public static float LeftSafeAreaScale => CAccess.SafeArea.x / CAccess.ScreenSize.x;
@@ -119,8 +119,8 @@ public static partial class CAccess {
 	public static float ScreenDPI => KCDefine.B_PLATFORM_SCREEN_DPI * (CAccess.ScreenSize.y / KCDefine.B_DPI_SCREEN_HEIGHT);
 #else
 	public static float ScreenDPI => Screen.dpi;
-#endif			// #if UNITY_EDITOR || UNITY_STANDALONE
-	#endregion			// 클래스 프로퍼티
+#endif          // #if UNITY_EDITOR || UNITY_STANDALONE                                                 
+	#endregion          // 클래스 프로퍼티                     
 
 	#region 클래스 함수
 	/** 유저 권한 유효 여부를 검사한다 */
@@ -131,9 +131,9 @@ public static partial class CAccess {
 		return Permission.HasUserAuthorizedPermission(a_oPermission);
 #else
 		return false;
-#endif			// #if UNITY_ANDROID
+#endif         // #if UNITY_ANDROID                              
 	}
-	
+
 	/** 배너 광고 높이를 반환한다 */
 	public static float GetBannerAdsHeight(float a_fHeight) {
 		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_REAL));
@@ -182,13 +182,13 @@ public static partial class CAccess {
 
 		return KCDefine.U_ASSET_P_G_NORM_QUALITY_POST_PROCESSING_SETTINGS;
 	}
-		
+
 	/** 값을 할당한다 */
 	public static void AssignVal(ref DG.Tweening.Tween a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_rLhs?.Kill();
 		a_rLhs = a_oRhs ?? a_oDefVal;
 	}
-	
+
 	/** 값을 할당한다 */
 	public static void AssignVal(ref Sequence a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_rLhs?.Kill();
@@ -199,7 +199,7 @@ public static partial class CAccess {
 	private static float ExDPIPixelsToPixels(this float a_fSender) {
 		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
 	}
-	#endregion			// 클래스 함수
+	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 리소스 존재 여부를 검사한다 */
@@ -208,7 +208,7 @@ public static partial class CAccess {
 
 		var oRes = Resources.Load<T>(a_oFilePath);
 		bool bIsExistsRes = typeof(T).Equals(typeof(TextAsset)) ? (oRes as TextAsset).ExIsValid() : oRes != null;
-		
+
 		// 자동 제거 모드 일 경우
 		if(bIsExistsRes && a_bIsAutoUnload) {
 			Resources.UnloadAsset(oRes);
@@ -216,7 +216,7 @@ public static partial class CAccess {
 
 		return bIsExistsRes;
 	}
-	#endregion			// 제네릭 클래스 함수
+	#endregion         // 제네릭 클래스 함수                       
 
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
@@ -234,7 +234,7 @@ public static partial class CAccess {
 			}
 		}
 	}
-#endif			// #if UNITY_EDITOR
+#endif         // #if UNITY_EDITOR                             
 
 #if PURCHASE_MODULE_ENABLE
 	/** 가격 문자열을 반환한다 */
@@ -242,6 +242,6 @@ public static partial class CAccess {
 		CAccess.Assert(a_oProduct != null);
 		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);
 	}
-#endif			// #if PURCHASE_MODULE_ENABLE
-	#endregion			// 조건부 클래스 함수
+#endif         // #if PURCHASE_MODULE_ENABLE                                       
+	#endregion         // 조건부 클래스 함수                       
 }

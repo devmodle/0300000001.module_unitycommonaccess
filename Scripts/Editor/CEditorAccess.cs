@@ -1,14 +1,14 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 
 #if UNITY_EDITOR
+using System.IO;
 using UnityEditor;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 /** 에디터 기본 접근 */
 [InitializeOnLoad]

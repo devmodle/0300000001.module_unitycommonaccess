@@ -55,6 +55,15 @@ public static partial class CEditorAccess {
 		return oDefineSymbols.ExIsValid() && oDefineSymbols.ExIsContains(a_oSymbol);
 	}
 
+	/** 최상단 객체 프리팹 경로를 반환한다 */
+	public static string GetRootObjPrefabPath(Scene a_stScene, string a_oName) {
+		string oDirPath = (!a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_01) && !a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_02)) ? KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_PREFABS : KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_EDITOR_PREFABS;
+		string oRootPath = (Directory.GetParent(a_stScene.path) != null) ? Directory.GetParent(a_stScene.path).Name.ExGetFileName(false) : string.Empty;
+		string oPrefabPath = (oRootPath.ExIsValid() && !oRootPath.Equals(KCDefine.B_DIR_N_SCENES)) ? string.Format(KCDefine.B_TEXT_FMT_4_SLASH_COMBINE, Path.GetDirectoryName(oDirPath).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH), CEditorAccess.GetSceneDirName(a_stScene), oRootPath, string.Format(KCDefine.B_TEXT_FMT_2_UNDER_SCORE_COMBINE, a_stScene.name, a_oName)) : string.Format(KCDefine.B_TEXT_FMT_3_SLASH_COMBINE, Path.GetDirectoryName(oDirPath).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH), CEditorAccess.GetSceneDirName(a_stScene), string.Format(KCDefine.B_TEXT_FMT_2_UNDER_SCORE_COMBINE, a_stScene.name, a_oName));
+
+		return string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, oPrefabPath, KCDefine.B_FILE_EXTENSION_PREFAB);
+	}
+
 	/** 활성 객체를 반환한다 */
 	public static GameObject GetActiveObj(bool a_bIsInHierarchy = true) {
 		return (a_bIsInHierarchy && (Selection.activeGameObject != null && !Selection.activeGameObject.activeInHierarchy)) ? null : Selection.activeGameObject;

@@ -87,8 +87,7 @@ public static partial class CEditorAccess {
 	/** 안드로이드 프로젝트 이름을 반환한다 */
 	public static string GetAndroidProjName(EAndroidType a_eType) {
 		switch(a_eType) {
-			case EAndroidType.AMAZON:
-				return KCEditorDefine.B_ANDROID_AMAZON_BUILD_PROJ_N_JENKINS;
+			case EAndroidType.AMAZON: return KCEditorDefine.B_ANDROID_AMAZON_BUILD_PROJ_N_JENKINS;
 		}
 
 		return KCEditorDefine.B_ANDROID_GOOGLE_BUILD_PROJ_N_JENKINS;

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -153,8 +153,7 @@ public static partial class CAccess {
 	/** 안드로이드 이름을 반환한다 */
 	public static string GetAndroidName(EAndroidType a_eType) {
 		switch(a_eType) {
-			case EAndroidType.AMAZON:
-				return KCDefine.B_PLATFORM_N_ANDROID_AMAZON;
+			case EAndroidType.AMAZON: return KCDefine.B_PLATFORM_N_ANDROID_AMAZON;
 		}
 
 		return KCDefine.B_PLATFORM_N_ANDROID_GOOGLE;
@@ -163,8 +162,7 @@ public static partial class CAccess {
 	/** 독립 플랫폼 이름을 반환한다 */
 	public static string GetStandaloneName(EStandaloneType a_eType) {
 		switch(a_eType) {
-			case EStandaloneType.WNDS_STEAM:
-				return KCDefine.B_PLATFORM_N_STANDALONE_WNDS_STEAM;
+			case EStandaloneType.WNDS_STEAM: return KCDefine.B_PLATFORM_N_STANDALONE_WNDS_STEAM;
 		}
 
 		return KCDefine.B_PLATFORM_N_STANDALONE_MAC_STEAM;
@@ -173,10 +171,8 @@ public static partial class CAccess {
 	/** 렌더링 파이프라인 경로를 반환한다 */
 	public static string GetRenderingPipelinePath(EQualityLevel a_eQualityLevel) {
 		switch(a_eQualityLevel) {
-			case EQualityLevel.HIGH:
-				return KCDefine.U_ASSET_P_G_HIGH_QUALITY_UNIVERSAL_RP;
-			case EQualityLevel.ULTRA:
-				return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_UNIVERSAL_RP;
+			case EQualityLevel.HIGH: return KCDefine.U_ASSET_P_G_HIGH_QUALITY_UNIVERSAL_RP;
+			case EQualityLevel.ULTRA: return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_UNIVERSAL_RP;
 		}
 
 		return KCDefine.U_ASSET_P_G_NORM_QUALITY_UNIVERSAL_RP;
@@ -185,10 +181,8 @@ public static partial class CAccess {
 	/** 포스트 프로세싱 설정 경로를 반환한다 */
 	public static string GetPostProcessingSettingsPath(EQualityLevel a_eQualityLevel) {
 		switch(a_eQualityLevel) {
-			case EQualityLevel.HIGH:
-				return KCDefine.U_ASSET_P_G_HIGH_QUALITY_POST_PROCESSING_SETTINGS;
-			case EQualityLevel.ULTRA:
-				return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_POST_PROCESSING_SETTINGS;
+			case EQualityLevel.HIGH: return KCDefine.U_ASSET_P_G_HIGH_QUALITY_POST_PROCESSING_SETTINGS;
+			case EQualityLevel.ULTRA: return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_POST_PROCESSING_SETTINGS;
 		}
 
 		return KCDefine.U_ASSET_P_G_NORM_QUALITY_POST_PROCESSING_SETTINGS;

@@ -23,10 +23,13 @@ using UnityEngine.Purchasing;
 #endif            // #if PURCHASE_MODULE_ENABLE                                       
 
 /** 유틸리티 접근자 */
-public static partial class CAccess {
+public static partial class CAccess
+{
 	#region 클래스 프로퍼티
-	public static bool IsNeedsTrackingConsent {
-		get {
+	public static bool IsNeedsTrackingConsent
+	{
+		get
+		{
 #if !UNITY_EDITOR && UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
 			return oVer.CompareTo(KCDefine.U_MIN_VER_TRACKING_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
@@ -38,8 +41,10 @@ public static partial class CAccess {
 		}
 	}
 
-	public static bool IsSupportsHapticFeedback {
-		get {
+	public static bool IsSupportsHapticFeedback
+	{
+		get
+		{
 #if !UNITY_EDITOR && UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
 
@@ -58,15 +63,18 @@ public static partial class CAccess {
 		}
 	}
 
-	public static EDeviceType DeviceType {
-		get {
+	public static EDeviceType DeviceType
+	{
+		get
+		{
 #if UNITY_IOS
 			return Device.generation.ToString().Contains(KCDefine.U_MODEL_N_IPAD) ? EDeviceType.TABLET : EDeviceType.PHONE;
 #elif UNITY_ANDROID
 			// TODO: 테블릿 여부 검사 로직 구현 필요
 			return EDeviceType.PHONE;
 #else
-			switch(Application.platform) {
+			switch(Application.platform)
+			{
 				case RuntimePlatform.PS4:
 				case RuntimePlatform.PS5:
 				case RuntimePlatform.XboxOne:
@@ -81,8 +89,10 @@ public static partial class CAccess {
 		}
 	}
 
-	public static Vector3 ScreenSize {
-		get {
+	public static Vector3 ScreenSize
+	{
+		get
+		{
 #if UNITY_EDITOR
 			return new Vector3(Camera.main.pixelWidth, Camera.main.pixelHeight, KCDefine.B_VAL_0_REAL);
 #else
@@ -91,8 +101,10 @@ public static partial class CAccess {
 		}
 	}
 
-	public static Rect SafeArea {
-		get {
+	public static Rect SafeArea
+	{
+		get
+		{
 #if UNITY_EDITOR
 			return new Rect(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_0_REAL, Camera.main.pixelWidth, Camera.main.pixelHeight);
 #else
@@ -129,7 +141,8 @@ public static partial class CAccess {
 
 	#region 클래스 함수
 	/** 유저 권한 유효 여부를 검사한다 */
-	public static bool IsEnableUserPermission(string a_oPermission) {
+	public static bool IsEnableUserPermission(string a_oPermission)
+	{
 		CAccess.Assert(a_oPermission.ExIsValid());
 
 #if UNITY_ANDROID
@@ -140,19 +153,23 @@ public static partial class CAccess {
 	}
 
 	/** 배너 광고 높이를 반환한다 */
-	public static float GetBannerAdsHeight(float a_fHeight) {
+	public static float GetBannerAdsHeight(float a_fHeight)
+	{
 		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_REAL));
 		return (a_fHeight.ExDPIPixelsToPixels() * (KCDefine.B_SCREEN_HEIGHT / CAccess.ScreenSize.y)) / CAccess.ResolutionScale;
 	}
 
 	/** iOS 이름을 반환한다 */
-	public static string GetiOSName(EiOSType a_eType) {
+	public static string GetiOSName(EiOSType a_eType)
+	{
 		return KCDefine.B_PLATFORM_N_IOS_APPLE;
 	}
 
 	/** 안드로이드 이름을 반환한다 */
-	public static string GetAndroidName(EAndroidType a_eType) {
-		switch(a_eType) {
+	public static string GetAndroidName(EAndroidType a_eType)
+	{
+		switch(a_eType)
+		{
 			case EAndroidType.AMAZON:
 				return KCDefine.B_PLATFORM_N_ANDROID_AMAZON;
 		}
@@ -161,8 +178,10 @@ public static partial class CAccess {
 	}
 
 	/** 독립 플랫폼 이름을 반환한다 */
-	public static string GetStandaloneName(EStandaloneType a_eType) {
-		switch(a_eType) {
+	public static string GetStandaloneName(EStandaloneType a_eType)
+	{
+		switch(a_eType)
+		{
 			case EStandaloneType.WNDS_STEAM:
 				return KCDefine.B_PLATFORM_N_STANDALONE_WNDS_STEAM;
 		}
@@ -171,8 +190,10 @@ public static partial class CAccess {
 	}
 
 	/** 렌더링 파이프라인 경로를 반환한다 */
-	public static string GetRenderingPipelinePath(EQualityLevel a_eQualityLevel) {
-		switch(a_eQualityLevel) {
+	public static string GetRenderingPipelinePath(EQualityLevel a_eQualityLevel)
+	{
+		switch(a_eQualityLevel)
+		{
 			case EQualityLevel.HIGH:
 				return KCDefine.U_ASSET_P_G_HIGH_QUALITY_UNIVERSAL_RP;
 			case EQualityLevel.ULTRA:
@@ -183,8 +204,10 @@ public static partial class CAccess {
 	}
 
 	/** 포스트 프로세싱 설정 경로를 반환한다 */
-	public static string GetPostProcessingSettingsPath(EQualityLevel a_eQualityLevel) {
-		switch(a_eQualityLevel) {
+	public static string GetPostProcessingSettingsPath(EQualityLevel a_eQualityLevel)
+	{
+		switch(a_eQualityLevel)
+		{
 			case EQualityLevel.HIGH:
 				return KCDefine.U_ASSET_P_G_HIGH_QUALITY_POST_PROCESSING_SETTINGS;
 			case EQualityLevel.ULTRA:
@@ -195,33 +218,38 @@ public static partial class CAccess {
 	}
 
 	/** 값을 할당한다 */
-	public static void AssignVal(ref DG.Tweening.Tween a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+	public static void AssignVal(ref DG.Tweening.Tween a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null)
+	{
 		a_rLhs?.Kill();
 		a_rLhs = a_oRhs ?? a_oDefVal;
 	}
 
 	/** 값을 할당한다 */
-	public static void AssignVal(ref Sequence a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+	public static void AssignVal(ref Sequence a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null)
+	{
 		a_rLhs?.Kill();
 		a_rLhs = (a_oRhs ?? a_oDefVal) as Sequence;
 	}
 
 	/** DPI 픽셀 => 픽셀로 변환한다 */
-	private static float ExDPIPixelsToPixels(this float a_fSender) {
+	private static float ExDPIPixelsToPixels(this float a_fSender)
+	{
 		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
 	}
 	#endregion         // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 리소스 존재 여부를 검사한다 */
-	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object {
+	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object
+	{
 		CAccess.Assert(a_oFilePath.ExIsValid());
 
 		var oRes = Resources.Load<T>(a_oFilePath);
 		bool bIsExistsRes = typeof(T).Equals(typeof(TextAsset)) ? (oRes as TextAsset).ExIsValid() : oRes != null;
 
 		// 자동 제거 모드 일 경우
-		if(bIsExistsRes && a_bIsAutoUnload) {
+		if(bIsExistsRes && a_bIsAutoUnload)
+		{
 			Resources.UnloadAsset(oRes);
 		}
 
@@ -232,15 +260,18 @@ public static partial class CAccess {
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	/** 스크립트 순서를 변경한다 */
-	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder, bool a_bIsEnableAssert = true) {
+	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder, bool a_bIsEnableAssert = true)
+	{
 		CAccess.Assert(!a_bIsEnableAssert || a_oScript != null);
 
 		// 스크립트가 존재 할 경우
-		if(a_oScript != null) {
+		if(a_oScript != null)
+		{
 			int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
 
 			// 기존 순서와 다를 경우
-			if(nOrder != a_nOrder) {
+			if(nOrder != a_nOrder)
+			{
 				MonoImporter.SetExecutionOrder(a_oScript, a_nOrder);
 			}
 		}
@@ -249,7 +280,8 @@ public static partial class CAccess {
 
 #if PURCHASE_MODULE_ENABLE
 	/** 가격 문자열을 반환한다 */
-	public static string GetPriceStr(Product a_oProduct) {
+	public static string GetPriceStr(Product a_oProduct)
+	{
 		CAccess.Assert(a_oProduct != null);
 		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);
 	}

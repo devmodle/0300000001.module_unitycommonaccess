@@ -12,7 +12,7 @@ using UnityEditor.PackageManager.Requests;
 
 #if UNITY_IOS
 using UnityEditor.iOS.Xcode;
-#endif            // #if UNITY_IOS                          
+#endif // #if UNITY_IOS                          
 
 /** 에디터 기본 접근자 확장 클래스 */
 public static partial class CEditorAccessExtension {
@@ -50,7 +50,7 @@ public static partial class CEditorAccessExtension {
 			}
 		}
 	}
-	#endregion         // 클래스 함수                   
+	#endregion // 클래스 함수                   
 
 	#region 조건부 클래스 함수
 #if UNITY_IOS
@@ -102,7 +102,7 @@ public static partial class CEditorAccessExtension {
 			return a_oSender.root.CreateDict(a_oKey);
 		}
 	}
-#endif         // #if UNITY_IOS                          
-	#endregion         // 조건부 클래스 함수                       
+#endif // #if UNITY_IOS                          
+	#endregion // 조건부 클래스 함수                       
 }
-#endif         // #if UNITY_EDITOR                             
+#endif // #if UNITY_EDITOR                             

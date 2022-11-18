@@ -14,13 +14,13 @@ using EnhancedUI.EnhancedScroller;
 
 #if UNITY_EDITOR
 using UnityEditor;
-#endif            // #if UNITY_EDITOR                             
+#endif // #if UNITY_EDITOR                             
 
 #if UNITY_IOS
 #if NOTI_MODULE_ENABLE
 using Unity.Notifications.iOS;
-#endif            // #if NOTI_MODULE_ENABLE                                   
-#endif            // #if UNITY_IOS                          
+#endif // #if NOTI_MODULE_ENABLE                                   
+#endif // #if UNITY_IOS                          
 
 /** 유틸리티 접근자 확장 클래스 */
 public static partial class CAccessExtension {
@@ -895,7 +895,7 @@ public static partial class CAccessExtension {
 
 		return null;
 	}
-	#endregion         // 클래스 함수                   
+	#endregion // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 값을 할당한다 */
@@ -1134,7 +1134,7 @@ public static partial class CAccessExtension {
 			}
 		}
 	}
-	#endregion         // 제네릭 클래스 함수                       
+	#endregion // 제네릭 클래스 함수                       
 
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
@@ -1147,20 +1147,20 @@ public static partial class CAccessExtension {
 			CAccess.SetScriptOrder(MonoScript.FromMonoBehaviour(a_oSender), a_nOrder, a_bIsEnableAssert);
 		}
 	}
-#endif         // #if UNITY_EDITOR                             
+#endif // #if UNITY_EDITOR                             
 
 #if ADS_MODULE_ENABLE
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EAdsPlatform a_eSender) {
 		return a_eSender > EAdsPlatform.NONE && a_eSender < EAdsPlatform.MAX_VAL;
 	}
-#endif         // #if ADS_MODULE_ENABLE                                  
+#endif // #if ADS_MODULE_ENABLE                                  
 
 #if PURCHASE_MODULE_ENABLE
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EPurchasePlatform a_eSender) {
 		return a_eSender > EPurchasePlatform.NONE && a_eSender < EPurchasePlatform.MAX_VAL;
 	}
-#endif         // #if PURCHASE_MODULE_ENABLE                                       
-	#endregion         // 조건부 클래스 함수                       
+#endif // #if PURCHASE_MODULE_ENABLE                                       
+	#endregion // 조건부 클래스 함수                       
 }

@@ -252,7 +252,7 @@ public static partial class CAccessExtension {
 			CAccessExtension.Swap(ref a_dblLhs, ref a_dblRhs);
 		}
 	}
-	#endregion         // 클래스 함수                   
+	#endregion // 클래스 함수                   
 
 	#region 제네릭 클래스 함수
 	/** 유효 여부를 검사한다 */
@@ -596,5 +596,5 @@ public static partial class CAccessExtension {
 
 		return (false, default(K));
 	}
-	#endregion         // 제네릭 클래스 함수                       
+	#endregion // 제네릭 클래스 함수                       
 }

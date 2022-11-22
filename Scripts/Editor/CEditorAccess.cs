@@ -22,11 +22,11 @@ public static partial class CEditorAccess {
 
 	#region 클래스 변수
 	private static Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>();
-	#endregion // 클래스 변수                   
+	#endregion // 클래스 변수
 
 	#region 클래스 프로퍼티
 	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode && !CEditorAccess.m_oBoolDict.GetValueOrDefault(EKey.IS_IMPORT_ASSETS);
-	#endregion // 클래스 프로퍼티                     
+	#endregion // 클래스 프로퍼티
 
 	#region 클래스 함수
 	/** 생성자 */
@@ -153,6 +153,6 @@ public static partial class CEditorAccess {
 			}
 		}
 	}
-	#endregion // 클래스 함수                   
+	#endregion // 클래스 함수
 }
-#endif // #if UNITY_EDITOR                             
+#endif // #if UNITY_EDITOR

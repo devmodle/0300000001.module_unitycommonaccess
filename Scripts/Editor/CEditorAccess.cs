@@ -59,7 +59,7 @@ public static partial class CEditorAccess {
 	public static string GetRootObjPrefabPath(Scene a_stScene, string a_oName) {
 		string oDirPath = (!a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_01) && !a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_02)) ? KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_PREFABS : KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_EDITOR_PREFABS;
 		string oRootPath = (Directory.GetParent(a_stScene.path) != null) ? Directory.GetParent(a_stScene.path).Name.ExGetFileName(false) : string.Empty;
-		string oPrefabPath = (oRootPath.ExIsValid() && !oRootPath.Equals(KCDefine.B_DIR_N_SCENES)) ? string.Format(KCDefine.B_TEXT_FMT_4_SLASH_COMBINE, Path.GetDirectoryName(oDirPath).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH), CEditorAccess.GetSceneDirName(a_stScene), oRootPath, string.Format(KCDefine.B_TEXT_FMT_2_UNDER_SCORE_COMBINE, a_stScene.name, a_oName)) : string.Format(KCDefine.B_TEXT_FMT_3_SLASH_COMBINE, Path.GetDirectoryName(oDirPath).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH), CEditorAccess.GetSceneDirName(a_stScene), string.Format(KCDefine.B_TEXT_FMT_2_UNDER_SCORE_COMBINE, a_stScene.name, a_oName));
+		string oPrefabPath = (oRootPath.ExIsValid() && !oRootPath.Equals(KCDefine.B_DIR_N_SCENES)) ? string.Format(KCDefine.B_TEXT_FMT_4_SLASH_COMBINE, Path.GetDirectoryName(oDirPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), CEditorAccess.GetSceneDirName(a_stScene), oRootPath, string.Format(KCDefine.B_TEXT_FMT_2_UNDER_SCORE_COMBINE, a_stScene.name, a_oName)) : string.Format(KCDefine.B_TEXT_FMT_3_SLASH_COMBINE, Path.GetDirectoryName(oDirPath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH), CEditorAccess.GetSceneDirName(a_stScene), string.Format(KCDefine.B_TEXT_FMT_2_UNDER_SCORE_COMBINE, a_stScene.name, a_oName));
 
 		return string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, oPrefabPath, KCDefine.B_FILE_EXTENSION_PREFAB);
 	}
@@ -71,7 +71,7 @@ public static partial class CEditorAccess {
 
 	/** 씬 디렉토리 이름을 반환한다 */
 	public static string GetSceneDirName(Scene a_stScene) {
-		return KCEditorDefine.B_DIR_N_SCENE_DICT.GetValueOrDefault(a_stScene.name, (!a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_01) && !a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_02)) ? Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH) : Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_EDITOR).Replace(KCDefine.B_TOKEN_REV_SLASH, KCDefine.B_TOKEN_SLASH));
+		return KCEditorDefine.B_DIR_N_SCENE_DICT.GetValueOrDefault(a_stScene.name, (!a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_01) && !a_stScene.name.Contains(KCDefine.B_EDITOR_SCENE_N_PATTERN_02)) ? Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH) : Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_EDITOR).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH));
 	}
 
 	/** iOS 프로젝트 이름을 반환한다 */

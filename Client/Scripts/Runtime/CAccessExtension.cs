@@ -366,11 +366,41 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 반환한다 */
-	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<V> a_oCompare, V a_tDefVal) {
+	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare, V a_tDefVal) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
-		var oResult = a_oSender.ExFindVal(a_oCompare);
+		var stResult = a_oSender.ExFindVal(a_oCompare);
 
-		return oResult.Item1 ? a_oSender[oResult.Item2] : a_tDefVal;
+		return stResult.Item1 ? a_oSender[stResult.Item2] : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
+	public static List<T> ExGetVals<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+		var oValList = new List<T>();
+
+		for(int i = 0; i < a_oSender.Count; ++i) {
+			// 값이 존재 할 경우
+			if(a_oCompare(a_oSender[i])) {
+				oValList.Add(a_oSender[i]);
+			}
+		}
+
+		return oValList;
+	}
+
+	/** 값을 반환한다 */
+	public static List<V> ExGetVals<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+		var oValList = new List<V>();
+
+		foreach(var stKeyVal in a_oSender) {
+			// 값이 존재 할 경우
+			if(a_oCompare(stKeyVal)) {
+				oValList.Add(stKeyVal.Value);
+			}
+		}
+
+		return oValList;
 	}
 
 	/** 필드 값을 반환한다 */
@@ -584,12 +614,12 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 탐색한다 */
-	private static (bool, K) ExFindVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<V> a_oCompare) {
+	private static (bool, K) ExFindVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
 
 		foreach(var stKeyVal in a_oSender) {
 			// 값이 존재 할 경우
-			if(a_oCompare(stKeyVal.Value)) {
+			if(a_oCompare(stKeyVal)) {
 				return (true, stKeyVal.Key);
 			}
 		}

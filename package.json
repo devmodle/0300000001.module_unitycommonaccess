@@ -7,7 +7,7 @@
     "email": "are2341@nate.com"
   },
   "dependencies": {
-	"module.unitycommondefine": "https://gitlab.com/9tapmodule.repository/0300000001.module_unitycommondefine_client.git#3.0.0",
-	"module.unitycommonexternals": "https://gitlab.com/9tapmodule.repository/0300000001.module_unitycommonexternals_client.git#3.0.0"
+	"module.unitycommondefine": "https://gitlab.com/9tapmodule.repository/0300000001.module_unitycommondefine.git#3.0.0",
+	"module.unitycommonexternals": "https://gitlab.com/9tapmodule.repository/0300000001.module_unitycommonexternals.git#3.0.0"
   }
 }

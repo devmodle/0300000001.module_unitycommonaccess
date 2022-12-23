@@ -69,11 +69,13 @@ public static partial class CAccess {
 			switch(Application.platform) {
 				case RuntimePlatform.PS4:
 				case RuntimePlatform.PS5:
-				case RuntimePlatform.XboxOne:
+				case RuntimePlatform.XboxOne: {
 					return EDeviceType.CONSOLE;
+				}
 				case RuntimePlatform.Switch:
-				case RuntimePlatform.Stadia:
+				case RuntimePlatform.Stadia: {
 					return EDeviceType.HANDHELD_CONSOLE;
+				}
 			}
 
 			return EDeviceType.UNKNOWN;

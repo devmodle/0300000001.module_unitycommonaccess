@@ -212,8 +212,8 @@ public static partial class CAccess {
 	/** 리소스 존재 여부를 검사한다 */
 	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-
 		var oRes = Resources.Load<T>(a_oFilePath);
+
 		bool bIsExistsRes = typeof(T).Equals(typeof(TextAsset)) ? (oRes as TextAsset).ExIsValid() : oRes != null;
 
 		// 자동 제거 모드 일 경우

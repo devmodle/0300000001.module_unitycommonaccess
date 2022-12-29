@@ -17,8 +17,23 @@ public static partial class CAccessExtension {
 	}
 
 	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this float a_fSender) {
+		return !float.IsNaN(a_fSender) && !float.IsInfinity(a_fSender);
+	}
+
+	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this double a_dblSender) {
+		return !double.IsNaN(a_dblSender) && !double.IsInfinity(a_dblSender);
+	}
+
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this string a_oSender) {
 		return a_oSender != null && a_oSender.Length > KCDefine.B_VAL_0_INT;
+	}
+
+	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this Vector3 a_stSender) {
+		return a_stSender.x.ExIsValid() && a_stSender.y.ExIsValid() && a_stSender.z.ExIsValid();
 	}
 
 	/** 유효 여부를 검사한다 */

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -258,6 +258,17 @@ public static partial class CAccessExtension {
 	/** 직교 벡터를 반환한다 */
 	public static Vector3 ExGetOrthogonalVec(this Vector3 a_stSender, EOrthogonal a_eOrthogonal) {
 		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z) : new Vector3(a_stSender.y, -a_stSender.x, a_stSender.z);
+	}
+
+	/** 앵커 보정 위치를 반환한다 */
+	public static Vector3 ExGetCorrectPivotPos(this Vector3 a_stSender, Vector3 a_stSrcPivot, Vector3 a_stDestPivot, Vector3 a_stSize) {
+		var stDelta = a_stDestPivot - a_stSrcPivot;
+		return a_stSender + new Vector3(a_stSize.x * -stDelta.x, a_stSize.y * -stDelta.y, a_stSize.z * -stDelta.z);
+	}
+
+	/** UI 앵커 보정 위치를 반환한다 */
+	public static Vector3 ExGetUIsCorrectPivotPos(this Vector3 a_stSender, Vector3 a_stSrcPivot, Vector3 a_stDestPivot, Vector3 a_stSize) {
+		return a_stSender.ExGetCorrectPivotPos(a_stDestPivot, a_stSrcPivot, a_stSize);
 	}
 
 	/** 월드 위치를 반환한다 */

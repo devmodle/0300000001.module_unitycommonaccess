@@ -260,15 +260,15 @@ public static partial class CAccessExtension {
 		return (a_eOrthogonal == EOrthogonal.CW) ? new Vector3(-a_stSender.y, a_stSender.x, a_stSender.z) : new Vector3(a_stSender.y, -a_stSender.x, a_stSender.z);
 	}
 
-	/** 앵커 보정 위치를 반환한다 */
-	public static Vector3 ExGetCorrectPivotPos(this Vector3 a_stSender, Vector3 a_stSrcPivot, Vector3 a_stDestPivot, Vector3 a_stSize) {
+	/** 기준점 위치를 반환한다 */
+	public static Vector3 ExGetPivotPos(this Vector3 a_stSender, Vector3 a_stSrcPivot, Vector3 a_stDestPivot, Vector3 a_stSize) {
 		var stDelta = a_stDestPivot - a_stSrcPivot;
 		return a_stSender + new Vector3(a_stSize.x * -stDelta.x, a_stSize.y * -stDelta.y, a_stSize.z * -stDelta.z);
 	}
 
-	/** UI 앵커 보정 위치를 반환한다 */
-	public static Vector3 ExGetUIsCorrectPivotPos(this Vector3 a_stSender, Vector3 a_stSrcPivot, Vector3 a_stDestPivot, Vector3 a_stSize) {
-		return a_stSender.ExGetCorrectPivotPos(a_stDestPivot, a_stSrcPivot, a_stSize);
+	/** UI 기준점 보정 위치를 반환한다 */
+	public static Vector3 ExGetUIsPivotPos(this Vector3 a_stSender, Vector3 a_stSrcPivot, Vector3 a_stDestPivot, Vector3 a_stSize) {
+		return a_stSender.ExGetPivotPos(a_stDestPivot, a_stSrcPivot, a_stSize);
 	}
 
 	/** 월드 위치를 반환한다 */
@@ -309,16 +309,19 @@ public static partial class CAccessExtension {
 
 	/** 월드 간격을 반환한다 */
 	public static Vector3 ExGetWorldPosDelta(this PointerEventData a_oSender) {
+		CAccess.Assert(a_oSender != null);
 		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExGetWorldPos() - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExGetWorldPos();
 	}
 
 	/** 로컬 간격을 반환한다 */
 	public static Vector3 ExGetLocalPosDelta(this PointerEventData a_oSender, GameObject a_oParent) {
+		CAccess.Assert(a_oSender != null);
 		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oParent) - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExGetWorldPos().ExToLocal(a_oParent);
 	}
 
 	/** 앵커 간격을 반환한다 */
 	public static Vector3 ExGetAnchorPosDelta(this PointerEventData a_oSender, GameObject a_oParent) {
+		CAccess.Assert(a_oSender != null);
 		return a_oSender.pointerPressRaycast.screenPosition.ExTo3D().ExToLocal(a_oParent) - a_oSender.pointerCurrentRaycast.screenPosition.ExTo3D().ExToLocal(a_oParent);
 	}
 
@@ -338,6 +341,12 @@ public static partial class CAccessExtension {
 	public static float ExGetNormPosH(this ScrollRect a_oSender, GameObject a_oViewport, GameObject a_oContents, Vector3 a_stPos) {
 		CAccess.Assert(a_oSender != null && a_oViewport != null && a_oContents != null);
 		return Mathf.Clamp01((a_stPos.x - (a_oViewport.transform as RectTransform).rect.width) / ((a_oContents.transform as RectTransform).rect.width - (a_oViewport.transform as RectTransform).rect.width));
+	}
+
+	/** 기준점을 반환한다 */
+	public static Vector3 ExGetPivot(this GameObject a_oSender) {
+		CAccess.Assert(a_oSender != null);
+		return (a_oSender.transform as RectTransform).pivot;
 	}
 
 	/** 크기 반격을 반환한다 */
@@ -639,16 +648,19 @@ public static partial class CAccessExtension {
 
 	/** X 축 비율을 변경한다 */
 	public static void ExSetScaleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetScale(new Vector3(a_fVal, a_oSender.transform.localScale.y, a_oSender.transform.localScale.z), a_bIsEnableAssert);
 	}
 
 	/** Y 축 비율을 변경한다 */
 	public static void ExSetScaleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetScale(new Vector3(a_oSender.transform.localScale.x, a_fVal, a_oSender.transform.localScale.z), a_bIsEnableAssert);
 	}
 
 	/** Z 축 비율을 변경한다 */
 	public static void ExSetScaleZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetScale(new Vector3(a_oSender.transform.localScale.x, a_oSender.transform.localScale.y, a_fVal), a_bIsEnableAssert);
 	}
 
@@ -664,16 +676,19 @@ public static partial class CAccessExtension {
 
 	/** 월드 X 축 각도를 변경한다 */
 	public static void ExSetWorldAngleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetWorldAngle(new Vector3(a_fVal, a_oSender.transform.eulerAngles.y, a_oSender.transform.eulerAngles.z), a_bIsEnableAssert);
 	}
 
 	/** 월드 Y 축 각도를 변경한다 */
 	public static void ExSetWorldAngleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetWorldAngle(new Vector3(a_oSender.transform.eulerAngles.x, a_fVal, a_oSender.transform.eulerAngles.z), a_bIsEnableAssert);
 	}
 
 	/** 월드 Z 축 각도를 변경한다 */
 	public static void ExSetWorldAngleZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetWorldAngle(new Vector3(a_oSender.transform.eulerAngles.x, a_oSender.transform.eulerAngles.y, a_fVal), a_bIsEnableAssert);
 	}
 
@@ -689,16 +704,19 @@ public static partial class CAccessExtension {
 
 	/** 로컬 X 축 각도를 변경한다 */
 	public static void ExSetLocalAngleX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetLocalAngle(new Vector3(a_fVal, a_oSender.transform.localEulerAngles.y, a_oSender.transform.localEulerAngles.z), a_bIsEnableAssert);
 	}
 
 	/** 로컬 Y 축 각도를 변경한다 */
 	public static void ExSetLocalAngleY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetLocalAngle(new Vector3(a_oSender.transform.localEulerAngles.x, a_fVal, a_oSender.transform.localEulerAngles.z), a_bIsEnableAssert);
 	}
 
 	/** 로컬 Z 축 각도를 변경한다 */
 	public static void ExSetLocalAngleZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetLocalAngle(new Vector3(a_oSender.transform.localEulerAngles.x, a_oSender.transform.localEulerAngles.y, a_fVal), a_bIsEnableAssert);
 	}
 
@@ -714,16 +732,19 @@ public static partial class CAccessExtension {
 
 	/** 월드 X 축 위치를 변경한다 */
 	public static void ExSetWorldPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetWorldPos(new Vector3(a_fVal, a_oSender.transform.position.y, a_oSender.transform.position.z), a_bIsEnableAssert);
 	}
 
 	/** 월드 Y 축 위치를 변경한다 */
 	public static void ExSetWorldPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetWorldPos(new Vector3(a_oSender.transform.position.x, a_fVal, a_oSender.transform.position.z), a_bIsEnableAssert);
 	}
 
 	/** 월드 Z 축 위치를 변경한다 */
 	public static void ExSetWorldPosZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetWorldPos(new Vector3(a_oSender.transform.position.x, a_oSender.transform.position.y, a_fVal), a_bIsEnableAssert);
 	}
 
@@ -739,17 +760,30 @@ public static partial class CAccessExtension {
 
 	/** 로컬 X 축 위치를 변경한다 */
 	public static void ExSetLocalPosX(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetLocalPos(new Vector3(a_fVal, a_oSender.transform.localPosition.y, a_oSender.transform.localPosition.z), a_bIsEnableAssert);
 	}
 
 	/** 로컬 Y 축 위치를 변경한다 */
 	public static void ExSetLocalPosY(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetLocalPos(new Vector3(a_oSender.transform.localPosition.x, a_fVal, a_oSender.transform.localPosition.z), a_bIsEnableAssert);
 	}
 
 	/** 로컬 Z 축 위치를 변경한다 */
 	public static void ExSetLocalPosZ(this GameObject a_oSender, float a_fVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 		a_oSender?.ExSetLocalPos(new Vector3(a_oSender.transform.localPosition.x, a_oSender.transform.localPosition.y, a_fVal), a_bIsEnableAssert);
+	}
+
+	/** 기준점을 변경한다 */
+	public static void ExSetPivot(this GameObject a_oSender, Vector3 a_stPivot, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oSender.transform as RectTransform != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oSender.transform as RectTransform != null) {
+			(a_oSender.transform as RectTransform).pivot = a_stPivot;
+		}
 	}
 
 	/** 크기 간격을 변경한다 */

@@ -302,10 +302,34 @@ public static partial class CAccessExtension {
 		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_0_INT)) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_1_INT));
 	}
 
-	/** 인덱스 유효 여부룰 검사한다 */
+	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx<T>(this List<T> a_oSender, int a_nIdx) {
 		CAccess.Assert(a_oSender != null);
 		return a_nIdx > KCDefine.B_IDX_INVALID && a_nIdx < a_oSender.Count;
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx<T>(this List<List<T>> a_oSender, Vector3Int a_stIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx.y) && a_oSender[a_stIdx.y].ExIsValidIdx(a_stIdx.x);
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx<V>(this Dictionary<int, V> a_oSender, int a_nIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ContainsKey(a_nIdx);
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx<V>(this Dictionary<int, Dictionary<int, V>> a_oSender, Vector3Int a_stIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.TryGetValue(a_stIdx.y, out Dictionary<int, V> oValDict) && oValDict.ExIsValidIdx(a_stIdx.x);
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx<V>(this Dictionary<int, Dictionary<int, Dictionary<int, V>>> a_oSender, Vector3Int a_stIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.TryGetValue(a_stIdx.z, out Dictionary<int, Dictionary<int, V>> oValDictContainer) && oValDictContainer.ExIsValidIdx(a_stIdx);
 	}
 
 	/** 포함 여부를 검사한다 */

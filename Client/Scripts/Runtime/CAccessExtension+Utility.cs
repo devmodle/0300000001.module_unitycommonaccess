@@ -219,8 +219,8 @@ public static partial class CAccessExtension {
 		return a_stSender;
 	}
 
-	/** 레이어 값을 반환한다 */
-	public static LayerMask ExGetLayerVal(this LayerMask a_stSender, int a_nVal) {
+	/** 레이어 마스크를 반환한다 */
+	public static LayerMask ExGetLayerMask(this LayerMask a_stSender, int a_nVal) {
 		a_stSender.value = a_nVal;
 		return a_stSender;
 	}
@@ -468,13 +468,13 @@ public static partial class CAccessExtension {
 	}
 
 	/** 너비를 변경한다 */
-	public static void ExSetWidth(this LineRenderer a_oSender, float a_fWidth, bool a_bIsEnableAssert = true) {
+	public static void ExSetWidth(this LineRenderer a_oSender, float a_fSrcWidth, float a_fDestWidth, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		// 라인이 존재 할 경우
+		// 라인 효과가 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.startWidth = a_fWidth;
-			a_oSender.endWidth = a_fWidth;
+			a_oSender.startWidth = a_fSrcWidth;
+			a_oSender.endWidth = a_fDestWidth;
 		}
 	}
 
@@ -485,6 +485,17 @@ public static partial class CAccessExtension {
 		// 컴포넌트가 존재 할 경우
 		if(a_oSender != null && a_oTag != null && !a_oSender.CompareTag(a_oTag)) {
 			a_oSender.tag = a_oTag;
+		}
+	}
+
+	/** 색상을 변경한다 */
+	public static void ExSetColor(this LineRenderer a_oSender, Color a_stSrcColor, Color a_stDestColor, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 라인 효과가 존재 할 경우
+		if(a_oSender != null) {
+			a_oSender.startColor = a_stSrcColor;
+			a_oSender.endColor = a_stDestColor;
 		}
 	}
 
@@ -546,7 +557,7 @@ public static partial class CAccessExtension {
 	public static void ExSetPositions(this LineRenderer a_oSender, List<Vector3> a_oPosList, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oPosList != null));
 
-		// 라인이 존재 할 경우
+		// 라인 효과가 존재 할 경우
 		if(a_oSender != null && a_oPosList != null) {
 			a_oSender.positionCount = a_oPosList.Count;
 			a_oSender.SetPositions(a_oPosList.ToArray());
@@ -609,7 +620,7 @@ public static partial class CAccessExtension {
 	public static void ExSetSortingOrder(this ParticleSystem a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
 
-		// 파티클이 존재 할 경우
+		// 파티클 효과가 존재 할 경우
 		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
 			a_oSender.GetComponent<ParticleSystemRenderer>()?.ExSetSortingOrder(a_stOrderInfo, a_bIsEnableAssert);
 		}
@@ -619,7 +630,7 @@ public static partial class CAccessExtension {
 	public static void ExSetStartColor(this ParticleSystem a_oSender, Color a_stMinColor, Color a_stMaxColor, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
-		// 파티클이 존재 할 경우
+		// 파티클 효과가 존재 할 경우
 		if(a_oSender != null) {
 			var oMainModule = a_oSender.main;
 			oMainModule.startColor = new ParticleSystem.MinMaxGradient(a_stMinColor, a_stMaxColor);

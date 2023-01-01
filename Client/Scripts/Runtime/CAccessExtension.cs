@@ -405,6 +405,18 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 반환한다 */
+	public static V ExGetVal<V>(this Dictionary<int, Dictionary<int, V>> a_oSender, Vector3Int a_stIdx, V a_tDefVal) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y][a_stIdx.x] : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
+	public static V ExGetVal<V>(this Dictionary<int, Dictionary<int, Dictionary<int, V>>> a_oSender, Vector3Int a_stIdx, V a_tDefVal) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.z][a_stIdx.y][a_stIdx.x] : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
 	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare, V a_tDefVal) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
 		var stResult = a_oSender.ExFindVal(a_oCompare);

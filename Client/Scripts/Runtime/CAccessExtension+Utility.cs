@@ -432,6 +432,33 @@ public static partial class CAccessExtension {
 		return string.Format(KCDefine.B_TEXT_FMT_COLOR, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
 	}
 
+	/** 픽셀을 변경한다 */
+	public static void ExSetPixels(this Texture2D a_oSender, Color a_stColor, int a_nMipLevel = KCDefine.B_VAL_0_INT, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 텍스처가 존재 할 경우
+		if(a_oSender != null) {
+			for(int i = 0; i < a_oSender.height; ++i) {
+				for(int j = 0; j < a_oSender.width; ++j) {
+					a_oSender.SetPixel(j, i, a_stColor);
+				}
+			}
+
+			a_oSender.Apply();
+		}
+	}
+
+	/** 픽셀을 변경한다 */
+	public static void ExSetPixels(this Texture2D a_oSender, List<Color> a_oColorList, int a_nMipLevel = KCDefine.B_VAL_0_INT, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oColorList != null));
+
+		// 텍스처가 존재 할 경우
+		if(a_oSender != null && a_oColorList != null) {
+			a_oSender.SetPixels(a_oColorList.ToArray(), a_nMipLevel);
+			a_oSender.Apply();
+		}
+	}
+
 	/** 활성화 여부를 변경한다 */
 	public static void ExSetEnable(this Behaviour a_oSender, bool a_bIsEnable, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -619,6 +646,17 @@ public static partial class CAccessExtension {
 		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
 			a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
 			a_oSender.sortingLayerName = a_stOrderInfo.m_oLayer;
+		}
+	}
+
+	/** 정렬 순서를 변경한다 */
+	public static void ExSetSortingOrder(this TextMeshPro a_oSender, STSortingOrderInfo a_stOrderInfo, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()));
+
+		// 렌더러가 존재 할 경우
+		if(a_oSender != null && a_stOrderInfo.m_oLayer.ExIsValid()) {
+			a_oSender.sortingOrder = a_stOrderInfo.m_nOrder;
+			a_oSender.sortingLayerID = SortingLayer.NameToID(a_stOrderInfo.m_oLayer);
 		}
 	}
 

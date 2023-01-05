@@ -186,7 +186,8 @@ public static partial class CAccessExtension {
 
 	/** 색상을 반환한다 */
 	public static Color ExGetAlphaColor(this Color a_stSender, float a_fAlpha) {
-		return new Color(a_stSender.r, a_stSender.g, a_stSender.b, a_fAlpha);
+		a_stSender.a = a_fAlpha;
+		return a_stSender;
 	}
 
 	/** 일반 색상을 반환한다 */
@@ -217,6 +218,17 @@ public static partial class CAccessExtension {
 	public static ColorBlock ExGetDisableColor(this ColorBlock a_stSender, Color a_stColor) {
 		a_stSender.disabledColor = a_stColor;
 		return a_stSender;
+	}
+
+	/** 순서를 반환한다 */
+	public static STSortingOrderInfo ExGetOrder(this STSortingOrderInfo a_stSender, int a_nOrder) {
+		a_stSender.m_nOrder = a_nOrder;
+		return a_stSender;
+	}
+
+	/** 추가 순서를 반환한다 */
+	public static STSortingOrderInfo ExGetExtraOrder(this STSortingOrderInfo a_stSender, int a_nOrder) {
+		return a_stSender.ExGetOrder(a_stSender.m_nOrder + a_nOrder);
 	}
 
 	/** 레이어 마스크를 반환한다 */

@@ -57,8 +57,8 @@ public static partial class CAccessExtension {
 	}
 
 	/** 인덱스 유효 여부를 검사한다 */
-	public static bool ExIsValidIdx(this Vector2Int a_stSender) {
-		return a_stSender.ExTo3D().ExIsValidIdx();
+	public static bool ExIsValidIdx(this Vector2Int a_stSender, int a_nZ = KCDefine.B_VAL_0_INT) {
+		return a_stSender.ExTo3D(a_nZ).ExIsValidIdx();
 	}
 
 	/** 인덱스 유효 여부를 검사한다 */
@@ -210,8 +210,8 @@ public static partial class CAccessExtension {
 	}
 
 	/** 이전 인덱스를 반환한다 */
-	public static Vector3Int ExGetPrevIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
-		return a_stSender.ExTo3D().ExGetPrevIdx(a_eDirection);
+	public static Vector3Int ExGetPrevIdx(this Vector2Int a_stSender, EDirection a_eDirection, int a_nZ = KCDefine.B_VAL_0_INT) {
+		return a_stSender.ExTo3D(a_nZ).ExGetPrevIdx(a_eDirection);
 	}
 
 	/** 이전 인덱스를 반환한다 */
@@ -223,8 +223,8 @@ public static partial class CAccessExtension {
 	}
 
 	/** 다음 인덱스를 반환한다 */
-	public static Vector3Int ExGetNextIdx(this Vector2Int a_stSender, EDirection a_eDirection) {
-		return a_stSender.ExTo3D().ExGetNextIdx(a_eDirection);
+	public static Vector3Int ExGetNextIdx(this Vector2Int a_stSender, EDirection a_eDirection, int a_nZ = KCDefine.B_VAL_0_INT) {
+		return a_stSender.ExTo3D(a_nZ).ExGetNextIdx(a_eDirection);
 	}
 
 	/** 다음 인덱스를 반환한다 */

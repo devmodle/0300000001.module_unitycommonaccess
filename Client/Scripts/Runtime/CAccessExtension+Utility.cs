@@ -253,8 +253,8 @@ public static partial class CAccessExtension {
 	}
 
 	/** 비율 벡터를 반환한다 */
-	public static Vector3 ExGetScaleVec(this Vector2 a_stSender, Vector3 a_stScale) {
-		return a_stSender.ExTo3D().ExGetScaleVec(a_stScale);
+	public static Vector3 ExGetScaleVec(this Vector2 a_stSender, Vector3 a_stScale, float a_fZ = KCDefine.B_VAL_0_REAL) {
+		return a_stSender.ExTo3D(a_fZ).ExGetScaleVec(a_stScale);
 	}
 
 	/** 비율 벡터를 반환한다 */
@@ -263,8 +263,8 @@ public static partial class CAccessExtension {
 	}
 
 	/** 직교 벡터를 반환한다 */
-	public static Vector3 ExGetOrthogonalVec(this Vector2 a_stSender, EOrthogonal a_eOrthogonal) {
-		return a_stSender.ExTo3D().ExGetOrthogonalVec(a_eOrthogonal);
+	public static Vector3 ExGetOrthogonalVec(this Vector2 a_stSender, EOrthogonal a_eOrthogonal, float a_fZ = KCDefine.B_VAL_0_REAL) {
+		return a_stSender.ExTo3D(a_fZ).ExGetOrthogonalVec(a_eOrthogonal);
 	}
 
 	/** 직교 벡터를 반환한다 */

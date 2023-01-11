@@ -21,11 +21,13 @@ public static partial class CEditorAccess {
 	}
 
 	#region 클래스 변수
-	private static Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>();
+	private static Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>() {
+		[EKey.IS_IMPORT_ASSETS] = false
+	};
 	#endregion // 클래스 변수
 
 	#region 클래스 프로퍼티
-	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode && !CEditorAccess.m_oBoolDict.GetValueOrDefault(EKey.IS_IMPORT_ASSETS);
+	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode && !CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS];
 	#endregion // 클래스 프로퍼티
 
 	#region 클래스 함수
@@ -125,32 +127,17 @@ public static partial class CEditorAccess {
 
 	/** 에셋 임포트가 시작했을 경우 */
 	private static void OnStartAssetImport(string a_oAssetName) {
-		CEditorAccess.m_oBoolDict.ExReplaceVal(EKey.IS_IMPORT_ASSETS, true);
+		CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS] = true;
 	}
 
 	/** 에셋 임포트가 완료 되었을 경우 */
 	private static void OnCompleteAssetImport(string a_oAssetName) {
-		CEditorAccess.m_oBoolDict.ExReplaceVal(EKey.IS_IMPORT_ASSETS, false);
+		CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS] = false;
 	}
 
 	/** 에셋 임포트가 실패했을 경우 */
 	private static void OnFailAssetImport(string a_oAssetName, string a_oErrorMsg) {
-		CEditorAccess.m_oBoolDict.ExReplaceVal(EKey.IS_IMPORT_ASSETS, false);
-	}
-
-	/** 값을 대체한다 */
-	private static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-
-		// 딕셔너리가 존재 할 경우
-		if(a_oSender != null) {
-			// 값 대체가 가능 할 경우
-			if(a_oSender.ContainsKey(a_tKey)) {
-				a_oSender[a_tKey] = a_tVal;
-			} else {
-				a_oSender.Add(a_tKey, a_tVal);
-			}
-		}
+		CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS] = false;
 	}
 	#endregion // 클래스 함수
 }

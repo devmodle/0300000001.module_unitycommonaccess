@@ -77,17 +77,22 @@ public static partial class CAccess {
 			return EDeviceType.PHONE;
 #else
 			switch(Application.platform) {
+				case RuntimePlatform.OSXEditor:
+				case RuntimePlatform.OSXPlayer:
+				case RuntimePlatform.WindowsEditor:
+				case RuntimePlatform.WindowsPlayer: {
+					return EDeviceType.DESKTOP;
+				}
 				case RuntimePlatform.PS4:
 				case RuntimePlatform.PS5:
 				case RuntimePlatform.XboxOne: {
 					return EDeviceType.CONSOLE;
 				}
-				case RuntimePlatform.Switch:
-				case RuntimePlatform.Stadia: {
+				case RuntimePlatform.Switch: {
 					return EDeviceType.HANDHELD_CONSOLE;
 				}
 			}
-
+			
 			return EDeviceType.UNKNOWN;
 #endif // #if UNITY_IOS
 		}

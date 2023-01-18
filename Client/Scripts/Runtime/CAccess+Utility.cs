@@ -58,6 +58,16 @@ public static partial class CAccess {
 		}
 	}
 
+	public static KeyCode CmdKeyCode {
+		get {
+#if UNITY_STANDALONE_WIN
+			return KeyCode.LeftControl;
+#else
+			return KeyCode.LeftCommand;
+#endif // #if UNITY_STANDALONE_WIN
+		}
+	}
+
 	public static EDeviceType DeviceType {
 		get {
 #if UNITY_IOS

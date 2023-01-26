@@ -6,9 +6,10 @@ using UnityEngine.Events;
 
 #if UNITY_EDITOR
 using System.IO;
-using UnityEditor;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEditor;
+using UnityEditor.SceneManagement;
 
 /** 에디터 기본 접근 */
 [InitializeOnLoad]
@@ -140,5 +141,72 @@ public static partial class CEditorAccess {
 		CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS] = false;
 	}
 	#endregion // 클래스 함수
+
+	#region 제네릭 클래스 함수
+	/** 에셋을 탐색한다 */
+	public static T FindAsset<T>(string a_oFilePath) where T : Object {
+		CAccess.Assert(a_oFilePath.ExIsValid());
+		return AssetDatabase.LoadAssetAtPath<T>(a_oFilePath);
+	}
+
+	/** 에셋을 탐색한다 */
+	public static T FindAsset<T>(string a_oFilter, List<string> a_oSearchPathList) where T : Object {
+		var oAssets = CEditorAccess.FindAssets<T>(a_oFilter, a_oSearchPathList);
+		return oAssets.ExIsValid() ? oAssets[KCDefine.B_VAL_0_INT] : null;
+	}
+
+	/** 에셋을 탐색한다 */
+	public static List<T> FindAssets<T>(string a_oFilter, List<string> a_oSearchPathList) where T : Object {
+		var oAssetList = new List<T>();
+		var oAssetGUIDs = AssetDatabase.FindAssets(a_oFilter, a_oSearchPathList.ToArray());
+
+		// 에셋 GUID 가 존재 할 경우
+		if(oAssetGUIDs.ExIsValid()) {
+			for(int i = 0; i < oAssetGUIDs.Length; ++i) {
+				var oAsset = AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(oAssetGUIDs[i]));
+
+				// 에셋이 존재 할 경우
+				if(oAsset != null) {
+					oAssetList.ExAddVal(oAsset);
+				}
+			}
+		}
+
+		return oAssetList;
+	}
+
+	/** 컴포넌트를 탐색한다 */
+	public static List<T> FindComponents<T>(bool a_bIsIncludeInactive = false) where T : Component {
+		var oPrefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+		var oComponentList = new List<T>();
+
+		// 프리팹 모드 일 경우
+		if(oPrefabStage != null) {
+			oPrefabStage.prefabContentsRoot.GetComponentsInChildren<T>(a_bIsIncludeInactive, oComponentList);
+		} else {
+			CAccess.EnumerateComponents<T>((a_oComponent) => {
+				oComponentList.Add(a_oComponent);
+				return true;
+			}, a_bIsIncludeInactive);
+		}
+
+		return oComponentList;
+	}
+	#endregion // 제네릭 클래스 함수
+}
+
+/** 에디터 기본 접근 - 추가 */
+public static partial class CEditorAccess {
+	#region 제네릭 클래스 함수
+	/** 값을 추가한다 */
+	private static void ExAddVal<T>(this List<T> a_oSender, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && !a_oSender.IndexOf(a_tVal).ExIsValidIdx()) {
+			a_oSender.Add(a_tVal);
+		}
+	}
+	#endregion // 제네릭 클래스 함수
 }
 #endif // #if UNITY_EDITOR

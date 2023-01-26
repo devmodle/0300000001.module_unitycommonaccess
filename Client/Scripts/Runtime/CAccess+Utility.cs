@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 #if UNITY_EDITOR
@@ -212,9 +213,37 @@ public static partial class CAccess {
 		a_rLhs = (a_oRhs ?? a_oDefVal) as Sequence;
 	}
 
-	/** DPI 픽셀 => 픽셀로 변환한다 */
-	private static float ExDPIPixelsToPixels(this float a_fSender) {
-		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
+	/** 씬을 순회한다 */
+	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+
+		// 콜백이 존재 할 경우
+		if(a_oCallback != null) {
+			for(int i = 0; i < SceneManager.sceneCount; ++i) {
+				// 씬 순회가 불가능 할 경우
+				if(!a_oCallback(SceneManager.GetSceneAt(i))) {
+					break;
+				}
+			}
+		}
+	}
+
+	/** 객체를 순회한다 */
+	public static void EnumerateRootObjs(System.Func<GameObject, bool> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+
+		// 콜백이 존재 할 경우
+		if(a_oCallback != null) {
+			CAccess.EnumerateScenes((a_stScene) => {
+				bool bIsTrue = true;
+
+				a_stScene.ExEnumerateRootObjs((a_oObj) => {
+					return bIsTrue = a_oCallback(a_oObj);
+				}, a_bIsEnableAssert);
+
+				return bIsTrue;
+			}, a_bIsEnableAssert);
+		}
 	}
 	#endregion // 클래스 함수
 
@@ -232,6 +261,24 @@ public static partial class CAccess {
 		}
 
 		return bIsExistsRes;
+	}
+
+	/** 컴포넌트를 순회한다 */
+	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+
+		// 콜백이 존재 할 경우
+		if(a_oCallback != null) {
+			CAccess.EnumerateScenes((a_stScene) => {
+				bool bIsTrue = true;
+
+				a_stScene.ExEnumerateComponents<T>((a_oComponent) => {
+					return bIsTrue = a_oCallback(a_oComponent);
+				}, a_bIsIncludeInactive, a_bIsEnableAssert);
+
+				return bIsTrue;
+			}, a_bIsEnableAssert);
+		}
 	}
 	#endregion // 제네릭 클래스 함수
 
@@ -261,4 +308,14 @@ public static partial class CAccess {
 	}
 #endif // #if PURCHASE_MODULE_ENABLE
 	#endregion // 조건부 클래스 함수
+}
+
+/** 유틸리티 접근자 - 추가 */
+public static partial class CAccess {
+	#region 클래스 함수
+	/** DPI 픽셀 => 픽셀로 변환한다 */
+	private static float ExDPIPixelsToPixels(this float a_fSender) {
+		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
+	}
+	#endregion // 클래스 함수
 }

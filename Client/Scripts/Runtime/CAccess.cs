@@ -72,20 +72,22 @@ public static partial class CAccess {
 		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.LastOrDefault());
 	}
 
-	/** 조건을 검사한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void Assert(bool a_bIsTrue) {
-		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue);
-	}
+	/** 디렉토리를 순회한다 */
+	public static void EnumerateDirectories(string a_oDirPath, System.Func<List<string>, List<string>, bool> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oCallback != null && a_oDirPath.ExIsValid()));
+		bool bIsValid = a_oCallback != null && a_oDirPath.ExIsValid();
 
-	/** 값을 비교한다 */
-	private static int ExCompare(this float a_fSender, float a_fRhs) {
-		// 값이 동일 할 경우
-		if(a_fSender.ExIsEquals(a_fRhs)) {
-			return KCDefine.B_COMPARE_EQUALS;
+		// 디렉토리가 존재 할 경우
+		if(bIsValid && Directory.Exists(a_oDirPath)) {
+			var oDirPaths = Directory.GetDirectories(a_oDirPath);
+
+			// 디렉토리 순회가 가능 할 경우
+			if(a_oCallback(oDirPaths.ToList(), Directory.GetFiles(a_oDirPath).ToList())) {
+				for(int i = 0; i < oDirPaths.Length; ++i) {
+					CAccess.EnumerateDirectories(oDirPaths[i], a_oCallback);
+				}
+			}
 		}
-
-		return a_fSender.ExIsLess(a_fRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
 	}
 	#endregion // 클래스 함수
 
@@ -107,4 +109,25 @@ public static partial class CAccess {
 		return oEnumStrList;
 	}
 	#endregion // 제네릭 클래스 함수
+}
+
+/** 기본 접근자 - 추가 */
+public static partial class CAccess {
+	#region 클래스 함수
+	/** 조건을 검사한다 */
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	public static void Assert(bool a_bIsTrue) {
+		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue);
+	}
+	
+	/** 값을 비교한다 */
+	private static int ExCompare(this float a_fSender, float a_fRhs) {
+		// 값이 동일 할 경우
+		if(a_fSender.ExIsEquals(a_fRhs)) {
+			return KCDefine.B_COMPARE_EQUALS;
+		}
+
+		return a_fSender.ExIsLess(a_fRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
+	}
+	#endregion // 클래스 함수
 }

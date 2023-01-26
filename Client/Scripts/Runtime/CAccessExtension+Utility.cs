@@ -967,60 +967,21 @@ public static partial class CAccessExtension {
 		}
 	}
 
-	/** 월드 위치를 반환한다 */
-	private static Vector3 ExGetWorldPos(this Vector3 a_stSender, Vector3 a_stScreenSize) {
-		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.x) - KCDefine.B_VAL_1_REAL;
-		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.y) - KCDefine.B_VAL_1_REAL;
+	/** 객체를 순회한다 */
+	public static void ExEnumerateRootObjs(this Scene a_stSender, System.Func<GameObject, bool> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
 
-		float fScreenWidth = a_stScreenSize.y * (CAccess.DeviceScreenSize.x / CAccess.DeviceScreenSize.y);
-		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_REAL), fNormPosY * (a_stScreenSize.y / KCDefine.B_VAL_2_REAL), a_stSender.z) * KCDefine.B_UNIT_SCALE;
-	}
+		// 순회가 가능 할 경우
+		if(a_oCallback != null) {
+			var oObjs = a_stSender.GetRootGameObjects();
 
-	/** 2 차원 => 3 차원으로 변환한다 */
-	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_REAL) {
-		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
-	}
-
-	/** 월드 => 로컬로 변환한다 */
-	private static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oParent, bool a_bIsCoord = true) {
-		return a_bIsCoord ? a_oParent.transform.InverseTransformPoint(a_stSender) : a_oParent.transform.InverseTransformDirection(a_stSender);
-	}
-
-	/** 자식 객체를 탐색한다 */
-	private static GameObject ExFindChild(this Scene a_stSender, string a_oName, bool a_bIsEnableSubName = false) {
-		CAccess.Assert(a_oName.ExIsValid());
-		var oObjs = a_stSender.GetRootGameObjects();
-
-		// 객체가 존재 할 경우
-		if(oObjs.ExIsValid()) {
 			for(int i = 0; i < oObjs.Length; ++i) {
-				var oObj = oObjs[i].ExFindChild(a_oName, true, a_bIsEnableSubName);
-
-				// 자식 객체가 존재 할 경우
-				if(oObj != null) {
-					return oObj;
+				// 객체 순회가 불가능 할 경우
+				if(!a_oCallback(oObjs[i])) {
+					break;
 				}
 			}
 		}
-
-		return null;
-	}
-
-	/** 자식 객체를 탐색한다 */
-	private static GameObject ExFindChild(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
-		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
-		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
-
-		foreach(var oObj in oEnumerator) {
-			bool bIsEquals = oObj.name.Equals(a_oName);
-
-			// 이름이 동일 할 경우
-			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
-				return oObj;
-			}
-		}
-
-		return null;
 	}
 	#endregion // 클래스 함수
 
@@ -1246,6 +1207,41 @@ public static partial class CAccessExtension {
 			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
+
+	/** 컴포넌트를 순회한다 */
+	public static void ExEnumerateComponents<T>(this Scene a_stSender, System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+
+		// 순회가 가능 할 경우
+		if(a_oCallback != null) {
+			a_stSender.ExEnumerateRootObjs((a_oObj) => {
+				bool bIsTrue = true;
+
+				a_oObj.ExEnumerateComponents<T>((a_oComponent) => {
+					return bIsTrue = a_oCallback(a_oComponent);
+				}, a_bIsEnableAssert);
+
+				return bIsTrue;
+			}, a_bIsEnableAssert);
+		}
+	}
+
+	/** 컴포넌트를 순회한다 */
+	public static void ExEnumerateComponents<T>(this GameObject a_oSender, System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCallback != null));
+
+		// 객체가 존재 할 경우
+		if(a_oSender != null && a_oCallback != null) {
+			var oComponents = a_oSender.GetComponentsInChildren<T>(a_bIsIncludeInactive);
+
+			for(int i = 0; i < oComponents.Length; ++i) {
+				// 컴포넌트 순회가 불가능 할 경우
+				if(!a_oCallback(oComponents[i])) {
+					break;
+				}
+			}
+		}
+	}
 	#endregion // 제네릭 클래스 함수
 
 	#region 조건부 클래스 함수
@@ -1279,6 +1275,64 @@ public static partial class CAccessExtension {
 
 /** 유틸리티 접근자 확장 클래스 - 추가 */
 public static partial class CAccessExtension {
+	#region 클래스 함수
+	/** 월드 위치를 반환한다 */
+	private static Vector3 ExGetWorldPos(this Vector3 a_stSender, Vector3 a_stScreenSize) {
+		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.x) - KCDefine.B_VAL_1_REAL;
+		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.y) - KCDefine.B_VAL_1_REAL;
+
+		float fScreenWidth = a_stScreenSize.y * (CAccess.DeviceScreenSize.x / CAccess.DeviceScreenSize.y);
+		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_REAL), fNormPosY * (a_stScreenSize.y / KCDefine.B_VAL_2_REAL), a_stSender.z) * KCDefine.B_UNIT_SCALE;
+	}
+
+	/** 2 차원 => 3 차원으로 변환한다 */
+	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_REAL) {
+		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
+	}
+
+	/** 월드 => 로컬로 변환한다 */
+	private static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oParent, bool a_bIsCoord = true) {
+		return a_bIsCoord ? a_oParent.transform.InverseTransformPoint(a_stSender) : a_oParent.transform.InverseTransformDirection(a_stSender);
+	}
+
+	/** 자식 객체를 탐색한다 */
+	private static GameObject ExFindChild(this Scene a_stSender, string a_oName, bool a_bIsEnableSubName = false) {
+		CAccess.Assert(a_oName.ExIsValid());
+		var oObjs = a_stSender.GetRootGameObjects();
+
+		// 객체가 존재 할 경우
+		if(oObjs.ExIsValid()) {
+			for(int i = 0; i < oObjs.Length; ++i) {
+				var oObj = oObjs[i].ExFindChild(a_oName, true, a_bIsEnableSubName);
+
+				// 자식 객체가 존재 할 경우
+				if(oObj != null) {
+					return oObj;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/** 자식 객체를 탐색한다 */
+	private static GameObject ExFindChild(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
+
+		foreach(var oObj in oEnumerator) {
+			bool bIsEquals = oObj.name.Equals(a_oName);
+
+			// 이름이 동일 할 경우
+			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
+				return oObj;
+			}
+		}
+
+		return null;
+	}
+	#endregion // 클래스 함수
+
 	#region 제네릭 클래스 함수
 	/** 값을 대체한다 */
 	private static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {

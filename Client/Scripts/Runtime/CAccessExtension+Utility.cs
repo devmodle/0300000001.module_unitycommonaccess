@@ -967,6 +967,109 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	/** 자식 객체를 탐색한다 */
+	public static GameObject ExFindChild(this Scene a_stSender, string a_oName, bool a_bIsEnableSubName = false) {
+		CAccess.Assert(a_oName.ExIsValid());
+		var oObjs = a_stSender.GetRootGameObjects();
+
+		// 객체가 존재 할 경우
+		if(oObjs.ExIsValid()) {
+			for(int i = 0; i < oObjs.Length; ++i) {
+				var oObj = oObjs[i].ExFindChild(a_oName, true, a_bIsEnableSubName);
+
+				// 자식 객체가 존재 할 경우
+				if(oObj != null) {
+					return oObj;
+				}
+			}
+		}
+
+		return null;
+	}
+
+	/** 자식 객체를 탐색한다 */
+	public static GameObject ExFindChild(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
+
+		foreach(var oObj in oEnumerator) {
+			bool bIsEquals = oObj.name.Equals(a_oName);
+
+			// 이름이 동일 할 경우
+			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
+				return oObj;
+			}
+		}
+
+		return null;
+	}
+
+	/** 자식 객체를 탐색한다 */
+	public static List<GameObject> ExFindChildren(this Scene a_stSender, string a_oName, bool a_bIsEnableSubName = false) {
+		var oObjs = a_stSender.GetRootGameObjects();
+		var oObjList = new List<GameObject>();
+
+		// 객체가 존재 할 경우
+		if(oObjs.ExIsValid()) {
+			for(int i = 0; i < oObjs.Length; ++i) {
+				var oChildObjList = oObjs[i].ExFindChildren(a_oName, true, a_bIsEnableSubName);
+				oObjList.AddRange(oChildObjList);
+			}
+		}
+
+		return oObjList;
+	}
+
+	/** 자식 객체를 탐색한다 */
+	public static List<GameObject> ExFindChildren(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
+		var oObjList = new List<GameObject>();
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
+
+		foreach(var oObj in oEnumerator) {
+			bool bIsEquals = oObj.name.Equals(a_oName);
+
+			// 이름이 동일 할 경우
+			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
+				oObjList.ExAddVal(oObj);
+			}
+		}
+
+		return oObjList;
+	}
+
+	/** 부모 객체를 탐색한다 */
+	public static GameObject ExFindParent(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.AncestorsAndSelf() : a_oSender.Ancestors();
+
+		foreach(var oObj in oEnumerator) {
+			bool bIsEquals = oObj.name.Equals(a_oName);
+
+			// 이름이 동일 할 경우
+			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
+				return oObj;
+			}
+		}
+
+		return null;
+	}
+
+	/** 부모 객체를 탐색한다 */
+	public static List<GameObject> ExFindParents(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
+		var oObjList = new List<GameObject>();
+		var oEnumerator = a_bIsIncludeSelf ? a_oSender.AncestorsAndSelf() : a_oSender.Ancestors();
+
+		foreach(var oObj in oEnumerator) {
+			bool bIsEquals = oObj.name.Equals(a_oName);
+
+			// 이름이 동일 할 경우
+			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
+				oObjList.ExAddVal(oObj);
+			}
+		}
+
+		return oObjList;
+	}
+
 	/** 객체를 순회한다 */
 	public static void ExEnumerateRootObjs(this Scene a_stSender, System.Func<GameObject, bool> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
@@ -1208,6 +1311,62 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	/** 컴포넌트를 탐색한다 */
+	public static T ExFindComponent<T>(this Scene a_stSender, string a_oName, bool a_bIsIncludeInactive = false, bool a_bIsEnableSubName = false) where T : Component {
+		CAccess.Assert(a_oName.ExIsValid());
+		return a_stSender.ExFindChild(a_oName, a_bIsEnableSubName)?.GetComponentInChildren<T>(a_bIsIncludeInactive);
+	}
+
+	/** 컴포넌트를 탐색한다 */
+	public static T ExFindComponent<T>(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsIncludeInactive = false, bool a_bIsEnableSubName = false) where T : Component {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		return a_oSender?.ExFindChild(a_oName, a_bIsIncludeSelf, a_bIsEnableSubName)?.GetComponentInChildren<T>(a_bIsIncludeInactive);
+	}
+
+	/** 컴포넌트를 탐색한다 */
+	public static List<T> ExFindComponents<T>(this Scene a_stSender, string a_oName, bool a_bIsIncludeInactive = false, bool a_bIsEnableSubName = false) where T : Component {
+		CAccess.Assert(a_oName.ExIsValid());
+		return a_stSender.ExFindChild(a_oName, a_bIsEnableSubName)?.GetComponentsInChildren<T>(a_bIsIncludeInactive).ToList();
+	}
+
+	/** 컴포넌트를 탐색한다 */
+	public static List<T> ExFindComponents<T>(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsIncludeInactive = false, bool a_bIsEnableSubName = false) where T : Component {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		return a_oSender?.ExFindChild(a_oName, a_bIsIncludeSelf, a_bIsEnableSubName)?.GetComponentsInChildren<T>(a_bIsIncludeInactive).ToList();
+	}
+
+	/** 부모 컴포넌트를 탐색한다 */
+	public static T ExFindComponentInParent<T>(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsIncludeInactive = false, bool a_bIsEnableSubName = false) where T : Component {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		return a_oSender?.ExFindParent(a_oName, a_bIsIncludeSelf, a_bIsEnableSubName)?.GetComponentInParent<T>(a_bIsIncludeInactive);
+	}
+
+	/** 부모 컴포넌트를 탐색한다 */
+	public static List<T> ExFindComponentsInParent<T>(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsIncludeInactive = false, bool a_bIsEnableSubName = false) where T : Component {
+		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
+		return a_oSender?.ExFindParent(a_oName, a_bIsIncludeSelf, a_bIsEnableSubName)?.GetComponentsInParent<T>(a_bIsIncludeInactive).ToList();
+	}
+
+	/** 배열을 순회한다 */
+	public static void ExEnumerate<T>(this T[,] a_oSender, System.Func<T, Vector3Int, bool> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCallback != null));
+
+		// 배열이 존재 할 경우
+		if(a_oSender != null && a_oCallback != null) {
+			for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VAL_0_INT); ++i) {
+				for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
+					// 배열 순회가 불가능 할 경우
+					if(!a_oCallback(a_oSender[i, j], new Vector3Int(j, i, KCDefine.B_VAL_0_INT))) {
+						goto EXIT_ENUMERATE;
+					}
+				}
+			}
+		}
+
+EXIT_ENUMERATE:
+		return;
+	}
+
 	/** 컴포넌트를 순회한다 */
 	public static void ExEnumerateComponents<T>(this Scene a_stSender, System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
@@ -1294,59 +1453,5 @@ public static partial class CAccessExtension {
 	private static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oParent, bool a_bIsCoord = true) {
 		return a_bIsCoord ? a_oParent.transform.InverseTransformPoint(a_stSender) : a_oParent.transform.InverseTransformDirection(a_stSender);
 	}
-
-	/** 자식 객체를 탐색한다 */
-	private static GameObject ExFindChild(this Scene a_stSender, string a_oName, bool a_bIsEnableSubName = false) {
-		CAccess.Assert(a_oName.ExIsValid());
-		var oObjs = a_stSender.GetRootGameObjects();
-
-		// 객체가 존재 할 경우
-		if(oObjs.ExIsValid()) {
-			for(int i = 0; i < oObjs.Length; ++i) {
-				var oObj = oObjs[i].ExFindChild(a_oName, true, a_bIsEnableSubName);
-
-				// 자식 객체가 존재 할 경우
-				if(oObj != null) {
-					return oObj;
-				}
-			}
-		}
-
-		return null;
-	}
-
-	/** 자식 객체를 탐색한다 */
-	private static GameObject ExFindChild(this GameObject a_oSender, string a_oName, bool a_bIsIncludeSelf = true, bool a_bIsEnableSubName = false) {
-		CAccess.Assert(a_oSender != null && a_oName.ExIsValid());
-		var oEnumerator = a_bIsIncludeSelf ? a_oSender.DescendantsAndSelf() : a_oSender.Descendants();
-
-		foreach(var oObj in oEnumerator) {
-			bool bIsEquals = oObj.name.Equals(a_oName);
-
-			// 이름이 동일 할 경우
-			if(bIsEquals || (a_bIsEnableSubName && oObj.name.Contains(a_oName))) {
-				return oObj;
-			}
-		}
-
-		return null;
-	}
 	#endregion // 클래스 함수
-
-	#region 제네릭 클래스 함수
-	/** 값을 대체한다 */
-	private static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-
-		// 딕셔너리가 존재 할 경우
-		if(a_oSender != null) {
-			// 값 대체가 가능 할 경우
-			if(a_oSender.ContainsKey(a_tKey)) {
-				a_oSender[a_tKey] = a_tVal;
-			} else {
-				a_oSender.Add(a_tKey, a_tVal);
-			}
-		}
-	}
-	#endregion // 제네릭 클래스 함수
 }

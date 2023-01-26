@@ -194,19 +194,4 @@ public static partial class CEditorAccess {
 	}
 	#endregion // 제네릭 클래스 함수
 }
-
-/** 에디터 기본 접근 - 추가 */
-public static partial class CEditorAccess {
-	#region 제네릭 클래스 함수
-	/** 값을 추가한다 */
-	private static void ExAddVal<T>(this List<T> a_oSender, T a_tVal, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-
-		// 값 추가가 가능 할 경우
-		if(a_oSender != null && !a_oSender.IndexOf(a_tVal).ExIsValidIdx()) {
-			a_oSender.Add(a_tVal);
-		}
-	}
-	#endregion // 제네릭 클래스 함수
-}
 #endif // #if UNITY_EDITOR

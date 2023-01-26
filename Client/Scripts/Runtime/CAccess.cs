@@ -155,4 +155,92 @@ public static partial class CAccess {
 		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
 	}
 	#endregion // 클래스 함수 (CExtension)
+
+	#region 제네릭 클래스 함수 (CExtension)
+	/** 값을 교환한다 */
+	public static void ExSwap<T>(this T[] a_oSender, int a_nIdx01, int a_nIdx02, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender.ExIsValid() && a_oSender.ExIsValidIdx(a_nIdx01) && a_oSender.ExIsValidIdx(a_nIdx02)));
+
+		// 인덱스가 유효 할 경우
+		if(a_oSender.ExIsValid() && (a_oSender.ExIsValidIdx(a_nIdx01) && a_oSender.ExIsValidIdx(a_nIdx02))) {
+			T tTemp = a_oSender[a_nIdx01];
+			a_oSender[a_nIdx01] = a_oSender[a_nIdx02];
+			a_oSender[a_nIdx02] = tTemp;
+		}
+	}
+
+	/** 값을 교환한다 */
+	public static void ExSwap<T>(this T[,] a_oSender, Vector3Int a_stIdx01, Vector3Int a_stIdx02, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender.ExIsValid() && a_oSender.ExIsValidIdx(a_stIdx01) && a_oSender.ExIsValidIdx(a_stIdx02)));
+
+		// 인덱스가 유효 할 경우
+		if(a_oSender.ExIsValid() && (a_oSender.ExIsValidIdx(a_stIdx01) && a_oSender.ExIsValidIdx(a_stIdx02))) {
+			T tTemp = a_oSender[a_stIdx01.y, a_stIdx01.x];
+			a_oSender[a_stIdx01.y, a_stIdx01.x] = a_oSender[a_stIdx02.y, a_stIdx02.x];
+			a_oSender[a_stIdx02.y, a_stIdx02.x] = tTemp;
+		}
+	}
+
+	/** 값을 교환한다 */
+	public static void ExSwap<T>(this List<T> a_oSender, int a_nIdx01, int a_nIdx02, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender.ExIsValid() && a_oSender.ExIsValidIdx(a_nIdx01) && a_oSender.ExIsValidIdx(a_nIdx02)));
+
+		// 인덱스가 유효 할 경우
+		if(a_oSender.ExIsValid() && (a_oSender.ExIsValidIdx(a_nIdx01) && a_oSender.ExIsValidIdx(a_nIdx02))) {
+			T tTemp = a_oSender[a_nIdx01];
+			a_oSender[a_nIdx01] = a_oSender[a_nIdx02];
+			a_oSender[a_nIdx02] = tTemp;
+		}
+	}
+
+	/** 값을 교환한다 */
+	public static void ExSwap<K, V>(this Dictionary<K, V> a_oSender, K a_tKey01, K a_tKey02, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender.ExIsValid() && a_oSender.ContainsKey(a_tKey01) && a_oSender.ContainsKey(a_tKey02)));
+
+		// 키가 유효 할 경우
+		if(a_oSender.ExIsValid() && (a_oSender.ContainsKey(a_tKey01) && a_oSender.ContainsKey(a_tKey02))) {
+			V tTemp = a_oSender[a_tKey01];
+			a_oSender[a_tKey01] = a_oSender[a_tKey02];
+			a_oSender[a_tKey02] = tTemp;
+		}
+	}
+
+	/** 값을 재배치한다 */
+	public static void ExShuffle<T>(this T[] a_oSender, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 재베치가 가능 할 경우
+		if(a_oSender != null) {
+			for(int i = 0; i < a_oSender.Length; ++i) {
+				a_oSender.ExSwap(i, Random.Range(KCDefine.B_VAL_0_INT, a_oSender.Length), a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 값을 재배치한다 */
+	public static void ExShuffle<T>(this List<T> a_oSender, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 재배치가 가능 할 경우
+		if(a_oSender != null) {
+			for(int i = 0; i < a_oSender.Count; ++i) {
+				a_oSender.ExSwap(i, Random.Range(KCDefine.B_VAL_0_INT, a_oSender.Count), a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 값을 재배치한다 */
+	public static void ExShuffle<K, V>(this Dictionary<K, V> a_oSender, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 재배치가 가능 할 경우
+		if(a_oSender != null) {
+			var oKeyList = a_oSender.Keys.ToList();
+
+			for(int i = 0; i < oKeyList.Count; ++i) {
+				a_oSender.ExSwap(oKeyList[i], oKeyList[Random.Range(KCDefine.B_VAL_0_INT, oKeyList.Count)], a_bIsEnableAssert);
+			}
+		}
+	}
+	#endregion // 제네릭 클래스 함수 (CExtension)
 }

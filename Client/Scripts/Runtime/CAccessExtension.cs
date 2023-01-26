@@ -635,7 +635,12 @@ public static partial class CAccessExtension {
 			}
 		}
 	}
+	#endregion // 제네릭 클래스 함수
+}
 
+/** 기본 접근자 확장 클래스 - 추가 */
+public static partial class CAccessExtension {
+	#region 제네릭 클래스 함수
 	/** 값을 교환한다 */
 	private static void Swap<T>(ref T a_tLhs, ref T a_tRhs) {
 		T tTemp = a_tLhs;

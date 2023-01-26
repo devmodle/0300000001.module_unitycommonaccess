@@ -1246,21 +1246,6 @@ public static partial class CAccessExtension {
 			a_oSender.ExFindChild(a_oName, a_bIsIncludeSelf)?.ExSetRaycastTargets<T>(a_bIsEnable, a_bIsEnableAssert);
 		}
 	}
-
-	/** 값을 대체한다 */
-	private static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-
-		// 딕셔너리가 존재 할 경우
-		if(a_oSender != null) {
-			// 값 대체가 가능 할 경우
-			if(a_oSender.ContainsKey(a_tKey)) {
-				a_oSender[a_tKey] = a_tVal;
-			} else {
-				a_oSender.Add(a_tKey, a_tVal);
-			}
-		}
-	}
 	#endregion // 제네릭 클래스 함수
 
 	#region 조건부 클래스 함수
@@ -1290,4 +1275,24 @@ public static partial class CAccessExtension {
 	}
 #endif // #if PURCHASE_MODULE_ENABLE
 	#endregion // 조건부 클래스 함수
+}
+
+/** 유틸리티 접근자 확장 클래스 - 추가 */
+public static partial class CAccessExtension {
+	#region 제네릭 클래스 함수
+	/** 값을 대체한다 */
+	private static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 딕셔너리가 존재 할 경우
+		if(a_oSender != null) {
+			// 값 대체가 가능 할 경우
+			if(a_oSender.ContainsKey(a_tKey)) {
+				a_oSender[a_tKey] = a_tVal;
+			} else {
+				a_oSender.Add(a_tKey, a_tVal);
+			}
+		}
+	}
+	#endregion // 제네릭 클래스 함수
 }

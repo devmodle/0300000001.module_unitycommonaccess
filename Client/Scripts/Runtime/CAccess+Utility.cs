@@ -309,13 +309,3 @@ public static partial class CAccess {
 #endif // #if PURCHASE_MODULE_ENABLE
 	#endregion // 조건부 클래스 함수
 }
-
-/** 유틸리티 접근자 - 추가 */
-public static partial class CAccess {
-	#region 클래스 함수
-	/** DPI 픽셀 => 픽셀로 변환한다 */
-	private static float ExDPIPixelsToPixels(this float a_fSender) {
-		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
-	}
-	#endregion // 클래스 함수
-}

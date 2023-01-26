@@ -982,12 +982,159 @@ public static partial class CAccessExtension {
 
 /** 기본 접근자 확장 클래스 - 추가 */
 public static partial class CAccessExtension {
-	#region 클래스 함수
+	#region 클래스 함수 (CExtension)
 	/** 2 차원 => 3 차원으로 변환한다 */
-	private static Vector3Int ExTo3D(this Vector2Int a_stSender, int a_nZ = KCDefine.B_VAL_0_INT) {
-		return new Vector3Int(a_stSender.x, a_stSender.y, a_nZ);
+	public static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_REAL) {
+		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
 	}
 
+	/** 2 차원 => 3 차원으로 변환한다 */
+	public static Vector3Int ExTo3D(this Vector2Int a_stSender, int a_nZ = KCDefine.B_VAL_0_INT) {
+		return new Vector3Int(a_stSender.x, a_stSender.y, a_nZ);
+	}
+	#endregion // 클래스 함수 (CExtension)
+
+	#region 제네릭 클래스 함수 (CExtension)
+	/** 1 차원 배열 => 2 차원 배열로 변환한다 */
+	public static T[,] ExToMultiArray<T>(this T[] a_oSender, int a_nNumRows, int a_nNumCols) {
+		CAccess.Assert(a_oSender != null && a_nNumRows > KCDefine.B_VAL_0_INT && a_nNumCols > KCDefine.B_VAL_0_INT);
+		var oVals = new T[a_nNumRows, a_nNumCols];
+
+		a_oSender.ExCopyTo(oVals, (a_tVal) => a_tVal);
+		return oVals;
+	}
+
+	/** 2 차원 배열 => 1 차원 배열로 변환한다 */
+	public static T[] ExToSingleArray<T>(this T[,] a_oSender) {
+		CAccess.Assert(a_oSender.ExIsValid());
+		var oVals = new T[a_oSender.Length];
+
+		a_oSender.ExCopyTo(oVals, (a_tVal) => a_tVal);
+		return oVals;
+	}
+
+	/** 1 차원 배열 => 2 차원 배열로 복사한다 */
+	public static void ExCopyTo<T01, T02>(this T01[] a_oSender, T02[,] a_oDestVals, System.Func<T01, T02> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && a_oDestVals != null) {
+			for(int i = 0; i < a_oSender.Length; ++i) {
+				a_oDestVals.ExSetVal(new Vector3Int(i % a_oDestVals.GetLength(KCDefine.B_VAL_1_INT), i / a_oDestVals.GetLength(KCDefine.B_VAL_1_INT), KCDefine.B_VAL_0_INT), a_oCallback(a_oSender[i]), a_bIsEnableAssert);
+			}
+		}
+	}
+
+	/** 2 차원 배열 => 1 차원 배열로 복사한다 */
+	public static void ExCopyTo<T01, T02>(this T01[,] a_oSender, T02[] a_oDestVals, System.Func<T01, T02> a_oCallback, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && a_oDestVals != null) {
+			for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VAL_0_INT); ++i) {
+				for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
+					a_oDestVals.ExSetVal((i * a_oSender.GetLength(KCDefine.B_VAL_1_INT)) + j, a_oCallback(a_oSender[i, j]), a_bIsEnableAssert);
+				}
+			}
+		}
+	}
+
+	/** 셋을 복사한다 */
+	public static void ExCopyTo<T01, T02>(this HashSet<T01> a_oSender, HashSet<T02> a_oDestValSet, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValSet != null && a_oCallback != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && (a_oDestValSet != null && a_oCallback != null)) {
+			// 클리어 모드 일 경우
+			if(a_bIsClear) {
+				a_oDestValSet.Clear();
+			}
+
+			foreach(var tVal in a_oSender) {
+				a_oDestValSet.Add(a_oCallback(tVal));
+			}
+		}
+	}
+
+	/** 리스트를 복사한다 */
+	public static void ExCopyTo<T01, T02>(this List<T01> a_oSender, List<T02> a_oDestValList, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValList != null && a_oCallback != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && (a_oDestValList != null && a_oCallback != null)) {
+			// 클리어 모드 일 경우
+			if(a_bIsClear) {
+				a_oDestValList.Clear();
+			}
+
+			for(int i = 0; i < a_oSender.Count; ++i) {
+				a_oDestValList.Add(a_oCallback(a_oSender[i]));
+			}
+		}
+	}
+
+	/** 스택을 복사한다 */
+	public static void ExCopyTo<T01, T02>(this Stack<T01> a_oSender, Stack<T02> a_oDestValStack, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValStack != null && a_oCallback != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && (a_oDestValStack != null && a_oCallback != null)) {
+			// 클리어 모드 일 경우
+			if(a_bIsClear) {
+				a_oDestValStack.Clear();
+			}
+
+			var oValStack = new Stack<T01>();
+
+			while(a_oSender.ExIsValid()) {
+				oValStack.Push(a_oSender.Pop());
+			}
+
+			while(oValStack.ExIsValid()) {
+				a_oDestValStack.Push(a_oCallback(oValStack.Pop()));
+			}
+		}
+	}
+
+	/** 큐를 복사한다 */
+	public static void ExCopyTo<T01, T02>(this Queue<T01> a_oSender, Queue<T02> a_oDestValQueue, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValQueue != null && a_oCallback != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && (a_oDestValQueue != null && a_oCallback != null)) {
+			// 클리어 모드 일 경우
+			if(a_bIsClear) {
+				a_oDestValQueue.Clear();
+			}
+
+			while(a_oSender.ExIsValid()) {
+				a_oDestValQueue.Enqueue(a_oCallback(a_oSender.Dequeue()));
+			}
+		}
+	}
+
+	/** 딕셔너리를 복사한다 */
+	public static void ExCopyTo<K, V01, V02>(this Dictionary<K, V01> a_oSender, Dictionary<K, V02> a_oDestValDict, System.Func<V01, V02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValDict != null && a_oCallback != null));
+
+		// 복사가 가능 할 경우
+		if(a_oSender != null && (a_oDestValDict != null && a_oCallback != null)) {
+			// 클리어 모드 일 경우
+			if(a_bIsClear) {
+				a_oDestValDict.Clear();
+			}
+
+			foreach(var stKeyVal in a_oSender) {
+				a_oDestValDict.TryAdd(stKeyVal.Key, a_oCallback(stKeyVal.Value));
+			}
+		}
+	}
+	#endregion // 제네릭 클래스 함수 (CExtension)
+}
+
+/** 기본 접근자 확장 클래스 - 기타 */
+public static partial class CAccessExtension {
+	#region 클래스 함수
 	/** 값을 교환한다 */
 	private static void LessCorrectSwap(ref float a_fLhs, ref float a_fRhs) {
 		// 보정이 필요 할 경우
@@ -1019,29 +1166,6 @@ public static partial class CAccessExtension {
 		if(a_tLhs.CompareTo(a_tRhs) > KCDefine.B_COMPARE_EQUALS) {
 			CAccessExtension.Swap(ref a_tLhs, ref a_tRhs);
 		}
-	}
-
-	/** 2 차원 배열 => 1 차원 배열로 복사한다 */
-	private static void ExCopyTo<T01, T02>(this T01[,] a_oSender, T02[] a_oDestVals, System.Func<T01, T02> a_oCallback, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
-
-		// 복사가 가능 할 경우
-		if(a_oSender != null && a_oDestVals != null) {
-			for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VAL_0_INT); ++i) {
-				for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
-					a_oDestVals.ExSetVal((i * a_oSender.GetLength(KCDefine.B_VAL_1_INT)) + j, a_oCallback(a_oSender[i, j]), a_bIsEnableAssert);
-				}
-			}
-		}
-	}
-
-	/** 2 차원 배열 => 1 차원 배열로 변환한다 */
-	private static T[] ExToSingleArray<T>(this T[,] a_oSender) {
-		CAccess.Assert(a_oSender.ExIsValid());
-		var oVals = new T[a_oSender.Length];
-
-		a_oSender.ExCopyTo(oVals, (a_tVal) => a_tVal);
-		return oVals;
 	}
 	#endregion // 제네릭 클래스 함수
 }

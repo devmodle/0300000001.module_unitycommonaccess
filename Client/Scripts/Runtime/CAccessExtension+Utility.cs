@@ -1086,6 +1086,15 @@ public static partial class CAccessExtension {
 			}
 		}
 	}
+
+	/** 월드 위치를 반환한다 */
+	private static Vector3 ExGetWorldPos(this Vector3 a_stSender, Vector3 a_stScreenSize) {
+		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.x) - KCDefine.B_VAL_1_REAL;
+		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.y) - KCDefine.B_VAL_1_REAL;
+
+		float fScreenWidth = a_stScreenSize.y * (CAccess.DeviceScreenSize.x / CAccess.DeviceScreenSize.y);
+		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_REAL), fNormPosY * (a_stScreenSize.y / KCDefine.B_VAL_2_REAL), a_stSender.z) * KCDefine.B_UNIT_SCALE;
+	}
 	#endregion // 클래스 함수
 
 	#region 제네릭 클래스 함수
@@ -1434,24 +1443,17 @@ EXIT_ENUMERATE:
 
 /** 유틸리티 접근자 확장 클래스 - 추가 */
 public static partial class CAccessExtension {
-	#region 클래스 함수
-	/** 월드 위치를 반환한다 */
-	private static Vector3 ExGetWorldPos(this Vector3 a_stSender, Vector3 a_stScreenSize) {
-		float fNormPosX = ((a_stSender.x * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.x) - KCDefine.B_VAL_1_REAL;
-		float fNormPosY = ((a_stSender.y * KCDefine.B_VAL_2_REAL) / CAccess.DeviceScreenSize.y) - KCDefine.B_VAL_1_REAL;
-
-		float fScreenWidth = a_stScreenSize.y * (CAccess.DeviceScreenSize.x / CAccess.DeviceScreenSize.y);
-		return new Vector3(fNormPosX * (fScreenWidth / KCDefine.B_VAL_2_REAL), fNormPosY * (a_stScreenSize.y / KCDefine.B_VAL_2_REAL), a_stSender.z) * KCDefine.B_UNIT_SCALE;
-	}
-
-	/** 2 차원 => 3 차원으로 변환한다 */
-	private static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_REAL) {
-		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);
+	#region 클래스 함수 (CExtension)
+	/** 월드 => 로컬로 변환한다 */
+	public static Vector3 ExToLocal(this Vector2 a_stSender, GameObject a_oParent, bool a_bIsCoord = true, float a_fZ = KCDefine.B_VAL_0_REAL) {
+		CAccess.Assert(a_oParent != null);
+		return a_stSender.ExTo3D(a_fZ).ExToLocal(a_oParent, a_bIsCoord);
 	}
 
 	/** 월드 => 로컬로 변환한다 */
-	private static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oParent, bool a_bIsCoord = true) {
-		return a_bIsCoord ? a_oParent.transform.InverseTransformPoint(a_stSender) : a_oParent.transform.InverseTransformDirection(a_stSender);
+	public static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oParent, bool a_bIsCoord = true) {
+		CAccess.Assert(a_oParent != null);
+		return a_oParent.transform.worldToLocalMatrix * new Vector4(a_stSender.x, a_stSender.y, a_stSender.z, a_bIsCoord ? KCDefine.B_VAL_1_REAL : KCDefine.B_VAL_0_REAL);
 	}
-	#endregion // 클래스 함수
+	#endregion // 클래스 함수 (CExtension)
 }

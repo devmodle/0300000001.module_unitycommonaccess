@@ -18,6 +18,12 @@ public static partial class CAccess {
 	#endregion // 클래스 프로퍼티
 
 	#region 클래스 함수
+	/** 조건을 검사한다 */
+	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
+	public static void Assert(bool a_bIsTrue) {
+		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue);
+	}
+
 	/** 유저 문자열을 반환한다 */
 	public static string GetUserStr(EUserType a_eUserType) {
 		// 유저 타입이 유효하지 않을 경우
@@ -113,15 +119,9 @@ public static partial class CAccess {
 
 /** 기본 접근자 - 추가 */
 public static partial class CAccess {
-	#region 클래스 함수
-	/** 조건을 검사한다 */
-	[Conditional("DEBUG"), Conditional("DEVELOPMENT_BUILD")]
-	public static void Assert(bool a_bIsTrue) {
-		UnityEngine.Assertions.Assert.IsTrue(a_bIsTrue);
-	}
-	
+	#region 클래스 함수 (CExtension)
 	/** 값을 비교한다 */
-	private static int ExCompare(this float a_fSender, float a_fRhs) {
+	public static int ExCompare(this float a_fSender, float a_fRhs) {
 		// 값이 동일 할 경우
 		if(a_fSender.ExIsEquals(a_fRhs)) {
 			return KCDefine.B_COMPARE_EQUALS;
@@ -129,5 +129,30 @@ public static partial class CAccess {
 
 		return a_fSender.ExIsLess(a_fRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
 	}
-	#endregion // 클래스 함수
+
+	/** 값을 비교한다 */
+	public static int ExCompare(this double a_dblSender, double a_dblRhs) {
+		// 값이 동일 할 경우
+		if(a_dblSender.ExIsEquals(a_dblRhs)) {
+			return KCDefine.B_COMPARE_EQUALS;
+		}
+
+		return a_dblSender.ExIsLess(a_dblRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
+	}
+
+	/** 시간을 비교한다 */
+	public static int ExCompare(this System.DateTime a_stSender, System.DateTime a_stRhs) {
+		return a_stSender.ExGetDeltaTime(a_stRhs).ExCompare(KCDefine.B_VAL_0_REAL);
+	}
+
+	/** DPI 픽셀 => 픽셀로 변환한다 */
+	public static float ExDPIPixelsToPixels(this int a_nSender) {
+		return a_nSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
+	}
+
+	/** DPI 픽셀 => 픽셀로 변환한다 */
+	public static float ExDPIPixelsToPixels(this float a_fSender) {
+		return a_fSender * (CAccess.ScreenDPI / KCDefine.B_DEF_SCREEN_DPI);
+	}
+	#endregion // 클래스 함수 (CExtension)
 }

@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
+
+using System.Linq;
 using UnityEngine.U2D;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
-using DG.Tweening;
+
 using Unity.Linq;
+using DG.Tweening;
 using EnhancedUI.EnhancedScroller;
 
 #if UNITY_EDITOR

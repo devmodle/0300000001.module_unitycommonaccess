@@ -177,7 +177,9 @@ public static partial class CAccess {
 	/** 독립 플랫폼 이름을 반환한다 */
 	public static string GetStandaloneName(EStandaloneType a_eType) {
 		switch(a_eType) {
+			case EStandaloneType.MAC_EDITOR: return KCDefine.B_PLATFORM_N_STANDALONE_MAC_EDITOR;
 			case EStandaloneType.WNDS_STEAM: return KCDefine.B_PLATFORM_N_STANDALONE_WNDS_STEAM;
+			case EStandaloneType.WNDS_EDITOR: return KCDefine.B_PLATFORM_N_STANDALONE_WNDS_EDITOR;
 		}
 
 		return KCDefine.B_PLATFORM_N_STANDALONE_MAC_STEAM;

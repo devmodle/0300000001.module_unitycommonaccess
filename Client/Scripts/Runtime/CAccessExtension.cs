@@ -305,17 +305,23 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_0_INT)) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_1_INT));
 	}
-
-	/** 인덱스 유효 여부를 검사한다 */
-	public static bool ExIsValidIdx<T>(this T[,,] a_oSender, Vector3Int a_stIdx) {
-		CAccess.Assert(a_oSender != null);
-		return (a_stIdx.z > KCDefine.B_IDX_INVALID && a_stIdx.z < a_oSender.GetLength(KCDefine.B_VAL_0_INT)) && (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_1_INT)) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_2_INT));
-	}
-
+	
 	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx<T>(this List<T> a_oSender, int a_nIdx) {
 		CAccess.Assert(a_oSender != null);
 		return a_nIdx > KCDefine.B_IDX_INVALID && a_nIdx < a_oSender.Count;
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx<T>(this List<T[]> a_oSender, Vector3Int a_stIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx.y) && a_oSender[a_stIdx.y].ExIsValidIdx(a_stIdx.x);
+	}
+
+	/** 인덱스 유효 여부를 검사한다 */
+	public static bool ExIsValidIdx<T>(this List<T[,]> a_oSender, Vector3Int a_stIdx) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx.z) && a_oSender[a_stIdx.z].ExIsValidIdx(a_stIdx);
 	}
 
 	/** 인덱스 유효 여부를 검사한다 */
@@ -397,15 +403,39 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 반환한다 */
+	public static T ExGetVal<T>(this T[] a_oSender, System.Predicate<T> a_oCompare, T a_tDefVal) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+
+		for(int i = 0; i < a_oSender.Length; ++i) {
+			// 값이 존재 할 경우
+			if(a_oCompare(a_oSender[i])) {
+				return a_oSender[i];
+			}
+		}
+
+		return a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
 	public static T ExGetVal<T>(this T[,] a_oSender, Vector3Int a_stIdx, T a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y, a_stIdx.x] : a_tDefVal;
 	}
 
 	/** 값을 반환한다 */
-	public static T ExGetVal<T>(this T[,,] a_oSender, Vector3Int a_stIdx, T a_tDefVal) {
+	public static T ExGetVal<T>(this T[,] a_oSender, System.Predicate<T> a_oCompare, T a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.z, a_stIdx.y, a_stIdx.x] : a_tDefVal;
+
+		for(int i = 0; i < a_oSender.GetLength(KCDefine.B_VAL_0_INT); ++i) {
+			for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
+				// 값이 존재 할 경우
+				if(a_oCompare(a_oSender[i, j])) {
+					return a_oSender[i, j];
+				}
+			}
+		}
+
+		return a_tDefVal;
 	}
 
 	/** 값을 반환한다 */
@@ -418,6 +448,24 @@ public static partial class CAccessExtension {
 	public static T ExGetVal<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare, T a_tDefVal) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
 		return a_oSender.ExGetVal(a_oSender.FindIndex(a_oCompare), a_tDefVal);
+	}
+
+	/** 값을 반환한다 */
+	public static T ExGetVal<T>(this List<T[]> a_oSender, Vector3Int a_stIdx, T a_tDefVal) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y][a_stIdx.x] : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
+	public static T ExGetVal<T>(this List<T[,]> a_oSender, Vector3Int a_stIdx, T a_tDefVal) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.z][a_stIdx.y, a_stIdx.x] : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
+	public static T ExGetVal<T>(this List<List<T>> a_oSender, Vector3Int a_stIdx, T a_tDefVal) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y][a_stIdx.x] : a_tDefVal;
 	}
 
 	/** 값을 반환한다 */

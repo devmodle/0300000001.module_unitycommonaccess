@@ -78,7 +78,7 @@ public static partial class CAccess {
 
 	public static KeyCode CmdKeyCode {
 		get {
-#if UNITY_STANDALONE_WIN
+#if UNITY_EDITOR_WIN
 			return KeyCode.LeftControl;
 #else
 			return KeyCode.LeftCommand;

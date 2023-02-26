@@ -80,9 +80,11 @@ public static partial class CAccess {
 		get {
 #if UNITY_EDITOR_WIN
 			return KeyCode.LeftControl;
-#else
+#elif UNITY_EDITOR_OSX
 			return KeyCode.LeftCommand;
-#endif // #if UNITY_STANDALONE_WIN
+#else
+			return (Application.platform == RuntimePlatform.WindowsPlayer) ? KeyCode.LeftControl : KeyCode.LeftCommand;
+#endif // #if UNITY_EDITOR_WIN
 		}
 	}
 

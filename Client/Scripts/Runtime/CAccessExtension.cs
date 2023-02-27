@@ -469,6 +469,14 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 반환한다 */
+	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare, V a_tDefVal) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+		var stResult = a_oSender.ExFindVal(a_oCompare);
+
+		return stResult.Item1 ? a_oSender[stResult.Item2] : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
 	public static V ExGetVal<V>(this Dictionary<int, Dictionary<int, V>> a_oSender, Vector3Int a_stIdx, V a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.y][a_stIdx.x] : a_tDefVal;
@@ -478,14 +486,6 @@ public static partial class CAccessExtension {
 	public static V ExGetVal<V>(this Dictionary<int, Dictionary<int, Dictionary<int, V>>> a_oSender, Vector3Int a_stIdx, V a_tDefVal) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.z][a_stIdx.y][a_stIdx.x] : a_tDefVal;
-	}
-
-	/** 값을 반환한다 */
-	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare, V a_tDefVal) {
-		CAccess.Assert(a_oSender != null && a_oCompare != null);
-		var stResult = a_oSender.ExFindVal(a_oCompare);
-
-		return stResult.Item1 ? a_oSender[stResult.Item2] : a_tDefVal;
 	}
 
 	/** 값을 반환한다 */
@@ -590,6 +590,36 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	/** 값을 반환한다 */
+	public static void ExSetVal<T>(this List<T[]> a_oSender, Vector3Int a_stIdx, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 인덱스가 유효 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_stIdx)) {
+			a_oSender[a_stIdx.y][a_stIdx.x] = a_tVal;
+		}
+	}
+
+	/** 값을 반환한다 */
+	public static void ExSetVal<T>(this List<T[,]> a_oSender, Vector3Int a_stIdx, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 인덱스가 유효 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_stIdx)) {
+			a_oSender[a_stIdx.z][a_stIdx.y, a_stIdx.x] = a_tVal;
+		}
+	}
+
+	/** 값을 반환한다 */
+	public static void ExSetVal<T>(this List<List<T>> a_oSender, Vector3Int a_stIdx, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 인덱스가 유효 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_stIdx)) {
+			a_oSender[a_stIdx.y][a_stIdx.x] = a_tVal;
+		}
+	}
+
 	/** 값을 변경한다 */
 	public static void ExSetVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
@@ -597,6 +627,36 @@ public static partial class CAccessExtension {
 		// 키가 유효 할 경우
 		if(a_oSender != null && a_oSender.ContainsKey(a_tKey)) {
 			a_oSender[a_tKey] = a_tVal;
+		}
+	}
+
+	/** 값을 반환한다 */
+	public static void ExSetVal<V>(this Dictionary<int, V> a_oSender, int a_nIdx, V a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 키가 유효 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_nIdx)) {
+			a_oSender[a_nIdx] = a_tVal;
+		}
+	}
+
+	/** 값을 반환한다 */
+	public static void ExSetVal<V>(this Dictionary<int, Dictionary<int, V>> a_oSender, Vector3Int a_stIdx, V a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 키가 유효 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_stIdx)) {
+			a_oSender[a_stIdx.y][a_stIdx.x] = a_tVal;
+		}
+	}
+
+	/** 값을 반환한다 */
+	public static void ExSetVal<V>(this Dictionary<int, Dictionary<int, Dictionary<int, V>>> a_oSender, Vector3Int a_stIdx, V a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 키가 유효 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_stIdx)) {
+			a_oSender[a_stIdx.z][a_stIdx.y][a_stIdx.x] = a_tVal;
 		}
 	}
 
@@ -711,6 +771,16 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 추가한다 */
+	public static void ExAddVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, System.Predicate<KeyValuePair<K, V>> a_oCompare, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCompare != null));
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && a_oCompare != null && !a_oSender.ExFindVal(a_oCompare).Item1) {
+			a_oSender.TryAdd(a_tKey, a_tVal);
+		}
+	}
+
+	/** 값을 추가한다 */
 	public static void ExAddVals<T>(this List<T> a_oSender, List<T> a_oValList, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oValList != null));
 
@@ -731,16 +801,6 @@ public static partial class CAccessExtension {
 			for(int i = 0; i < a_oValList.Count; ++i) {
 				a_oSender.ExAddVal(a_oValList[i], a_oCompare, a_bIsEnableAssert);
 			}
-		}
-	}
-
-	/** 값을 추가한다 */
-	public static void ExAddVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, System.Predicate<KeyValuePair<K, V>> a_oCompare, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCompare != null));
-
-		// 값 추가가 가능 할 경우
-		if(a_oSender != null && a_oCompare != null && !a_oSender.ExFindVal(a_oCompare).Item1) {
-			a_oSender.TryAdd(a_tKey, a_tVal);
 		}
 	}
 
@@ -769,16 +829,6 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 제거한다 */
-	public static void ExRemoveValAt<T>(this List<T> a_oSender, int a_nIdx, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-
-		// 값 제거가 가능 할 경우
-		if(a_oSender != null && a_oSender.ExIsValidIdx(a_nIdx)) {
-			a_oSender.RemoveAt(a_nIdx);
-		}
-	}
-
-	/** 값을 제거한다 */
 	public static void ExRemoveVal<T>(this List<T> a_oSender, T a_tVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
@@ -795,6 +845,41 @@ public static partial class CAccessExtension {
 		// 값 제거가 가능 할 경우
 		if(a_oSender != null && a_oCompare != null) {
 			a_oSender.ExRemoveValAt(a_oSender.FindIndex(a_oCompare), a_bIsEnableAssert);
+		}
+	}
+
+	/** 값을 제거한다 */
+	public static void ExRemoveVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 제거가 가능 할 경우
+		if(a_oSender != null && a_oSender.ContainsKey(a_tKey)) {
+			a_oSender.Remove(a_tKey);
+		}
+	}
+
+	/** 값을 제거한다 */
+	public static void ExRemoveVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCompare != null));
+
+		// 딕셔너리가 존재 할 경우
+		if(a_oSender != null && a_oCompare != null) {
+			var stResult = a_oSender.ExFindVal(a_oCompare);
+
+			// 값 제거가 가능 할 경우
+			if(stResult.Item1) {
+				a_oSender.ExRemoveVal(stResult.Item2);
+			}
+		}
+	}
+
+	/** 값을 제거한다 */
+	public static void ExRemoveValAt<T>(this List<T> a_oSender, int a_nIdx, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 제거가 가능 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_nIdx)) {
+			a_oSender.RemoveAt(a_nIdx);
 		}
 	}
 
@@ -821,31 +906,6 @@ public static partial class CAccessExtension {
 			do {
 				a_oSender.ExRemoveValAt(nIdx, a_bIsEnableAssert);
 			} while((nIdx = a_oSender.FindIndex(a_oCompare)).ExIsValidIdx());
-		}
-	}
-
-	/** 값을 제거한다 */
-	public static void ExRemoveVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
-
-		// 값 제거가 가능 할 경우
-		if(a_oSender != null && a_oSender.ContainsKey(a_tKey)) {
-			a_oSender.Remove(a_tKey);
-		}
-	}
-
-	/** 값을 제거한다 */
-	public static void ExRemoveVal<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCompare != null));
-
-		// 딕셔너리가 존재 할 경우
-		if(a_oSender != null && a_oCompare != null) {
-			var stResult = a_oSender.ExFindVal(a_oCompare);
-
-			// 값 제거가 가능 할 경우
-			if(stResult.Item1) {
-				a_oSender.ExRemoveVal(stResult.Item2);
-			}
 		}
 	}
 
@@ -940,18 +1000,6 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 대체한다 */
-	public static void ExReplaceVals<T>(this List<T> a_oSender, List<(T, T)> a_oValInfoList, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oValInfoList != null));
-
-		// 값 대체가 가능 할 경우
-		if(a_oSender != null && a_oValInfoList != null) {
-			for(int i = 0; i < a_oValInfoList.Count; ++i) {
-				a_oSender.ExReplaceVal(a_oValInfoList[i].Item1, a_oValInfoList[i].Item2, a_bIsEnableAssert);
-			}
-		}
-	}
-
-	/** 값을 대체한다 */
 	public static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
@@ -979,6 +1027,18 @@ public static partial class CAccessExtension {
 				a_oSender[stResult.Item2] = a_tVal;
 			} else {
 				a_oSender.Add(stResult.Item2, a_tVal);
+			}
+		}
+	}
+
+	/** 값을 대체한다 */
+	public static void ExReplaceVals<T>(this List<T> a_oSender, List<(T, T)> a_oValInfoList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oValInfoList != null));
+
+		// 값 대체가 가능 할 경우
+		if(a_oSender != null && a_oValInfoList != null) {
+			for(int i = 0; i < a_oValInfoList.Count; ++i) {
+				a_oSender.ExReplaceVal(a_oValInfoList[i].Item1, a_oValInfoList[i].Item2, a_bIsEnableAssert);
 			}
 		}
 	}

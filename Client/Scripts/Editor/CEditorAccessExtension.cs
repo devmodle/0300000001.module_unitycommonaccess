@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,17 +35,17 @@ public static partial class CEditorAccessExtension {
 		return a_oSender.IsCompleted && a_oSender.Status == StatusCode.Success;
 	}
 
-	/** 정적 에디터 플래그를 설정한다 */
-	public static void ExSetStaticEditorFlags(this GameObject a_oSender, StaticEditorFlags a_eFlags, bool a_bIsEnableAssert = true) {
+	/** 정적 플래그를 변경한다 */
+	public static void ExSetStaticEditorFlags(this GameObject a_oSender, StaticEditorFlags a_eFlags, bool a_bIsResetChildren = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
-			var oEnumerator = a_oSender.DescendantsAndSelf();
+			GameObjectUtility.SetStaticEditorFlags(a_oSender, a_eFlags);
 
-			foreach(var oObj in oEnumerator) {
-				// 플래그 설정이 필요 할 경우
-				if(GameObjectUtility.GetStaticEditorFlags(oObj) != a_eFlags) {
+			// 자식 객체 리셋 모드 일 경우
+			if(a_bIsResetChildren) {
+				foreach(var oObj in a_oSender.Descendants()) {
 					GameObjectUtility.SetStaticEditorFlags(oObj, a_eFlags);
 				}
 			}

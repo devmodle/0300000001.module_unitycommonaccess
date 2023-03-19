@@ -33,6 +33,11 @@ public static partial class CAccessExtension {
 	}
 
 	/** 유효 여부를 검사한다 */
+	public static bool ExIsValid(this EGridType a_eSender) {
+		return a_eSender > EGridType.NONE && a_eSender < EGridType.MAX_VAL;
+	}
+
+	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this EUserType a_eSender) {
 		return a_eSender > EUserType.NONE && a_eSender < EUserType.MAX_VAL;
 	}

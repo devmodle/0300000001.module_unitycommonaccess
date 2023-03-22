@@ -1109,6 +1109,16 @@ public static partial class CAccessExtension {
 /** 기본 접근자 확장 클래스 - 추가 */
 public static partial class CAccessExtension {
 	#region 클래스 함수 (CExtension)
+	/** 3 차원 => 2 차원으로 변환한다 */
+	public static Vector2 ExTo2D(this Vector3 a_stSender) {
+		return new Vector2(a_stSender.x, a_stSender.y);
+	}
+
+	/** 3 차원 => 2 차원으로 변환한다 */
+	public static Vector2Int ExTo2D(this Vector3Int a_stSender) {
+		return new Vector2Int(a_stSender.x, a_stSender.y);
+	}
+
 	/** 2 차원 => 3 차원으로 변환한다 */
 	public static Vector3 ExTo3D(this Vector2 a_stSender, float a_fZ = KCDefine.B_VAL_0_REAL) {
 		return new Vector3(a_stSender.x, a_stSender.y, a_fZ);

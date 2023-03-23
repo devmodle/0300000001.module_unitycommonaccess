@@ -212,32 +212,32 @@ public static partial class CAccessExtension {
 		return a_stSender;
 	}
 
-	/** 일반 색상을 반환한다 */
-	public static ColorBlock ExGetNormColor(this ColorBlock a_stSender, Color a_stColor) {
+	/** 일반 색상 블럭을 반환한다 */
+	public static ColorBlock ExGetNormColorBlock(this ColorBlock a_stSender, Color a_stColor) {
 		a_stSender.normalColor = a_stColor;
 		return a_stSender;
 	}
 
-	/** 프레스 색상을 반환한다 */
-	public static ColorBlock ExGetPressColor(this ColorBlock a_stSender, Color a_stColor) {
+	/** 프레스 색상 블럭을 반환한다 */
+	public static ColorBlock ExGetPressColorBlock(this ColorBlock a_stSender, Color a_stColor) {
 		a_stSender.pressedColor = a_stColor;
 		return a_stSender;
 	}
 
-	/** 선택 색상을 반환한다 */
-	public static ColorBlock ExGetSelColor(this ColorBlock a_stSender, Color a_stColor) {
+	/** 선택 색상 블럭을 반환한다 */
+	public static ColorBlock ExGetSelColorBlock(this ColorBlock a_stSender, Color a_stColor) {
 		a_stSender.selectedColor = a_stColor;
 		return a_stSender;
 	}
 
-	/** 하이라이트 색상을 반환한다 */
-	public static ColorBlock ExGetHighlightColor(this ColorBlock a_stSender, Color a_stColor) {
+	/** 하이라이트 색상 블럭을 반환한다 */
+	public static ColorBlock ExGetHighlightColorBlock(this ColorBlock a_stSender, Color a_stColor) {
 		a_stSender.highlightedColor = a_stColor;
 		return a_stSender;
 	}
 
-	/** 비활성 색상을 반환한다 */
-	public static ColorBlock ExGetDisableColor(this ColorBlock a_stSender, Color a_stColor) {
+	/** 비활성 색상 블럭을 반환한다 */
+	public static ColorBlock ExGetDisableColorBlock(this ColorBlock a_stSender, Color a_stColor) {
 		a_stSender.disabledColor = a_stColor;
 		return a_stSender;
 	}
@@ -255,15 +255,15 @@ public static partial class CAccessExtension {
 		return a_stSender.ExGetRecordInfo(a_stSender.m_nIntRecord + a_nIntRecord, a_stSender.m_dblRealRecord + a_dblRealRecord);
 	}
 
-	/** 순서 정보를 반환한다 */
-	public static STSortingOrderInfo ExGetOrderInfo(this STSortingOrderInfo a_stSender, int a_nOrder) {
+	/** 정렬 순서 정보를 반환한다 */
+	public static STSortingOrderInfo ExGetSortingOrderInfo(this STSortingOrderInfo a_stSender, int a_nOrder) {
 		a_stSender.m_nOrder = a_nOrder;
 		return a_stSender;
 	}
 
-	/** 순서 정보를 반환한다 */
-	public static STSortingOrderInfo ExGetExtraOrderInfo(this STSortingOrderInfo a_stSender, int a_nOrder) {
-		return a_stSender.ExGetOrderInfo(a_stSender.m_nOrder + a_nOrder);
+	/** 정렬 순서 정보를 반환한다 */
+	public static STSortingOrderInfo ExGetExtraSortingOrderInfo(this STSortingOrderInfo a_stSender, int a_nOrder) {
+		return a_stSender.ExGetSortingOrderInfo(a_stSender.m_nOrder + a_nOrder);
 	}
 
 	/** 레이어 마스크를 반환한다 */
@@ -650,7 +650,7 @@ public static partial class CAccessExtension {
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.colors = a_oSender.colors.ExGetNormColor(a_stColor);
+			a_oSender.colors = a_oSender.colors.ExGetNormColorBlock(a_stColor);
 		}
 	}
 
@@ -660,7 +660,7 @@ public static partial class CAccessExtension {
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.colors = a_oSender.colors.ExGetSelColor(a_stColor);
+			a_oSender.colors = a_oSender.colors.ExGetSelColorBlock(a_stColor);
 		}
 	}
 
@@ -670,7 +670,7 @@ public static partial class CAccessExtension {
 
 		// 버튼이 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.colors = a_oSender.colors.ExGetDisableColor(a_stColor);
+			a_oSender.colors = a_oSender.colors.ExGetDisableColorBlock(a_stColor);
 		}
 	}
 

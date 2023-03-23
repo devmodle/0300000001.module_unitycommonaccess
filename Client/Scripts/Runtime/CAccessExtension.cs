@@ -839,7 +839,7 @@ public static partial class CAccessExtension {
 
 		// 값 제거가 가능 할 경우
 		if(a_oSender != null && a_oSender.Contains(a_tVal)) {
-			a_oSender.ExRemoveValAt(a_oSender.IndexOf(a_tVal), a_bIsEnableAssert);
+			a_oSender.ExRemoveVal((a_tCompareVal) => a_tCompareVal.Equals(a_tVal), a_bIsEnableAssert);
 		}
 	}
 
@@ -976,7 +976,7 @@ public static partial class CAccessExtension {
 
 		// 리스트가 존재 할 경우
 		if(a_oSender != null) {
-			int nIdx = a_oSender.IndexOf(a_tVal);
+			int nIdx = a_oSender.FindIndex((a_tCompareVal) => a_tCompareVal.Equals(a_tVal));
 
 			// 값 대체가 가능 할 경우
 			if(a_oSender.ExIsValidIdx(nIdx)) {

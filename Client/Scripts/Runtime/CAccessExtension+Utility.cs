@@ -242,15 +242,28 @@ public static partial class CAccessExtension {
 		return a_stSender;
 	}
 
-	/** 순서를 반환한다 */
-	public static STSortingOrderInfo ExGetOrder(this STSortingOrderInfo a_stSender, int a_nOrder) {
+	/** 기록 정보를 반환한다 */
+	public static STRecordInfo ExGetRecordInfo(this STRecordInfo a_stSender, long a_nIntRecord, double a_dblRealRecord) {
+		a_stSender.m_nIntRecord = a_nIntRecord;
+		a_stSender.m_dblRealRecord = a_dblRealRecord;
+
+		return a_stSender;
+	}
+
+	/** 기록 정보를 반환한다 */
+	public static STRecordInfo ExGetExtraRecordInfo(this STRecordInfo a_stSender, long a_nIntRecord, double a_dblRealRecord) {
+		return a_stSender.ExGetRecordInfo(a_stSender.m_nIntRecord + a_nIntRecord, a_stSender.m_dblRealRecord + a_dblRealRecord);
+	}
+
+	/** 순서 정보를 반환한다 */
+	public static STSortingOrderInfo ExGetOrderInfo(this STSortingOrderInfo a_stSender, int a_nOrder) {
 		a_stSender.m_nOrder = a_nOrder;
 		return a_stSender;
 	}
 
-	/** 추가 순서를 반환한다 */
-	public static STSortingOrderInfo ExGetExtraOrder(this STSortingOrderInfo a_stSender, int a_nOrder) {
-		return a_stSender.ExGetOrder(a_stSender.m_nOrder + a_nOrder);
+	/** 순서 정보를 반환한다 */
+	public static STSortingOrderInfo ExGetExtraOrderInfo(this STSortingOrderInfo a_stSender, int a_nOrder) {
+		return a_stSender.ExGetOrderInfo(a_stSender.m_nOrder + a_nOrder);
 	}
 
 	/** 레이어 마스크를 반환한다 */

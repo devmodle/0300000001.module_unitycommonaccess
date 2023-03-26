@@ -1128,6 +1128,16 @@ public static partial class CAccessExtension {
 	public static Vector3Int ExTo3D(this Vector2Int a_stSender, int a_nZ = KCDefine.B_VAL_0_INT) {
 		return new Vector3Int(a_stSender.x, a_stSender.y, a_nZ);
 	}
+
+	/** 4 차원 => 3 차원으로 변환한다 */
+	public static Vector3 ExTo3D(this Vector4 a_stSender) {
+		return new Vector3(a_stSender.x, a_stSender.y, a_stSender.z);
+	}
+
+	/** 3 차원 => 4 차원으로 변환한다 */
+	public static Vector4 ExTo4D(this Vector3 a_stSender, bool a_bIsCoord = true) {
+		return new Vector4(a_stSender.x, a_stSender.y, a_stSender.z, a_bIsCoord ? KCDefine.B_VAL_1_REAL : KCDefine.B_VAL_0_REAL);
+	}
 	#endregion // 클래스 함수 (CExtension)
 
 	#region 제네릭 클래스 함수 (CExtension)

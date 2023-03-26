@@ -1480,7 +1480,7 @@ public static partial class CAccessExtension {
 	/** 월드 => 로컬로 변환한다 */
 	public static Vector3 ExToLocal(this Vector3 a_stSender, GameObject a_oParent, bool a_bIsCoord = true) {
 		CAccess.Assert(a_oParent != null);
-		return a_oParent.transform.worldToLocalMatrix * new Vector4(a_stSender.x, a_stSender.y, a_stSender.z, a_bIsCoord ? KCDefine.B_VAL_1_REAL : KCDefine.B_VAL_0_REAL);
+		return a_oParent.transform.worldToLocalMatrix * a_stSender.ExTo4D(a_bIsCoord);
 	}
 	#endregion // 클래스 함수 (CExtension)
 }

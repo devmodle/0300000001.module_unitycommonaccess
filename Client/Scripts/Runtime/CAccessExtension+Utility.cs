@@ -194,16 +194,58 @@ public static partial class CAccessExtension {
 		return a_oSender.Count == a_oIdxInfoList.Count;
 	}
 
-	/** 값을 할당한다 */
-	public static void ExAssignVal(this List<DG.Tweening.Tween> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
-		a_oSender.ExSetVal(a_nIdx, a_oRhs ?? a_oDefVal, false);
+	/** 최소 값을 반환한다 */
+	public static float ExGetMinVal(this Vector2 a_stSender) {
+		return a_stSender.x.ExIsLess(a_stSender.y) ? a_stSender.x : a_stSender.y;
 	}
 
-	/** 값을 할당한다 */
-	public static void ExAssignVal(this List<Sequence> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
-		a_oSender.ExSetVal(a_nIdx, (a_oRhs ?? a_oDefVal) as Sequence, false);
+	/** 최소 값을 반환한다 */
+	public static float ExGetMinVal(this Vector3 a_stSender) {
+		float fMinVal = a_stSender.ExTo2D().ExGetMinVal();
+		return fMinVal.ExIsLess(a_stSender.z) ? fMinVal : a_stSender.z;
+	}
+
+	/** 최소 값을 반환한다 */
+	public static float ExGetMinVal(this Vector4 a_stSender) {
+		float fMinVal = a_stSender.ExTo3D().ExGetMinVal();
+		return fMinVal.ExIsLess(a_stSender.w) ? fMinVal : a_stSender.w;
+	}
+
+	/** 최소 값을 반환한다 */
+	public static int ExGetMinVal(this Vector2Int a_stSender) {
+		return Mathf.Min(a_stSender.x, a_stSender.y);
+	}
+
+	/** 최소 값을 반환한다 */
+	public static int ExGetMinVal(this Vector3Int a_stSender) {
+		return Mathf.Min(a_stSender.ExTo2D().ExGetMinVal(), a_stSender.z);
+	}
+
+	/** 최대 값을 반환한다 */
+	public static float ExGetMaxVal(this Vector2 a_stSender) {
+		return a_stSender.x.ExIsGreate(a_stSender.y) ? a_stSender.x : a_stSender.y;
+	}
+
+	/** 최대 값을 반환한다 */
+	public static float ExGetMaxVal(this Vector3 a_stSender) {
+		float fMinVal = a_stSender.ExTo2D().ExGetMaxVal();
+		return fMinVal.ExIsGreate(a_stSender.z) ? fMinVal : a_stSender.z;
+	}
+
+	/** 최대 값을 반환한다 */
+	public static float ExGetMaxVal(this Vector4 a_stSender) {
+		float fMinVal = a_stSender.ExTo3D().ExGetMaxVal();
+		return fMinVal.ExIsGreate(a_stSender.w) ? fMinVal : a_stSender.w;
+	}
+
+	/** 최대 값을 반환한다 */
+	public static int ExGetMaxVal(this Vector2Int a_stSender) {
+		return Mathf.Max(a_stSender.x, a_stSender.y);
+	}
+
+	/** 최대 값을 반환한다 */
+	public static int ExGetMaxVal(this Vector3Int a_stSender) {
+		return Mathf.Max(a_stSender.ExTo2D().ExGetMaxVal(), a_stSender.z);
 	}
 
 	/** 색상을 반환한다 */
@@ -981,6 +1023,18 @@ public static partial class CAccessExtension {
 		if(a_oSender != null) {
 			a_oSender.Delegate = a_oDelegate;
 		}
+	}
+
+	/** 값을 할당한다 */
+	public static void ExAssignVal(this List<DG.Tweening.Tween> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
+		a_oSender.ExSetVal(a_nIdx, a_oRhs ?? a_oDefVal, false);
+	}
+
+	/** 값을 할당한다 */
+	public static void ExAssignVal(this List<Sequence> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
+		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
+		a_oSender.ExSetVal(a_nIdx, (a_oRhs ?? a_oDefVal) as Sequence, false);
 	}
 
 	/** 데이터를 다시 로드한다 */

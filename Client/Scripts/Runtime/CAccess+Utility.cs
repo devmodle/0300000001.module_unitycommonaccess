@@ -21,6 +21,10 @@ using UnityEngine.iOS;
 using UnityEngine.Android;
 #endif // #if UNITY_ANDROID
 
+#if ADS_MODULE_ENABLE && ADMOB_ADS_ENABLE
+using GoogleMobileAds.Api;
+#endif // #if ADS_MODULE_ENABLE && ADMOB_ADS_ENABLE
+
 #if PURCHASE_MODULE_ENABLE
 using UnityEngine.Purchasing;
 #endif // #if PURCHASE_MODULE_ENABLE
@@ -305,6 +309,26 @@ public static partial class CAccess {
 		}
 	}
 #endif // #if UNITY_EDITOR
+
+#if ADS_MODULE_ENABLE && ADMOB_ADS_ENABLE
+	/** 값을 할당한다 */
+	public static void AssignVal(ref BannerView a_rLhs, BannerView a_oRhs, BannerView a_oDefVal = null) {
+		a_rLhs?.Destroy();
+		a_rLhs = a_oRhs ?? a_oDefVal;
+	}
+
+	/** 값을 할당한다 */
+	public static void AssignVal(ref RewardedAd a_rLhs, RewardedAd a_oRhs, RewardedAd a_oDefVal = null) {
+		a_rLhs?.Destroy();
+		a_rLhs = a_oRhs ?? a_oDefVal;
+	}
+
+	/** 값을 할당한다 */
+	public static void AssignVal(ref InterstitialAd a_rLhs, InterstitialAd a_oRhs, InterstitialAd a_oDefVal = null) {
+		a_rLhs?.Destroy();
+		a_rLhs = a_oRhs ?? a_oDefVal;
+	}
+#endif // #if ADS_MODULE_ENABLE && ADMOB_ADS_ENABLE
 
 #if PURCHASE_MODULE_ENABLE
 	/** 가격 문자열을 반환한다 */

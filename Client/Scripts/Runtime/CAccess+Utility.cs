@@ -299,13 +299,8 @@ public static partial class CAccess {
 		CAccess.Assert(!a_bIsEnableAssert || a_oScript != null);
 
 		// 스크립트가 존재 할 경우
-		if(a_oScript != null) {
-			int nOrder = MonoImporter.GetExecutionOrder(a_oScript);
-
-			// 기존 순서와 다를 경우
-			if(nOrder != a_nOrder) {
-				MonoImporter.SetExecutionOrder(a_oScript, a_nOrder);
-			}
+		if(a_oScript != null && MonoImporter.GetExecutionOrder(a_oScript) != a_nOrder) {
+			MonoImporter.SetExecutionOrder(a_oScript, a_nOrder);
 		}
 	}
 #endif // #if UNITY_EDITOR

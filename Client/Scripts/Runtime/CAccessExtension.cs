@@ -185,6 +185,36 @@ public static partial class CAccessExtension {
 		return a_dblSender.ExIsGreateEquals(a_dblMinVal) && a_dblSender.ExIsLessEquals(a_dblMaxVal);
 	}
 
+	/** 최소 값을 반환한다 */
+	public static float ExGetMinVal(this float a_fSender, float a_fRhs) {
+		return a_fSender.ExIsLess(a_fRhs) ? a_fSender : a_fRhs;
+	}
+
+	/** 최소 값을 반환한다 */
+	public static double ExGetMinVal(this double a_dblSender, double a_dblRhs) {
+		return a_dblSender.ExIsLess(a_dblRhs) ? a_dblSender : a_dblRhs;
+	}
+
+	/** 최대 값을 반환한다 */
+	public static float ExGetMaxVal(this float a_fSender, float a_fRhs) {
+		return a_fSender.ExIsGreate(a_fRhs) ? a_fSender : a_fRhs;
+	}
+
+	/** 최대 값을 반환한다 */
+	public static double ExGetMaxVal(this double a_dblSender, double a_dblRhs) {
+		return a_dblSender.ExIsGreate(a_dblRhs) ? a_dblSender : a_dblRhs;
+	}
+
+	/** 보정 값을 반환한다 */
+	public static float ExGetClampVal(this float a_fSender, float a_fMinVal, float a_fMaxVal) {
+		return a_fSender.ExGetMaxVal(a_fMinVal).ExGetMinVal(a_fMaxVal);
+	}
+
+	/** 보정 값을 반환한다 */
+	public static double ExGetClampVal(this double a_dblSender, double a_dblMinVal, double a_dblMaxVal) {
+		return a_dblSender.ExGetMaxVal(a_dblMinVal).ExGetMinVal(a_dblMaxVal);
+	}
+
 	/** 시간 간격을 반환한다 */
 	public static double ExGetDeltaTime(this System.DateTime a_stSender, System.DateTime a_stRhs) {
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());

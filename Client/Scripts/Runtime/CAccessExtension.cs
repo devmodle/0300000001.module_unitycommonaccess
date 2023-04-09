@@ -13,8 +13,13 @@ using System.Reflection;
 public static partial class CAccessExtension {
 	#region 클래스 함수
 	/** 정수 여부를 검사한다 */
-	public static bool ExIsInt(this decimal a_nSender) {
-		return (a_nSender % KCDefine.B_VAL_1_INT) == KCDefine.B_VAL_0_INT;
+	public static bool ExIsInt(this decimal a_dmSender) {
+		return a_dmSender == decimal.Truncate(a_dmSender);
+	}
+
+	/** 실수 여부를 검사한다 */
+	public static bool ExIsReal(this decimal a_dmSender) {
+		return a_dmSender != decimal.Truncate(a_dmSender);
 	}
 
 	/** 유효 여부를 검사한다 */
@@ -29,7 +34,7 @@ public static partial class CAccessExtension {
 
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this string a_oSender) {
-		return a_oSender != null && a_oSender.Length > KCDefine.B_VAL_0_INT;
+		return !string.IsNullOrEmpty(a_oSender);
 	}
 
 	/** 유효 여부를 검사한다 */

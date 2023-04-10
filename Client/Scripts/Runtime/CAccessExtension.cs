@@ -152,7 +152,7 @@ public static partial class CAccessExtension {
 	/** 성공 완료 여부를 검사한다 */
 	public static bool ExIsCompleteSuccess(this Task a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.IsCompleted && a_oSender.IsCompletedSuccessfully && !a_oSender.IsFaulted && !a_oSender.IsCanceled;
+		return a_oSender.ExIsComplete() && a_oSender.IsCompletedSuccessfully;
 	}
 
 	/** 유럽 연합 여부를 검사한다 */
@@ -433,7 +433,7 @@ public static partial class CAccessExtension {
 	/** 성공 완료 여부를 검사한다 */
 	public static bool ExIsCompleteSuccess<T>(this Task<T> a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		return (a_oSender as Task).ExIsComplete() && a_oSender.IsCompletedSuccessfully && a_oSender.Result != null;
+		return a_oSender.ExIsComplete() && a_oSender.IsCompletedSuccessfully;
 	}
 
 	/** 값을 반환한다 */

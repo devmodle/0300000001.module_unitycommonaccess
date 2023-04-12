@@ -529,33 +529,33 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 반환한다 */
-	public static List<T> ExGetVals<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare) {
+	public static List<T> ExGetVals<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare, List<T> a_oOutValList) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
-		var oValList = new List<T>();
+		a_oOutValList = a_oOutValList ?? new List<T>();
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
 			// 값이 존재 할 경우
 			if(a_oCompare(a_oSender[i])) {
-				oValList.Add(a_oSender[i]);
+				a_oOutValList.Add(a_oSender[i]);
 			}
 		}
 
-		return oValList;
+		return a_oOutValList;
 	}
 
 	/** 값을 반환한다 */
-	public static List<V> ExGetVals<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare) {
+	public static List<V> ExGetVals<K, V>(this Dictionary<K, V> a_oSender, System.Predicate<KeyValuePair<K, V>> a_oCompare, List<V> a_oOutValList) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
-		var oValList = new List<V>();
+		a_oOutValList = a_oOutValList ?? new List<V>();
 
 		foreach(var stKeyVal in a_oSender) {
 			// 값이 존재 할 경우
 			if(a_oCompare(stKeyVal)) {
-				oValList.Add(stKeyVal.Value);
+				a_oOutValList.Add(stKeyVal.Value);
 			}
 		}
 
-		return oValList;
+		return a_oOutValList;
 	}
 
 	/** 필드 값을 반환한다 */

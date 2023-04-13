@@ -868,6 +868,38 @@ public static partial class CAccessExtension {
 		}
 	}
 
+	/** 값을 추가한다 */
+	public static void ExInsertVal<T>(this List<T> a_oSender, int a_nIdx, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && a_oSender.ExIsValidIdx(a_nIdx)) {
+			a_oSender.Insert(a_nIdx, a_tVal);
+		}
+	}
+
+	/** 값을 추가한다 */
+	public static void ExInsertVal<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCompare != null));
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && a_oCompare != null) {
+			a_oSender.ExInsertVal(a_oSender.FindIndex(a_oCompare), a_tVal);
+		}
+	}
+
+	/** 값을 추가한다 */
+	public static void ExInsertVals<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare, List<T> a_oValList, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oValList != null && a_oCompare != null));
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && a_oValList != null && a_oCompare != null) {
+			for(int i = 0; i < a_oValList.Count; ++i) {
+				a_oSender.ExInsertVal(a_oCompare, a_oValList[i]);
+			}
+		}
+	}
+
 	/** 값을 제거한다 */
 	public static void ExRemoveVal<T>(this List<T> a_oSender, T a_tVal, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);

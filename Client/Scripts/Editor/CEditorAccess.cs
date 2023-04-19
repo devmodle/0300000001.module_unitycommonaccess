@@ -28,6 +28,7 @@ public static partial class CEditorAccess {
 	#endregion // 클래스 변수
 
 	#region 클래스 프로퍼티
+	public static bool IsAppleMSeries => SystemInfo.processorType.ToUpper().Contains(KCEditorDefine.B_TOKEN_APPLE_M_SERIES);
 	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode && !CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS];
 	#endregion // 클래스 프로퍼티
 

@@ -211,6 +211,11 @@ public static partial class CAccess {
 		return KCDefine.U_ASSET_P_G_NORM_QUALITY_POST_PROCESSING_SETTINGS;
 	}
 
+	/** 시간 비율을 변경한다 */
+	public static void SetTimeScale(float a_fScale) {
+		Time.timeScale = a_fScale.ExGetClampVal(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_9_REAL);
+	}
+
 	/** 값을 할당한다 */
 	public static void AssignVal(ref DG.Tweening.Tween a_rLhs, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
 		a_rLhs?.Kill();

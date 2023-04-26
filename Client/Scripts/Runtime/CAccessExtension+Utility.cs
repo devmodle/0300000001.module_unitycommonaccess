@@ -363,7 +363,7 @@ public static partial class CAccessExtension {
 	/** 월드 위치를 반환한다 */
 	public static Vector3 ExGetWorldPos(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExGetWorldPos(KCDefine.B_SCREEN_SIZE);
+		return a_oSender.ExGetWorldPos(KCDefine.B_DESIGN_SCREEN_SIZE);
 	}
 
 	/** 월드 위치를 반환한다 */
@@ -375,7 +375,7 @@ public static partial class CAccessExtension {
 	/** 로컬 위치를 반환한다 */
 	public static Vector3 ExGetLocalPos(this PointerEventData a_oSender, GameObject a_oParent) {
 		CAccess.Assert(a_oSender != null && a_oParent != null);
-		return a_oSender.ExGetLocalPos(a_oParent, KCDefine.B_SCREEN_SIZE);
+		return a_oSender.ExGetLocalPos(a_oParent, KCDefine.B_DESIGN_SCREEN_SIZE);
 	}
 
 	/** 로컬 위치를 반환한다 */
@@ -393,7 +393,7 @@ public static partial class CAccessExtension {
 	/** 월드 간격을 반환한다 */
 	public static Vector3 ExGetWorldPosDelta(this PointerEventData a_oSender) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExGetWorldPosDelta(KCDefine.B_SCREEN_SIZE);
+		return a_oSender.ExGetWorldPosDelta(KCDefine.B_DESIGN_SCREEN_SIZE);
 	}
 
 	/** 월드 간격을 반환한다 */
@@ -405,7 +405,7 @@ public static partial class CAccessExtension {
 	/** 로컬 간격을 반환한다 */
 	public static Vector3 ExGetLocalPosDelta(this PointerEventData a_oSender, GameObject a_oParent) {
 		CAccess.Assert(a_oSender != null);
-		return a_oSender.ExGetLocalPosDelta(a_oParent, KCDefine.B_SCREEN_SIZE);
+		return a_oSender.ExGetLocalPosDelta(a_oParent, KCDefine.B_DESIGN_SCREEN_SIZE);
 	}
 
 	/** 로컬 간격을 반환한다 */

@@ -99,8 +99,7 @@ public static partial class CAccessExtension {
 
 	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this double a_dblSender, double a_dblRhs) {
-		double dblDelta = System.Math.Abs(a_dblSender) - System.Math.Abs(a_dblRhs);
-		return dblDelta >= -double.Epsilon && dblDelta <= double.Epsilon;
+		return a_dblSender >= a_dblRhs - double.Epsilon && a_dblSender <= a_dblRhs + double.Epsilon;
 	}
 
 	/** 작음 여부를 검사한다 */

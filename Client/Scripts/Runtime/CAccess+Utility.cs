@@ -137,12 +137,12 @@ public static partial class CAccess {
 	public static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, CAccess.DeviceScreenSize.z);
 	public static Vector3 CorrectDesktopScreenSize => CAccess.ResulitionCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
 
-	private static Vector3 ResolutionScreenSize => new Vector3(CAccess.DeviceScreenSize.y * (KCDefine.B_SCREEN_WIDTH / (float)KCDefine.B_SCREEN_HEIGHT), CAccess.DeviceScreenSize.y, CAccess.DeviceScreenSize.z);
-	private static Vector3 ResolutionDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_LANDSCAPE_SCREEN_WIDTH / (float)KCDefine.B_LANDSCAPE_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
+	private static Vector3 ResolutionScreenSize => new Vector3(CAccess.DeviceScreenSize.y * (KCDefine.B_DESIGN_SCREEN_WIDTH / (float)KCDefine.B_DESIGN_SCREEN_HEIGHT), CAccess.DeviceScreenSize.y, CAccess.DeviceScreenSize.z);
+	private static Vector3 ResolutionDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_DESIGN_L_SCREEN_WIDTH / (float)KCDefine.B_DESIGN_L_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
 	private static Vector3 ResulitionCorrectDesktopScreenSize => CAccess.ResolutionDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
 
 #if UNITY_EDITOR || UNITY_STANDALONE
-	public static float ScreenDPI => KCDefine.B_PLATFORM_SCREEN_DPI * (CAccess.DeviceScreenSize.y / KCDefine.B_DPI_SCREEN_HEIGHT);
+	public static float ScreenDPI => KCDefine.B_PLATFORM_SCREEN_DPI * (CAccess.DeviceScreenSize.y / KCDefine.B_DESIGN_DPI_SCREEN_HEIGHT);
 #else
 	public static float ScreenDPI => Screen.dpi;
 #endif // #if UNITY_EDITOR || UNITY_STANDALONE
@@ -163,7 +163,7 @@ public static partial class CAccess {
 	/** 배너 광고 높이를 반환한다 */
 	public static float GetBannerAdsHeight(float a_fHeight) {
 		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_REAL));
-		return (a_fHeight.ExDPIPixelsToPixels() * (KCDefine.B_SCREEN_HEIGHT / CAccess.DeviceScreenSize.y)) / CAccess.ResolutionScale;
+		return (a_fHeight.ExDPIPixelsToPixels() * (KCDefine.B_DESIGN_SCREEN_HEIGHT / CAccess.DeviceScreenSize.y)) / CAccess.ResolutionScale;
 	}
 
 	/** iOS 이름을 반환한다 */

@@ -516,9 +516,9 @@ public static partial class CAccessExtension {
 	}
 
 	/** 색상 형식 문자열을 반환한다 */
-	public static string ExGetColorFmtStr(this string a_oSender, Color a_stColor) {
+	public static string ExGetColorFmtStr(this string a_oSender, Color a_stColor, bool a_bIsEnableAlpha = true) {
 		CAccess.Assert(a_oSender != null);
-		return string.Format(KCDefine.B_TEXT_FMT_COLOR, ColorUtility.ToHtmlStringRGBA(a_stColor), a_oSender);
+		return string.Format(KCDefine.B_TEXT_FMT_COLOR, a_stColor.ExToColorStr(a_bIsEnableAlpha), a_oSender);
 	}
 
 	/** 픽셀을 변경한다 */
@@ -1525,6 +1525,19 @@ EXIT_ENUMERATE:
 /** 유틸리티 접근자 확장 클래스 - 추가 */
 public static partial class CAccessExtension {
 	#region 클래스 함수 (CExtension)
+	/** 문자열 => 색상으로 변환한다 */
+	public static Color ExColorStrToColor(this string a_oSender) {
+		CAccess.Assert(a_oSender.ExIsValid());
+		string oColorStr = a_oSender.Contains(KCDefine.B_TOKEN_SHARP) ? a_oSender : string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, KCDefine.B_TOKEN_SHARP, a_oSender);
+
+		return ColorUtility.TryParseHtmlString(oColorStr, out Color stColor) ? stColor : Color.white;
+	}
+
+	/** 색상 => 문자열로 변환한다 */
+	public static string ExToColorStr(this Color a_stSender, bool a_bIsEnableAlpha = true) {
+		return a_bIsEnableAlpha ? ColorUtility.ToHtmlStringRGBA(a_stSender) : ColorUtility.ToHtmlStringRGB(a_stSender);
+	}
+
 	/** 월드 => 로컬로 변환한다 */
 	public static Vector3 ExToLocal(this Vector2 a_stSender, GameObject a_oParent, bool a_bIsCoord = true, float a_fZ = KCDefine.B_VAL_0_REAL) {
 		CAccess.Assert(a_oParent != null);

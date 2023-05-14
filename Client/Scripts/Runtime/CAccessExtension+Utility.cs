@@ -1528,9 +1528,9 @@ public static partial class CAccessExtension {
 	/** 문자열 => 색상으로 변환한다 */
 	public static Color ExColorStrToColor(this string a_oSender) {
 		CAccess.Assert(a_oSender.ExIsValid());
-		string oColorStr = a_oSender.Contains(KCDefine.B_TOKEN_SHARP) ? a_oSender : string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, KCDefine.B_TOKEN_SHARP, a_oSender);
+		string oColorStr = a_oSender.Replace(KCDefine.B_TOKEN_SHARP, string.Empty).PadLeft(KCDefine.B_VAL_6_INT, char.Parse(KCDefine.B_STR_0_INT));
 
-		return ColorUtility.TryParseHtmlString(oColorStr, out Color stColor) ? stColor : Color.white;
+		return ColorUtility.TryParseHtmlString(string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, KCDefine.B_TOKEN_SHARP, oColorStr), out Color stColor) ? stColor : Color.white;
 	}
 
 	/** 색상 => 문자열로 변환한다 */

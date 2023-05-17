@@ -1525,17 +1525,41 @@ EXIT_ENUMERATE:
 /** 유틸리티 접근자 확장 클래스 - 추가 */
 public static partial class CAccessExtension {
 	#region 클래스 함수 (CExtension)
+	/** 색상 => 값으로 변환한다 */
+	public static uint ExToColorVal(this Color a_stColor, bool a_bIsEnableAlpha = true) {
+		uint nRVal = (uint)(a_stColor.r * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_2_INT);
+		uint nGVal = (uint)(a_stColor.g * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_1_INT);
+		uint nBVal = (uint)(a_stColor.b * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_0_INT);
+		uint nAVal = KCDefine.B_VAL_0_INT;
+
+		// 알파 채널 모드 일 경우
+		if(a_bIsEnableAlpha) {
+			nRVal = (uint)(a_stColor.r * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_3_INT);
+			nGVal = (uint)(a_stColor.g * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_2_INT);
+			nBVal = (uint)(a_stColor.b * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_1_INT);
+			nAVal = (uint)(a_stColor.a * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_0_INT);
+		}
+
+		return nRVal | nGVal | nBVal | nAVal;
+	}
+
+	/** 색상 => 누적 값으로 변환한다 */
+	public static float ExToColorSumVal(this Color a_stColor, bool a_bIsEnableAlpha = true) {
+		float fSumVal = a_stColor.r + a_stColor.g + a_stColor.b;
+		return a_bIsEnableAlpha ? fSumVal + a_stColor.a : fSumVal;
+	}
+
+	/** 색상 => 문자열로 변환한다 */
+	public static string ExToColorStr(this Color a_stSender, bool a_bIsEnableAlpha = true) {
+		return a_bIsEnableAlpha ? ColorUtility.ToHtmlStringRGBA(a_stSender) : ColorUtility.ToHtmlStringRGB(a_stSender);
+	}
+
 	/** 문자열 => 색상으로 변환한다 */
 	public static Color ExColorStrToColor(this string a_oSender) {
 		CAccess.Assert(a_oSender.ExIsValid());
 		string oColorStr = a_oSender.Replace(KCDefine.B_TOKEN_SHARP, string.Empty).PadLeft(KCDefine.B_VAL_6_INT, char.Parse(KCDefine.B_STR_0_INT));
 
 		return ColorUtility.TryParseHtmlString(string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, KCDefine.B_TOKEN_SHARP, oColorStr), out Color stColor) ? stColor : Color.white;
-	}
-
-	/** 색상 => 문자열로 변환한다 */
-	public static string ExToColorStr(this Color a_stSender, bool a_bIsEnableAlpha = true) {
-		return a_bIsEnableAlpha ? ColorUtility.ToHtmlStringRGBA(a_stSender) : ColorUtility.ToHtmlStringRGB(a_stSender);
 	}
 
 	/** 월드 => 로컬로 변환한다 */

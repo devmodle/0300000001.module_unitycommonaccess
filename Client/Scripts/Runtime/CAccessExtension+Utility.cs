@@ -1526,18 +1526,18 @@ EXIT_ENUMERATE:
 public static partial class CAccessExtension {
 	#region 클래스 함수 (CExtension)
 	/** 색상 => 값으로 변환한다 */
-	public static uint ExToColorVal(this Color a_stColor, bool a_bIsEnableAlpha = true) {
-		uint nRVal = (uint)(a_stColor.r * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_2_INT);
-		uint nGVal = (uint)(a_stColor.g * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_1_INT);
-		uint nBVal = (uint)(a_stColor.b * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_0_INT);
-		uint nAVal = KCDefine.B_VAL_0_INT;
+	public static long ExToColorVal(this Color a_stColor, bool a_bIsEnableAlpha = true) {
+		long nRVal = (long)(a_stColor.r * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_2_INT);
+		long nGVal = (long)(a_stColor.g * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_1_INT);
+		long nBVal = (long)(a_stColor.b * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_0_INT);
+		long nAVal = KCDefine.B_VAL_0_INT;
 
 		// 알파 채널 모드 일 경우
 		if(a_bIsEnableAlpha) {
-			nRVal = (uint)(a_stColor.r * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_3_INT);
-			nGVal = (uint)(a_stColor.g * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_2_INT);
-			nBVal = (uint)(a_stColor.b * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_1_INT);
-			nAVal = (uint)(a_stColor.a * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_0_INT);
+			nRVal = (long)(a_stColor.r * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_3_INT);
+			nGVal = (long)(a_stColor.g * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_2_INT);
+			nBVal = (long)(a_stColor.b * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_1_INT);
+			nAVal = (long)(a_stColor.a * KCDefine.B_UNIT_NORM_VAL_TO_BYTE) << (KCDefine.B_VAL_8_INT * KCDefine.B_VAL_0_INT);
 		}
 
 		return nRVal | nGVal | nBVal | nAVal;

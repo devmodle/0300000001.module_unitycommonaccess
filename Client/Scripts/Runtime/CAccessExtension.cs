@@ -184,6 +184,11 @@ public static partial class CAccessExtension {
 		return a_dblSender.ExIsGreateEquals(a_dblMinVal) && a_dblSender.ExIsLessEquals(a_dblMaxVal);
 	}
 
+	/** 값을 반환한다 */
+	public static double ExGetVal(this RefreshRate a_stSender, double a_dblDefVal = KCDefine.B_MIN_TARGET_FRAME_RATE) {
+		return a_stSender.value.ExIsValid() ? a_stSender.value : a_dblDefVal;
+	}
+
 	/** 최소 값을 반환한다 */
 	public static float ExGetMinVal(this float a_fSender, float a_fRhs) {
 		return a_fSender.ExIsLess(a_fRhs) ? a_fSender : a_fRhs;

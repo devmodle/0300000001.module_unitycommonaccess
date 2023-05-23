@@ -877,7 +877,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 값 추가가 가능 할 경우
-		if(a_oSender != null && a_oSender.ExIsValidIdx(a_nIdx)) {
+		if(a_oSender != null && (a_nIdx > KCDefine.B_IDX_INVALID && a_nIdx <= a_oSender.Count)) {
 			a_oSender.Insert(a_nIdx, a_tVal);
 		}
 	}

@@ -80,14 +80,14 @@ public static partial class CAccess {
 		}
 	}
 
-	public static KeyCode CmdKeyCode {
+	public static KeyCode SubCmdKeyCode {
 		get {
 #if UNITY_EDITOR_WIN
-			return KeyCode.LeftControl;
+			return KeyCode.LeftAlt;
 #elif UNITY_EDITOR_OSX
 			return KeyCode.LeftCommand;
 #else
-			return (Application.platform == RuntimePlatform.WindowsPlayer) ? KeyCode.LeftControl : KeyCode.LeftCommand;
+			return (Application.platform == RuntimePlatform.WindowsPlayer) ? KeyCode.LeftAlt : KeyCode.LeftCommand;
 #endif // #if UNITY_EDITOR_WIN
 		}
 	}
@@ -134,6 +134,7 @@ public static partial class CAccess {
 	public static string ProductInfoTableLoadPath => File.Exists(KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO) ? KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO : KCDefine.U_TABLE_P_G_PRODUCT_INFO;
 	public static string ProductInfoTableSavePath => KCDefine.U_RUNTIME_TABLE_P_G_PRODUCT_INFO;
 
+	public static KeyCode CmdKeyCode => KeyCode.LeftShift;
 	public static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, CAccess.DeviceScreenSize.z);
 	public static Vector3 CorrectDesktopScreenSize => CAccess.ResulitionCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
 

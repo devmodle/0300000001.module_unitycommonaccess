@@ -102,6 +102,11 @@ public static partial class CAccessExtension {
 		return a_dblSender >= a_dblRhs - double.Epsilon && a_dblSender <= a_dblRhs + double.Epsilon;
 	}
 
+	/** 동일 여부를 검사한다 */
+	public static bool ExIsEquals(this string a_oSender, string a_oRhs) {
+		return a_oSender != null && a_oSender.Equals(a_oRhs);
+	}
+
 	/** 작음 여부를 검사한다 */
 	public static bool ExIsLess(this float a_fSender, float a_fRhs) {
 		return a_fSender < a_fRhs - float.Epsilon;

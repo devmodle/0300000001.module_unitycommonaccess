@@ -61,7 +61,7 @@ public static partial class CEditorAccess {
 
 	/** 최상단 객체 프리팹 경로를 반환한다 */
 	public static string GetRootObjPrefabPath(Scene a_stScene, string a_oName) {
-		string oDirName = Path.GetDirectoryName(KCEditorDefine.B_DIR_P_SUB_UNITY_PROJ_PREFABS).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH);
+		string oDirName = Path.GetDirectoryName(KCEditorDefine.B_DIR_P_RES_PREFABS).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH);
 		string oPrefabPath = string.Format(KCDefine.B_TEXT_FMT_3_SLASH_COMBINE, oDirName, CEditorAccess.GetSceneDirName(a_stScene), string.Format(KCDefine.B_TEXT_FMT_2_UNDER_SCORE_COMBINE, a_stScene.name, a_oName));
 
 		return string.Format(KCDefine.B_TEXT_FMT_2_COMBINE, oPrefabPath, KCDefine.B_FILE_EXTENSION_PREFAB);

@@ -1356,7 +1356,7 @@ public static partial class CAccessExtension {
 
 /** 기본 접근자 확장 클래스 - 기타 */
 public static partial class CAccessExtension {
-	#region 클래스 함수
+	#region 클래스 함수 (CFunc)
 	/** 값을 교환한다 */
 	private static void LessCorrectSwap(ref float a_fLhs, ref float a_fRhs) {
 		// 보정이 필요 할 경우
@@ -1372,22 +1372,20 @@ public static partial class CAccessExtension {
 			CAccessExtension.Swap(ref a_dblLhs, ref a_dblRhs);
 		}
 	}
-	#endregion // 클래스 함수
+	#endregion // 클래스 함수 (CFunc)
 
-	#region 제네릭 클래스 함수
+	#region 제네릭 클래스 함수 (CFunc)
 	/** 값을 교환한다 */
-	private static void Swap<T>(ref T a_tLhs, ref T a_tRhs) {
-		T tTemp = a_tLhs;
-		a_tLhs = a_tRhs;
-		a_tRhs = tTemp;
+	private static void Swap<T>(ref T a_tOutLhs, ref T a_tOutRhs) {
+		T tTemp = a_tOutLhs; a_tOutLhs = a_tOutRhs; a_tOutRhs = tTemp;
 	}
 
 	/** 값을 교환한다 */
-	private static void LessCorrectSwap<T>(ref T a_tLhs, ref T a_tRhs) where T : System.IComparable<T> {
+	private static void LessCorrectSwap<T>(ref T a_tOutLhs, ref T a_tOutRhs) where T : System.IComparable<T> {
 		// 보정이 필요 할 경우
-		if(a_tLhs.CompareTo(a_tRhs) > KCDefine.B_COMPARE_EQUALS) {
-			CAccessExtension.Swap(ref a_tLhs, ref a_tRhs);
+		if(a_tOutLhs.CompareTo(a_tOutRhs) > KCDefine.B_COMPARE_EQUALS) {
+			CAccessExtension.Swap(ref a_tOutLhs, ref a_tOutRhs);
 		}
 	}
-	#endregion // 제네릭 클래스 함수
+	#endregion // 제네릭 클래스 함수 (CFunc)
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -164,9 +164,7 @@ public static partial class CAccess {
 
 		// 인덱스가 유효 할 경우
 		if(a_oSender.ExIsValid() && (a_oSender.ExIsValidIdx(a_nIdx01) && a_oSender.ExIsValidIdx(a_nIdx02))) {
-			T tTemp = a_oSender[a_nIdx01];
-			a_oSender[a_nIdx01] = a_oSender[a_nIdx02];
-			a_oSender[a_nIdx02] = tTemp;
+			T tTemp = a_oSender[a_nIdx01]; a_oSender[a_nIdx01] = a_oSender[a_nIdx02]; a_oSender[a_nIdx02] = tTemp;
 		}
 	}
 
@@ -176,9 +174,7 @@ public static partial class CAccess {
 
 		// 인덱스가 유효 할 경우
 		if(a_oSender.ExIsValid() && (a_oSender.ExIsValidIdx(a_stIdx01) && a_oSender.ExIsValidIdx(a_stIdx02))) {
-			T tTemp = a_oSender[a_stIdx01.y, a_stIdx01.x];
-			a_oSender[a_stIdx01.y, a_stIdx01.x] = a_oSender[a_stIdx02.y, a_stIdx02.x];
-			a_oSender[a_stIdx02.y, a_stIdx02.x] = tTemp;
+			T tTemp = a_oSender[a_stIdx01.y, a_stIdx01.x]; a_oSender[a_stIdx01.y, a_stIdx01.x] = a_oSender[a_stIdx02.y, a_stIdx02.x]; a_oSender[a_stIdx02.y, a_stIdx02.x] = tTemp;
 		}
 	}
 
@@ -188,9 +184,7 @@ public static partial class CAccess {
 
 		// 인덱스가 유효 할 경우
 		if(a_oSender.ExIsValid() && (a_oSender.ExIsValidIdx(a_nIdx01) && a_oSender.ExIsValidIdx(a_nIdx02))) {
-			T tTemp = a_oSender[a_nIdx01];
-			a_oSender[a_nIdx01] = a_oSender[a_nIdx02];
-			a_oSender[a_nIdx02] = tTemp;
+			T tTemp = a_oSender[a_nIdx01]; a_oSender[a_nIdx01] = a_oSender[a_nIdx02]; a_oSender[a_nIdx02] = tTemp;
 		}
 	}
 
@@ -200,9 +194,7 @@ public static partial class CAccess {
 
 		// 키가 유효 할 경우
 		if(a_oSender.ExIsValid() && (a_oSender.ContainsKey(a_tKey01) && a_oSender.ContainsKey(a_tKey02))) {
-			V tTemp = a_oSender[a_tKey01];
-			a_oSender[a_tKey01] = a_oSender[a_tKey02];
-			a_oSender[a_tKey02] = tTemp;
+			V tTemp = a_oSender[a_tKey01]; a_oSender[a_tKey01] = a_oSender[a_tKey02]; a_oSender[a_tKey02] = tTemp;
 		}
 	}
 

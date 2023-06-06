@@ -147,7 +147,7 @@ public static partial class CAccess {
 #else
 	public static float ScreenDPI => Screen.dpi;
 #endif // #if UNITY_EDITOR || UNITY_STANDALONE
-	#endregion // 클래스 프로퍼티
+#endregion // 클래스 프로퍼티
 
 	#region 클래스 함수
 	/** 유저 권한 유효 여부를 검사한다 */
@@ -338,5 +338,5 @@ public static partial class CAccess {
 		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);
 	}
 #endif // #if PURCHASE_MODULE_ENABLE
-	#endregion // 조건부 클래스 함수
+#endregion // 조건부 클래스 함수
 }

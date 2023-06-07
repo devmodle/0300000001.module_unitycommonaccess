@@ -14,22 +14,13 @@ using UnityEditor.SceneManagement;
 /** 에디터 기본 접근 */
 [InitializeOnLoad]
 public static partial class CEditorAccess {
-	/** 식별자 */
-	private enum EKey {
-		NONE = -1,
-		IS_IMPORT_ASSETS,
-		[HideInInspector] MAX_VAL
-	}
-
 	#region 클래스 변수
-	private static Dictionary<EKey, bool> m_oBoolDict = new Dictionary<EKey, bool>() {
-		[EKey.IS_IMPORT_ASSETS] = false
-	};
+	private static bool m_bIsImportAssets = false;
 	#endregion // 클래스 변수
 
 	#region 클래스 프로퍼티
 	public static bool IsAppleMSeries => SystemInfo.processorType.ToUpper().Contains(KCEditorDefine.B_TOKEN_APPLE_M_SERIES);
-	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode && !CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS];
+	public static bool IsEnableUpdateState => !BuildPipeline.isBuildingPlayer && !EditorApplication.isUpdating && !EditorApplication.isCompiling && !EditorApplication.isPlayingOrWillChangePlaymode && !CEditorAccess.m_bIsImportAssets;
 	#endregion // 클래스 프로퍼티
 
 	#region 클래스 함수
@@ -41,8 +32,8 @@ public static partial class CEditorAccess {
 		AssetDatabase.importPackageCompleted -= CEditorAccess.OnCompleteAssetImport;
 		AssetDatabase.importPackageCompleted += CEditorAccess.OnCompleteAssetImport;
 
-		AssetDatabase.importPackageCancelled -= CEditorAccess.OnCompleteAssetImport;
-		AssetDatabase.importPackageCancelled += CEditorAccess.OnCompleteAssetImport;
+		AssetDatabase.importPackageCancelled -= CEditorAccess.OnCancelAssetImport;
+		AssetDatabase.importPackageCancelled += CEditorAccess.OnCancelAssetImport;
 
 		AssetDatabase.importPackageFailed -= CEditorAccess.OnFailAssetImport;
 		AssetDatabase.importPackageFailed += CEditorAccess.OnFailAssetImport;
@@ -131,17 +122,22 @@ public static partial class CEditorAccess {
 
 	/** 에셋 임포트가 시작했을 경우 */
 	private static void OnStartAssetImport(string a_oAssetName) {
-		CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS] = true;
+		CEditorAccess.m_bIsImportAssets = true;
 	}
 
 	/** 에셋 임포트가 완료 되었을 경우 */
 	private static void OnCompleteAssetImport(string a_oAssetName) {
-		CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS] = false;
+		CEditorAccess.m_bIsImportAssets = false;
+	}
+
+	/** 에셋 임포트가 취소 되었을 경우 */
+	private static void OnCancelAssetImport(string a_oAssetName) {
+		CEditorAccess.OnCompleteAssetImport(a_oAssetName);
 	}
 
 	/** 에셋 임포트가 실패했을 경우 */
 	private static void OnFailAssetImport(string a_oAssetName, string a_oErrorMsg) {
-		CEditorAccess.m_oBoolDict[EKey.IS_IMPORT_ASSETS] = false;
+		CEditorAccess.OnCompleteAssetImport(a_oAssetName);
 	}
 	#endregion // 클래스 함수
 

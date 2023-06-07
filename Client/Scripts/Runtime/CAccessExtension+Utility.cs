@@ -110,8 +110,18 @@ public static partial class CAccessExtension {
 	}
 
 	/** 동일 여부를 검사한다 */
+	public static bool ExIsEquals(this Rect a_stSender, Rect a_stRhs) {
+		return a_stSender.min.ExIsEquals(a_stRhs.min) && a_stSender.max.ExIsEquals(a_stRhs.max);
+	}
+
+	/** 동일 여부를 검사한다 */
 	public static bool ExIsEquals(this Color a_stSender, Color a_stRhs) {
 		return a_stSender.r.ExIsEquals(a_stRhs.r) && a_stSender.g.ExIsEquals(a_stRhs.g) && a_stSender.b.ExIsEquals(a_stRhs.b) && a_stSender.a.ExIsEquals(a_stRhs.a);
+	}
+
+	/** 동일 여부를 검사한다 */
+	public static bool ExIsEquals(this Bounds a_stSender, Bounds a_stRhs) {
+		return a_stSender.min.ExIsEquals(a_stRhs.min) && a_stSender.max.ExIsEquals(a_stRhs.max);
 	}
 
 	/** 동일 여부를 검사한다 */

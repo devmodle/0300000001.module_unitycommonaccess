@@ -1521,14 +1521,12 @@ EXIT_ENUMERATE:
 	public static bool ExIsValid(this EAdsPlatform a_eSender) {
 		return a_eSender > EAdsPlatform.NONE && a_eSender < EAdsPlatform.MAX_VAL;
 	}
-#endif // #if ADS_MODULE_ENABLE
 
-#if PURCHASE_MODULE_ENABLE
 	/** 유효 여부를 검사한다 */
-	public static bool ExIsValid(this EPurchasePlatform a_eSender) {
-		return a_eSender > EPurchasePlatform.NONE && a_eSender < EPurchasePlatform.MAX_VAL;
+	public static bool ExIsValid(this EBannerAdsPos a_eSender) {
+		return a_eSender > EBannerAdsPos.NONE && a_eSender < EBannerAdsPos.MAX_VAL;
 	}
-#endif // #if PURCHASE_MODULE_ENABLE
+#endif // #if ADS_MODULE_ENABLE
 	#endregion // 조건부 클래스 함수
 }
 

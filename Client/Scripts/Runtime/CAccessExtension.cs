@@ -538,6 +538,18 @@ public static partial class CAccessExtension {
 	}
 
 	/** 값을 반환한다 */
+	public static T ExGetVal<T>(this Stack<T> a_oSender, T a_tDefVal) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValid() ? a_oSender.Pop() : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
+	public static T ExGetVal<T>(this Queue<T> a_oSender, T a_tDefVal) {
+		CAccess.Assert(a_oSender != null);
+		return a_oSender.ExIsValid() ? a_oSender.Dequeue() : a_tDefVal;
+	}
+
+	/** 값을 반환한다 */
 	public static List<T> ExGetVals<T>(this List<T> a_oSender, System.Predicate<T> a_oCompare, List<T> a_oOutValList) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
 		a_oOutValList = a_oOutValList ?? new List<T>();

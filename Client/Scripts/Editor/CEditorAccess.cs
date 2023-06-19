@@ -75,7 +75,7 @@ public static partial class CEditorAccess {
 
 	/** iOS 빌드 결과 경로를 반환한다 */
 	public static string GetiOSBuildOutputPath(EiOSType a_eType, string a_oBuildFileExtension) {
-		return string.Format(KCEditorDefine.B_BUILD_OUTPUT_P_FMT_IOS, CAccess.GetiOSName(a_eType), a_oBuildFileExtension);
+		return string.Format(KCEditorDefine.B_BUILD_OUTPUT_P_FMT_IOS, CAccess.GetiOSPlatform(a_eType), a_oBuildFileExtension);
 	}
 
 	/** 안드로이드 프로젝트 이름을 반환한다 */
@@ -89,7 +89,7 @@ public static partial class CEditorAccess {
 
 	/** 안드로이드 빌드 결과 경로를 반환한다 */
 	public static string GetAndroidBuildOutputPath(EAndroidType a_eType, string a_oBuildFileExtension) {
-		return string.Format(KCEditorDefine.B_BUILD_OUTPUT_P_FMT_ANDROID, CAccess.GetAndroidName(a_eType), a_oBuildFileExtension);
+		return string.Format(KCEditorDefine.B_BUILD_OUTPUT_P_FMT_ANDROID, CAccess.GetAndroidPlatform(a_eType), a_oBuildFileExtension);
 	}
 
 	/** 독립 플랫폼 프로젝트 이름을 반환한다 */
@@ -106,7 +106,7 @@ public static partial class CEditorAccess {
 
 	/** 독립 플랫폼 빌드 결과 경로를 반환한다 */
 	public static string GetStandaloneBuildOutputPath(EStandaloneType a_eType, string a_oBuildFileExtension) {
-		return string.Format(KCEditorDefine.B_BUILD_OUTPUT_P_FMT_STANDALONE, CAccess.GetStandaloneName(a_eType), a_oBuildFileExtension);
+		return string.Format(KCEditorDefine.B_BUILD_OUTPUT_P_FMT_STANDALONE, CAccess.GetStandalonePlatform(a_eType), a_oBuildFileExtension);
 	}
 
 	/** 그래픽 API 를 변경한다 */

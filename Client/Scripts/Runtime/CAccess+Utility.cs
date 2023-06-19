@@ -105,7 +105,12 @@ public static partial class CAccess {
 	public static Rect SafeArea {
 		get {
 #if UNITY_EDITOR
-			return new Rect(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_0_REAL, Camera.main.pixelWidth, Camera.main.pixelHeight);
+			// 에디터 모드 일 경우
+			if(UnityEngine.Device.Application.isEditor) {
+				return new Rect(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_0_REAL, Camera.main.pixelWidth, Camera.main.pixelHeight);
+			}
+
+			return Screen.safeArea;
 #else
 			return Screen.safeArea;
 #endif // #if UNITY_EDITOR
@@ -167,29 +172,33 @@ public static partial class CAccess {
 		return (a_fHeight.ExDPIPixelsToPixels() * (KCDefine.B_DESIGN_SCREEN_HEIGHT / CAccess.DeviceScreenSize.y)) / CAccess.ResolutionScale;
 	}
 
-	/** iOS 이름을 반환한다 */
-	public static string GetiOSName(EiOSType a_eType) {
-		return KCDefine.B_PLATFORM_N_IOS_APPLE;
+	/** iOS 플랫폼을 반환한다 */
+	public static string GetiOSPlatform(EiOSType a_eType) {
+		switch(a_eType) {
+			// Do Something
+		}
+
+		return KCDefine.B_PLATFORM_IOS_APPLE;
 	}
 
 	/** 안드로이드 이름을 반환한다 */
-	public static string GetAndroidName(EAndroidType a_eType) {
+	public static string GetAndroidPlatform(EAndroidType a_eType) {
 		switch(a_eType) {
-			case EAndroidType.AMAZON: return KCDefine.B_PLATFORM_N_ANDROID_AMAZON;
+			case EAndroidType.AMAZON: return KCDefine.B_PLATFORM_ANDROID_AMAZON;
 		}
 
-		return KCDefine.B_PLATFORM_N_ANDROID_GOOGLE;
+		return KCDefine.B_PLATFORM_ANDROID_GOOGLE;
 	}
 
-	/** 독립 플랫폼 이름을 반환한다 */
-	public static string GetStandaloneName(EStandaloneType a_eType) {
+	/** 독립 플랫폼을 반환한다 */
+	public static string GetStandalonePlatform(EStandaloneType a_eType) {
 		switch(a_eType) {
-			case EStandaloneType.MAC_EDITOR: return KCDefine.B_PLATFORM_N_STANDALONE_MAC_EDITOR;
-			case EStandaloneType.WNDS_STEAM: return KCDefine.B_PLATFORM_N_STANDALONE_WNDS_STEAM;
-			case EStandaloneType.WNDS_EDITOR: return KCDefine.B_PLATFORM_N_STANDALONE_WNDS_EDITOR;
+			case EStandaloneType.MAC_EDITOR: return KCDefine.B_PLATFORM_STANDALONE_MAC_EDITOR;
+			case EStandaloneType.WNDS_STEAM: return KCDefine.B_PLATFORM_STANDALONE_WNDS_STEAM;
+			case EStandaloneType.WNDS_EDITOR: return KCDefine.B_PLATFORM_STANDALONE_WNDS_EDITOR;
 		}
 
-		return KCDefine.B_PLATFORM_N_STANDALONE_MAC_STEAM;
+		return KCDefine.B_PLATFORM_STANDALONE_MAC_STEAM;
 	}
 
 	/** 렌더링 파이프라인 경로를 반환한다 */

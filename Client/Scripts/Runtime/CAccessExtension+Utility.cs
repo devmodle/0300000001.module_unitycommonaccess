@@ -1006,12 +1006,12 @@ public static partial class CAccessExtension {
 	}
 
 	/** 부모를 변경한다 */
-	public static void ExSetParent(this GameObject a_oSender, GameObject a_oParent, bool a_bIsStayWorldState = false, bool a_bIsEnableAssert = true) {
+	public static void ExSetParent(this GameObject a_oSender, GameObject a_oParent, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {
-			a_oSender.transform.SetParent(a_oParent?.transform, a_bIsStayWorldState);
+			a_oSender.transform.SetParent(a_oParent?.transform, false);
 		}
 	}
 

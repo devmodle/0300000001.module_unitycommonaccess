@@ -168,7 +168,7 @@ public static partial class CAccess {
 
 	/** 배너 광고 높이를 반환한다 */
 	public static float GetBannerAdsHeight(float a_fHeight) {
-		CAccess.Assert(a_fHeight.ExIsGreateEquals(KCDefine.B_VAL_0_REAL));
+		CAccess.Assert(a_fHeight.ExIsGreatEquals(KCDefine.B_VAL_0_REAL));
 		return (a_fHeight.ExDPIPixelsToPixels() * (KCDefine.B_DESIGN_SCREEN_HEIGHT / CAccess.DeviceScreenSize.y)) / CAccess.ResolutionScale;
 	}
 
@@ -401,7 +401,7 @@ public static partial class CAccess {
 	
 	/** 대기 객체를 반환한다 */
 	public static IEnumerator CoGetWaitForSecs(float a_fDeltaTime, bool a_bIsRealtime = false) {
-		CAccess.Assert(a_fDeltaTime.ExIsGreateEquals(KCDefine.B_VAL_0_REAL));
+		CAccess.Assert(a_fDeltaTime.ExIsGreatEquals(KCDefine.B_VAL_0_REAL));
 		yield return a_bIsRealtime ? CAccess.GetWaitForSecondsRealtime(a_fDeltaTime) : CAccess.GetWaitForSeconds(a_fDeltaTime);
 	}
 

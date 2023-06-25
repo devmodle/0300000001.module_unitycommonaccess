@@ -118,13 +118,13 @@ public static partial class CAccessExtension {
 	}
 
 	/** 큰 여부를 검사한다 */
-	public static bool ExIsGreate(this float a_fSender, float a_fRhs) {
+	public static bool ExIsGreat(this float a_fSender, float a_fRhs) {
 		return a_fSender > a_fRhs + float.Epsilon;
 	}
 
 	/** 크거나 같음 여부를 검사한다 */
-	public static bool ExIsGreateEquals(this float a_fSender, float a_fRhs) {
-		return a_fSender.ExIsGreate(a_fRhs) || a_fSender.ExIsEquals(a_fRhs);
+	public static bool ExIsGreatEquals(this float a_fSender, float a_fRhs) {
+		return a_fSender.ExIsGreat(a_fRhs) || a_fSender.ExIsEquals(a_fRhs);
 	}
 
 	/** 작음 여부를 검사한다 */
@@ -138,13 +138,13 @@ public static partial class CAccessExtension {
 	}
 
 	/** 큰 여부를 검사한다 */
-	public static bool ExIsGreate(this double a_dblSender, double a_dblRhs) {
+	public static bool ExIsGreat(this double a_dblSender, double a_dblRhs) {
 		return a_dblSender > a_dblRhs + double.Epsilon;
 	}
 
 	/** 크거나 같음 여부를 검사한다 */
-	public static bool ExIsGreateEquals(this double a_dblSender, double a_dblRhs) {
-		return a_dblSender.ExIsGreate(a_dblRhs) || a_dblSender.ExIsEquals(a_dblRhs);
+	public static bool ExIsGreatEquals(this double a_dblSender, double a_dblRhs) {
+		return a_dblSender.ExIsGreat(a_dblRhs) || a_dblSender.ExIsEquals(a_dblRhs);
 	}
 
 	/** 완료 여부를 검사한다 */
@@ -167,26 +167,26 @@ public static partial class CAccessExtension {
 
 	/** 범위 포함 여부를 검사한다 */
 	public static bool ExIsInRange(this int a_nSender, int a_nMinVal, int a_nMaxVal) {
-		CAccessExtension.LessCorrectSwap(ref a_nMinVal, ref a_nMaxVal);
+		CAccess.Swap(ref a_nMinVal, ref a_nMaxVal, ESwapType.LESS);
 		return a_nSender >= a_nMinVal && a_nSender <= a_nMaxVal;
 	}
 
 	/** 범위 포함 여부를 검사한다 */
 	public static bool ExIsInRange(this long a_nSender, long a_nMinVal, long a_nMaxVal) {
-		CAccessExtension.LessCorrectSwap(ref a_nMinVal, ref a_nMaxVal);
+		CAccess.Swap(ref a_nMinVal, ref a_nMaxVal, ESwapType.LESS);
 		return a_nSender >= a_nMinVal && a_nSender <= a_nMaxVal;
 	}
 
 	/** 범위 포함 여부를 검사한다 */
 	public static bool ExIsInRange(this float a_fSender, float a_fMinVal, float a_fMaxVal) {
-		CAccessExtension.LessCorrectSwap(ref a_fMinVal, ref a_fMaxVal);
-		return a_fSender.ExIsGreateEquals(a_fMinVal) && a_fSender.ExIsLessEquals(a_fMaxVal);
+		CAccess.Swap(ref a_fMinVal, ref a_fMaxVal, ESwapType.LESS);
+		return a_fSender.ExIsGreatEquals(a_fMinVal) && a_fSender.ExIsLessEquals(a_fMaxVal);
 	}
 
 	/** 범위 포함 여부를 검사한다 */
 	public static bool ExIsInRange(this double a_dblSender, double a_dblMinVal, double a_dblMaxVal) {
-		CAccessExtension.LessCorrectSwap(ref a_dblMinVal, ref a_dblMaxVal);
-		return a_dblSender.ExIsGreateEquals(a_dblMinVal) && a_dblSender.ExIsLessEquals(a_dblMaxVal);
+		CAccess.Swap(ref a_dblMinVal, ref a_dblMaxVal, ESwapType.LESS);
+		return a_dblSender.ExIsGreatEquals(a_dblMinVal) && a_dblSender.ExIsLessEquals(a_dblMaxVal);
 	}
 
 	/** 값을 반환한다 */
@@ -206,12 +206,12 @@ public static partial class CAccessExtension {
 
 	/** 최대 값을 반환한다 */
 	public static float ExGetMaxVal(this float a_fSender, float a_fRhs) {
-		return a_fSender.ExIsGreate(a_fRhs) ? a_fSender : a_fRhs;
+		return a_fSender.ExIsGreat(a_fRhs) ? a_fSender : a_fRhs;
 	}
 
 	/** 최대 값을 반환한다 */
 	public static double ExGetMaxVal(this double a_dblSender, double a_dblRhs) {
-		return a_dblSender.ExIsGreate(a_dblRhs) ? a_dblSender : a_dblRhs;
+		return a_dblSender.ExIsGreat(a_dblRhs) ? a_dblSender : a_dblRhs;
 	}
 
 	/** 보정 값을 반환한다 */
@@ -354,7 +354,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null);
 		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_0_INT)) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_1_INT));
 	}
-	
+
 	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx<T>(this List<T> a_oSender, int a_nIdx) {
 		CAccess.Assert(a_oSender != null);
@@ -431,6 +431,34 @@ public static partial class CAccessExtension {
 	public static bool ExIsContains<K, V>(this Dictionary<K, V> a_oSender, List<K> a_oKeyList) {
 		CAccess.Assert(a_oSender != null && a_oKeyList != null);
 		return a_oKeyList.All((a_tKey) => a_oSender.ContainsKey(a_tKey));
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContains<T>(this Stack<T> a_oSender, System.Predicate<T> a_oCompare) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+
+		foreach(var tVal in a_oSender) {
+			// 값이 존재 할 경우
+			if(a_oCompare(tVal)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContains<T>(this Queue<T> a_oSender, System.Predicate<T> a_oCompare) {
+		CAccess.Assert(a_oSender != null && a_oCompare != null);
+
+		foreach(var tVal in a_oSender) {
+			// 값이 존재 할 경우
+			if(a_oCompare(tVal)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/** 완료 여부를 검사한다 */
@@ -816,7 +844,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 값 추가가 가능 할 경우
-		if(a_oSender != null && !a_oSender.IndexOf(a_tVal).ExIsValidIdx()) {
+		if(a_oSender != null && !a_oSender.Contains(a_tVal)) {
 			a_oSender.Add(a_tVal);
 		}
 	}
@@ -838,6 +866,46 @@ public static partial class CAccessExtension {
 		// 값 추가가 가능 할 경우
 		if(a_oSender != null && a_oCompare != null && !a_oSender.ExFindVal(a_oCompare).Item1) {
 			a_oSender.TryAdd(a_tKey, a_tVal);
+		}
+	}
+
+	/** 값을 추가한다 */
+	public static void ExAddVal<T>(this Stack<T> a_oSender, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && !a_oSender.Contains(a_tVal)) {
+			a_oSender.Push(a_tVal);
+		}
+	}
+
+	/** 값을 추가한다 */
+	public static void ExAddVal<T>(this Stack<T> a_oSender, T a_tVal, System.Predicate<T> a_oCompare, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCompare != null));
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && a_oCompare != null && !a_oSender.ExIsContains(a_oCompare)) {
+			a_oSender.Push(a_tVal);
+		}
+	}
+
+	/** 값을 추가한다 */
+	public static void ExAddVal<T>(this Queue<T> a_oSender, T a_tVal, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && !a_oSender.Contains(a_tVal)) {
+			a_oSender.Enqueue(a_tVal);
+		}
+	}
+
+	/** 값을 추가한다 */
+	public static void ExAddVal<T>(this Queue<T> a_oSender, T a_tVal, System.Predicate<T> a_oCompare, bool a_bIsEnableAssert = true) {
+		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oCompare != null));
+
+		// 값 추가가 가능 할 경우
+		if(a_oSender != null && a_oCompare != null && !a_oSender.ExIsContains(a_oCompare)) {
+			a_oSender.Enqueue(a_tVal);
 		}
 	}
 
@@ -1364,40 +1432,4 @@ public static partial class CAccessExtension {
 		}
 	}
 	#endregion // 제네릭 클래스 함수 (CExtension)
-}
-
-/** 기본 접근자 확장 클래스 - 기타 */
-public static partial class CAccessExtension {
-	#region 클래스 함수 (CFunc)
-	/** 값을 교환한다 */
-	private static void LessCorrectSwap(ref float a_fLhs, ref float a_fRhs) {
-		// 보정이 필요 할 경우
-		if(a_fLhs.ExIsGreate(a_fRhs)) {
-			CAccessExtension.Swap(ref a_fLhs, ref a_fRhs);
-		}
-	}
-
-	/** 값을 교환한다 */
-	private static void LessCorrectSwap(ref double a_dblLhs, ref double a_dblRhs) {
-		// 보정이 필요 할 경우
-		if(a_dblLhs.ExIsGreate(a_dblRhs)) {
-			CAccessExtension.Swap(ref a_dblLhs, ref a_dblRhs);
-		}
-	}
-	#endregion // 클래스 함수 (CFunc)
-
-	#region 제네릭 클래스 함수 (CFunc)
-	/** 값을 교환한다 */
-	private static void Swap<T>(ref T a_tOutLhs, ref T a_tOutRhs) {
-		T tTemp = a_tOutLhs; a_tOutLhs = a_tOutRhs; a_tOutRhs = tTemp;
-	}
-
-	/** 값을 교환한다 */
-	private static void LessCorrectSwap<T>(ref T a_tOutLhs, ref T a_tOutRhs) where T : System.IComparable<T> {
-		// 보정이 필요 할 경우
-		if(a_tOutLhs.CompareTo(a_tOutRhs) > KCDefine.B_COMPARE_EQUALS) {
-			CAccessExtension.Swap(ref a_tOutLhs, ref a_tOutRhs);
-		}
-	}
-	#endregion // 제네릭 클래스 함수 (CFunc)
 }

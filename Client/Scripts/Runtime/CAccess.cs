@@ -129,7 +129,7 @@ public static partial class CAccess {
 			return KCDefine.B_COMPARE_EQUALS;
 		}
 
-		return a_fSender.ExIsLess(a_fRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
+		return a_fSender.ExIsLess(a_fRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREAT;
 	}
 
 	/** 값을 비교한다 */
@@ -139,7 +139,7 @@ public static partial class CAccess {
 			return KCDefine.B_COMPARE_EQUALS;
 		}
 
-		return a_dblSender.ExIsLess(a_dblRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREATE;
+		return a_dblSender.ExIsLess(a_dblRhs) ? KCDefine.B_COMPARE_LESS : KCDefine.B_COMPARE_GREAT;
 	}
 
 	/** 시간을 비교한다 */
@@ -237,4 +237,94 @@ public static partial class CAccess {
 		}
 	}
 	#endregion // 제네릭 클래스 함수 (CExtension)
+}
+
+/** 기본 접근자 - 추가 */
+public static partial class CAccess {
+	#region 클래스 함수 (CFunc)
+	/** 값을 교환한다 */
+	public static void Swap(ref float a_fOutLhs, ref float a_fOutRhs, ESwapType a_eSwapType) {
+		switch(a_eSwapType) {
+			case ESwapType.LESS: {
+				// 보정이 필요 할 경우
+				if(!a_fOutLhs.ExIsLessEquals(a_fOutRhs)) {
+					CAccess.Swap(ref a_fOutLhs, ref a_fOutRhs);
+				}
+
+				break;
+			}
+			case ESwapType.GREAT: {
+				// 보정이 필요 할 경우
+				if(!a_fOutLhs.ExIsGreatEquals(a_fOutRhs)) {
+					CAccess.Swap(ref a_fOutLhs, ref a_fOutRhs);
+				}
+
+				break;
+			}
+			case ESwapType.ALWAYS: {
+				CAccess.Swap(ref a_fOutLhs, ref a_fOutRhs);
+				break;
+			}
+		}
+	}
+
+	/** 값을 교환한다 */
+	public static void Swap(ref double a_dblOutLhs, ref double a_dblOutRhs, ESwapType a_eSwapType) {
+		switch(a_eSwapType) {
+			case ESwapType.LESS: {
+				// 보정이 필요 할 경우
+				if(!a_dblOutLhs.ExIsLessEquals(a_dblOutRhs)) {
+					CAccess.Swap(ref a_dblOutLhs, ref a_dblOutRhs);
+				}
+
+				break;
+			}
+			case ESwapType.GREAT: {
+				// 보정이 필요 할 경우
+				if(!a_dblOutLhs.ExIsGreatEquals(a_dblOutRhs)) {
+					CAccess.Swap(ref a_dblOutLhs, ref a_dblOutRhs);
+				}
+
+				break;
+			}
+			case ESwapType.ALWAYS: {
+				CAccess.Swap(ref a_dblOutLhs, ref a_dblOutRhs);
+				break;
+			}
+		}
+	}
+	#endregion // 클래스 함수 (CFunc)
+
+	#region 제네릭 클래스 함수 (CFunc)
+	/** 값을 교환한다 */
+	public static void Swap<T>(ref T a_tOutLhs, ref T a_tOutRhs) {
+		T tTemp = a_tOutLhs; a_tOutLhs = a_tOutRhs; a_tOutRhs = tTemp;
+	}
+
+	/** 값을 교환한다 */
+	public static void Swap<T>(ref T a_tOutLhs, ref T a_tOutRhs, ESwapType a_eSwapType) where T : System.IComparable<T> {
+		switch(a_eSwapType) {
+			case ESwapType.LESS: {
+				// 보정이 필요 할 경우
+				if(a_tOutLhs.CompareTo(a_tOutRhs) > KCDefine.B_COMPARE_EQUALS) {
+					CAccess.Swap(ref a_tOutLhs, ref a_tOutRhs);
+				}
+
+				break;
+			}
+			case ESwapType.GREAT: {
+				// 보정이 필요 할 경우
+				if(a_tOutLhs.CompareTo(a_tOutRhs) < KCDefine.B_COMPARE_EQUALS) {
+					CAccess.Swap(ref a_tOutLhs, ref a_tOutRhs);
+				}
+
+				break;
+			}
+			case ESwapType.ALWAYS: {
+				CAccess.Swap(ref a_tOutLhs, ref a_tOutRhs);
+				break;
+			}
+		}
+	}
+	#endregion // 제네릭 클래스 함수 (CFunc)
 }

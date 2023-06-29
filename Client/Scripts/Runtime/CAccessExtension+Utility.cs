@@ -1510,7 +1510,7 @@ EXIT_ENUMERATE:
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 컴포넌트가 존재 할 경우
-		if(a_oSender != null) {
+		if(a_oSender != null && a_nOrder > KCDefine.U_SCRIPT_O_INVALID) {
 			CAccess.SetScriptOrder(MonoScript.FromMonoBehaviour(a_oSender), a_nOrder, a_bIsEnableAssert);
 		}
 	}

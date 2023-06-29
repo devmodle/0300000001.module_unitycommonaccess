@@ -334,11 +334,6 @@ public static partial class CAccessExtension {
 	}
 
 	/** 유효 여부를 검사한다 */
-	public static bool ExIsValid<T>(this HashSet<T> a_oSender) {
-		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
-	}
-
-	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid<K, V>(this Dictionary<K, V> a_oSender) {
 		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
 	}
@@ -1337,23 +1332,6 @@ public static partial class CAccessExtension {
 				for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
 					a_oDestVals.ExSetVal((i * a_oSender.GetLength(KCDefine.B_VAL_1_INT)) + j, a_oCallback(a_oSender[i, j]), a_bIsEnableAssert);
 				}
-			}
-		}
-	}
-
-	/** 셋을 복사한다 */
-	public static void ExCopyTo<T01, T02>(this HashSet<T01> a_oSender, HashSet<T02> a_oDestValSet, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValSet != null && a_oCallback != null));
-
-		// 복사가 가능 할 경우
-		if(a_oSender != null && (a_oDestValSet != null && a_oCallback != null)) {
-			// 클리어 모드 일 경우
-			if(a_bIsClear) {
-				a_oDestValSet.Clear();
-			}
-
-			foreach(var tVal in a_oSender) {
-				a_oDestValSet.Add(a_oCallback(tVal));
 			}
 		}
 	}

@@ -33,15 +33,20 @@ using UnityEngine.Purchasing;
 public static partial class CAccess {
 	#region 클래스 변수
 	private static Dictionary<RuntimePlatform, EDeviceType> m_oDeviceTypeDict = new Dictionary<RuntimePlatform, EDeviceType>() {
+		// 데스크 탑 {
 		[RuntimePlatform.OSXEditor] = EDeviceType.DESKTOP,
 		[RuntimePlatform.OSXPlayer] = EDeviceType.DESKTOP,
+
 		[RuntimePlatform.WindowsEditor] = EDeviceType.DESKTOP,
 		[RuntimePlatform.WindowsPlayer] = EDeviceType.DESKTOP,
+		// 데스크 탑 }
 
+		// 콘솔
 		[RuntimePlatform.PS4] = EDeviceType.CONSOLE,
 		[RuntimePlatform.PS5] = EDeviceType.CONSOLE,
 		[RuntimePlatform.XboxOne] = EDeviceType.CONSOLE,
 
+		// 휴대용 콘솔
 		[RuntimePlatform.Switch] = EDeviceType.HANDHELD_CONSOLE
 	};
 	#endregion // 클래스 변수
@@ -105,12 +110,7 @@ public static partial class CAccess {
 	public static Rect SafeArea {
 		get {
 #if UNITY_EDITOR
-			// 에디터 모드 일 경우
-			if(UnityEngine.Device.Application.isEditor) {
-				return new Rect(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_0_REAL, Camera.main.pixelWidth, Camera.main.pixelHeight);
-			}
-
-			return Screen.safeArea;
+			return UnityEngine.Device.Application.isEditor ? new Rect(KCDefine.B_VAL_0_REAL, KCDefine.B_VAL_0_REAL, Camera.main.pixelWidth, Camera.main.pixelHeight) : Screen.safeArea;
 #else
 			return Screen.safeArea;
 #endif // #if UNITY_EDITOR
@@ -152,7 +152,7 @@ public static partial class CAccess {
 #else
 	public static float ScreenDPI => Screen.dpi;
 #endif // #if UNITY_EDITOR || UNITY_STANDALONE
-#endregion // 클래스 프로퍼티
+	#endregion // 클래스 프로퍼티
 
 	#region 클래스 함수
 	/** 유저 권한 유효 여부를 검사한다 */
@@ -292,7 +292,7 @@ public static partial class CAccess {
 	/** 리소스 존재 여부를 검사한다 */
 	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-		
+
 		var oRes = Resources.Load<T>(a_oFilePath);
 		bool bIsExistsRes = typeof(T).Equals(typeof(TextAsset)) ? (oRes as TextAsset).ExIsValid() : oRes != null;
 
@@ -398,7 +398,7 @@ public static partial class CAccess {
 		CAccess.m_oWaitForSecsDict.Clear();
 		CAccess.m_oWaitForSecsRealtimeDict.Clear();
 	}
-	
+
 	/** 대기 객체를 반환한다 */
 	public static IEnumerator CoGetWaitForSecs(float a_fDeltaTime, bool a_bIsRealtime = false) {
 		CAccess.Assert(a_fDeltaTime.ExIsGreatEquals(KCDefine.B_VAL_0_REAL));

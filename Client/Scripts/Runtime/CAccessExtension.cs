@@ -231,27 +231,9 @@ public static partial class CAccessExtension {
 	}
 
 	/** 시간 간격을 반환한다 */
-	public static double ExGetDeltaTimePerMinutes(this System.DateTime a_stSender, System.DateTime a_stRhs) {
-		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
-		return (a_stSender - a_stRhs).TotalMinutes;
-	}
-
-	/** 시간 간격을 반환한다 */
-	public static double ExGetDeltaTimePerHours(this System.DateTime a_stSender, System.DateTime a_stRhs) {
-		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
-		return (a_stSender - a_stRhs).TotalHours;
-	}
-
-	/** 시간 간격을 반환한다 */
 	public static double ExGetDeltaTimePerDays(this System.DateTime a_stSender, System.DateTime a_stRhs) {
 		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
 		return (a_stSender - a_stRhs).TotalDays;
-	}
-
-	/** 시간 간격을 반환한다 */
-	public static long ExGetDeltaTimePerTicks(this System.DateTime a_stSender, System.DateTime a_stRhs) {
-		CAccess.Assert(a_stSender.ExIsValid() && a_stRhs.ExIsValid());
-		return (a_stSender - a_stRhs).Ticks;
 	}
 
 	/** 이전 인덱스를 반환한다 */
@@ -264,7 +246,8 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_3D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
 
-		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1.x, a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1.y, a_stSender.z);
+		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1.x, 
+			a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item1.y, a_stSender.z);
 	}
 
 	/** 다음 인덱스를 반환한다 */
@@ -277,7 +260,8 @@ public static partial class CAccessExtension {
 		CAccess.Assert(!a_stSender.Equals(KCDefine.B_IDX_INVALID_3D));
 		CAccess.Assert(a_eDirection >= EDirection.UP && a_eDirection <= EDirection.RIGHT_DOWN);
 
-		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.x, a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.y, a_stSender.z);
+		return new Vector3Int(a_stSender.x + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.x, 
+			a_stSender.y + KCDefine.B_IDX_OFFSET_INFO_LIST_2D[(int)a_eDirection].Item2.y, a_stSender.z);
 	}
 
 	/** 파일 이름을 반환한다 */
@@ -315,7 +299,8 @@ public static partial class CAccessExtension {
 
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid<T>(this T[,] a_oSender) {
-		return a_oSender != null && a_oSender.GetLength(KCDefine.B_VAL_0_INT) > KCDefine.B_VAL_0_INT && a_oSender.GetLength(KCDefine.B_VAL_1_INT) > KCDefine.B_VAL_0_INT;
+		return a_oSender != null && 
+			a_oSender.GetLength(KCDefine.B_VAL_0_INT) > KCDefine.B_VAL_0_INT && a_oSender.GetLength(KCDefine.B_VAL_1_INT) > KCDefine.B_VAL_0_INT;
 	}
 
 	/** 유효 여부를 검사한다 */
@@ -347,7 +332,11 @@ public static partial class CAccessExtension {
 	/** 인덱스 유효 여부를 검사한다 */
 	public static bool ExIsValidIdx<T>(this T[,] a_oSender, Vector3Int a_stIdx) {
 		CAccess.Assert(a_oSender != null);
-		return (a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_0_INT)) && (a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_1_INT));
+
+		bool bIsValid01 = a_stIdx.y > KCDefine.B_IDX_INVALID && a_stIdx.y < a_oSender.GetLength(KCDefine.B_VAL_0_INT);
+		bool bIsValid02 = a_stIdx.x > KCDefine.B_IDX_INVALID && a_stIdx.x < a_oSender.GetLength(KCDefine.B_VAL_1_INT);
+
+		return bIsValid01 && bIsValid02;
 	}
 
 	/** 인덱스 유효 여부를 검사한다 */

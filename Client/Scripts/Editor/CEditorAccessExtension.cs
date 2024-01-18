@@ -51,9 +51,7 @@ public static partial class CEditorAccessExtension {
 			}
 		}
 	}
-	#endregion // 클래스 함수
 
-	#region 조건부 클래스 함수
 #if UNITY_IOS
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this PlistDocument a_oSender) {
@@ -104,6 +102,6 @@ public static partial class CEditorAccessExtension {
 		}
 	}
 #endif // #if UNITY_IOS
-	#endregion // 조건부 클래스 함수
+	#endregion // 클래스 함수
 }
 #endif // #if UNITY_EDITOR

@@ -26,7 +26,9 @@ public static partial class CEditorAccessExtension {
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid(this BuildTarget a_eSender) {
 		bool bIsMobile = a_eSender == BuildTarget.iOS || a_eSender == BuildTarget.Android;
-		return bIsMobile || (a_eSender == BuildTarget.StandaloneOSX || a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64);
+		bool bIsDesktop = a_eSender == BuildTarget.StandaloneOSX || a_eSender == BuildTarget.StandaloneWindows || a_eSender == BuildTarget.StandaloneWindows64;
+
+		return bIsMobile || bIsDesktop;
 	}
 
 	/** 성공 완료 여부를 검사한다 */
@@ -36,7 +38,9 @@ public static partial class CEditorAccessExtension {
 	}
 
 	/** 정적 플래그를 변경한다 */
-	public static void ExSetStaticEditorFlags(this GameObject a_oSender, StaticEditorFlags a_eFlags, bool a_bIsResetChildren = true, bool a_bIsEnableAssert = true) {
+	public static void ExSetStaticEditorFlags(this GameObject a_oSender, 
+		StaticEditorFlags a_eFlags, bool a_bIsResetChildren = true, bool a_bIsEnableAssert = true) {
+			
 		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
 
 		// 객체가 존재 할 경우
@@ -61,7 +65,15 @@ public static partial class CEditorAccessExtension {
 	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains(this PlistElementArray a_oSender, string a_oStr) {
 		CAccess.Assert(a_oSender != null && a_oStr.ExIsValid());
-		return a_oSender.values.FindIndex((a_oElement) => a_oElement.AsString().Equals(a_oStr)) >= KCDefine.B_VAL_0_INT;
+		int nResult = a_oSender.values.FindIndex((a_oElement) => a_oElement.AsString().Equals(a_oStr));
+
+		return a_oSender.values.ExIsValidIdx(nResult);
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContains(this PlistElementDict a_oSender, string a_oStr) {
+		CAccess.Assert(a_oSender != null && a_oStr.ExIsValid());
+		return a_oSender.values.ContainsKey(a_oStr);
 	}
 
 	/** 포함 여부를 검사한다 */
@@ -70,9 +82,10 @@ public static partial class CEditorAccessExtension {
 
 		for(int i = 0; i < a_oSender.values.Count; ++i) {
 			var oValDict = a_oSender.values[i].AsDict();
+			bool bIsValid = oValDict.values.TryGetValue(KCEditorDefine.B_KEY_IOS_ADS_NETWORK_ID, out PlistElement oElement);
 
 			// 광고 네트워크 식별자가 존재 할 경우
-			if(oValDict.values.TryGetValue(KCEditorDefine.B_KEY_IOS_ADS_NETWORK_ID, out PlistElement oElement) && oElement.AsString().Equals(a_oNetworkID)) {
+			if(bIsValid && oElement.AsString().Equals(a_oNetworkID)) {
 				return true;
 			}
 		}

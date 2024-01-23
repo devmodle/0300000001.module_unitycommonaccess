@@ -211,7 +211,7 @@ public static partial class CAccess {
 		return KCDefine.U_ASSET_P_G_NORM_QUALITY_URP;
 	}
 
-	/** 포스트 프로세싱 설정 경로를 반환한다 */
+	/** 포스트 프로세스 설정 경로를 반환한다 */
 	public static string GetPostProcessingSettingsPath(EQualityLevel a_eQualityLevel) {
 		switch(a_eQualityLevel) {
 			case EQualityLevel.HIGH: return KCDefine.U_ASSET_P_G_HIGH_QUALITY_POST_PROCESSING_SETTINGS;

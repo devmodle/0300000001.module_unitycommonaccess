@@ -1374,7 +1374,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 1 차원 배열 => 2 차원 배열로 복사한다 */
-	public static void ExCopyTo<T01, T02>(this T01[] a_oSender, T02[,] a_oDestVals, System.Func<T01, T02> a_oCallback, bool a_bIsEnableAssert = true) {
+	public static void ExCopyTo<TA, TB>(this TA[] a_oSender, TB[,] a_oDestVals, System.Func<TA, TB> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
 
 		// 복사가 가능 할 경우
@@ -1389,7 +1389,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 1 차원 배열 => 3 차원 배열로 복사한다 */
-	public static void ExCopyTo<T01, T02>(this T01[] a_oSender, T02[,,] a_oDestVals, System.Func<T01, T02> a_oCallback, bool a_bIsEnableAssert = true) {
+	public static void ExCopyTo<TA, TB>(this TA[] a_oSender, TB[,,] a_oDestVals, System.Func<TA, TB> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
 
 		// 복사가 가능 할 경우
@@ -1406,7 +1406,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 2 차원 배열 => 1 차원 배열로 복사한다 */
-	public static void ExCopyTo<T01, T02>(this T01[,] a_oSender, T02[] a_oDestVals, System.Func<T01, T02> a_oCallback, bool a_bIsEnableAssert = true) {
+	public static void ExCopyTo<TA, TB>(this TA[,] a_oSender, TB[] a_oDestVals, System.Func<TA, TB> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
 
 		// 복사가 가능 할 경우
@@ -1423,7 +1423,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 3 차원 배열 => 1 차원 배열로 복사한다 */
-	public static void ExCopyTo<T01, T02>(this T01[,,] a_oSender, T02[] a_oDestVals, System.Func<T01, T02> a_oCallback, bool a_bIsEnableAssert = true) {
+	public static void ExCopyTo<TA, TB>(this TA[,,] a_oSender, TB[] a_oDestVals, System.Func<TA, TB> a_oCallback, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestVals != null));
 
 		// 복사가 불가능 할 경우
@@ -1445,7 +1445,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 리스트를 복사한다 */
-	public static void ExCopyTo<T01, T02>(this List<T01> a_oSender, List<T02> a_oDestValList, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+	public static void ExCopyTo<TA, TB>(this List<TA> a_oSender, List<TB> a_oDestValList, System.Func<TA, TB> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValList != null && a_oCallback != null));
 
 		// 복사가 가능 할 경우
@@ -1462,7 +1462,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 스택을 복사한다 */
-	public static void ExCopyTo<T01, T02>(this Stack<T01> a_oSender, Stack<T02> a_oDestValStack, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+	public static void ExCopyTo<TA, TB>(this Stack<TA> a_oSender, Stack<TB> a_oDestValStack, System.Func<TA, TB> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValStack != null && a_oCallback != null));
 
 		// 복사가 가능 할 경우
@@ -1472,7 +1472,7 @@ public static partial class CAccessExtension {
 				a_oDestValStack.Clear();
 			}
 
-			var oValStack = new Stack<T01>();
+			var oValStack = new Stack<TA>();
 
 			while(a_oSender.ExIsValid()) {
 				oValStack.Push(a_oSender.Pop());
@@ -1485,8 +1485,8 @@ public static partial class CAccessExtension {
 	}
 
 	/** 큐를 복사한다 */
-	public static void ExCopyTo<T01, T02>(this Queue<T01> a_oSender,
-		Queue<T02> a_oDestValQueue, System.Func<T01, T02> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
+	public static void ExCopyTo<TA, TB>(this Queue<TA> a_oSender,
+		Queue<TB> a_oDestValQueue, System.Func<TA, TB> a_oCallback, bool a_bIsClear = true, bool a_bIsEnableAssert = true) {
 
 		CAccess.Assert(!a_bIsEnableAssert || (a_oSender != null && a_oDestValQueue != null && a_oCallback != null));
 

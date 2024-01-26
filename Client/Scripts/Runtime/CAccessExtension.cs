@@ -74,7 +74,7 @@ public static partial class CAccessExtension {
 
 	/** 빌드 번호 유효 여부를 검사한다 */
 	public static bool ExIsValidBuildNum(this int a_nSender) {
-		return a_nSender >= KCDefine.B_MIN_BUILD_NUM;
+		return a_nSender >= KCDefine.B_VAL_1_INT;
 	}
 
 	/** 빌드 버전 유효 여부를 검사한다 */

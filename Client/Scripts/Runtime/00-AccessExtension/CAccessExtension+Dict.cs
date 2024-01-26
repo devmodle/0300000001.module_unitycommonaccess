@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+using System.Linq;
+
 /** 접근자 확장 클래스 - 딕셔너리 */
 public static partial class CAccessExtension {
 	#region 내부 클래스 함수
@@ -52,7 +54,7 @@ public static partial class CAccessExtension {
 
 	/** 값을 반환한다 */
 	public static V ExGetVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tDefVal = default) {
-		CAccess.Assert(a_oSender != null && a_oCompare != null);
+		CAccess.Assert(a_oSender != null);
 		return a_oSender.GetValueOrDefault(a_tKey, a_tDefVal);
 	}
 

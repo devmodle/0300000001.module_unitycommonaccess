@@ -125,12 +125,12 @@ public static partial class CEditorAccess {
 		CEditorAccess.m_bIsImportAssets = true;
 	}
 
-	/** 에셋 임포트가 완료 되었을 경우 */
+	/** 에셋 임포트가 완료되었을 경우 */
 	private static void OnCompleteAssetImport(string a_oAssetName) {
 		CEditorAccess.m_bIsImportAssets = false;
 	}
 
-	/** 에셋 임포트가 취소 되었을 경우 */
+	/** 에셋 임포트가 취소되었을 경우 */
 	private static void OnCancelAssetImport(string a_oAssetName) {
 		CEditorAccess.OnCompleteAssetImport(a_oAssetName);
 	}

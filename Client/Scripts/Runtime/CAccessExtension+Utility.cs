@@ -1063,15 +1063,12 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oName.ExIsValid());
 		var oObjs = a_stSender.GetRootGameObjects();
 
-		// 객체가 존재 할 경우
-		if(oObjs.ExIsValid()) {
-			for(int i = 0; i < oObjs.Length; ++i) {
-				var oObj = oObjs[i].ExFindChild(a_oName, true, a_bIsEnableSubName);
+		for(int i = 0; i < oObjs.Length; ++i) {
+			var oObj = oObjs[i].ExFindChild(a_oName, true, a_bIsEnableSubName);
 
-				// 자식 객체가 존재 할 경우
-				if(oObj != null) {
-					return oObj;
-				}
+			// 자식 객체가 존재 할 경우
+			if(oObj != null) {
+				return oObj;
 			}
 		}
 

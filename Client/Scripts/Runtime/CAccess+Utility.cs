@@ -239,8 +239,8 @@ public static partial class CAccess {
 	}
 
 	/** 씬을 순회한다 */
-	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || a_oCallback != null);
 
 		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
@@ -254,8 +254,8 @@ public static partial class CAccess {
 	}
 
 	/** 객체를 순회한다 */
-	public static void EnumerateRootObjs(System.Func<GameObject, bool> a_oCallback, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+	public static void EnumerateRootObjs(System.Func<GameObject, bool> a_oCallback, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || a_oCallback != null);
 
 		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
@@ -264,10 +264,10 @@ public static partial class CAccess {
 
 				a_stScene.ExEnumerateRootObjs((a_oObj) => {
 					return bIsTrue = a_oCallback(a_oObj);
-				}, a_bIsEnableAssert);
+				}, a_bIsAssert);
 
 				return bIsTrue;
-			}, a_bIsEnableAssert);
+			}, a_bIsAssert);
 		}
 	}
 
@@ -305,8 +305,8 @@ public static partial class CAccess {
 	}
 
 	/** 컴포넌트를 순회한다 */
-	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsEnableAssert = true) where T : Component {
-		CAccess.Assert(!a_bIsEnableAssert || a_oCallback != null);
+	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsAssert = true) where T : Component {
+		CAccess.Assert(!a_bIsAssert || a_oCallback != null);
 
 		// 콜백이 존재 할 경우
 		if(a_oCallback != null) {
@@ -315,10 +315,10 @@ public static partial class CAccess {
 
 				a_stScene.ExEnumerateComponents<T>((a_oComponent) => {
 					return bIsTrue = a_oCallback(a_oComponent);
-				}, a_bIsIncludeInactive, a_bIsEnableAssert);
+				}, a_bIsIncludeInactive, a_bIsAssert);
 
 				return bIsTrue;
-			}, a_bIsEnableAssert);
+			}, a_bIsAssert);
 		}
 	}
 	#endregion // 제네릭 클래스 함수
@@ -326,8 +326,8 @@ public static partial class CAccess {
 	#region 조건부 클래스 함수
 #if UNITY_EDITOR
 	/** 스크립트 순서를 변경한다 */
-	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder, bool a_bIsEnableAssert = true) {
-		CAccess.Assert(!a_bIsEnableAssert || a_oScript != null);
+	public static void SetScriptOrder(MonoScript a_oScript, int a_nOrder, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || a_oScript != null);
 
 		// 스크립트가 존재 할 경우
 		if(a_oScript != null && MonoImporter.GetExecutionOrder(a_oScript) != a_nOrder) {

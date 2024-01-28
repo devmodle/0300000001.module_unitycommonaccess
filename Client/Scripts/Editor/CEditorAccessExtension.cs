@@ -39,9 +39,9 @@ public static partial class CEditorAccessExtension {
 
 	/** 정적 플래그를 변경한다 */
 	public static void ExSetStaticEditorFlags(this GameObject a_oSender, 
-		StaticEditorFlags a_eFlags, bool a_bIsResetChildren = true, bool a_bIsEnableAssert = true) {
+		StaticEditorFlags a_eFlags, bool a_bIsResetChildren = true, bool a_bIsAssert = true) {
 			
-		CAccess.Assert(!a_bIsEnableAssert || a_oSender != null);
+		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
 		// 객체가 존재 할 경우
 		if(a_oSender != null) {

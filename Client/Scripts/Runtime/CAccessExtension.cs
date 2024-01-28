@@ -369,7 +369,7 @@ public static partial class CAccessExtension {
 		CAccess.Assert(a_oSender != null && a_oValList != null);
 		return a_oSender.ExToSingleArray().ExIsContains(a_oValList);
 	}
-	
+
 	/** 포함 여부를 검사한다 */
 	public static bool ExIsContains<T>(this Stack<T> a_oSender, System.Predicate<T> a_oCompare) {
 		CAccess.Assert(a_oSender != null && a_oCompare != null);
@@ -525,7 +525,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 프로퍼티 값을 반환한다 */
-	public static object ExGetPropertyVal<T>(this object a_oSender, 
+	public static object ExGetPropertyVal<T>(this object a_oSender,
 		string a_oName, BindingFlags a_eBindingFlags = KCDefine.B_BINDING_F_PUBLIC_INSTANCE) {
 
 		CAccess.Assert(a_oName.ExIsValid());
@@ -642,7 +642,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 필드 값을 변경한다 */
-	public static void ExSetFieldVal<T>(this object a_oSender, 
+	public static void ExSetFieldVal<T>(this object a_oSender,
 		string a_oName, object a_oVal, BindingFlags a_eBindingFlags = KCDefine.B_BINDING_F_PUBLIC_INSTANCE, bool a_bIsAssert = true) {
 
 		CAccess.Assert(!a_bIsAssert || a_oName.ExIsValid());
@@ -671,7 +671,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 프로퍼티 값을 변경한다 */
-	public static void ExSetPropertyVal<T>(this object a_oSender, 
+	public static void ExSetPropertyVal<T>(this object a_oSender,
 		string a_oName, object a_oVal, BindingFlags a_eBindingFlags = KCDefine.B_BINDING_F_PUBLIC_INSTANCE, bool a_bIsAssert = true) {
 
 		CAccess.Assert(!a_bIsAssert || a_oName.ExIsValid());
@@ -683,7 +683,7 @@ public static partial class CAccessExtension {
 	}
 
 	/** 런타임 프로퍼티 값을 변경한다 */
-	public static void ExSetRuntimePropertyVal<T>(this object a_oSender, 
+	public static void ExSetRuntimePropertyVal<T>(this object a_oSender,
 		string a_oName, object a_oVal, bool a_bIsAssert = true) {
 
 		CAccess.Assert(!a_bIsAssert || a_oName.ExIsValid());
@@ -1052,14 +1052,16 @@ public static partial class CAccessExtension {
 	public static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, K a_tKey, V a_tVal, bool a_bIsAssert = true) {
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
-		// 딕셔너리가 존재 할 경우
-		if(a_oSender != null) {
-			// 값 대체가 가능 할 경우
-			if(a_oSender.ContainsKey(a_tKey)) {
-				a_oSender[a_tKey] = a_tVal;
-			} else {
-				a_oSender.Add(a_tKey, a_tVal);
-			}
+		// 값 대체가 불가능 할 경우
+		if(a_oSender == null) {
+			return;
+		}
+
+		// 값 대체가 가능 할 경우
+		if(a_oSender.ContainsKey(a_tKey)) {
+			a_oSender[a_tKey] = a_tVal;
+		} else {
+			a_oSender.Add(a_tKey, a_tVal);
 		}
 	}
 
@@ -1067,16 +1069,18 @@ public static partial class CAccessExtension {
 	public static void ExReplaceVal<K, V>(this Dictionary<K, V> a_oSender, V a_tVal, System.Predicate<KeyValuePair<K, V>> a_oCompare, bool a_bIsAssert = true) {
 		CAccess.Assert(!a_bIsAssert || (a_oSender != null && a_oCompare != null));
 
-		// 딕셔너리가 존재 할 경우
-		if(a_oSender != null && a_oCompare != null) {
-			var stResult = a_oSender.ExFindVal(a_oCompare);
+		// 값 대체가 불가능 할 경우
+		if(a_oSender == null || a_oCompare == null) {
+			return;
+		}
 
-			// 값 대체가 가능 할 경우
-			if(stResult.Item1) {
-				a_oSender[stResult.Item2] = a_tVal;
-			} else {
-				a_oSender.Add(stResult.Item2, a_tVal);
-			}
+		var stResult = a_oSender.ExFindVal(a_oCompare);
+
+		// 값 대체가 가능 할 경우
+		if(stResult.Item1) {
+			a_oSender[stResult.Item2] = a_tVal;
+		} else {
+			a_oSender.Add(stResult.Item2, a_tVal);
 		}
 	}
 

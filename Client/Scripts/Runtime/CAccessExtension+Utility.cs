@@ -1037,13 +1037,13 @@ public static partial class CAccessExtension {
 
 	/** 값을 할당한다 */
 	public static void ExAssignVal(this List<DG.Tweening.Tween> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
+		a_oSender.ExGetVal(a_nIdx)?.Kill();
 		a_oSender.ExSetVal(a_nIdx, a_oRhs ?? a_oDefVal, false);
 	}
 
 	/** 값을 할당한다 */
 	public static void ExAssignVal(this List<Sequence> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_nIdx, null)?.Kill();
+		a_oSender.ExGetVal(a_nIdx)?.Kill();
 		a_oSender.ExSetVal(a_nIdx, (a_oRhs ?? a_oDefVal) as Sequence, false);
 	}
 
@@ -1188,13 +1188,13 @@ public static partial class CAccessExtension {
 	#region 제네릭 클래스 함수
 	/** 값을 할당한다 */
 	public static void ExAssignVal<K>(this Dictionary<K, DG.Tweening.Tween> a_oSender, K a_tKey, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.GetValueOrDefault(a_tKey)?.Kill();
+		a_oSender.ExGetVal(a_tKey)?.Kill();
 		a_oSender.ExReplaceVal(a_tKey, a_oRhs ?? a_oDefVal, false);
 	}
 
 	/** 값을 할당한다 */
 	public static void ExAssignVal<K>(this Dictionary<K, Sequence> a_oSender, K a_tKey, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.GetValueOrDefault(a_tKey)?.Kill();
+		a_oSender.ExGetVal(a_tKey)?.Kill();
 		a_oSender.ExReplaceVal(a_tKey, (a_oRhs ?? a_oDefVal) as Sequence, false);
 	}
 

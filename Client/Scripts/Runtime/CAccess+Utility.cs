@@ -148,7 +148,7 @@ public static partial class CAccess {
 	private static Vector3 ResulitionCorrectDesktopScreenSize => CAccess.ResolutionDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
 
 #if UNITY_EDITOR || UNITY_STANDALONE
-	public static float ScreenDPI => KCDefine.B_PLATFORM_SCREEN_DPI * (CAccess.DeviceScreenSize.y / KCDefine.B_DESIGN_DPI_SCREEN_HEIGHT);
+	public static float ScreenDPI => KCDefine.B_PLATFORM_SCREEN_DPI * (CAccess.DeviceScreenSize.y / KCDefine.B_DESIGN_SCREEN_HEIGHT);
 #else
 	public static float ScreenDPI => Screen.dpi;
 #endif // #if UNITY_EDITOR || UNITY_STANDALONE

@@ -600,14 +600,18 @@ public static partial class CAccessExtension {
 	}
 
 	/** 너비를 변경한다 */
-	public static void ExSetWidth(this LineRenderer a_oSender, float a_fSrcWidth, float a_fDestWidth, bool a_bIsAssert = true) {
+	public static void ExSetWidth(this LineRenderer a_oSender, 
+		float a_fSrcWidth, float a_fDestWidth, bool a_bIsAssert = true) {
+
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
-		// 라인 효과가 존재 할 경우
-		if(a_oSender != null) {
-			a_oSender.startWidth = a_fSrcWidth;
-			a_oSender.endWidth = a_fDestWidth;
+		// 너비 변경이 불가능 할 경우
+		if(a_oSender == null) {
+			return;
 		}
+
+		a_oSender.startWidth = a_fSrcWidth;
+		a_oSender.endWidth = a_fDestWidth;
 	}
 
 	/** 태그를 변경한다 */
@@ -784,16 +788,20 @@ public static partial class CAccessExtension {
 	public static void ExSetLayer(this GameObject a_oSender, int a_nLayer, bool a_bIsResetChildren = true, bool a_bIsAssert = true) {
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
-		// 객체가 존재 할 경우
-		if(a_oSender != null) {
-			a_oSender.layer = a_nLayer;
+		// 레이어 변경이 불가능 할 경우
+		if(a_oSender == null) {
+			return;
+		}
 
-			// 자식 객체 리셋 모드 일 경우
-			if(a_bIsResetChildren) {
-				foreach(var oObj in a_oSender.Descendants()) {
-					oObj.layer = a_nLayer;
-				}
-			}
+		a_oSender.layer = a_nLayer;
+
+		// 자식 레이어 리셋 모드가 아닐 경우
+		if(!a_bIsResetChildren) {
+			return;
+		}
+
+		foreach(var oObj in a_oSender.Descendants()) {
+			oObj.layer = a_nLayer;
 		}
 	}
 

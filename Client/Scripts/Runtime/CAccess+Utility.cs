@@ -201,8 +201,8 @@ public static partial class CAccess {
 		return KCDefine.B_PLATFORM_STANDALONE_MAC_STEAM;
 	}
 
-	/** 렌더링 파이프라인 경로를 반환한다 */
-	public static string GetRenderingPipelinePath(EQualityLevel a_eQualityLevel) {
+	/** URP 에셋 경로를 반환한다 */
+	public static string GetURPAssetPath(EQualityLevel a_eQualityLevel) {
 		switch(a_eQualityLevel) {
 			case EQualityLevel.HIGH: return KCDefine.U_ASSET_P_G_HIGH_QUALITY_URP;
 			case EQualityLevel.ULTRA: return KCDefine.U_ASSET_P_G_ULTRA_QUALITY_URP;
@@ -242,13 +242,15 @@ public static partial class CAccess {
 	public static void EnumerateScenes(System.Func<Scene, bool> a_oCallback, bool a_bIsAssert = true) {
 		CAccess.Assert(!a_bIsAssert || a_oCallback != null);
 
-		// 콜백이 존재 할 경우
-		if(a_oCallback != null) {
-			for(int i = 0; i < SceneManager.sceneCount; ++i) {
-				// 씬 순회가 불가능 할 경우
-				if(!a_oCallback(SceneManager.GetSceneAt(i))) {
-					break;
-				}
+		// 씬 순회가 불가능 할 경우
+		if(a_oCallback == null) {
+			return;
+		}
+
+		for(int i = 0; i < SceneManager.sceneCount; ++i) {
+			// 씬 순회가 불가능 할 경우
+			if(!a_oCallback(SceneManager.GetSceneAt(i))) {
+				break;
 			}
 		}
 	}
@@ -257,33 +259,37 @@ public static partial class CAccess {
 	public static void EnumerateRootObjs(System.Func<GameObject, bool> a_oCallback, bool a_bIsAssert = true) {
 		CAccess.Assert(!a_bIsAssert || a_oCallback != null);
 
-		// 콜백이 존재 할 경우
-		if(a_oCallback != null) {
-			CAccess.EnumerateScenes((a_stScene) => {
-				bool bIsTrue = true;
-
-				a_stScene.ExEnumerateRootObjs((a_oObj) => {
-					return bIsTrue = a_oCallback(a_oObj);
-				}, a_bIsAssert);
-
-				return bIsTrue;
-			}, a_bIsAssert);
+		// 객체 순회가 불가능 할 경우
+		if(a_oCallback == null) {
+			return;
 		}
+
+		CAccess.EnumerateScenes((a_stScene) => {
+			bool bIsTrue = true;
+
+			a_stScene.ExEnumerateRootObjs((a_oObj) => {
+				return bIsTrue = a_oCallback(a_oObj);
+			}, a_bIsAssert);
+
+			return bIsTrue;
+		}, a_bIsAssert);
 	}
 
 	/** 대기 객체를 반환한다 */
 	private static WaitForSeconds GetWaitForSeconds(float a_fDelay) {
-		var oWaitForSecs = CAccess.m_oWaitForSecsDict.GetValueOrDefault(a_fDelay) ?? new WaitForSeconds(a_fDelay);
-		CAccess.m_oWaitForSecsDict.TryAdd(a_fDelay, oWaitForSecs);
+		var oWaitForSecs = CAccess.m_oWaitForSecsDict.GetValueOrDefault(a_fDelay) ?? 
+			new WaitForSeconds(a_fDelay);
 
+		CAccess.m_oWaitForSecsDict.TryAdd(a_fDelay, oWaitForSecs);
 		return oWaitForSecs;
 	}
 
 	/** 대기 객체를 반환한다 */
 	private static WaitForSecondsRealtime GetWaitForSecondsRealtime(float a_fDelay) {
-		var oWaitForSecs = CAccess.m_oWaitForSecsRealtimeDict.GetValueOrDefault(a_fDelay) ?? new WaitForSecondsRealtime(a_fDelay);
-		CAccess.m_oWaitForSecsRealtimeDict.TryAdd(a_fDelay, oWaitForSecs);
+		var oWaitForSecs = CAccess.m_oWaitForSecsRealtimeDict.GetValueOrDefault(a_fDelay) ?? 
+			new WaitForSecondsRealtime(a_fDelay);
 
+		CAccess.m_oWaitForSecsRealtimeDict.TryAdd(a_fDelay, oWaitForSecs);
 		return oWaitForSecs;
 	}
 	#endregion // 클래스 함수
@@ -292,9 +298,10 @@ public static partial class CAccess {
 	/** 리소스 존재 여부를 검사한다 */
 	public static bool IsExistsRes<T>(string a_oFilePath, bool a_bIsAutoUnload = false) where T : Object {
 		CAccess.Assert(a_oFilePath.ExIsValid());
-
 		var oRes = Resources.Load<T>(a_oFilePath);
-		bool bIsExistsRes = typeof(T).Equals(typeof(TextAsset)) ? (oRes as TextAsset).ExIsValid() : oRes != null;
+
+		bool bIsExistsRes = typeof(T).Equals(typeof(TextAsset)) ? 
+			(oRes as TextAsset).ExIsValid() : oRes != null;
 
 		// 자동 제거 모드 일 경우
 		if(bIsExistsRes && a_bIsAutoUnload) {
@@ -305,21 +312,25 @@ public static partial class CAccess {
 	}
 
 	/** 컴포넌트를 순회한다 */
-	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, bool a_bIsIncludeInactive = false, bool a_bIsAssert = true) where T : Component {
+	public static void EnumerateComponents<T>(System.Func<T, bool> a_oCallback, 
+		bool a_bIsIncludeInactive = false, bool a_bIsAssert = true) where T : Component {
+
 		CAccess.Assert(!a_bIsAssert || a_oCallback != null);
 
-		// 콜백이 존재 할 경우
-		if(a_oCallback != null) {
-			CAccess.EnumerateScenes((a_stScene) => {
-				bool bIsTrue = true;
-
-				a_stScene.ExEnumerateComponents<T>((a_oComponent) => {
-					return bIsTrue = a_oCallback(a_oComponent);
-				}, a_bIsIncludeInactive, a_bIsAssert);
-
-				return bIsTrue;
-			}, a_bIsAssert);
+		// 컴포넌트 순회가 불가능 할 경우
+		if(a_oCallback == null) {
+			return;
 		}
+
+		CAccess.EnumerateScenes((a_stScene) => {
+			bool bIsTrue = true;
+
+			a_stScene.ExEnumerateComponents<T>((a_oComponent) => {
+				return bIsTrue = a_oCallback(a_oComponent);
+			}, a_bIsIncludeInactive, a_bIsAssert);
+
+			return bIsTrue;
+		}, a_bIsAssert);
 	}
 	#endregion // 제네릭 클래스 함수
 

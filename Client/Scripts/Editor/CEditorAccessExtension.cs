@@ -39,20 +39,24 @@ public static partial class CEditorAccessExtension {
 
 	/** 정적 플래그를 변경한다 */
 	public static void ExSetStaticEditorFlags(this GameObject a_oSender, 
-		StaticEditorFlags a_eFlags, bool a_bIsResetChildren = true, bool a_bIsAssert = true) {
+		StaticEditorFlags a_eFlags, bool a_bIsCascade = true, bool a_bIsAssert = true) {
 			
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
-		// 객체가 존재 할 경우
-		if(a_oSender != null) {
-			GameObjectUtility.SetStaticEditorFlags(a_oSender, a_eFlags);
+		// 플래그 변경이 불가능 할 경우
+		if(a_oSender == null) {
+			return;
+		}
 
-			// 자식 객체 리셋 모드 일 경우
-			if(a_bIsResetChildren) {
-				foreach(var oObj in a_oSender.Descendants()) {
-					GameObjectUtility.SetStaticEditorFlags(oObj, a_eFlags);
-				}
-			}
+		GameObjectUtility.SetStaticEditorFlags(a_oSender, a_eFlags);
+
+		// 계층 적용 모드가 아닐 경우
+		if(!a_bIsCascade) {
+			return;
+		}
+
+		foreach(var oObj in a_oSender.Descendants()) {
+			GameObjectUtility.SetStaticEditorFlags(oObj, a_eFlags);
 		}
 	}
 

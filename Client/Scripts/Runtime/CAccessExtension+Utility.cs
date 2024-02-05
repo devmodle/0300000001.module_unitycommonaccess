@@ -774,7 +774,9 @@ public static partial class CAccessExtension {
 	}
 
 	/** 색상을 변경한다 */
-	public static void ExSetStartColor(this ParticleSystem a_oSender, Color a_stMinColor, Color a_stMaxColor, bool a_bIsAssert = true) {
+	public static void ExSetStartColor(this ParticleSystem a_oSender, 
+		Color a_stMinColor, Color a_stMaxColor, bool a_bIsAssert = true) {
+
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
 		// 파티클 효과가 존재 할 경우
@@ -785,7 +787,9 @@ public static partial class CAccessExtension {
 	}
 
 	/** 레이어를 변경한다 */
-	public static void ExSetLayer(this GameObject a_oSender, int a_nLayer, bool a_bIsResetChildren = true, bool a_bIsAssert = true) {
+	public static void ExSetLayer(this GameObject a_oSender, 
+		int a_nLayer, bool a_bIsCascade = true, bool a_bIsAssert = true) {
+
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
 		// 레이어 변경이 불가능 할 경우
@@ -795,8 +799,8 @@ public static partial class CAccessExtension {
 
 		a_oSender.layer = a_nLayer;
 
-		// 자식 레이어 리셋 모드가 아닐 경우
-		if(!a_bIsResetChildren) {
+		// 계층 적용 모드가 아닐 경우
+		if(!a_bIsCascade) {
 			return;
 		}
 

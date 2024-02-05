@@ -8,7 +8,6 @@ using UnityEngine.Events;
 using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
-
 using Unity.Linq;
 
 #if UNITY_IOS

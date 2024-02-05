@@ -9,7 +9,6 @@ using UnityEngine.U2D;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
-
 using Unity.Linq;
 using DG.Tweening;
 using EnhancedUI.EnhancedScroller;

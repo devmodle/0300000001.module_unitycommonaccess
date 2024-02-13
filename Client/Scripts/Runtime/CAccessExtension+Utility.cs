@@ -1447,13 +1447,13 @@ public static partial class CAccessExtension {
 				for(int j = 0; j < a_oSender.GetLength(KCDefine.B_VAL_1_INT); ++j) {
 					// 배열 순회가 불가능 할 경우
 					if(!a_oCallback(a_oSender[i, j], new Vector3Int(j, i, KCDefine.B_VAL_0_INT))) {
-						goto EXIT_ENUMERATE;
+						goto EX_ENUMERATE_EXIT_ENUMERATE;
 					}
 				}
 			}
 		}
 
-EXIT_ENUMERATE:
+EX_ENUMERATE_EXIT_ENUMERATE:
 		return;
 	}
 

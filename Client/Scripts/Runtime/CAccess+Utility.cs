@@ -56,7 +56,7 @@ public static partial class CAccess {
 		get {
 #if !UNITY_EDITOR && UNITY_IOS
 			var oVer = new System.Version(Device.systemVersion);
-			return oVer.CompareTo(KCDefine.U_MIN_VER_TRACKING_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
+			return oVer.CompareTo(KCDefine.B_MIN_VER_TRACKING_CONSENT_VIEW) >= KCDefine.B_COMPARE_EQUALS;
 #elif !UNITY_EDITOR && UNITY_ANDROID
 			return false;
 #else
@@ -71,9 +71,9 @@ public static partial class CAccess {
 			var oVer = new System.Version(Device.systemVersion);
 
 			// 햅틱 피드백 지원 버전 일 경우
-			if(oVer.CompareTo(KCDefine.U_MIN_VER_HAPTIC_FEEDBACK) >= KCDefine.B_COMPARE_EQUALS) {
+			if(oVer.CompareTo(KCDefine.B_MIN_VER_HAPTIC_FEEDBACK) >= KCDefine.B_COMPARE_EQUALS) {
 				string oModel = Device.generation.ToString().ToUpper();
-				return Device.generation >= iPhone7 && oModel.Contains(KCDefine.U_MODEL_N_IPHONE.ToUpper());
+				return Device.generation >= iPhone7 && oModel.Contains(KCDefine.B_MODEL_N_IPHONE.ToUpper());
 			}
 
 			return false;

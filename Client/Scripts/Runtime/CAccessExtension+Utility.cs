@@ -1504,7 +1504,7 @@ EX_ENUMERATE_EXIT_ENUMERATE:
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
 
 		bool bIsInvalidA = Application.isPlaying;
-		bool bIsInvalidB = a_oSender == null || a_nOrder >= KCDefine.U_SCRIPT_O_INVALID;
+		bool bIsInvalidB = a_oSender == null || a_nOrder >= KCDefine.B_SCRIPT_O_INVALID;
 
 		// 스크립트 순서 변경이 불가능 할 경우
 		if(bIsInvalidA || bIsInvalidB) {

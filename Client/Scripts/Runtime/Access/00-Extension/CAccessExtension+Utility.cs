@@ -133,76 +133,6 @@ public static partial class CAccessExtension {
 		return a_stSender.x.ExIsEquals(a_stRhs.x) && a_stSender.y.ExIsEquals(a_stRhs.y) && a_stSender.z.ExIsEquals(a_stRhs.z);
 	}
 
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this List<Vector2> a_oSender, List<Vector2> a_oVecList) {
-		CAccess.Assert(a_oSender != null && a_oVecList != null);
-
-		for(int i = 0; i < a_oSender.Count; ++i) {
-			// 동일하지 않을 경우
-			if(!a_oSender[i].ExIsEquals(a_oVecList[i])) {
-				return false;
-			}
-		}
-
-		return a_oSender.Count == a_oVecList.Count;
-	}
-
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this List<Vector3> a_oSender, List<Vector3> a_oVecList) {
-		CAccess.Assert(a_oSender != null && a_oVecList != null);
-
-		for(int i = 0; i < a_oSender.Count; ++i) {
-			// 동일하지 않을 경우
-			if(!a_oSender[i].ExIsEquals(a_oVecList[i])) {
-				return false;
-			}
-		}
-
-		return a_oSender.Count == a_oVecList.Count;
-	}
-
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this List<Vector2Int> a_oSender, List<Vector2Int> a_oVecList) {
-		CAccess.Assert(a_oSender != null && a_oVecList != null);
-
-		for(int i = 0; i < a_oSender.Count; ++i) {
-			// 동일하지 않을 경우
-			if(!a_oSender[i].Equals(a_oVecList[i])) {
-				return false;
-			}
-		}
-
-		return a_oSender.Count == a_oVecList.Count;
-	}
-
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this List<Vector3Int> a_oSender, List<Vector3Int> a_oVecList) {
-		CAccess.Assert(a_oSender != null && a_oVecList != null);
-
-		for(int i = 0; i < a_oSender.Count; ++i) {
-			// 동일하지 않을 경우
-			if(!a_oSender[i].Equals(a_oVecList[i])) {
-				return false;
-			}
-		}
-
-		return a_oSender.Count == a_oVecList.Count;
-	}
-
-	/** 동일 여부를 검사한다 */
-	public static bool ExIsEquals(this List<STIdxInfo> a_oSender, List<STIdxInfo> a_oIdxInfoList) {
-		CAccess.Assert(a_oSender != null && a_oIdxInfoList != null);
-
-		for(int i = 0; i < a_oSender.Count; ++i) {
-			// 동일하지 않을 경우
-			if(!a_oSender[i].Equals(a_oIdxInfoList[i])) {
-				return false;
-			}
-		}
-
-		return a_oSender.Count == a_oIdxInfoList.Count;
-	}
-
 	/** 최소 값을 반환한다 */
 	public static float ExGetMinVal(this Vector2 a_stSender) {
 		return a_stSender.x.ExIsLess(a_stSender.y) ? a_stSender.x : a_stSender.y;
@@ -1046,18 +976,6 @@ public static partial class CAccessExtension {
 		}
 	}
 
-	/** 값을 할당한다 */
-	public static void ExAssignVal(this List<DG.Tweening.Tween> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_nIdx)?.Kill();
-		a_oSender.ExSetVal(a_nIdx, a_oRhs ?? a_oDefVal, false);
-	}
-
-	/** 값을 할당한다 */
-	public static void ExAssignVal(this List<Sequence> a_oSender, int a_nIdx, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_nIdx)?.Kill();
-		a_oSender.ExSetVal(a_nIdx, (a_oRhs ?? a_oDefVal) as Sequence, false);
-	}
-
 	/** 데이터를 다시 로드한다 */
 	public static void ExReloadData(this EnhancedScroller a_oSender, int a_nDataIdx, bool a_bIsAssert = true) {
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);
@@ -1197,18 +1115,6 @@ public static partial class CAccessExtension {
 	#endregion // 클래스 함수
 
 	#region 제네릭 클래스 함수
-	/** 값을 할당한다 */
-	public static void ExAssignVal<K>(this Dictionary<K, DG.Tweening.Tween> a_oSender, K a_tKey, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_tKey)?.Kill();
-		a_oSender.ExReplaceVal(a_tKey, a_oRhs ?? a_oDefVal, false);
-	}
-
-	/** 값을 할당한다 */
-	public static void ExAssignVal<K>(this Dictionary<K, Sequence> a_oSender, K a_tKey, DG.Tweening.Tween a_oRhs, DG.Tweening.Tween a_oDefVal = null) {
-		a_oSender.ExGetVal(a_tKey)?.Kill();
-		a_oSender.ExReplaceVal(a_tKey, (a_oRhs ?? a_oDefVal) as Sequence, false);
-	}
-
 	/** 컴포넌트 활성 여부를 변경한다 */
 	public static void ExSetEnableComponent<T>(this GameObject a_oSender, bool a_bIsEnable, bool a_bIsAssert = true) where T : Component {
 		CAccess.Assert(!a_bIsAssert || a_oSender != null);

@@ -14,7 +14,9 @@
         "UnityEngine.Purchasing.SecurityCore",
         "UnityEngine.Purchasing.SecurityStub",
         "AppleAuth",
+        "MessagePack",
         "EnhancedScroller_asmdef",
+        "SimpleScrollSnap",
         "DOTween.Modules",
         "DOTweenPro.Scripts"
     ],

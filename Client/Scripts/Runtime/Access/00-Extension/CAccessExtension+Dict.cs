@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 using System.Linq;
+using DG.Tweening;
 
 /** 접근자 확장 클래스 - 딕셔너리 */
 public static partial class CAccessExtension {
@@ -20,18 +21,6 @@ public static partial class CAccessExtension {
 	/** 유효 여부를 검사한다 */
 	public static bool ExIsValid<K, V>(this Dictionary<K, V> a_oSender) {
 		return a_oSender != null && a_oSender.Count > KCDefine.B_VAL_0_INT;
-	}
-
-	/** 포함 여부를 검사한다 */
-	public static bool ExIsContains<K, V>(this Dictionary<K, V> a_oSender, List<K> a_oKeyList) {
-		CAccess.Assert(a_oSender != null && a_oKeyList != null);
-		return a_oKeyList.All((a_tKey) => a_oSender.ContainsKey(a_tKey));
-	}
-
-	/** 포함 여부를 검사한다 */
-	public static bool ExIsContainsAny<K, V>(this Dictionary<K, V> a_oSender, List<K> a_oKeyList) {
-		CAccess.Assert(a_oSender != null && a_oKeyList != null);
-		return a_oKeyList.Any((a_tKey) => a_oSender.ContainsKey(a_tKey));
 	}
 
 	/** 인덱스 유효 여부를 검사한다 */
@@ -50,6 +39,18 @@ public static partial class CAccessExtension {
 	public static bool ExIsValidIdx<V>(this Dictionary<int, Dictionary<int, Dictionary<int, V>>> a_oSender, Vector3Int a_stIdx) {
 		CAccess.Assert(a_oSender != null);
 		return a_oSender.TryGetValue(a_stIdx.z, out Dictionary<int, Dictionary<int, V>> oValDictContainer) && oValDictContainer.ExIsValidIdx(a_stIdx);
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContainsAny<K, V>(this Dictionary<K, V> a_oSender, List<K> a_oKeyList) {
+		CAccess.Assert(a_oSender != null && a_oKeyList != null);
+		return a_oKeyList.Any((a_tKey) => a_oSender.ContainsKey(a_tKey));
+	}
+
+	/** 포함 여부를 검사한다 */
+	public static bool ExIsContainsAll<K, V>(this Dictionary<K, V> a_oSender, List<K> a_oKeyList) {
+		CAccess.Assert(a_oSender != null && a_oKeyList != null);
+		return a_oKeyList.All((a_tKey) => a_oSender.ContainsKey(a_tKey));
 	}
 
 	/** 값을 반환한다 */
@@ -84,4 +85,18 @@ public static partial class CAccessExtension {
 		return a_oSender.ExIsValidIdx(a_stIdx) ? a_oSender[a_stIdx.z].ExGetVal(a_stIdx, a_tDefVal) : a_tDefVal;
 	}
 	#endregion // 클래스 접근 함수
+
+	#region 제네릭 클래스 접근 함수
+	/** 값을 할당한다 */
+	public static void ExAssignVal<K>(this Dictionary<K, Tween> a_oSender, K a_tKey, Tween a_oRhs, Tween a_oDefVal = null) {
+		a_oSender.ExGetVal(a_tKey)?.Kill();
+		a_oSender.ExReplaceVal(a_tKey, a_oRhs ?? a_oDefVal, false);
+	}
+
+	/** 값을 할당한다 */
+	public static void ExAssignVal<K>(this Dictionary<K, Sequence> a_oSender, K a_tKey, Tween a_oRhs, Tween a_oDefVal = null) {
+		a_oSender.ExGetVal(a_tKey)?.Kill();
+		a_oSender.ExReplaceVal(a_tKey, (a_oRhs ?? a_oDefVal) as Sequence, false);
+	}
+	#endregion // 제네릭 클래스 접근 함수
 }

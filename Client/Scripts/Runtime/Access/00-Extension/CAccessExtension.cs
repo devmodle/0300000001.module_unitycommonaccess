@@ -504,7 +504,9 @@ public static partial class CAccessExtension {
 	}
 
 	/** 필드 값을 반환한다 */
-	public static object ExGetFieldVal<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags) {
+	public static object ExGetFieldVal<T>(this object a_oSender, 
+		string a_oName, BindingFlags a_eBindingFlags = KCDefine.B_BINDING_F_PUBLIC_INSTANCE) {
+
 		CAccess.Assert(a_oName.ExIsValid());
 		return typeof(T).GetField(a_oName, a_eBindingFlags).GetValue(a_oSender);
 	}

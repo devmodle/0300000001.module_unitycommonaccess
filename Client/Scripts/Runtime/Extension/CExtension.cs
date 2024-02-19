@@ -431,7 +431,9 @@ public static partial class CExtension {
 	}
 
 	/** 함수를 호출한다 */
-	public static object ExCallFunc<T>(this object a_oSender, string a_oName, BindingFlags a_eBindingFlags, List<object> a_oParamsList) {
+	public static object ExCallFunc<T>(this object a_oSender, 
+		string a_oName, List<object> a_oParamsList, BindingFlags a_eBindingFlags = KCDefine.B_BINDING_F_PUBLIC_INSTANCE) {
+
 		CAccess.Assert(a_oName.ExIsValid());
 		return typeof(T).GetMethod(a_oName, a_eBindingFlags).Invoke(a_oSender, a_oParamsList.ToArray());
 	}

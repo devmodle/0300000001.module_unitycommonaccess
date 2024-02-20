@@ -87,9 +87,9 @@ public static partial class CFunc {
 			return;
 		}
 
-		CFactory.RemoveDir(a_oDestPath, a_bIsAssert: a_bIsAssert);
+		CFunc.RemoveDir(a_oDestPath, a_bIsAssert: a_bIsAssert);
 
-		CAccess.EnumerateDirectories(a_oSrcPath, (a_oDirPathList, a_oFilePathList) => {
+		CFunc.EnumerateDirectories(a_oSrcPath, (a_oFilePathList, a_oDirPathList) => {
 			for(int i = 0; i < a_oFilePathList.Count; ++i) {
 				string oDestFilePath = a_oFilePathList[i].Replace(a_oSrcPath, a_oDestPath);
 				CFunc.CopyFile(a_oFilePathList[i], oDestFilePath, a_bIsOverwrite, a_bIsAssert);
@@ -97,6 +97,51 @@ public static partial class CFunc {
 
 			return true;
 		});
+	}
+
+	/** 파일을 제거한다 */
+	public static void RemoveFile(string a_oFilePath, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || a_oFilePath.ExIsValid());
+
+		// 파일 제거가 불가능 할 경우
+		if(!a_oFilePath.ExIsValid() || !File.Exists(a_oFilePath)) {
+			return;
+		}
+
+		File.Delete(a_oFilePath);
+	}
+
+	/** 디렉토리를 제거한다 */
+	public static void RemoveDir(string a_oDirPath, bool a_bIsRecursive = true, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || a_oDirPath.ExIsValid());
+
+		// 디렉토리 제거가 불가능 할 경우
+		if(!a_oDirPath.ExIsValid() || !Directory.Exists(a_oDirPath)) {
+			return;
+		}
+
+		Directory.Delete(a_oDirPath, a_bIsRecursive);
+	}
+
+	/** 디렉토리를 순회한다 */
+	public static void EnumerateDirectories(string a_oDirPath, System.Func<List<string>, List<string>, bool> a_oCallback, bool a_bIsAssert = true) {
+		CAccess.Assert(!a_bIsAssert || (a_oCallback != null && a_oDirPath.ExIsValid()));
+
+		// 디렉토리 순회가 불가능 할 경우
+		if(a_oCallback == null || !a_oDirPath.ExIsValid() || !Directory.Exists(a_oDirPath)) {
+			return;
+		}
+
+		var oDirPaths = Directory.GetDirectories(a_oDirPath);
+
+		// 디렉토리 순회가 불가능 할 경우
+		if(!a_oCallback(Directory.GetFiles(a_oDirPath).ToList(), oDirPaths.ToList())) {
+			return;
+		}
+
+		for(int i = 0; i < oDirPaths.Length; ++i) {
+			CFunc.EnumerateDirectories(oDirPaths[i], a_oCallback);
+		}
 	}
 	#endregion // 클래스 함수
 }

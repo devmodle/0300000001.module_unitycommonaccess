@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Reflection;
 
-/** 기본 접근자 확장 클래스 */
+/** 접근자 확장 클래스 */
 public static partial class CAccessExtension {
 	#region 클래스 함수
 	/** 정수 여부를 검사한다 */
@@ -990,7 +990,7 @@ public static partial class CAccessExtension {
 	#endregion // 제네릭 클래스 함수
 }
 
-/** 기본 접근자 확장 클래스 - 추가 */
+/** 접근자 확장 클래스 - 추가 */
 public static partial class CAccessExtension {
 	#region 클래스 함수 (CExtension)
 	/** 3 차원 => 2 차원으로 변환한다 */

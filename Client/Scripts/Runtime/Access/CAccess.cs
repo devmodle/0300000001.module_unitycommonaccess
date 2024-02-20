@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Diagnostics;
 
-/** 기본 접근자 */
+/** 접근자 */
 public static partial class CAccess {
 	#region 클래스 프로퍼티
 	public static bool IsSupportsMSAA => SystemInfo.supportsMultisampledTextures > KCDefine.B_VAL_0_INT;
@@ -41,25 +41,6 @@ public static partial class CAccess {
 		return string.Format(KCDefine.B_TEXT_FMT_VER, a_oVer, oUserStr);
 	}
 
-	/** 읽기용 스트림을 반환한다 */
-	public static FileStream GetReadStream(string a_oFilePath) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		return File.Exists(a_oFilePath) ? File.Open(a_oFilePath, FileMode.Open, FileAccess.Read) : null;
-	}
-
-	/** 쓰기용 스트림을 반환한다 */
-	public static FileStream GetWriteStream(string a_oFilePath) {
-		CAccess.Assert(a_oFilePath.ExIsValid());
-		string oDirPath = Path.GetDirectoryName(a_oFilePath).Replace(KCDefine.B_TOKEN_R_SLASH, KCDefine.B_TOKEN_SLASH);
-
-		// 디렉토리가 없을 경우
-		if(oDirPath.ExIsValid() && !Directory.Exists(oDirPath)) {
-			Directory.CreateDirectory(oDirPath);
-		}
-
-		return File.Open(a_oFilePath, FileMode.Create, FileAccess.Write);
-	}
-
 	/** 랜덤 확률을 반환한다 */
 	public static (int, float) GetRandPercent(List<float> a_oPercentList) {
 		CAccess.Assert(a_oPercentList.ExIsValid());
@@ -77,24 +58,6 @@ public static partial class CAccess {
 		}
 
 		return (a_oPercentList.Count - KCDefine.B_VAL_1_INT, a_oPercentList.LastOrDefault());
-	}
-
-	/** 디렉토리를 순회한다 */
-	public static void EnumerateDirectories(string a_oDirPath, System.Func<List<string>, List<string>, bool> a_oCallback, bool a_bIsAssert = true) {
-		CAccess.Assert(!a_bIsAssert || (a_oCallback != null && a_oDirPath.ExIsValid()));
-		bool bIsValid = a_oCallback != null && a_oDirPath.ExIsValid();
-
-		// 디렉토리가 존재 할 경우
-		if(bIsValid && Directory.Exists(a_oDirPath)) {
-			var oDirPaths = Directory.GetDirectories(a_oDirPath);
-
-			// 디렉토리 순회가 가능 할 경우
-			if(a_oCallback(oDirPaths.ToList(), Directory.GetFiles(a_oDirPath).ToList())) {
-				for(int i = 0; i < oDirPaths.Length; ++i) {
-					CAccess.EnumerateDirectories(oDirPaths[i], a_oCallback);
-				}
-			}
-		}
 	}
 	#endregion // 클래스 함수
 
@@ -119,7 +82,7 @@ public static partial class CAccess {
 	#endregion // 제네릭 클래스 함수
 }
 
-/** 기본 접근자 - 추가 */
+/** 접근자 - 추가 */
 public static partial class CAccess {
 	#region 클래스 함수 (CExtension)
 	/** 값을 비교한다 */
@@ -239,7 +202,7 @@ public static partial class CAccess {
 	#endregion // 제네릭 클래스 함수 (CExtension)
 }
 
-/** 기본 접근자 - 추가 */
+/** 접근자 - 추가 */
 public static partial class CAccess {
 	#region 클래스 함수 (CFunc)
 	/** 값을 교환한다 */

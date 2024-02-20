@@ -371,7 +371,9 @@ public static partial class CAccess {
 	/** 가격 문자열을 반환한다 */
 	public static string GetPriceStr(Product a_oProduct) {
 		CAccess.Assert(a_oProduct != null);
-		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);
+		
+		return string.Format(KCDefine.B_TEXT_FMT_2_SPACE_COMBINE, 
+			a_oProduct.metadata.isoCurrencyCode, a_oProduct.metadata.localizedPrice);
 	}
 #endif // #if PURCHASE_MODULE_ENABLE
 	#endregion // 조건부 클래스 함수
@@ -380,7 +382,7 @@ public static partial class CAccess {
 /** 유틸리티 접근자 - 코루틴 */
 public static partial class CAccess {
 	/** 실수 비교자 */
-	private class CRealCompare : IEqualityComparer<float> {
+	private class CRealComparer : IEqualityComparer<float> {
 		#region 함수
 		/** 동일 여부를 검사한다 */
 		public bool Equals(float a_fLhs, float a_fRhs) {
@@ -395,12 +397,12 @@ public static partial class CAccess {
 	}
 
 	#region 클래스 변수
-	private static CRealCompare m_oRealCompare = new CRealCompare();
+	private static CRealComparer m_oRealComparer = new CRealComparer();
 	private static WaitForEndOfFrame m_oWaitForEndOfFrame = new WaitForEndOfFrame();
 	private static WaitForFixedUpdate m_oWaitForFixedUpdate = new WaitForFixedUpdate();
 
-	private static Dictionary<float, WaitForSeconds> m_oWaitForSecsDict = new Dictionary<float, WaitForSeconds>(CAccess.m_oRealCompare);
-	private static Dictionary<float, WaitForSecondsRealtime> m_oWaitForSecsRealtimeDict = new Dictionary<float, WaitForSecondsRealtime>(CAccess.m_oRealCompare);
+	private static Dictionary<float, WaitForSeconds> m_oWaitForSecsDict = new Dictionary<float, WaitForSeconds>(CAccess.m_oRealComparer);
+	private static Dictionary<float, WaitForSecondsRealtime> m_oWaitForSecsRealtimeDict = new Dictionary<float, WaitForSecondsRealtime>(CAccess.m_oRealComparer);
 	#endregion // 클래스 변수
 
 	#region 클래스 함수
@@ -413,17 +415,19 @@ public static partial class CAccess {
 	/** 대기 객체를 반환한다 */
 	public static IEnumerator CoGetWaitForSecs(float a_fDeltaTime, bool a_bIsRealtime = false) {
 		CAccess.Assert(a_fDeltaTime.ExIsGreatEquals(KCDefine.B_VAL_0_REAL));
-		yield return a_bIsRealtime ? CAccess.GetWaitForSecondsRealtime(a_fDeltaTime) : CAccess.GetWaitForSeconds(a_fDeltaTime);
-	}
 
-	/** 대기 객체를 반환한다 */
-	public static IEnumerator CoGetWaitForEndOfFrame() {
-		yield return CAccess.m_oWaitForEndOfFrame;
+		yield return a_bIsRealtime ? 
+			CAccess.GetWaitForSecondsRealtime(a_fDeltaTime) : CAccess.GetWaitForSeconds(a_fDeltaTime);
 	}
 
 	/** 대기 객체를 반환한다 */
 	public static IEnumerator CoGetWaitForFixedUpdate() {
 		yield return CAccess.m_oWaitForFixedUpdate;
+	}
+
+	/** 대기 객체를 반환한다 */
+	public static IEnumerator CoGetWaitForEndOfFrame() {
+		yield return CAccess.m_oWaitForEndOfFrame;
 	}
 	#endregion // 클래스 함수
 }

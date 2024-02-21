@@ -373,14 +373,14 @@ public static partial class CExtension {
 	}
 
 	/** 객체 => 특정 타입으로 변환한다 */
-	public static List<DestT> ExToTypes<SrcT, DestT>(this List<SrcT> a_oSender) where SrcT : class where DestT : class {
+	public static List<TDest> ExToTypes<TSrc, TDest>(this List<TSrc> a_oSender) where TSrc : class where TDest : class {
 		CAccess.Assert(a_oSender != null);
-		var oTypeList = new List<DestT>();
+		var oTypeList = new List<TDest>();
 
 		for(int i = 0; i < a_oSender.Count; ++i) {
 			// 타입 추가가 가능 할 경우
-			if(a_oSender[i] as DestT != null) {
-				oTypeList.Add(a_oSender[i] as DestT);
+			if(a_oSender[i] as TDest != null) {
+				oTypeList.Add(a_oSender[i] as TDest);
 			}
 		}
 
@@ -388,14 +388,14 @@ public static partial class CExtension {
 	}
 
 	/** 객체 => 특정 타입으로 변환한다 */
-	public static Dictionary<DestK, DestV> ExToTypes<SrcK, SrcV, DestK, DestV>(this Dictionary<SrcK, SrcV> a_oSender) where SrcK : class where SrcV : class where DestK : class where DestV : class {
+	public static Dictionary<KDest, VDest> ExToTypes<KSrc, VSrc, KDest, VDest>(this Dictionary<KSrc, VSrc> a_oSender) where KSrc : class where VSrc : class where KDest : class where VDest : class {
 		CAccess.Assert(a_oSender != null);
-		var oTypeDict = new Dictionary<DestK, DestV>();
+		var oTypeDict = new Dictionary<KDest, VDest>();
 
 		foreach(var stKeyVal in a_oSender) {
 			// 타입 추가가 가능 할 경우
-			if(stKeyVal.Key as DestK != null && stKeyVal.Value as DestV != null) {
-				oTypeDict.Add(stKeyVal.Key as DestK, stKeyVal.Value as DestV);
+			if(stKeyVal.Key as KDest != null && stKeyVal.Value as VDest != null) {
+				oTypeDict.Add(stKeyVal.Key as KDest, stKeyVal.Value as VDest);
 			}
 		}
 
@@ -403,14 +403,14 @@ public static partial class CExtension {
 	}
 
 	/** 객체 => 특정 리스트 타입으로 변환한다 */
-	public static List<DestT> ExToListTypes<SrcK, SrcV, DestT>(this Dictionary<SrcK, SrcV> a_oSender) where SrcK : class where SrcV : class where DestT : class {
+	public static List<TDest> ExToListTypes<KSrc, VSrc, TDest>(this Dictionary<KSrc, VSrc> a_oSender) where KSrc : class where VSrc : class where TDest : class {
 		CAccess.Assert(a_oSender != null);
-		var oTypeList = new List<DestT>();
+		var oTypeList = new List<TDest>();
 
 		foreach(var stKeyVal in a_oSender) {
 			// 타입 추가가 가능 할 경우
-			if(stKeyVal.Value as DestT != null) {
-				oTypeList.Add(stKeyVal.Value as DestT);
+			if(stKeyVal.Value as TDest != null) {
+				oTypeList.Add(stKeyVal.Value as TDest);
 			}
 		}
 

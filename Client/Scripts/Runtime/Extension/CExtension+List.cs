@@ -235,8 +235,8 @@ public static partial class CExtension {
 	}
 
 	/** 리스트를 복사한다 */
-	public static void ExCopyTo<TA, TB>(this List<TA> a_oSender,
-		List<TB> a_oDestValList, System.Func<TA, TB> a_oCallback, bool a_bIsClear = true, bool a_bIsAssert = true) {
+	public static void ExCopyTo<TSrc, TDest>(this List<TSrc> a_oSender,
+		List<TDest> a_oDestValList, System.Func<TSrc, TDest> a_oCallback, bool a_bIsClear = true, bool a_bIsAssert = true) {
 
 		CAccess.Assert(!a_bIsAssert || (a_oSender != null && a_oDestValList != null && a_oCallback != null));
 

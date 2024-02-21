@@ -821,7 +821,7 @@ public static partial class CExtension {
 	}
 
 	/** 종류 => 보정 된 종류로 변환한다 */
-	public static int ExKindsToCorrectKinds(this int a_nSender, EKindsGroupType a_eKindsGroupType) {
+	public static int ExKindsToAdjustKinds(this int a_nSender, EKindsGroupType a_eKindsGroupType) {
 		switch(a_eKindsGroupType) {
 			case EKindsGroupType.TYPE: return a_nSender.ExKindsToTypeKinds();
 			case EKindsGroupType.SUB_TYPE: return a_nSender.ExKindsToSubType();

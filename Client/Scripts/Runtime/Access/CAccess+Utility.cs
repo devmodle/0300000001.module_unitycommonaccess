@@ -141,11 +141,11 @@ public static partial class CAccess {
 
 	public static KeyCode CmdKeyCode => KeyCode.LeftShift;
 	public static Vector3 DesktopScreenSize => new Vector3(Screen.currentResolution.width, Screen.currentResolution.height, CAccess.DeviceScreenSize.z);
-	public static Vector3 CorrectDesktopScreenSize => CAccess.ResulitionCorrectDesktopScreenSize * CAccess.DesktopResolutionScale;
+	public static Vector3 AdjustDesktopScreenSize => CAccess.ResulitionAdjustDesktopScreenSize * CAccess.DesktopResolutionScale;
 
 	private static Vector3 ResolutionScreenSize => new Vector3(CAccess.DeviceScreenSize.y * (KCDefine.B_DESIGN_SCREEN_WIDTH / (float)KCDefine.B_DESIGN_SCREEN_HEIGHT), CAccess.DeviceScreenSize.y, CAccess.DeviceScreenSize.z);
 	private static Vector3 ResolutionDesktopScreenSize => new Vector3(CAccess.DesktopScreenSize.y * (KCDefine.B_DESIGN_L_SCREEN_WIDTH / (float)KCDefine.B_DESIGN_L_SCREEN_HEIGHT), CAccess.DesktopScreenSize.y, CAccess.DesktopScreenSize.z);
-	private static Vector3 ResulitionCorrectDesktopScreenSize => CAccess.ResolutionDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
+	private static Vector3 ResulitionAdjustDesktopScreenSize => CAccess.ResolutionDesktopScreenSize * KCDefine.B_DESKTOP_SCREEN_RATE;
 
 #if UNITY_EDITOR || UNITY_STANDALONE
 	public static float ScreenDPI => KCDefine.B_PLATFORM_SCREEN_DPI * (CAccess.DeviceScreenSize.y / KCDefine.B_DESIGN_SCREEN_HEIGHT);
